@@ -1,0 +1,749 @@
+Number.prototype.mod = function(n) {
+return ((this%n)+n)%n;
+}
+
+function viewModel () {
+	var self = this;
+	
+/*	if (localStorage.getItem("currentHoleStore") != null)
+	{
+	 	self.currentHole = ko.observable(localStorage.getItem("currentHoleStore"), {persist: 'currentHoleStore'});
+	} */
+	self.currentHole = ko.observable(1);
+	
+	
+	self.currentHolePar = ko.observable(0);
+	self.currentHoleScore = ko.observable(0);
+	self.currentHoleHcp = ko.observable(0);
+	self.currentHoleLength = ko.observable(0);
+
+	
+	self.courseName = ko.observable("");
+	self.currentTees = ko.observable("yellow");
+	self.playerGender = ko.observable("");
+	self.playerGenders = ko.observableArray(["Male", "Female"]);
+	self.playerName = ko.observable("Rami Valta");
+	self.playerExactHcp = ko.observable();
+	self.courseSl = ko.observable(0);
+	self.courseCr = ko.observable(0);
+	self.playerDefaultTee = ko.observable();
+	
+	self.noScoreEntered = ko.observable(true);
+	self.showPoints = ko.observable(false);
+	self.sliderVal = ko.observable(0);
+	self.hasSlid = ko.observable(false);
+
+	self.holes = ko.observableArray([]);
+	self.courseData = ko.observableArray([]);
+	self.roundScores = ko.observableArray([]);
+	self.rounds = ko.observableArray([]);
+
+
+	function prePopulateScores () {
+		for (var i = 0; i < 18; i++) {
+			var el = {};
+			el['hole'] = ko.observable(i + 1);
+			el['score'] = ko.observable(0);
+			el['points'] = ko.observable(0);
+			el['scoreToPar'] = ko.observable(0);
+			self.roundScores.push(el);
+		}
+	};
+	
+	function makeobservable (array) {
+		for (var i = 0, m = array.length; i < m; i++) {
+			self.holes.push({
+				hole_number: ko.observable(array[i].hole_number),
+				hole_par: ko.observable(array[i].hole_par),
+				hole_hcp: ko.observable(array[i].hole_hcp),
+				hole_length_yellow: ko.observable(array[i].hole_length_yellow),
+				hole_length_red: ko.observable(array[i].hole_length_red),
+				hole_length_white: ko.observable(array[i].hole_length_white),
+				hole_length_blue: ko.observable(array[i].hole_length_blue)
+			});
+
+		};
+			//	return obsArray;
+	};
+
+	self.coursePar = ko.computed(function() {
+		var s = 0;
+		for (var i = 0; i < self.holes().length; i++) {
+			s = s + parseInt(self.holes()[i].hole_par());
+			}
+		return s;
+	});
+
+//computeds 
+
+	self.holeScoreName = ko.computed(function() {
+		if (self.noScoreEntered()) {
+			return "";
+			}
+		else if (self.currentHoleScore() == 0) {
+			return "";
+			}
+		else {			
+			var x = parseInt(self.currentHoleScore()) - self.currentHolePar();
+			switch (x) {
+				case 0: return "Par";
+				case -1: return "Birdie";
+				case -2: return "Eagle";
+				case -3: return "Albatross";
+				case 1: return "Bogey";
+				case 2: return "Double";
+			}
+			if (x > 2) {
+				return x + " over";
+			}
+			else if (x < -3) {
+				return Math.abs(x) + " under";
+			}
+		}
+	});
+	
+
+	self.totalScore = ko.computed(function() {
+		var s = 0;
+		for (var n = 0, m = self.roundScores().length; n < m; n++) {
+			s = s + parseInt(self.roundScores()[n].score());
+		}
+		return s;
+	});
+		
+	self.totalPoints = ko.computed(function() {
+		var s = 0;
+		for (var n = 0, m = self.roundScores().length; n < m; n++) {
+			s = s + parseInt(self.roundScores()[n].points());
+		}
+		return s;
+	});
+
+	self.totalToPar = ko.computed(function() {
+		var s = 0;
+		for (var i = 0; i < self.roundScores().length; i++) {
+			s = s + parseInt(self.roundScores()[i].scoreToPar());
+		}
+		return s;
+	});
+
+	self.playerPlayingHcp = ko.computed(function () {
+		/* GA PLAYING HANDICAP FORMULA the “EGA Playing Handicap Formula” converts exact handicaps into playing handicaps. PLAYING HCP = EXACT HCP x (SR / 113) + (CR - PAR) */
+		var a = parseFloat(self.playerExactHcp());
+		var b = parseFloat(self.courseSl()) / 113;
+		var c = parseFloat(self.courseCr()) - parseFloat(self.coursePar());
+		var playhcp = a * b + c;
+		return Math.round(playhcp);
+	});
+	
+	self.currentHoleHcpPar = ko.computed(function () {
+		var par = self.currentHolePar();
+		var crhcp = parseInt(self.playerPlayingHcp());
+		var baseadj, hcpholes;
+		baseadj = Math.floor(crhcp / 18);
+		hcpholes = (crhcp.mod(18));
+		
+		if (hcpholes >= parseInt(self.currentHoleHcp())) {
+			return parseInt(self.currentHolePar()) + baseadj + 1;
+			}
+		else {
+			return parseInt(par) + parseInt(baseadj);
+			}
+	});
+
+
+
+/* observablet loppuu */
+
+	self.getHoleData = function () {
+		var idx = parseInt(self.currentHole()) -1 ; // index fix, sanity?
+		
+		var par = parseInt(self.holes()[idx].hole_par());
+		self.currentHolePar(par);
+		self.currentHoleHcp(parseInt(self.holes()[idx].hole_hcp()));
+	
+		var curHole = parseInt(self.currentHole());
+		var curScore = parseInt(self.currentHoleScore());
+		var curPoints = parseInt(self.currentHolePoints());
+				
+		
+		for (var i = 0; i < self.roundScores().length; i++) {
+		    if (self.roundScores()[i].hole() == curHole) {
+				self.currentHoleScore(parseInt(self.roundScores()[i].score()));
+				self.noScoreEntered(false);
+			}
+		}
+		
+		if (self.currentHoleScore() == 0) {
+			self.noScoreEntered(true);
+		}
+				
+		if (self.currentTees() == "yellow") self.currentHoleLength(parseInt(self.holes()[idx].hole_length_yellow()));
+	};
+	
+	
+	self.nextHole = function () {
+		var curHole = parseInt(self.currentHole());
+	
+		self.showPoints(false);
+		self.noScoreEntered(true);
+
+		if (curHole == 18) {
+			self.currentHole(1);
+			self.getHoleData();
+		}
+		else {
+			self.currentHole(self.currentHole() + 1);
+			self.getHoleData();
+		};
+	};
+	
+	self.previousHole = function() {
+		var curHole = parseInt(self.currentHole());
+		self.noScoreEntered(false);
+
+		if (curHole === 1) {
+			self.currentHole(18);
+			self.getHoleData();
+		}
+
+		else {
+			self.currentHole(curHole - 1);
+			self.getHoleData();
+		};
+	}
+	
+	self.setCourseGeneralData = function () {
+		if (self.currentTees() == "yellow") {
+			self.courseCr(self.courseData()[0].cr_yellow_men);
+			self.courseSl(self.courseData()[0].sl_yellow_men);
+		}
+		self.courseName(self.courseData()[0].course_name);
+
+	}
+
+	self.getCourseGeneralData = function (callback) {
+		var course = "1";
+		var d, t, x;
+		$.ajax({
+			type: 'POST',
+			async: 'true',
+			 url: 'readcourse.php',
+			data: { course : d },
+	        dataType: "json",
+			success: function(d) {
+				 t = JSON.stringify(d);
+				 x = JSON.parse(t);
+				callback(x);
+
+			}
+		});
+	};
+
+	function courseGeneralDataCb(x) {
+		for (var i = 0, j = x.length; i < j; i++) {
+			self.courseData.push(x[i]);
+		};
+		self.getCourseHoleData(courseHoleDataCb);
+	};
+
+
+	self.getCourseHoleData = function (callback) {
+		var data, t, x;
+		$.ajax({
+			type: 'POST',
+			async: 'true',
+			 url: 'readdb.php',
+			data: { data : data },
+	        dataType: "json",
+			success: function(data) {
+
+				 t = JSON.stringify(data);
+				 x = JSON.parse(t);
+				callback(x);
+
+			}
+		});
+	};
+	
+	function courseHoleDataCb(x) {
+	//	self.holes = self.makeobservable(x) // propertyt observableiksi
+		makeobservable(x);
+		prePopulateScores();
+		self.getHoleData(); 
+		self.setCourseGeneralData();
+	
+	};
+	
+	self.getRoundsData = function (callback) {
+		var course = "1";
+		var d, t, x;
+		$.ajax({
+			type: 'POST',
+			async: 'true',
+			 url: 'readrounds.php',
+			data: { round : d },
+	        dataType: "json",
+			success: function(d) {
+				 t = JSON.stringify(d);
+				 x = JSON.parse(t);
+				callback(x);
+
+			}
+		});
+	};
+
+	function roundsDataCb(x) {
+		for (var i = 0, j = x.length; i < j; i++) {
+			self.rounds.push(x[i]);
+		};
+		self.getGolferData();
+//		self.setCourseGeneralData(); 
+//		self.getCourseHoleData(courseHoleDataCb);
+	};
+	
+	self.currentHolePoints = ko.computed(function() {
+		var curHcpPar = parseInt(self.currentHoleHcpPar());
+		var curScore = parseInt(self.currentHoleScore());
+		
+		if (self.noScoreEntered()) {
+			return 0;
+			}
+		else if ( curScore == 0) {
+			return 0;
+			}
+		else {		
+			var y = curHcpPar - curScore + 2;
+			self.showPoints(true);
+			if (y > 0) {
+				return y;
+				}
+			else {
+				return 0;
+			}
+		}
+	});
+	
+	
+	self.saveScores = function () {
+		var data = [];
+		
+		data[0] = parseInt(1);
+		data[1] = self.courseName;
+		data[2] = parseInt(self.totalScore());
+		data[3] = parseInt(self.totalPoints());
+		
+		for (var i = 0, n = 4; i < self.roundScores().length; i++, n++) {
+			data[n] = parseInt(self.roundScores()[i].score());
+		}
+		
+		$.ajax ({
+			type: 'POST',
+			url: 'saveround.php',
+			data: { data : data },
+			success: function() {
+				self.rounds.removeAll(); // en saanu listviewiä päivittymään kun kierros on pelattu, rumaruma hack mikä hakee uudestaan serveriltä koko paskan
+				self.getRounds();        //
+
+				$.mobile.changePage('#f_page');
+/*				setTimeout(function () {
+					myScroll.refresh();
+				}, 200);	 */
+			}
+		});
+	};
+
+		
+	self.setScore = function () {
+	
+		var sVal = parseInt(self.sliderVal());
+
+		if (sVal <50 && sVal >5 || sVal < -5 && sVal > -50 ) {
+			if (self.noScoreEntered()) {
+				self.currentHoleScore(self.currentHolePar());
+				self.noScoreEntered(false);
+			}
+		} 
+
+		if (sVal >= 51) {
+			if (self.noScoreEntered()) {
+				self.currentHoleScore(self.currentHolePar());
+			}
+			self.upScore() ;
+			self.noScoreEntered(false);
+		}
+			
+		if (sVal < -51) {
+			if (self.noScoreEntered()) {
+				self.currentHoleScore(self.currentHolePar());
+			}
+			self.downScore();
+			self.noScoreEntered(false);
+		}
+			
+	/*	if (localStorage.getItem("roundScoresStorage") !== null) {
+			var o = JSON.parse(localStorage.getItem("roundScoresStorage"));
+			for (var i = 0; i < self.roundScores().length; i++) {
+				self.roundScores()[i].hole(o[i].hole);
+				self.roundScores()[i].score(o[i].score);
+				self.roundScores()[i].points(o[i].points);
+				self.roundScores()[i].scoreToPar(o[i].scoreToPar);
+			}
+		}	 */
+			
+		var curHole = parseInt(self.currentHole());
+		var curScore = parseInt(self.currentHoleScore()) ;
+		var curPoints = parseInt(self.currentHolePoints());
+		var curHolePar = parseInt(self.currentHolePar());
+		var idx = curHole - 1;
+
+		for (var i = 0; i < self.roundScores().length; i++) {
+			if (self.roundScores()[i].hole() == curHole) {
+				self.roundScores()[i].score(curScore);
+				self.roundScores()[i].points(curPoints);
+				self.roundScores()[i].scoreToPar(curScore - curHolePar);
+			}
+		};
+			
+/*			
+		if (typeof(localStorage)== 'undefined') {
+			alert ("ei oo html5 localstoragea");
+		}
+		else {
+			for (var i = 0; i < self.roundScores().length; i++) {
+				localStorage['roundScoresStorage']=ko.toJSON(self.roundScores);
+			}
+		}
+	*/		
+			
+	};
+
+	self.upScore = function () {
+		if (self.hasSlid() == false) {
+			var y = self.currentHoleScore();
+			self.currentHoleScore(parseInt(y) + 1);
+			$("#score").animate({ 
+				fontSize: "1.05em", 
+				  }, 50, function() {
+				  		  $("#score").animate({ 
+							fontSize: "1em",
+						  }, 300 );
+					  }
+				  )
+			}
+		self.hasSlid(true);
+	};
+	
+	self.downScore = function () {
+		if (self.hasSlid() === false) {
+			var y = parseInt(self.currentHoleScore());
+			if (y == 0) {
+				}
+			else {
+				self.currentHoleScore(parseInt(y) - 1);
+				$("#score").animate({ 
+				fontSize: "0.95em", 
+				  }, 50, function() {
+			  		  $("#score").animate({ 
+						fontSize: "1em",
+					  }, 300 );
+				  }
+ 				)
+			}
+		self.hasSlid(true);
+		}
+	};
+	
+	
+	self.resetSlider = function () {
+		var sVal = self.sliderVal();
+		self.hasSlid(false);
+		self.sliderVal(0);
+	};
+	
+	self.getRounds = function () {
+		self.getRoundsData(roundsDataCb);
+	};
+	
+	self.getCourse = function () {
+		self.getCourseGeneralData(courseGeneralDataCb);
+	};
+	
+
+	self.getRoundsData(roundsDataCb);
+	self.getCourseGeneralData(courseGeneralDataCb);
+	
+	
+	ko.bindingHandlers.slider = {
+	    init: function (element, valueAccessor) {
+    	    function setSliderValue(newValue) {
+	            var slider = $("#" + element.id);
+			//	console.log(slider);
+        	    slider.val(newValue);
+            	slider.slider('refresh');
+	            slider.on('change', function () {
+    	            valueAccessor()(slider.val());
+	            });
+	           	slider.on('slidestop', function () {
+						valueAccessor()(slider.val());
+	   			});
+	        }
+    	    valueAccessor().subscribe(setSliderValue);
+
+	    }
+	}; 
+	
+	ko.bindingHandlers.mobileList = {
+		'update': function (element, valueAccessor) {
+			setTimeout(function () { //To make sure the refresh fires after the DOM is updated
+	    //    console.log("listview refresh");
+	        $(element).listview('refresh');
+		    }, 0);
+		}
+	};
+	
+    ko.bindingHandlers.mobileradio = {
+        init: function (element, valueAccessor) {
+        },
+        update: function (element, valueAccessor) {
+            var value = valueAccessor();
+            var valueUnwrapped = ko.utils.unwrapObservable(value);
+            if (valueUnwrapped == $(element).val()) {
+                $(element).prop("checked", "true").checkboxradio("refresh");
+            } else {
+  //              $(element).prop('checked', false);
+				$(element).removeProp("checked").checkboxradio("refresh");
+				
+            }
+        }
+    };
+    
+	ko.bindingHandlers.jqmValue = {
+		init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+			if (typeof ko.bindingHandlers.value.init !== 'undefined') {
+				ko.bindingHandlers.value.init(element, valueAccessor, allBindingsAccessor, viewModel);
+			}
+		},
+
+		update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+			if (typeof ko.bindingHandlers.value.update !== 'undefined') {
+				ko.bindingHandlers.value.update(element, valueAccessor, allBindingsAccessor, viewModel);
+			}
+
+			var instance = $.data(element, 'selectmenu');
+			if (instance) {
+				$(element).selectmenu('refresh', true);
+			}
+		}
+	};
+
+	
+	self.saveGolfer = function () {
+		var data = [];
+		
+		data[0] = self.playerName();
+		data[1] = self.playerExactHcp();
+		data[2] = self.playerDefaultTee();
+		data[3] = self.playerGender();
+		
+		
+		$.ajax ({
+			type: 'POST',
+			url: 'savegolfer.php',
+			data: { data : data },
+			success: function() {
+				$.mobile.changePage('#f_page');
+			}
+		});
+	};
+
+	self.getGolferData = function (callback) {
+		var d, t, x;
+		$.ajax({
+			type: 'POST',
+			async: 'true',
+			 url: 'readgolfer.php',
+			data: { round : d },
+	        dataType: "json",
+			success: function(d) {
+				t = JSON.stringify(d);
+				x = JSON.parse(t);
+				self.playerName(x[0].name);
+				self.playerExactHcp(x[0].hcp);
+				self.playerDefaultTee(x[0].tee);
+				self.playerGender(x[0].gender);
+			}
+		});
+	};
+	
+	
+	self.hcpScroller = function () {
+		var whl1 = {'-2':'-2', '-1':'-1', '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53' 
+		   };
+	
+		var whl2 = {'0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9'
+			};
+	
+		var wheel = [{},{}];
+	
+		wheel[0]['Wheel1'] = whl1;
+		wheel[1]['Wheel2'] = whl2;
+
+		$('#i').scroller({
+			display: 'inline',
+			mode: 'scroller',
+			theme: 'android',
+			wheels: wheel,
+			width: 20,
+			height: 30,
+			showLabel: false,
+			formatResult: function (a) {
+				var i = a[0] + "." + a[1];
+				return i;
+			}
+		});    
+			
+		var hcp = parseFloat(self.playerExactHcp());
+		hcp = hcp.toFixed(1);
+		var t = [];
+		t = hcp.split(".");
+		
+		$('#i').scroller('setValue', t, true, 1);
+			
+	};
+			
+	self.loadCourseSelect = function () {
+		$.mobile.changePage('#courseSelect');
+	}
+}	
+	
+
+// end viewModel
+
+
+
+
+/* function preload(arrayOfImages) {
+    $(arrayOfImages).each(function () {
+        $('<img />').attr('src',this).appendTo('body').css('display','none');
+    });
+} */
+
+/*
+var imgArray = ['img/handle0.png', 'img/handleplus1.png', 'img/handleplus2.png', 'img/handleminus1.png', 'img/handleminus2.png'];
+
+preload(imgArray); */
+
+		
+
+
+//$(document).ready(function(){
+
+
+//$(document).unbind('pageinit');
+
+//$(document).bind('pageinit', function() {
+//	$.mobile.ignoreContentEnabled = true;
+
+
+/*	$("#scoreCard").on('pageshow'), function() {
+//		$("scoreCard").trigger("create");
+// 		$("#scoreCard").trigger("refresh");
+ 		alert ("sup");
+	}; */
+
+
+
+//ko.applyBindings(vm);
+
+
+
+window.vm = new viewModel();
+
+$(document).on('pageinit', function() {
+	
+	window.vm = new viewModel();
+//	ko.applyBindings(vm);
+	ko.applyBindings(vm, document.getElementById("f_page"));
+
+		
+	ko.applyBindings(vm, document.getElementById("scoreCard"));
+
+	
+	$('#s_page').on('pageinit', function () {
+		ko.applyBindings(vm, document.getElementById("s_page"))
+	});
+	
+	$('#prefs').on('pageinit', function () {
+		ko.applyBindings(vm, document.getElementById("prefs"));
+		vm.hcpScroller();
+//		$("#prefs").selectmenu();
+  //      $("#prefs").selectmenu('refresh', true);
+	});
+		
+	
+	$(document).off('pageinit');
+
+});	
+	
+	
+//	vm.sliderVal(0);
+	
+//	$('#f_page').on('pageinit', function() {
+	//	ko.applyBindings(vm, document.getElementById("f_page"))});
+	
+//	$('#s_page').on('pageinit', function() {
+	//	ko.applyBindings(vm, document.getElementById("s_page"))});
+//	$('#s_page').off('pageinit');
+
+//	$('#s_page').off('pageinit');
+
+		
+	//$(document).on('pageinit', '#s_page', function () {
+//	ko.applyBindings(vm, document.getElementById("s_page"));
+//	ko.applyBindings(vm, document.getElementById("f_page"));
+//	ko.applyBindings(vm, document.getElementById("scoreCard"));
+
+//	$(document).unbind('pageinit', '#s_page');
+//	$(document).unbind('pageinit');
+//});
+	
+	/*
+
+
+$(document).on('pageinit', '#scoreCard', function () {
+	window.vm = new viewModel();
+	ko.applyBindings(viewModel, document.getElementById("scoreCard"));
+});
+
+$(document).on('pageinit', '#f_page', function () {
+	window.vm = new viewModel();
+	ko.applyBindings(viewModel, document.getElementById("f_page"));
+	});
+	*/
+/*	
+		$("#s_page").unbind('pageinit');
+	}); */
+
+/*	
+	$("#f_page").bind('pageinit', function () {
+		ko.applyBindings(viewModel, document.getElementById("f_page"));
+	}); */
+
+
+	
+//	$(document).unbind('pageinit');
+//});
+
+
+
+//	$.mobile.loadPage("#scoreCard");
+
+//	vm.sliderVal(0);
+//	vm.getCourse();
+
+//	vm.getRounds();
+
+	
+
+

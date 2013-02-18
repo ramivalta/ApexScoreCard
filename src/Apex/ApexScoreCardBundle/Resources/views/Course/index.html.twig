@@ -1,0 +1,75 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Course list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Coursename</th>
+                <th>Coursealias</th>
+                <th>Crredmen</th>
+                <th>Crbluemen</th>
+                <th>Cryellowmen</th>
+                <th>Crwhitemen</th>
+                <th>Crredladies</th>
+                <th>Crblueladies</th>
+                <th>Cryellowladies</th>
+                <th>Crwhiteladies</th>
+                <th>Slredmen</th>
+                <th>Slbluemen</th>
+                <th>Slyellowmen</th>
+                <th>Slwhitemen</th>
+                <th>Slredladies</th>
+                <th>Slblueladies</th>
+                <th>Slyellowladies</th>
+                <th>Slwhiteladies</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('course_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.courseName }}</td>
+                <td>{{ entity.courseAlias }}</td>
+                <td>{{ entity.crRedMen }}</td>
+                <td>{{ entity.crBlueMen }}</td>
+                <td>{{ entity.crYellowMen }}</td>
+                <td>{{ entity.crWhiteMen }}</td>
+                <td>{{ entity.crRedLadies }}</td>
+                <td>{{ entity.crBlueLadies }}</td>
+                <td>{{ entity.crYellowLadies }}</td>
+                <td>{{ entity.crWhiteLadies }}</td>
+                <td>{{ entity.slRedMen }}</td>
+                <td>{{ entity.slBlueMen }}</td>
+                <td>{{ entity.slYellowMen }}</td>
+                <td>{{ entity.slWhiteMen }}</td>
+                <td>{{ entity.slRedLadies }}</td>
+                <td>{{ entity.slBlueLadies }}</td>
+                <td>{{ entity.slYellowLadies }}</td>
+                <td>{{ entity.slWhiteLadies }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('course_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('course_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('course_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

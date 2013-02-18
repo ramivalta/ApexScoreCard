@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Hole list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Courseid</th>
+                <th>Holenumber</th>
+                <th>Par</th>
+                <th>Hcp</th>
+                <th>Lengthred</th>
+                <th>Lengthyellow</th>
+                <th>Lengthblue</th>
+                <th>Lengthwhite</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('hole_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.courseId }}</td>
+                <td>{{ entity.holeNumber }}</td>
+                <td>{{ entity.par }}</td>
+                <td>{{ entity.hcp }}</td>
+                <td>{{ entity.lengthRed }}</td>
+                <td>{{ entity.lengthYellow }}</td>
+                <td>{{ entity.lengthBlue }}</td>
+                <td>{{ entity.lengthWhite }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('hole_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('hole_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('hole_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

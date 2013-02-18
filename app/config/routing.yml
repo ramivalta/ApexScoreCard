@@ -1,0 +1,3 @@
+apex_score:
+    resource: "@ApexScoreBundle/Resources/config/routing.yml"
+    prefix:   /

@@ -1,0 +1,28 @@
+apex_score_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ApexScoreBundle:Default:index }
+
+
+ApexScoreBundle_course:
+    resource: "@ApexScoreBundle/Resources/config/routing/course.yml"
+    prefix: /course
+
+ApexScoreBundle_hole:
+    resource: "@ApexScoreBundle/Resources/config/routing/hole.yml"
+    prefix: /hole
+
+ApexScoreBundle_round:
+    resource: "@ApexScoreBundle/Resources/config/routing/round.yml"
+    prefix: /round
+
+ApexScoreBundle_golfer:
+    resource: "@ApexScoreBundle/Resources/config/routing/golfer.yml"
+    prefix: /golfer
+
+ApexScoreBundle_roundGolfer:
+    resource: "@ApexScoreBundle/Resources/config/routing/roundGolfer.yml"
+    prefix: /roundGolfer
+
+apex_score_app: 
+    pattern: /App
+    defaults: { _controller: ApexScoreBundle:App:index }

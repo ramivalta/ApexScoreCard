@@ -1,0 +1,30 @@
+hole:
+    pattern:  /
+    defaults: { _controller: "ApexScoreBundle:Hole:index" }
+
+hole_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApexScoreBundle:Hole:show" }
+
+hole_new:
+    pattern:  /new/{courseId}
+    defaults: { _controller: "ApexScoreBundle:Hole:new" }
+
+hole_create:
+    pattern:  /create
+    defaults: { _controller: "ApexScoreBundle:Hole:create" }
+    requirements: { _method: post }
+
+hole_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApexScoreBundle:Hole:edit" }
+
+hole_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApexScoreBundle:Hole:update" }
+    requirements: { _method: post }
+
+hole_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApexScoreBundle:Hole:delete" }
+    requirements: { _method: post }

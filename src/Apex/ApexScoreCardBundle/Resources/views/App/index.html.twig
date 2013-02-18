@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+
+    <script src="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.min.js"></script>
+	
+    <script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
+	
+    <link href="{{ asset('bundles/apexscore/css/mobiscroll-2.4.1.custom.min.css') }}" rel="stylesheet" type="text/css" />
+	<script src="{{ asset('bundles/apexscore/js/mobiscroll-2.4.1.custom.min.js') }}"> type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$.mobile.changePage.defaults.allowSamePageTransition = true;
+        $.mobile.ignoreContentEnabled = true;
+	</script>
+
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.min.css" />
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles_front.css') }}" type="text/css" media="screen" rel="stylesheet" />  
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
+
+	
+<!--	<link rel="stylesheet" href="VilleSpecial.min.css"/> -->
+
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1.0; minimum-scale=0.5; user-scalable=1;" />
+	<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<meta name="apple-mobile-web-app-status-bar-style" content="white" />  
+	
+	
+
+</head>
+
+<body>
+	<div id="f_page" data-role="page" data-title="Rounds">
+	
+		<div id="header" data-role="header" data-theme="b" data-position="fixed">
+
+				<a href="#prefs" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton"></a>
+
+			<div id="headerText">Rounds</div>
+				<a href="#courseSelect"  data-rel="dialog" data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
+		</div>
+		
+		<!-- data-bind="click: loadCourseSelect" -->
+		
+		<div id="f_roundList">
+			<div id="scrollWrapper">
+				<ul data-role="listview" data-theme="d" data-bind="mobileList: rounds, foreach: rounds"> 
+					<li><a href="#"><span data-bind="text: course"></span><span style="font-size: 75%"> / Score: 
+						<span  data-bind="text: score"></span> Points <span data-bind="text: points"></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+	
+<!--	
+	
+	<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div>
+	 
+	-->
+	
+	
+		<div id="f_courseList" style="display: none">
+			<ul data-role="listview" data-theme="a">
+				<li><a href="#"> <span data-bind="text: courseName"></span> <span style="font-size: 75%" data-bind="text: coursePar"></span></a>
+				</li>
+			</ul>
+		</div>		
+	
+		<div id="f_footer" data-theme="a" data-role="footer">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#roundList" id="roundButton" data-role="button" class="ui-btn-active ui-state-persist">Rounds</a></li>
+					<li><a href="#courseList" id="courseButton" data-role="button">Courses</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<script>
+		$("#roundButton").click(function () {
+			$("#courseList").hide();
+			$("#roundList").show();
+			
+		});
+		
+		$("#courseButton").click(function () {
+			$("#roundList").hide();
+			$("#courseList").show();
+		});
+		</script>
+
+	</div>
+	
+	
+
+<div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
+
+
+	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+
+		<a href="#" data-role="button" data-bind="click: saveScores" data-icon="home" data-iconpos="notext"></a>
+
+		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
+			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
+		</div>
+
+		<a href="#scoreCard"  data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext"></a>
+		
+	</div>
+
+	<div id="scoreWrappi" class="ui-grid-b">
+		<div id="holeScore" class="ui-block-a">
+			<span data-bind="text: holeScoreName" data-bind="visible: showPoints"></span><br>
+			<span data-bind="text: currentHolePoints, visible: showPoints" style="font-size: 75%"></span>
+			<span style="font-size: 75%" data-bind="visible: showPoints"> points</span>
+		</div>
+	
+		<div id="scoreB" class="ui-block-b">
+			<div id="scoreC">
+			
+				<div id="il"></div>
+			
+				<div id="score">
+	
+					<div id="scoreDisplay" data-bind="visible:  noScoreEntered">-</div>
+	
+					<div id="scoreDisplay" data-bind="text: currentHoleScore, visible: noScoreEntered() == false""></div>
+						
+				</div>
+				
+				<div id="ir"></div>
+				
+			</div>
+		</div>
+	
+	
+	
+		<div id="roundScore" class="ui-block-c">
+			Score: <span data-bind="text: totalScore"></span><br>
+			<span style="font-size: 75%"> Points:</span>
+			<span data-bind="text: totalPoints" style="font-size: 75%"></span>
+		</div>
+	</div>
+
+	<div id="sliderWrappi" class="ui-grid-b">
+		<div id="leftFill" class="ui-block-a"></div>
+		<div id="sliderW" class="ui-block-b">
+			<div id="slideri">
+				<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: setScore, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-100" max="100" /> 
+
+			</div>
+		</div>
+		<div id="rightFill" class="ui-block-c"></div>
+	</div>
+
+
+<!--
+
+
+<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)">
+ -->
+
+	
+	<div id="holeData">
+		<div  class="ui-grid-a">
+			<div id="1" class="ui-block-a">
+				<span id="course" data-bind="text: courseName"></span><br>
+				Hole <span id="hole" data-bind="text: currentHole"></span><br>
+				Par <span id="par" data-bind="text: currentHolePar"></span><br>
+				Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
+				<span id="length" data-bind="text: currentHoleLength"></span> meters<br>
+			</div>
+			<div id="2" class="ui-block-b">
+				Player: <span id="player" data-bind="text: playerName"></span><br>
+				Handicap: <span id="playerhcp" data-bind="text: playerExactHcp"></span><br>
+				Course handicap: <span id="playerplayhcp" data-bind="text: playerPlayingHcp"></span><br>
+<!--				Current round: <span id="currentRoundTopar" data-bind="text: roundScoreToPar"></span> -->
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="footer" data-role="footer" data-theme="a" data-position="fixed">
+		<span style="float: left""><a href="#s_page" data-role="button" data-icon="arrow-l"  data-transition="slidefade" data-direction="reverse" data-bind="click: previousHole" data-iconpos="notext"></a></span>
+
+
+		<span style="float: right"><a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="click: nextHole" data-transition="slidefade" data-iconpos="notext"></a>
+		</span>	
+		
+	</div>
+
+</div>	
+	
+	
+<div id="scoreCard" data-role="page">
+
+
+	<div data-theme="c" data-role="header" id="dialogHeader">
+
+			<span id="scCourse" data-bind="text: courseName"></span>
+			<span id="scPlayer" data-bind="text: playerName"></span>
+			<span id="scPlayerHcp" data-bind="text: playerExactHcp"></span>
+
+	</div>
+
+	
+
+	<div data-theme="b" data-role="content" id="dialogContent">
+	
+	<div id="dialogCenter">
+		<div id="scLeftSide">
+
+		<table id="scoreCardHoles">
+			<tr>
+				<td id="scHeaders">Hole</td>
+				<td id="scHeaders">Par</td>
+				<td id="scHeaders">HCP</td>
+				<td id="scHeaders">Length</td>
+			</tr>
+			<tbody data-bind="foreach: holes" id="koHoles">
+				<tr>
+					<td id="scCells" data-bind="text: hole_number"></td>
+					<td id="scCells" data-bind="text: hole_par"></td>
+					<td id="scCells" data-bind="text: hole_hcp"></td>
+					<td id="scCells" data-bind="text: hole_length_yellow"></td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td id="scTotalsL"></td>
+					<td id="scTotals" data-bind="text: coursePar"></td>
+					<td id="scTotals"></td>
+					<td id="scTotals"></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		
+		<div id="scRightSide">
+	
+		<table id="scoreCardScores">
+			<tr>
+				<td id="scHeaders">Score</td>
+				<td id="scHeaders">To Par</td>
+				<td id="scHeaders">Points</td>
+			</tr>
+			<tbody data-bind="foreach: roundScores">
+				<tr>
+					<!-- ko if: score() > 0 -->
+						<!-- ko if: scoreToPar() < 0 -->
+						<td id="scScoreCells" data-bind="text: score" style="background: #C2F0C2"></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar() >= 0 -->
+						<td id="scScoreCells" data-bind="text: score"></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar() > 0 -->
+						<td id="scScoreCells">+<span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar() < 0 -->
+						<td id="scScoreCells" style="background: #C2F0C2"><span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar() == 0 -->
+						<td id="scScoreCells"><span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						
+						<td id="scPointsCells" data-bind="text: points"></td>
+					
+					<!-- /ko -->
+					
+					<!-- ko if: score() == 0 -->
+						<td id="scScoreCells">&nbsp;</td>
+						<td id="scScoreCells">&nbsp;</td>
+						<td id="scPointsCells">&nbsp;</td>
+					<!-- /ko -->
+				</tr>
+			</tbody>
+		</table>
+			<table id="scoreCardScoreTotals">
+				<tr>
+				<!-- ko if: totalToPar() < 0 -->
+					<td id="scTotalScore" data-bind="text: totalScore" style="background: #C2F0C2"></td>
+				<!-- /ko -->
+				<!-- ko if: totalToPar() >= 0 -->	
+					<td id="scTotalScore" data-bind="text: totalScore"></td>
+				<!-- /ko -->				
+					<!-- ko if: totalToPar() > 0 -->
+						<td id="scTotalScore">+<span data-bind="text: totalToPar"></span></td>
+					<!-- /ko -->
+					<!-- ko if: totalToPar() < 0 -->
+						<td id="scTotalScore" style="background-color: #C2F0C2"><span data-bind="text: totalToPar" ></span></td>
+					<!-- /ko -->
+					<!-- ko if: totalToPar() == 0 -->
+						<td id="scTotalScore"><span data-bind="text: totalToPar" ></span></td>
+					<!-- /ko -->
+					
+					<td id="scTotalPoints" data-bind="text: totalPoints"></td> 
+				</tr>
+			</table>
+		
+			</div>
+	
+			</div>
+		
+			<div id="scoreCardButtons">
+				<a href="#" data-role="button" id="scoreCardShare" data-mini="true">Share</a>
+				<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true"  id="scoreCardClose">Close</a>
+			</div>
+	</div>
+</div>
+
+
+<div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
+
+	
+	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+			<a href="#" data-role="Home" data-bind="click: saveGolfer" data-icon="home" data-iconpos="notext"></a>
+
+		<div id="headerText">Preferences</div>
+	</div>
+
+	<div id="prefsWrappi" data-theme="e">
+	
+		<div id="mainPrefs">
+			<h5>Handicap</h5>
+		
+			<div id="prefsPlayerHcp" style="background:transparent; text-align: center" data-enhance="false"> 
+				<input id="i" style="display: none"
+				data-bind="value: playerExactHcp" />
+			</div>
+			
+			<div id="tees">
+				<h5>Default tee</h5>
+
+				<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="e">
+					<input type="radio" name="radio1" id="tees_red" value="red" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+					<label for="tees_red" style="border-color: red" id="prefsTees">Red</label>
+
+					<input type="radio" name="radio1" id="tees_blue" value="blue" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+					<label for="tees_blue" style="border-color: blue" id="prefsTees">Blue</label>
+
+					<input type="radio" name="radio1" id="tees_yellow" value="yellow" checked="checked" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+					<label for="tees_yellow" style="border-color: yellow" id="prefsTees">Yellow</label>
+
+					<input type="radio" name="radio1" id="tees_white" value="white" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+					<label for="tees_white" style="border-color: white" id="prefsTees">White</label>
+				</fieldset>
+			</div>
+			
+			<div id="gender">
+				<label for="gender">
+					<h5>Gender</h5>
+				</label>
+				<select name="gender" id="gender" data-role="slider" data-theme="b" data-track-theme="c" data-bind="value: playerGender, jqmOptions: playerGenders" data-mini="true" >
+					<option>Male</option>
+					<option>Female</option>
+				</select> 
+			</div>
+			
+			<span style="font-size: 6px" data-bind="text: playerGender"></span>
+			
+		</div>
+	</div>
+</div>
+
+<div id="courseSelect" data-role="page" page-title="New round" data-theme="b">
+	<div id="scrollWrapperi">
+		<ul data-role="listview" data-filter="true" data-filter-placeholder="Choose course..." id="courseList">
+			<li><a href="#s_page">Muurame Golf <span style="font-size: 75%">par 71 ja muuta sellasta tietoa</a></li>
+			<li><a href="#">Laukaan Peurunkagolf</a></li>
+			<li><a href="#">Augusta National</a></li>
+			<li><a href="#">Cypress Point</a></li>
+			<li><a href="#">Houston Country Club</a></li>
+			<li><a href="#">Merion Cricket Club</a></li>
+			<li><a href="#">Winged Foot</a></li>
+		</ul>
+	</div>
+	<div id="c_footer">
+		<div id="courseSelectCancelButton">
+			<a href="#f_page" data-role="button" id="cancelButton" data-icon="delete" data-theme="a">Cancel</a>
+		</div>
+	</div>
+</div>		
+
+	
+
+</body>
+</html>

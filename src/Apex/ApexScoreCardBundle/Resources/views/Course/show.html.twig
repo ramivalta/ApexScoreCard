@@ -1,0 +1,152 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Course</h1>
+
+    <table class="record_properties">
+        <tbody>
+<!--            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr> -->
+            <tr>
+<!--                <th>Course name</th> -->
+                <td>{{ entity.courseName }}</td>
+<!--            </tr>
+            <tr> -->
+<!--                <th>Coursealias</th> -->
+                <td>{{ entity.courseAlias }}</td>
+            </tr>
+
+            <tr>
+			    <th>Cr/Slope</th>
+            </tr>
+            
+            <tr>
+                <th>Crwhitemen</th>
+                <td>{{ entity.crWhiteMen }}</td>
+            </tr>
+             <tr>
+                <th>Cryellowmen</th>
+                <td>{{ entity.crYellowMen }}</td>
+            </tr>
+              <tr>
+                <th>Crbluemen</th>
+                <td>{{ entity.crBlueMen }}</td>
+            </tr>
+            <tr>
+                <th>Crredmen</th>
+                <td>{{ entity.crRedMen }}</td>
+            </tr>
+            <tr>
+                <th>Slredmen</th>
+                <td>{{ entity.slRedMen }}</td>
+            </tr>
+            <tr>
+                <th>Slbluemen</th>
+                <td>{{ entity.slBlueMen }}</td>
+            </tr>
+            <tr>
+                <th>Slyellowmen</th>
+                <td>{{ entity.slYellowMen }}</td>
+            </tr>
+            <tr>
+                <th>Slwhitemen</th>
+                <td>{{ entity.slWhiteMen }}</td>
+            </tr>
+           
+       
+            <tr>
+                <th>Crredladies</th>
+                <td>{{ entity.crRedLadies }}</td>
+            </tr>
+            <tr>
+                <th>Crblueladies</th>
+                <td>{{ entity.crBlueLadies }}</td>
+            </tr>
+            <tr>
+                <th>Cryellowladies</th>
+                <td>{{ entity.crYellowLadies }}</td>
+            </tr>
+            <tr>
+                <th>Crwhiteladies</th>
+                <td>{{ entity.crWhiteLadies }}</td>
+            </tr>
+     
+            <tr>
+                <th>Slredladies</th>
+                <td>{{ entity.slRedLadies }}</td>
+            </tr>
+            <tr>
+                <th>Slblueladies</th>
+                <td>{{ entity.slBlueLadies }}</td>
+            </tr>
+            <tr>
+                <th>Slyellowladies</th>
+                <td>{{ entity.slYellowLadies }}</td>
+            </tr>
+            <tr>
+                <th>Slwhiteladies</th>
+                <td>{{ entity.slWhiteLadies }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+       <h3>Holes</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Number
+                </th>
+                <th>Par</th>
+                <th>Hcp</th>
+                <th>White</th>
+                <th>Yellow</th>
+                <th>Blue</th>
+                <th>Red</th>
+            </tr>
+        </thead>
+        {% for hole in entity.holes %}
+        <tr>
+            <td><a href="{{ path('hole_edit', { 'id': hole.id }) }}">{{ hole.holeNumber }}</a></td>
+            <td>{{ hole.par }}</td>
+            <td>{{ hole.hcp }}</td>
+            <td>{{ hole.lengthWhite }}</td>
+            <td>{{ hole.lengthYellow }}</td>
+            <td>{{ hole.lengthBlue }}</td>
+            <td>{{ hole.lengthRed }}</td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    
+    
+    
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('course') }}">
+            Back to the list
+        </a>
+    </li>
+    
+    <li>
+        <a href="{{ path('hole_new', { 'courseId': entity.id }) }}">Add hole</a>
+    </li>
+    
+    
+    <li>
+        <a href="{{ path('course_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('course_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+course:
+    pattern:  /
+    defaults: { _controller: "ApexScoreBundle:Course:index" }
+
+course_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApexScoreBundle:Course:show" }
+
+course_new:
+    pattern:  /new
+    defaults: { _controller: "ApexScoreBundle:Course:new" }
+
+course_create:
+    pattern:  /create
+    defaults: { _controller: "ApexScoreBundle:Course:create" }
+    requirements: { _method: post }
+
+course_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApexScoreBundle:Course:edit" }
+
+course_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApexScoreBundle:Course:update" }
+    requirements: { _method: post }
+
+course_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApexScoreBundle:Course:delete" }
+    requirements: { _method: post }

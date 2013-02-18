@@ -1,0 +1,30 @@
+roundgolfer:
+    pattern:  /
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:index" }
+
+roundgolfer_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:show" }
+
+roundgolfer_new:
+    pattern:  /new
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:new" }
+
+roundgolfer_create:
+    pattern:  /create
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:create" }
+    requirements: { _method: post }
+
+roundgolfer_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:edit" }
+
+roundgolfer_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:update" }
+    requirements: { _method: post }
+
+roundgolfer_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:delete" }
+    requirements: { _method: post }

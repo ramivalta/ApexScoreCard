@@ -1,0 +1,30 @@
+round:
+    pattern:  /
+    defaults: { _controller: "ApexScoreBundle:Round:index" }
+
+round_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApexScoreBundle:Round:show" }
+
+round_new:
+    pattern:  /new
+    defaults: { _controller: "ApexScoreBundle:Round:new" }
+
+round_create:
+    pattern:  /create
+    defaults: { _controller: "ApexScoreBundle:Round:create" }
+    requirements: { _method: post }
+
+round_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApexScoreBundle:Round:edit" }
+
+round_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApexScoreBundle:Round:update" }
+    requirements: { _method: post }
+
+round_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApexScoreBundle:Round:delete" }
+    requirements: { _method: post }

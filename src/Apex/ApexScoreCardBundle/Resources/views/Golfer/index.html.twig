@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Golfer list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Tee</th>
+                <th>Gender</th>
+                <th>Handicap</th>
+                <th>Password</th>
+                <th>Salt</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('golfer_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.tee }}</td>
+                <td>{{ entity.gender }}</td>
+                <td>{{ entity.handicap }}</td>
+                <td>{{ entity.password }}</td>
+                <td>{{ entity.salt }}</td>
+                <td>{{ entity.email }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('golfer_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('golfer_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('golfer_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
