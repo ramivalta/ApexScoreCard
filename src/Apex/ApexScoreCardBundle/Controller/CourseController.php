@@ -15,7 +15,7 @@ use Apex\ApexScoreCardBundle\Form\CourseType;
  *
  * @Route("/course")
  */
-class CourseController extends Controller
+class CourseController extends BaseController
 {
     /**
      * Lists all Course entities.

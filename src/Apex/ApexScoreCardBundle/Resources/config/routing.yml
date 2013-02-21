@@ -23,6 +23,15 @@ ApexScoreBundle_roundGolfer:
     resource: "@ApexScoreBundle/Resources/config/routing/roundGolfer.yml"
     prefix: /roundGolfer
 
-apex_score_app: 
-    pattern: /App
-    defaults: { _controller: ApexScoreBundle:App:index }
+ApexScoreBundle_app:
+    resource: "@ApexScoreBundle/Resources/config/routing/app.yml"
+    prefix: /app
+
+GlobalJs:
+    pattern: /js/global.js
+    defaults: { _controller: ApexScoreBundle:Default:globaljs, _format: js }
+
+
+#apex_score_app: 
+#    pattern: /App
+#    defaults: { _controller: ApexScoreBundle:App:index }

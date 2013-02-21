@@ -13,8 +13,9 @@ class roundGolferType extends AbstractType
         $builder
             ->add('roundId')
             ->add('golferId')
-            ->add('rounds')
-            ->add('golfers')
+
+#            ->add('rounds')
+#            ->add('golfers')
         ;
     }
 

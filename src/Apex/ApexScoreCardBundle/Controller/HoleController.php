@@ -15,7 +15,7 @@ use Apex\ApexScoreCardBundle\Form\HoleType;
  *
  * @Route("/hole")
  */
-class HoleController extends Controller
+class HoleController extends BaseController
 {
     /**
      * Lists all Hole entities.

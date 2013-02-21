@@ -59,6 +59,14 @@ class Round
      */
     private $round;
     
+	/**
+	 * Get course
+	 * @return course
+	 */
+	public function getCourse()
+	{
+		return $this->course;
+	}
 
 
     /**

@@ -1,0 +1,31 @@
+app:
+    pattern:  /
+    defaults: { _controller: "ApexScoreBundle:App:index" }
+
+app_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApexScoreBundle:App:show" }
+
+app_new:
+    pattern:  /new
+    defaults: { _controller: "ApexScoreBundle:App:new" }
+
+app_create:
+    pattern:  /create
+    defaults: { _controller: "ApexScoreBundle:App:create" }
+    requirements: { _method: post }
+
+app_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApexScoreBundle:App:edit" }
+
+app_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApexScoreBundle:App:update" }
+    requirements: { _method: post }
+
+app_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApexScoreBundle:App:delete" }
+    requirements: { _method: post }
+

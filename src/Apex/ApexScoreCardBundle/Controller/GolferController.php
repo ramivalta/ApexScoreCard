@@ -9,13 +9,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Apex\ApexScoreCardBundle\Entity\Golfer;
 use Apex\ApexScoreCardBundle\Form\GolferType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Golfer controller.
  *
  * @Route("/golfer")
  */
-class GolferController extends Controller
+class GolferController extends BaseController
 {
     /**
      * Lists all Golfer entities.
@@ -207,4 +208,22 @@ class GolferController extends Controller
             ->getForm()
         ;
     }
+    
+    public function jsonGolferAction()
+    {
+    	$json = $this->getRequestJson();
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$entity = $em->getRepository('ApexScoreBundle:Golfer')->find($json->id);
+    	
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Golfer entity');
+    	}
+    	
+    	$golfer = $entity->getJson();
+    	
+    	return new Response(json_encode(array('golfer' => $golfer)));
+    }
+    	
 }

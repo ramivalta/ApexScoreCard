@@ -28,3 +28,8 @@ golfer_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ApexScoreBundle:Golfer:delete" }
     requirements: { _method: post }
+
+golfer_json:
+    pattern: /json/show/golfer
+    defaults: { _controller: "ApexScoreBundle:Golfer:jsonGolfer", _format: json }
+    requirements: { _method: post }

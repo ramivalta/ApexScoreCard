@@ -92,6 +92,18 @@ class roundGolfer
         return $this->roundId;
     }
 
+
+	public function getRounds()
+	{
+		return $this->rounds;
+	}
+
+	public function getGolfers()
+	{
+		return $this->golfers;
+	}
+		
+
     /**
      * Set golferId
      *

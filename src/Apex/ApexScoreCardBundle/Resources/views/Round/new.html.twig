@@ -3,6 +3,11 @@
 {% block body -%}
     <h1>Round creation</h1>
 
+	{% for courses in course %}
+		<span>{{ courses.id }} {{ courses.courseName }}</span>
+	{% endfor %}
+	
+
     <form action="{{ path('round_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>

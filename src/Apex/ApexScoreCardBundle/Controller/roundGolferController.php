@@ -15,7 +15,7 @@ use Apex\ApexScoreCardBundle\Form\roundGolferType;
  *
  * @Route("/roundgolfer")
  */
-class roundGolferController extends Controller
+class roundGolferController extends BaseController
 {
     /**
      * Lists all roundGolfer entities.

@@ -10,11 +10,17 @@ class RoundType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    	
         $builder
             ->add('courseId')
+#            , 'choice', array(
+ #           	'choices' => array(
+  #          		'1' => 'Muurame Golf hardcoded',
+	#				'2' => 'Laukaan Peurunkagolf hardcoded',
+     #       	)))
             ->add('startTime')
             ->add('endTime')
-            ->add('course')
+
         ;
     }
 

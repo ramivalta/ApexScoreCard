@@ -15,8 +15,8 @@ class HoleType extends AbstractType
             ->add('par')
             ->add('hcp')
             ->add('lengthRed')
-            ->add('lengthYellow')
             ->add('lengthBlue')
+            ->add('lengthYellow')
             ->add('lengthWhite')
         ;
     }

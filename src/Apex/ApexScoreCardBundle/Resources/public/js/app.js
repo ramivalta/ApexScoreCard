@@ -19,7 +19,7 @@ function viewModel () {
 
 	
 	self.courseName = ko.observable("");
-	self.currentTees = ko.observable("yellow");
+//	self.currentTees = ko.observable("yellow");
 	self.playerGender = ko.observable("");
 	self.playerGenders = ko.observableArray(["Male", "Female"]);
 	self.playerName = ko.observable("Rami Valta");
@@ -558,14 +558,27 @@ function viewModel () {
 	};
 
 	self.getGolferData = function (callback) {
-		var d, t, x;
+	
+		var golfer_id = 4;
+		apexEventProxy.getGolferData(
+			{ id : 4 },
+			function(data) {
+				self.playerName(data.golfer.name);
+				self.playerExactHcp(data.golfer.handicap);
+				self.playerDefaultTee(data.golfer.tee);
+				self.playerGender(data.golfer.gender);
+			}
+		);
+	
+				
+/*		var d, t, x;
 		$.ajax({
 			type: 'POST',
 			async: 'true',
 			 url: 'readgolfer.php',
 			data: { round : d },
 	        dataType: "json",
-			success: function(d) {
+			success: function(d) { 
 				t = JSON.stringify(d);
 				x = JSON.parse(t);
 				self.playerName(x[0].name);
@@ -573,9 +586,21 @@ function viewModel () {
 				self.playerDefaultTee(x[0].tee);
 				self.playerGender(x[0].gender);
 			}
-		});
+		}); */
+		
+//			alert ({{ golfers.handicap }});
+
+//			self.playerGender( {% golfers.gender %} );
+			
+	//		self.playerDefaultTee ( {{ golfers.tee }} );
+			
+//			self.playerExactHcp(% golfers.handicap %;
+		
+		
+		
 	};
 	
+	self.getGolferData();
 	
 	self.hcpScroller = function () {
 		var whl1 = {'-2':'-2', '-1':'-1', '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53' 

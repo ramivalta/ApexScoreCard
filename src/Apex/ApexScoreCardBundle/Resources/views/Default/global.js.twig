@@ -1,0 +1,55 @@
+
+
+function ControllerProxy() {
+    var self = this;
+
+    // *** Call a wrapped object
+    self.post = function (url, data, callback, error, anyway) {
+
+        var json;
+        if (data != null) {
+            json = JSON.stringify(data);
+        } else {
+            json = null;
+        }
+
+        // *** The service endpoint URL        
+        
+        $.ajax({
+            url: url,
+            data: json,
+            type: "POST",
+            processData: false,
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json"
+        }).done(function (res) {
+                if (!callback) return;
+                callback(res);
+                return;
+        }).fail(function (xhr) {
+			var responseTextErr = xhr.responseText;
+			if (responseTextErr) {
+				if (error) error(responseTextErr);
+				else alert('FAIL', responseTextErr);
+			}
+			return;
+		}).always(function() {
+                if (anyway) anyway();
+		});
+            
+    };
+}
+
+
+var ApexEventProxy = function() {
+    var self = this;
+    self.proxy = new ControllerProxy();
+    
+    self.getGolferData = function(data, done, always, fail){
+        self.proxy.post('{{ path('golfer_json')}}', data, done, fail, always);
+    };
+
+};
+var apexEventProxy = new ApexEventProxy();
+

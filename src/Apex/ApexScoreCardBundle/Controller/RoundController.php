@@ -15,7 +15,7 @@ use Apex\ApexScoreCardBundle\Form\RoundType;
  *
  * @Route("/round")
  */
-class RoundController extends Controller
+class RoundController extends BaseController
 {
     /**
      * Lists all Round entities.
@@ -45,11 +45,22 @@ class RoundController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Round();
+        $em = $this->getDoctrine()->getManager();
+        //	$courseId = $request->get('course_Id');
+//     	$courses = $em->getRepository('ApexScoreBundle:Course')->findAll();
+        
+        
         $form = $this->createForm(new RoundType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
+        
+ 
+        
             $em = $this->getDoctrine()->getManager();
+            
+         //   $course = $em->getRepository('ApexScoreBundle:Course')->find($courseId);
+//			$entity->setCourse($course);            
             $em->persist($entity);
             $em->flush();
 
@@ -72,11 +83,17 @@ class RoundController extends Controller
     public function newAction()
     {
         $entity = new Round();
+       	
+       	$em = $this->getDoctrine()->getManager();
+       	
+       	$courses = $em->getRepository('ApexScoreBundle:Course')->findAll();
+       	
         $form   = $this->createForm(new RoundType(), $entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'course' => $courses,
         );
     }
 

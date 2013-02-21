@@ -4,6 +4,7 @@ namespace Apex\ApexScoreCardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JsonSerializable;
 
 /**
  * Golfer
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Golfer implements UserInterface
 {
+		 
     /**
      * @var integer
      *
@@ -74,7 +76,6 @@ class Golfer implements UserInterface
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $email;
-    
     
 
     /**
@@ -274,25 +275,40 @@ class Golfer implements UserInterface
     public function eraseCredentials()
     {
     }
+    
+ public function getJson()
+	{
+		return array(
+			'name' => $this->name,
+			'tee' => $this->tee,
+			'gender' => $this->gender,
+			'handicap' => $this->handicap,
+		);
+	}
+    
 
     /**
      * @see \Serializable::serialize()
      */
-    public function serialize()
+
+/*    public function serialize()
     {
         return serialize(array(
-            $this->id,
+            'name' => $this->name,
+            'tee' => $this->tee,
+			'gender' => $this->gender,
+			'handicap' => $this->handicap,
         ));
-    }
-
+    }  */
+ 
     /**
      * @see \Serializable::unserialize()
      */
-    public function unserialize($serialized)
+/*    public function unserialize($serialized)
     {
         list (
             $this->id,
         ) = unserialize($serialized);
-    }
+    }  */
     
 }
