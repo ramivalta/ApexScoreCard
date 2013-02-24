@@ -622,4 +622,61 @@ class Course
     {
         return $this->holes;
     }
+    
+    public function getJson() {
+    	return array(
+    		'id' => $this->id,
+    		'name' => $this->courseName,
+    		'alias' => $this->courseAlias,
+    		'crRedMen' => $this->crRedMen,
+    		'crBlueMen' => $this->crBlueMen,
+    		'crYellowMen' => $this->crYellowMen,
+    		'crWhiteMen' => $this->crWhiteMen,
+    		'crRedLadies' => $this->crRedLadies,
+    		'crBlueLadies' => $this->crBlueLadies,
+    		'crYellowLadies' => $this->crYellowLadies,
+    		'crWhiteLadies' => $this->crWhiteLadies,
+    		'slRedMen' => $this->slRedMen,
+    		'slBlueMen' => $this->slBlueMen,
+    		'slYellowMen' => $this->slYellowMen,
+    		'slWhiteMen' => $this->slWhiteMen,
+    		'slRedLadies' => $this->slRedLadies,
+    		'slBlueLadies' => $this->slBlueLadies,
+    		'slYellowLadies' => $this->slYellowLadies,
+    		'slWhiteLadies' => $this->slWhiteLadies
+    	);
+    }
+
+    /**
+     * Add rounds
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\Round $rounds
+     * @return Course
+     */
+    public function addRound(\Apex\ApexScoreCardBundle\Entity\Round $rounds)
+    {
+        $this->rounds[] = $rounds;
+    
+        return $this;
+    }
+
+    /**
+     * Remove rounds
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\Round $rounds
+     */
+    public function removeRound(\Apex\ApexScoreCardBundle\Entity\Round $rounds)
+    {
+        $this->rounds->removeElement($rounds);
+    }
+
+    /**
+     * Get rounds
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRounds()
+    {
+        return $this->rounds;
+    }
 }

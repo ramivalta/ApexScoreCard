@@ -29,7 +29,12 @@ golfer_delete:
     defaults: { _controller: "ApexScoreBundle:Golfer:delete" }
     requirements: { _method: post }
 
-golfer_json:
+golfer_json_get:
     pattern: /json/show/golfer
     defaults: { _controller: "ApexScoreBundle:Golfer:jsonGolfer", _format: json }
+    requirements: { _method: post }
+
+golfer_json_set:
+    pattern: /json/save/golfer
+    defaults: { _controller: "ApexScoreBundle:Golfer:saveGolferPrefs", _format: json }
     requirements: { _method: post }

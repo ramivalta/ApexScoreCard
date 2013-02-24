@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Apex\ApexScoreCardBundle\Entity\Round;
 use Apex\ApexScoreCardBundle\Form\RoundType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Round controller.
@@ -224,4 +225,52 @@ class RoundController extends BaseController
             ->getForm()
         ;
     }
+    
+    public function jsonRound()
+    {
+    	$round_id = $this->get('security.context')->getToken()->getUser()->getId();
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+    	
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Round entity');
+    	}
+    	
+    	$round = $entity->getJson();
+    	
+    	return new Response(json_encode(array('round' => $round)));
+    }
+    
+    public function startNewRoundAction()
+    {
+    	$json = $this->getRequestJson();
+    
+    	$course_id = $json->data->id;
+//    	$date = date('Y-m-d H:i:s');
+    	
+    	error_log($course_id);
+    	  
+    	
+    	$datet = new \DateTime;
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$entity = new Round();
+    	
+//    	$course = $em->getRepository('ApexScoreBundle:Course')->findById($course_id);
+    	
+    	$entity->setCourseId($course_id);
+    	$entity->setStartTime($datet);
+    	$entity->setStartTime($datet);
+    	
+    	$em->persist($entity);
+    	$em->flush();
+    	
+    	return new Response(json_encode(array('message' => 'OK')));
+    }
+    	
+    	
+    	
 }

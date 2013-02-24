@@ -211,11 +211,14 @@ class GolferController extends BaseController
     
     public function jsonGolferAction()
     {
-    	$json = $this->getRequestJson();
+//    	$json = $this->getRequestJson();
+    	
+    	$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
     	
     	$em = $this->getDoctrine()->getManager();
     	
-    	$entity = $em->getRepository('ApexScoreBundle:Golfer')->find($json->id);
+    	$entity = $em->getRepository('ApexScoreBundle:Golfer')->find($golfer_id);
+    	
     	
     	if (!$entity) {
     		throw $this->createNotFoundException('Unable to find Golfer entity');
@@ -225,5 +228,27 @@ class GolferController extends BaseController
     	
     	return new Response(json_encode(array('golfer' => $golfer)));
     }
-    	
+    
+    public function saveGolferPrefsAction()
+    {
+		$json = $this->getRequestJson();
+
+		$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
+    	$em = $this->getDoctrine()->getManager();
+    	$entity = $em->getRepository('ApexScoreBundle:Golfer')->find($golfer_id);
+
+	 	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Golfer entity');
+    	}
+		
+		$entity->setHandicap($json->data->handicap);
+		$entity->setTee($json->data->tee);
+		$entity->setGender($json->data->gender);
+		
+		$em->persist($entity);
+        $em->flush();
+		
+		return new Response(json_encode(array('message' => 'OK')));
+	}
+	
 }

@@ -2,6 +2,14 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+fos_user:
+    db_driver: orm
+    firewall_name : main
+    user_class: Apex\ApexScoreCardBundle\Entity\Golfer
+    registration:
+        form:
+            type: apex_score_registration
+
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }

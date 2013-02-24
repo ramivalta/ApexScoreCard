@@ -5,12 +5,12 @@ namespace Apex\ApexScoreCardBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * roundGolfer
+ * roundScores
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Apex\ApexScoreCardBundle\Entity\roundGolferRepository")
+ * @ORM\Entity(repositoryClass="Apex\ApexScoreCardBundle\Entity\roundScoresRepository")
  */
-class roundGolfer
+class roundScores
 {
     /**
      * @var integer
@@ -34,30 +34,21 @@ class roundGolfer
      * @ORM\Column(name="golfer_id", type="integer")
      */
     private $golferId;
-    
-    
-    /**
-     * @var Apex\ApexScoreCardBundle\Entity\Round
-     *
-     * @ORM\ManyToOne(targetEntity="Apex\ApexScoreCardBundle\Entity\Round", inversedBy="round")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="round_id", referencedColumnName="id")
-     * })
-     */
-    private $rounds;
-    
 
     /**
-     * @var Apex\ApexScoreCardBundle\Entity\Golfer
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Apex\ApexScoreCardBundle\Entity\Golfer", inversedBy="round")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="golfer_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="hole_id", type="integer")
      */
-    private $golfers;
+    private $holeId;
 
-        
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="score", type="integer")
+     */
+    private $score;
+
 
     /**
      * Get id
@@ -73,7 +64,7 @@ class roundGolfer
      * Set roundId
      *
      * @param integer $roundId
-     * @return roundGolfer
+     * @return roundScores
      */
     public function setRoundId($roundId)
     {
@@ -92,23 +83,11 @@ class roundGolfer
         return $this->roundId;
     }
 
-
-	public function getRounds()
-	{
-		return $this->rounds;
-	}
-
-	public function getGolfers()
-	{
-		return $this->golfers;
-	}
-		
-
     /**
      * Set golferId
      *
      * @param integer $golferId
-     * @return roundGolfer
+     * @return roundScores
      */
     public function setGolferId($golferId)
     {
@@ -128,28 +107,48 @@ class roundGolfer
     }
 
     /**
-     * Set rounds
+     * Set holeId
      *
-     * @param \Apex\ApexScoreCardBundle\Entity\Round $rounds
-     * @return roundGolfer
+     * @param integer $holeId
+     * @return roundScores
      */
-    public function setRounds(\Apex\ApexScoreCardBundle\Entity\Round $rounds = null)
+    public function setHoleId($holeId)
     {
-        $this->rounds = $rounds;
+        $this->holeId = $holeId;
     
         return $this;
     }
 
     /**
-     * Set golfers
+     * Get holeId
      *
-     * @param \Apex\ApexScoreCardBundle\Entity\Golfer $golfers
-     * @return roundGolfer
+     * @return integer 
      */
-    public function setGolfers(\Apex\ApexScoreCardBundle\Entity\Golfer $golfers = null)
+    public function getHoleId()
     {
-        $this->golfers = $golfers;
+        return $this->holeId;
+    }
+
+    /**
+     * Set score
+     *
+     * @param integer $score
+     * @return roundScores
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
     
         return $this;
+    }
+
+    /**
+     * Get score
+     *
+     * @return integer 
+     */
+    public function getScore()
+    {
+        return $this->score;
     }
 }

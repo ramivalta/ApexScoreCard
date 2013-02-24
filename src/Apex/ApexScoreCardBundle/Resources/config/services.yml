@@ -2,6 +2,8 @@ parameters:
 #    apex_score.example.class: Apex\ApexScoreCardBundle\Example
 
 services:
-#    apex_score.example:
-#        class: %apex_score.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    apex_score.registration.form.type:
+        class: Apex\ApexScoreCardBundle\Form\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: apex_score_registration }

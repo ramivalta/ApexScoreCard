@@ -22,7 +22,7 @@ function viewModel () {
 //	self.currentTees = ko.observable("yellow");
 	self.playerGender = ko.observable("");
 	self.playerGenders = ko.observableArray(["Male", "Female"]);
-	self.playerName = ko.observable("Rami Valta");
+	self.playerName = ko.observable("");
 	self.playerExactHcp = ko.observable();
 	self.courseSl = ko.observable(0);
 	self.courseCr = ko.observable(0);
@@ -37,6 +37,9 @@ function viewModel () {
 	self.courseData = ko.observableArray([]);
 	self.roundScores = ko.observableArray([]);
 	self.rounds = ko.observableArray([]);
+	
+	self.recentlyPlayedCourses = ko.observableArray([]);
+	self.courseList = ko.observableArray([]);
 
 
 	function prePopulateScores () {
@@ -496,8 +499,9 @@ function viewModel () {
 	ko.bindingHandlers.mobileList = {
 		'update': function (element, valueAccessor) {
 			setTimeout(function () { //To make sure the refresh fires after the DOM is updated
-	    //    console.log("listview refresh");
+	        console.log("listview refresh");
 	        $(element).listview('refresh');
+//	        $(element).trigger("create");
 		    }, 0);
 		}
 	};
@@ -536,32 +540,63 @@ function viewModel () {
 			}
 		}
 	};
+	
+	self.loadPrefs = function() {
+		$.mobile.changePage("#prefs");
+
+	};
+		
+	
+	self.startNewRound = function(course_id) {
+		var data = { id : course_id };
+		apexEventProxy.startNewRound(
+			{ data : data},
+			function (data) {
+			}
+		);
+		
+	alert(course_id);
+	};		
+	
+
+	self.getCourseList = function (callback) {
+		var a;
+		apexEventProxy.getCourseList(
+		{ a : a },
+		function(data) {
+//			alert(data.courses[0].name);
+			for (var i = 0, m = data.courses.length; i < m; i++) {
+				self.courseList.push(data.courses[i]);
+			}
+	//		self.courseList.push(data);
+/*			self.playerName(data.golfer.name);
+			self.playerExactHcp(data.golfer.handicap);
+			self.playerDefaultTee(data.golfer.tee);
+			self.playerGender(data.golfer.gender); */
+			}
+		);
+	};
+
 
 	
-	self.saveGolfer = function () {
-		var data = [];
-		
-		data[0] = self.playerName();
-		data[1] = self.playerExactHcp();
-		data[2] = self.playerDefaultTee();
-		data[3] = self.playerGender();
-		
-		
-		$.ajax ({
-			type: 'POST',
-			url: 'savegolfer.php',
-			data: { data : data },
-			success: function() {
+	self.saveGolfer = function (callback) {
+		var data = {
+			handicap: self.playerExactHcp(),
+			tee: self.playerDefaultTee(),
+			gender: self.playerGender()
+		};
+		apexEventProxy.saveGolferData(
+			{ data : data },
+			function (data) {
 				$.mobile.changePage('#f_page');
 			}
-		});
+		);
 	};
 
 	self.getGolferData = function (callback) {
-	
-		var golfer_id = 4;
-		apexEventProxy.getGolferData(
-			{ id : 4 },
+			var a;
+			apexEventProxy.getGolferData(
+			{ a : a },
 			function(data) {
 				self.playerName(data.golfer.name);
 				self.playerExactHcp(data.golfer.handicap);
@@ -570,37 +605,11 @@ function viewModel () {
 			}
 		);
 	
-				
-/*		var d, t, x;
-		$.ajax({
-			type: 'POST',
-			async: 'true',
-			 url: 'readgolfer.php',
-			data: { round : d },
-	        dataType: "json",
-			success: function(d) { 
-				t = JSON.stringify(d);
-				x = JSON.parse(t);
-				self.playerName(x[0].name);
-				self.playerExactHcp(x[0].hcp);
-				self.playerDefaultTee(x[0].tee);
-				self.playerGender(x[0].gender);
-			}
-		}); */
-		
-//			alert ({{ golfers.handicap }});
-
-//			self.playerGender( {% golfers.gender %} );
-			
-	//		self.playerDefaultTee ( {{ golfers.tee }} );
-			
-//			self.playerExactHcp(% golfers.handicap %;
-		
-		
-		
 	};
 	
 	self.getGolferData();
+	self.getCourseList();
+	
 	
 	self.hcpScroller = function () {
 		var whl1 = {'-2':'-2', '-1':'-1', '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53' 
@@ -694,6 +703,7 @@ $(document).on('pageinit', function() {
 		
 	ko.applyBindings(vm, document.getElementById("scoreCard"));
 
+	ko.applyBindings(vm, document.getElementById("courseSelect"));
 	
 	$('#s_page').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("s_page"))
@@ -702,6 +712,7 @@ $(document).on('pageinit', function() {
 	$('#prefs').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("prefs"));
 		vm.hcpScroller();
+
 //		$("#prefs").selectmenu();
   //      $("#prefs").selectmenu('refresh', true);
 	});

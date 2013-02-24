@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Apex\ApexScoreCardBundle\Entity\Course;
 use Apex\ApexScoreCardBundle\Form\CourseType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Course controller.
@@ -207,4 +208,22 @@ class CourseController extends BaseController
             ->getForm()
         ;
     }
+    
+    
+    public function getCourseListAction()
+    {
+		$em = $this->getDoctrine()->getManager();
+		$entities = $em->getRepository('ApexScoreBundle:Course')->findAll();
+		
+		if (!$entities) {
+    		throw $this->createNotFoundException('Unable to find Course entity');
+    	}
+		
+		$courses = array();
+		foreach ($entities as $poops) { // homopaskakyrpä, kaks tuntia meni tähänkin
+    		$courses[] = $poops->getJson();
+    	}
+    	return new Response(json_encode(array('courses' => $courses)));
+    }
+    
 }

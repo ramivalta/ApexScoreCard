@@ -28,3 +28,8 @@ round_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ApexScoreBundle:Round:delete" }
     requirements: { _method: post }
+
+round_json_new:
+    pattern: /json/new/round
+    defaults: { _controller: "ApexScoreBundle:Round:startNewRound", _format: json }
+    requirements: { _method: post }

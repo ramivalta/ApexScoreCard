@@ -77,6 +77,15 @@ class Hole
      */
     private $lengthWhite;
 
+    /**
+     * @var Apex\ApexScoreCardBundle\Entity\Course
+     *
+     * @ORM\ManyToOne(targetEntity="Apex\ApexScoreCardBundle\Entity\Course", inversedBy="holes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="course_id", referencedColumnName="id")
+     * })
+     */
+    private $course;
 
     /**
      * Get id
@@ -100,6 +109,33 @@ class Hole
     
         return $this;
     }
+
+    /**
+     * Set course
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\Course $course
+     * @return Holes
+     */
+    public function setCourse(\Apex\ApexScoreCardBundle\Entity\Course $course = null)
+    {
+        $this->course = $course;
+    
+        return $this;
+    }
+
+
+    /**
+     * Get course
+     *
+     * @return \Apex\ApexScoreCardBundle\Entity\Course 
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+
+
 
     /**
      * Get courseId
