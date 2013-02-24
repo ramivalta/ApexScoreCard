@@ -307,4 +307,19 @@ class Hole
     {
         return $this->lengthWhite;
     }
+    
+    public function getJson()
+    {
+		return array(
+			'course_id' => $this->courseId,
+			'hole_number' => $this->holeNumber,
+			'par' => $this->par,
+			'hcp' => $this->hcp,
+			'length_red' => $this->lengthRed,
+			'length_blue' => $this->lengthBlue,
+			'length_yellow' => $this->lengthYellow,
+			'length_white' => $this->lengthWhite,
+		);
+    }
+
 }

@@ -28,3 +28,8 @@ hole_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ApexScoreBundle:Hole:delete" }
     requirements: { _method: post }
+
+hole_json_get_all:
+    pattern: /json/get/holes/all
+    defaults: { _controller: "ApexScoreBundle:Hole:getHoleData" }
+    requirements: { _method: post }

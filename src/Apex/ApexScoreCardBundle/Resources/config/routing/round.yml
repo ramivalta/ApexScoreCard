@@ -31,5 +31,5 @@ round_delete:
 
 round_json_new:
     pattern: /json/new/round
-    defaults: { _controller: "ApexScoreBundle:Round:startNewRound", _format: json }
+    defaults: { _controller: "ApexScoreBundle:Round:createNewRound", _format: json }
     requirements: { _method: post }

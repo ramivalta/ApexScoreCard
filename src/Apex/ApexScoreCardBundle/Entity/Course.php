@@ -87,13 +87,6 @@ class Course
     /**
      * @var float
      *
-     * @ORM\Column(name="crWhiteLadies", type="float")
-     */
-    private $crWhiteLadies;
-
-    /**
-     * @var float
-     *
      * @ORM\Column(name="slRedMen", type="float")
      */
     private $slRedMen;
@@ -139,15 +132,6 @@ class Course
      * @ORM\Column(name="slYellowLadies", type="float")
      */
     private $slYellowLadies;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="slWhiteLadies", type="float")
-     */
-    private $slWhiteLadies;
-
-
 
     /**
      * @ORM\OneToMany(targetEntity="Apex\ApexScoreCardBundle\Entity\Hole", mappedBy="course")
@@ -376,28 +360,6 @@ class Course
         return $this->crYellowLadies;
     }
 
-    /**
-     * Set crWhiteLadies
-     *
-     * @param float $crWhiteLadies
-     * @return Course
-     */
-    public function setCrWhiteLadies($crWhiteLadies)
-    {
-        $this->crWhiteLadies = $crWhiteLadies;
-    
-        return $this;
-    }
-
-    /**
-     * Get crWhiteLadies
-     *
-     * @return float 
-     */
-    public function getCrWhiteLadies()
-    {
-        return $this->crWhiteLadies;
-    }
 
     /**
      * Set slRedMen
@@ -561,28 +523,6 @@ class Course
     }
 
     /**
-     * Set slWhiteLadies
-     *
-     * @param float $slWhiteLadies
-     * @return Course
-     */
-    public function setSlWhiteLadies($slWhiteLadies)
-    {
-        $this->slWhiteLadies = $slWhiteLadies;
-    
-        return $this;
-    }
-
-    /**
-     * Get slWhiteLadies
-     *
-     * @return float 
-     */
-    public function getSlWhiteLadies()
-    {
-        return $this->slWhiteLadies;
-    }
-    /**
      * Constructor
      */
     public function __construct()
@@ -635,7 +575,6 @@ class Course
     		'crRedLadies' => $this->crRedLadies,
     		'crBlueLadies' => $this->crBlueLadies,
     		'crYellowLadies' => $this->crYellowLadies,
-    		'crWhiteLadies' => $this->crWhiteLadies,
     		'slRedMen' => $this->slRedMen,
     		'slBlueMen' => $this->slBlueMen,
     		'slYellowMen' => $this->slYellowMen,
@@ -643,7 +582,6 @@ class Course
     		'slRedLadies' => $this->slRedLadies,
     		'slBlueLadies' => $this->slBlueLadies,
     		'slYellowLadies' => $this->slYellowLadies,
-    		'slWhiteLadies' => $this->slWhiteLadies
     	);
     }
 

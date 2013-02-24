@@ -157,11 +157,9 @@
 	</div>
 
 
-<!--
 
+<!-- <div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
 
-<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)">
- -->
 
 	
 	<div id="holeData">
@@ -226,7 +224,7 @@
 					<td id="scCells" data-bind="text: hole_number"></td>
 					<td id="scCells" data-bind="text: hole_par"></td>
 					<td id="scCells" data-bind="text: hole_hcp"></td>
-					<td id="scCells" data-bind="text: hole_length_yellow"></td>
+					<td id="scCells" data-bind="text: hole_length"></td>
 				</tr>
 			</tbody>
 			<tbody>
@@ -322,13 +320,11 @@
 		<div id="headerText">Preferences</div>
 	</div>
 
-	<div id="prefsWrappi" data-theme="e">
+	<div id="prefsWrappi">
 	
 		<div id="mainPrefs">
 			<h5>Handicap</h5>
-			<span>{{ golfers.handicap }}</span>
-		
-			<div id="prefsPlayerHcp" style="background:transparent; text-align: center" data-enhance="false"> 
+			<div id="prefsPlayerHcp"> 
 				<input id="i" style="display: none"
 				data-bind="value: playerExactHcp" />
 			</div>
@@ -336,7 +332,7 @@
 <!--				<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
 			
 			<div id="tees">
-				<h5>Default tee</h5>
+				<h5>Tee</h5>
 
 				<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="e">
 					<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />

@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Apex\ApexScoreCardBundle\Entity\Hole;
-use Apex\ApexScoreCardBundle\Form\HoleType;
+use Apex\ApexScoreCardBundle\Entity\roundScore;
+use Apex\ApexScoreCardBundle\Form\roundScoreType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Hole controller.
+ * roundScore controller.
  *
- * @Route("/hole")
+ * @Route("/roundscore")
  */
-class HoleController extends BaseController
+class roundScoreController extends BaseController
 {
     /**
-     * Lists all Hole entities.
+     * Lists all roundScore entities.
      *
-     * @Route("/", name="hole")
+     * @Route("/", name="roundscore")
      * @Method("GET")
      * @Template()
      */
@@ -29,7 +29,7 @@ class HoleController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApexScoreBundle:Hole')->findAll();
+        $entities = $em->getRepository('ApexScoreBundle:roundScore')->findAll();
 
         return array(
             'entities' => $entities,
@@ -37,30 +37,24 @@ class HoleController extends BaseController
     }
 
     /**
-     * Creates a new Hole entity.
+     * Creates a new roundScore entity.
      *
-     * @Route("/", name="hole_create")
+     * @Route("/", name="roundscore_create")
      * @Method("POST")
-     * @Template("ApexScoreBundle:Hole:new.html.twig")
+     * @Template("ApexScoreBundle:roundScore:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Hole();
-        $form = $this->createForm(new HoleType(), $entity);
+        $entity  = new roundScore();
+        $form = $this->createForm(new roundScoreType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-        
-            $courseId = $request->get('course_Id');
-        
             $em = $this->getDoctrine()->getManager();
-            
-            $course = $em->getRepository('ApexScoreBundle:Course')->find($courseId);
-            $entity->setCourse($course);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('course_show', array('id' => $entity->getCourse()->getId())));
+            return $this->redirect($this->generateUrl('roundscore_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -70,28 +64,27 @@ class HoleController extends BaseController
     }
 
     /**
-     * Displays a form to create a new Hole entity.
+     * Displays a form to create a new roundScore entity.
      *
-     * @Route("/new", name="hole_new")
+     * @Route("/new", name="roundscore_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction($courseId)
+    public function newAction()
     {
-        $entity = new Hole();
-        $form   = $this->createForm(new HoleType(), $entity);
-        
+        $entity = new roundScore();
+        $form   = $this->createForm(new roundScoreType(), $entity);
+
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'course_Id' => $courseId
         );
     }
 
     /**
-     * Finds and displays a Hole entity.
+     * Finds and displays a roundScore entity.
      *
-     * @Route("/{id}", name="hole_show")
+     * @Route("/{id}", name="roundscore_show")
      * @Method("GET")
      * @Template()
      */
@@ -99,10 +92,10 @@ class HoleController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApexScoreBundle:Hole')->find($id);
+        $entity = $em->getRepository('ApexScoreBundle:roundScore')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Hole entity.');
+            throw $this->createNotFoundException('Unable to find roundScore entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -114,9 +107,9 @@ class HoleController extends BaseController
     }
 
     /**
-     * Displays a form to edit an existing Hole entity.
+     * Displays a form to edit an existing roundScore entity.
      *
-     * @Route("/{id}/edit", name="hole_edit")
+     * @Route("/{id}/edit", name="roundscore_edit")
      * @Method("GET")
      * @Template()
      */
@@ -124,13 +117,13 @@ class HoleController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApexScoreBundle:Hole')->find($id);
+        $entity = $em->getRepository('ApexScoreBundle:roundScore')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Hole entity.');
+            throw $this->createNotFoundException('Unable to find roundScore entity.');
         }
 
-        $editForm = $this->createForm(new HoleType(), $entity);
+        $editForm = $this->createForm(new roundScoreType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -141,31 +134,31 @@ class HoleController extends BaseController
     }
 
     /**
-     * Edits an existing Hole entity.
+     * Edits an existing roundScore entity.
      *
-     * @Route("/{id}", name="hole_update")
+     * @Route("/{id}", name="roundscore_update")
      * @Method("PUT")
-     * @Template("ApexScoreBundle:Hole:edit.html.twig")
+     * @Template("ApexScoreBundle:roundScore:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApexScoreBundle:Hole')->find($id);
+        $entity = $em->getRepository('ApexScoreBundle:roundScore')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Hole entity.');
+            throw $this->createNotFoundException('Unable to find roundScore entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new HoleType(), $entity);
+        $editForm = $this->createForm(new roundScoreType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('hole_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('roundscore_edit', array('id' => $id)));
         }
 
         return array(
@@ -176,9 +169,9 @@ class HoleController extends BaseController
     }
 
     /**
-     * Deletes a Hole entity.
+     * Deletes a roundScore entity.
      *
-     * @Route("/{id}", name="hole_delete")
+     * @Route("/{id}", name="roundscore_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -188,21 +181,21 @@ class HoleController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ApexScoreBundle:Hole')->find($id);
+            $entity = $em->getRepository('ApexScoreBundle:roundScore')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Hole entity.');
+                throw $this->createNotFoundException('Unable to find roundScore entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('hole'));
+        return $this->redirect($this->generateUrl('roundscore'));
     }
 
     /**
-     * Creates a form to delete a Hole entity by id.
+     * Creates a form to delete a roundScore entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -215,29 +208,30 @@ class HoleController extends BaseController
             ->getForm()
         ;
     }
- 
- 	public function getHoleDataAction()
- 	{
- 		$json = $this->getRequestJson();
- 		
- 		$course_id = $json->data->course_id;
- 			
- 		$em = $this->getDoctrine()->getManager();
- 		
- 		$entities = $em->getRepository('ApexScoreBundle:Hole')->findByCourseId($course_id);
- 		
- 		if (!$entities) {
- 			throw $this->createNotFoundException('Unable to fin Hole entity');
- 		}
- 		
- 		$holes = array();
- 		
- 		foreach ($entities as $h) {
- 			$holes[] = $h->getJson();
- 		}
- 		
- 		return new Response(json_encode(array('holes' => $holes)));
- 	
- 	}
-
+    
+    public function createNewRoundScoreAction()
+    {
+    	$json = $this->getRequestJson();
+    	
+    	$round_id = $json->data->round_id;
+    	$round_hcp = $json->data->round_hcp;
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$entity = new roundScore();
+    	
+		$round = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+		
+		$entity->setRounds($round);
+		$entity->setRoundHcp($round_hcp);
+    	$entity->setHoleId(1);
+/*    	$entity->setScore(); */
+    	
+    	$em->persist($entity);
+    	$em->flush();
+    	
+		return new Response(json_encode(array('message' => 'OK')));
+    	
+    }	
+    	
 }

@@ -22,6 +22,10 @@ ApexScoreBundle_golfer:
 ApexScoreBundle_roundGolfer:
     resource: "@ApexScoreBundle/Resources/config/routing/roundGolfer.yml"
     prefix: /roundGolfer
+    
+ApexScoreBundle_scoreGolfer:
+    resource: "@ApexScoreBundle/Resources/config/routing/roundScore.yml"
+    prefix: /roundScore
 
 ApexScoreBundle_app:
     resource: "@ApexScoreBundle/Resources/config/routing/app.yml"

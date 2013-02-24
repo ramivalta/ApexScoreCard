@@ -53,16 +53,12 @@ body {
 	border: 0px;
 	font-size: 0.8em;
 	font-family: verdana;
-//	color: #e0e0e0;
-//	text-shadow: -1px -1px 2px #000;
-	//, 0px 1px 2px #000;
 
 	text-align: left;
 	margin-top: 1.5em;
 	padding-left: 2px;
 	line-height: 1.1em; 
-	
-		color: #000;
+	color: #000;
 	text-shadow: -1px -1px 2px #e0e0e0;
 	
 	
@@ -74,15 +70,10 @@ body {
 	border: 0px;
 	font-size: 0.8em;
 	font-family: verdana;
-//	color: gray;
-//	color: #e0e0e0;
-//	text-shadow: 0px -2px 1px #fff, 0px 1px 3px #ccc;
-//	text-shadow: -1px -1px 2px #000;
 	text-align: right;
 	margin-top: 1.5em;
 	padding-right: 2px;
 	line-height: 1.1em; 
-	
 	color: #000;
 	text-shadow: -1px -1px 2px #e0e0e0;
 	
@@ -97,11 +88,8 @@ body {
 	clear: both;
 	border: 0px;
 	padding: 0px;
-//	position: relative;
-//	height: 100%;
 	background-color: transparent;
 	padding-top: 20px;
-//	top: 25px;
 	height: 85px;
 	}
 	
@@ -112,9 +100,6 @@ body {
 #score {
 	margin: auto;
 	border: 0px;
-
-//	vertical-align: middle;
-//	float: left;
 	width: 80px;
 	height: 60px;
 	margin-left: auto;
@@ -135,9 +120,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 #scoreB {
 	border:0;
-//	margin:0;
 	padding:0;
-//	width: 100%;
 	margin: auto;
 }
 
@@ -160,9 +143,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	float: left;
 	margin-top: 10px;
 	font-weight: bold;
-//	color: #fcfcfc;
 	color: #333;
-//	text-shadow: -0px -1px 2px #eee, 1px 2px 2px #000;
 	text-shadow: -1px -1px 2px #fff, 1px 1px 2px #fff;
 }
 
@@ -172,6 +153,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	position: fixed;
 	padding: 1px;
 	padding-bottom: 0px !important;
+	bottom: -1px;
 	bottom: 0px;
 	margin: 0px;
 	}
@@ -281,7 +263,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 #holeData {
 	clear: both;
-//	float: left; 
 	text-align: left;
 	width: 90%;
 	margin: auto;
@@ -312,11 +293,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #dialogContent {
-//	width: 100%;
 	text-align: center;
-	//float: left;
-//	font-size: 1.2em;
-//	height: auto;
 }
 	
 #scoreCardHoles {
@@ -326,12 +303,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	text-align: center;
 	border-spacing: 0px;
 	width: 100%;
-/*	border: 1px;
-	border-style: dashed;
-	border-color: black;
-	border-collapse: collapse;
-	padding: 0px;
-	margin: 0px; */
 }
 
 #scoreCardScores {
@@ -340,12 +311,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	text-align: center;
 	border-spacing: 0px;
 	width: 100%;
-/*	border: 1px;
-	border-style: dashed;
-	border-color: black;
-	border-collapse: collapse;
-	padding: 0px;
-	margin: 0px; */
 }
 
 
@@ -360,14 +325,11 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	clear: both;
 	margin-left: auto;
 	margin-right: auto;
-//	width: 100%;
-//	width: 420px;
+
 }
 
 #scCells {
-//	border-left-width: 0px;
-//	border-bottom-width: 0px;
-//	border: 1px;
+
 	padding: 0px;
 	border-bottom-width: 1px;
 	border-top-width: 0px;
@@ -403,7 +365,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 #scLeftSide {
 	float: left;
 	width: 50%;
-		padding-bottom: 47px;
+	padding-bottom: 47px;
 }
 
 #scRightSide {
@@ -413,18 +375,11 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #scoreCardScoreTotals {
-/*	padding-right: 0px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	margin: 0px; */
 	border-spacing: 0px;
 	width: 50%;
 	position: absolute;
 	bottom: 62px;
-/*	border-style: solid;
-	border-width: 0px;
-	border-color: black;*/
+
 	border-left-width: 1px;
 	border-left-style: solid;
 	border-left-color: black;
@@ -432,23 +387,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #scTotalScore {
-/*	width: 38%;
-	border-width: 0px;
-	border-color: black;
-	border-style: solid;
-	padding: 0px;
-	background: #B3E0B3;
-	border-bottom-width: 1px;
-	border-right-width: 0px;
-	border-left-width: 0px;
-	border-style: solid;
-	border-color: black;
-	
-	border-top-width: 1px;
-	border-top-style: dotted;
-	
-	float: left; */
-	
+
 	padding: 0px;
 	border-bottom-width: 1px;
 	border-top-width: 1px;
@@ -458,25 +397,10 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-color: black;
 	background: #efefef;
 	width: 33%;
-	
-
 }
 
 #scTotalPoints {
- 	/*width: 41%;
-	padding: 0px;
-	background: #D2D7D9;
-	border-bottom-width: 1px;
 
-	border-right-width: 1px;
-	border-left-width: 1px;
-	border-style: solid;
-	border-color: black;
-
-	border-top-width: 1px;
-	border-top-style: dotted;
-
-	float: left; */
 	padding: 0px;
 	border-bottom-width: 1px;
 	border-top-width: 1px;
@@ -486,7 +410,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-color: black;
 	background: #efefef;
 	width: 33%;
-
 }
 
 #scTotals {
@@ -497,7 +420,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-right-width: 0px;
 	border-left-width: 0px;
 	padding: 0px;
-	
 }
 
 
@@ -509,7 +431,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-right-width: 0px;
 	border-left-width: 1px;
 	padding: 0px;
-	
 }
 
 
@@ -519,7 +440,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-
 }
 
 
@@ -533,14 +453,11 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #scoreCardClose {
-//	clear: both;
+
 	width: 49%;
 	height: auto;
 	position: absolute;
 	bottom: 0px;
-//	left: 0px;
-	//right: 30px;
-//	margin: 10px;
 	right: 0px;
 	margin: 2px;
 }
@@ -552,7 +469,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 
 #prefsPlayerHcp {
-	background: transparent !important;
 }
 
 
@@ -570,28 +486,22 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-style: solid;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
-//	font-size: 1em;
 }
 
 #mainPrefs {
 	float: left;
 	width: 100%;
 	margin: auto;
-//	background: transparent !important;
 }
 
 
 #prefsWrappi
 	{
 	width: 100%;
-//	float: left;
 	border: 0px;
-//	background: transparent !important;
 	margin: auto;
-//	position: absolute;
-//	overflow: auto;
 	text-align: center;
-	}
+}
 	
 #gender .ui-slider-switch { width: 6em };
 
@@ -644,10 +554,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #courseSelectCancelButton {
-//	position: fixed;
-//	bottom: 0px;
-//	width: 100%;
-//	background: blue;
+
 	margin: 5px;
 }
 
@@ -656,7 +563,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 c_footer {
-//	width: 100%;
 	height: 40px;
 	position: fixed;
 	bottom: 0px;

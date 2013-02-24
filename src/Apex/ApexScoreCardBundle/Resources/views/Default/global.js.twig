@@ -58,8 +58,23 @@ var ApexEventProxy = function() {
 		 self.proxy.post('{{path('course_json_get')}}', data, done, fail, always);
     };
     
-    self.startNewRound = function (data, done, always, fail) {
+    self.createNewRound = function (data, done, always, fail) {
     	self.proxy.post('{{path('round_json_new')}}', data, done, fail, always);
+	};
+	
+	self.createNewRoundGolfer = function (data, done, always, fail) {
+    	self.proxy.post('{{path('roundGolfer_json_new')}}', data, done, fail, always);
+	};
+
+	self.createNewRoundScore = function (data, done, always, fail) {
+    	self.proxy.post('{{path('roundScore_json_new')}}', data, done, fail, always);
+	};
+	
+	self.getHoleData = function (data, done, always, fail) {
+    	self.proxy.post('{{path('hole_json_get_all')}}', data, done, fail, always);
+	};
+	self.getCourseData = function (data, done, always, fail) {
+    	self.proxy.post('{{path('course_json_get_data')}}', data, done, fail, always);
 	};
 
 };

@@ -28,3 +28,8 @@ roundgolfer_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ApexScoreBundle:roundGolfer:delete" }
     requirements: { _method: post }
+
+roundGolfer_json_new:
+    pattern: /json/new/roundGolfer
+    defaults: { _controller: "ApexScoreBundle:roundGolfer:createNewRoundGolfer", _format: json }
+    requirements: { _method: post }

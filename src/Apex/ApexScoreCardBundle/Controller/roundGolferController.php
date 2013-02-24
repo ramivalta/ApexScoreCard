@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Apex\ApexScoreCardBundle\Entity\roundGolfer;
 use Apex\ApexScoreCardBundle\Form\roundGolferType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * roundGolfer controller.
@@ -206,5 +207,31 @@ class roundGolferController extends BaseController
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    public function createNewRoundGolferAction()
+    {
+    	$json = $this->getRequestJson();
+    
+		$round_id = $json->data->round_id;
+//		error_log($json->round_data->golfer_id);
+
+
+    	$em = $this->getDoctrine()->getManager();
+    	
+		$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
+
+    	$entity = new roundGolfer();
+    	
+    	$round = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+    	$golfer = $em->getRepository('ApexScoreBundle:Golfer')->find($golfer_id);
+    	
+    	$entity->setRounds($round);
+    	$entity->setGolfers($golfer);
+    	
+    	$em->persist($entity);
+    	$em->flush();
+    	
+    	return new Response(json_encode(array('message' => 'OK')));
     }
 }

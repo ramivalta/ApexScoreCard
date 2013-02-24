@@ -38,9 +38,16 @@ class roundScore
     /**
      * @var integer
      *
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(name="score", type="integer", nullable=true)
      */
     private $score;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="round_hcp", type="float")
+     */
+    private $round_hcp;
 
     /**
      * @var Apex\ApexScoreCardBundle\Entity\Round
@@ -133,6 +140,7 @@ class roundScore
         return $this->score;
     }
 
+
     /**
      * Set rounds
      *
@@ -154,5 +162,28 @@ class roundScore
     public function getRounds()
     {
         return $this->rounds;
+    }
+
+    /**
+     * Set round_hcp
+     *
+     * @param float $roundHcp
+     * @return roundScore
+     */
+    public function setRoundHcp($roundHcp)
+    {
+        $this->round_hcp = $roundHcp;
+    
+        return $this;
+    }
+
+    /**
+     * Get round_hcp
+     *
+     * @return float 
+     */
+    public function getRoundHcp()
+    {
+        return $this->round_hcp;
     }
 }

@@ -20,7 +20,6 @@ class CourseType extends AbstractType
             ->add('crRedLadies')
             ->add('crBlueLadies')
             ->add('crYellowLadies')
-            ->add('crWhiteLadies')
             ->add('slRedMen')
             ->add('slBlueMen')
             ->add('slYellowMen')
@@ -28,7 +27,6 @@ class CourseType extends AbstractType
             ->add('slRedLadies')
             ->add('slBlueLadies')
             ->add('slYellowLadies')
-            ->add('slWhiteLadies')
         ;
     }
 

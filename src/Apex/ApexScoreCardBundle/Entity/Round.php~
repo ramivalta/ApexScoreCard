@@ -57,12 +57,12 @@ class Round
     /**
      * @ORM\OneToMany(targetEntity="Apex\ApexScoreCardBundle\Entity\roundGolfer", mappedBy="rounds")
      */
-    private $round;
+    private $golfer;
     
     /**
      * @ORM\OneToMany(targetEntity="Apex\ApexScoreCardBundle\Entity\roundScore", mappedBy="rounds")
      */    
-    private $round_s;
+    private $score;
     
     
 	/**
@@ -168,80 +168,15 @@ class Round
      * @param \Apex\ApexScoreCardBundle\Entity\Course $course
      * @return Round
      */
-    public function setCourse(\Apex\ApexScoreCardBundle\Entity\Course $course = null)
+//    public function setCourse(\Apex\ApexScoreCardBundle\Entity\Course $course = null)
+    public function setCourse($course)
     {
         $this->course = $course;
     
         return $this;
     }
 
-    /**
-     * Add round
-     *
-     * @param \Apex\ApexScoreCardBundle\Entity\roundGolfer $round
-     * @return Round
-     */
-    public function addRound(\Apex\ApexScoreCardBundle\Entity\roundGolfer $round)
-    {
-        $this->round[] = $round;
-    
-        return $this;
-    }
-
-    /**
-     * Remove round
-     *
-     * @param \Apex\ApexScoreCardBundle\Entity\roundGolfer $round
-     */
-    public function removeRound(\Apex\ApexScoreCardBundle\Entity\roundGolfer $round)
-    {
-        $this->round->removeElement($round);
-    }
-
-    /**
-     * Get round
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRound()
-    {
-        return $this->round;
-    }
-
-    /**
-     * Add round_s
-     *
-     * @param \Apex\ApexScoreCardBundle\Entity\roundScore $roundS
-     * @return Round
-     */
-    public function addRoundS(\Apex\ApexScoreCardBundle\Entity\roundScore $roundS)
-    {
-        $this->round_s[] = $roundS;
-    
-        return $this;
-    }
-
-    /**
-     * Remove round_s
-     *
-     * @param \Apex\ApexScoreCardBundle\Entity\roundScore $roundS
-     */
-    public function removeRoundS(\Apex\ApexScoreCardBundle\Entity\roundScore $roundS)
-    {
-        $this->round_s->removeElement($roundS);
-    }
-
-    /**
-     * Get round_s
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRoundS()
-    {
-        return $this->round_s;
-    }
-    
-    public function getJson()
+       public function getJson()
     {
     	return array(
     		'id' => $this->id,
@@ -251,4 +186,70 @@ class Round
     	);
     }
     		
+
+    /**
+     * Add golfer
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\roundGolfer $golfer
+     * @return Round
+     */
+    public function addGolfer(\Apex\ApexScoreCardBundle\Entity\roundGolfer $golfer)
+    {
+        $this->golfer[] = $golfer;
+    
+        return $this;
+    }
+
+    /**
+     * Remove golfer
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\roundGolfer $golfer
+     */
+    public function removeGolfer(\Apex\ApexScoreCardBundle\Entity\roundGolfer $golfer)
+    {
+        $this->golfer->removeElement($golfer);
+    }
+
+    /**
+     * Get golfer
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGolfer()
+    {
+        return $this->golfer;
+    }
+
+    /**
+     * Add score
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\roundScore $score
+     * @return Round
+     */
+    public function addScore(\Apex\ApexScoreCardBundle\Entity\roundScore $score)
+    {
+        $this->score[] = $score;
+    
+        return $this;
+    }
+
+    /**
+     * Remove score
+     *
+     * @param \Apex\ApexScoreCardBundle\Entity\roundScore $score
+     */
+    public function removeScore(\Apex\ApexScoreCardBundle\Entity\roundScore $score)
+    {
+        $this->score->removeElement($score);
+    }
+
+    /**
+     * Get score
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
 }

@@ -243,34 +243,44 @@ class RoundController extends BaseController
     	return new Response(json_encode(array('round' => $round)));
     }
     
-    public function startNewRoundAction()
+    public function createNewRoundAction()
     {
     	$json = $this->getRequestJson();
     
-    	$course_id = $json->data->id;
+    	$course_id = $json->data->course_id;
 //    	$date = date('Y-m-d H:i:s');
     	
     	error_log($course_id);
     	  
-    	
     	$datet = new \DateTime;
     	
     	$em = $this->getDoctrine()->getManager();
     	
     	$entity = new Round();
+
+	  	$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
     	
-//    	$course = $em->getRepository('ApexScoreBundle:Course')->findById($course_id);
+    	$entity->setCourse($course);
+    	$entity->setStartTime($datet);
     	
-    	$entity->setCourseId($course_id);
-    	$entity->setStartTime($datet);
-    	$entity->setStartTime($datet);
+
+    	
+/*    	$round_id = $entity->getId();
+    	$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
+    	
+    	$golferRound = $em->getRepository('ApexScoreBundle:roundGolfer');
+    	
+    	$golferRound->addGolferToRoundAction($round_id, $golfer_id); */
+    	
+    	
+//    	$entity->setEndTime($datet);
     	
     	$em->persist($entity);
     	$em->flush();
     	
-    	return new Response(json_encode(array('message' => 'OK')));
+    	$round_id = $entity->getId();
+    	
+    	return new Response(json_encode(array('message' => 'OK', 'round_id' => $round_id )));
     }
-    	
-    	
     	
 }
