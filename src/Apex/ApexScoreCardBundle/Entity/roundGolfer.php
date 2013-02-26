@@ -152,4 +152,12 @@ class roundGolfer
     
         return $this;
     }
+    
+ /*   public function getJson() {
+    	return array(
+    		'id' => $this-id,
+    		'
+    	);
+    		
+    } */
 }

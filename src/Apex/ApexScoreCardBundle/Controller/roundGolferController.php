@@ -234,4 +234,5 @@ class roundGolferController extends BaseController
     	
     	return new Response(json_encode(array('message' => 'OK')));
     }
+    
 }

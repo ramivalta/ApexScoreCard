@@ -76,6 +76,9 @@ var ApexEventProxy = function() {
 	self.getCourseData = function (data, done, always, fail) {
     	self.proxy.post('{{path('course_json_get_data')}}', data, done, fail, always);
 	};
+	self.getRoundList = function (data, done, always, fail) {
+    	self.proxy.post('{{path('round_json_get_list')}}', data, done, fail, always);
+    };
 
 };
 var apexEventProxy = new ApexEventProxy();

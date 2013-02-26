@@ -215,23 +215,32 @@ class roundScoreController extends BaseController
     	
     	$round_id = $json->data->round_id;
     	$round_hcp = $json->data->round_hcp;
+    	$hole_score = $json->data->hole_score;
+    	$hole_id = $json->data->hole_id;
     	
     	$em = $this->getDoctrine()->getManager();
-    	
-    	$entity = new roundScore();
-    	
-		$round = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
-		
-		$entity->setRounds($round);
-		$entity->setRoundHcp($round_hcp);
-    	$entity->setHoleId(1);
-/*    	$entity->setScore(); */
-    	
-    	$em->persist($entity);
+    	    	
+    	$hole = $em->getRepository('ApexScoreBundle:roundScore')->findOneBy(array(
+    		'roundId' => $round_id, 'holeId' => $hole_id));    		
+
+    	if ($hole) {
+    		$hole->setScore($hole_score);
+    		$em->persist($hole);
+    	}
+    	else {
+			$entity = new roundScore();
+			$round = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+			$entity->setRounds($round);
+			$entity->setRoundHcp($round_hcp);
+			$entity->setHoleId($hole_id);
+			$entity->setScore($hole_score);
+	    	$em->persist($entity);
+    	}
+	    	
     	$em->flush();
     	
 		return new Response(json_encode(array('message' => 'OK')));
     	
-    }	
+    }
     	
 }

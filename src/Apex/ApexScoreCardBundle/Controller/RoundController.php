@@ -250,7 +250,7 @@ class RoundController extends BaseController
     	$course_id = $json->data->course_id;
 //    	$date = date('Y-m-d H:i:s');
     	
-    	error_log($course_id);
+//    	error_log($course_id);
     	  
     	$datet = new \DateTime;
     	
@@ -265,22 +265,67 @@ class RoundController extends BaseController
     	
 
     	
-/*    	$round_id = $entity->getId();
-    	$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
-    	
-    	$golferRound = $em->getRepository('ApexScoreBundle:roundGolfer');
-    	
-    	$golferRound->addGolferToRoundAction($round_id, $golfer_id); */
-    	
-    	
-//    	$entity->setEndTime($datet);
-    	
     	$em->persist($entity);
     	$em->flush();
     	
     	$round_id = $entity->getId();
+
+    	$start_time = date('H:1, d.m.Y', time());
+
     	
-    	return new Response(json_encode(array('message' => 'OK', 'round_id' => $round_id )));
+    	return new Response(json_encode(array('message' => 'OK', 'round_id' => $round_id, 'round_start_time' => $start_time)));
+    }
+    
+    public function getRoundListAction()
+    {
+   		$user_id = $this->get('security.context')->getToken()->getUser()->getId();
+    
+    	$em = $this->getDoctrine()->getManager();
+    	
+		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $user_id));
+		
+//		, array('id' => 'ASC'));
+		
+		$rounds = array();
+
+		foreach ($g_rounds as $g) {
+			$rounds[] = $g->getRoundId();
+//			error_log($g->getRoundId());
+		}
+		
+		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
+		
+//		$f_courses = $em->getRepository('ApexScoreBundle:Course')->findById($f_rounds->getId());
+		
+		$course_ids = array();
+
+
+
+
+		foreach ($f_rounds as $f) {
+			$roundses[] = $f->getJson();
+			$courses[] = $f->getCourse()->getJson();
+//			$courses[] = 
+//			error_log($f->getCourseId());
+		}
+		
+//		$g_courses = $em->getRepository('ApexScoreBundle:Course')->findById($course_ids);
+		
+//		$courseNames = array();
+		
+//		foreach ($g_courses as $g) {
+//			$courseNames[] = $g->getCourseName();
+//			error_log($g->getCourseName());
+//		}
+		
+		
+		
+		
+		
+//		$rounds = $g_rounds->getRounds()->getJson();
+
+		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses)));	
     }
     	
+
 }

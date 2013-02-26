@@ -29,6 +29,11 @@ function viewModel () {
 	self.playerDefaultTee = ko.observable();
 	self.courseAlias = ko.observable();
 	
+	self.round_id = ko.observable();
+	self.course_id = ko.observable();
+	self.round_hcp = ko.observable();
+	self.roundStartTime = ko.observable();
+	
 	self.noScoreEntered = ko.observable(true);
 	self.showPoints = ko.observable(false);
 	self.sliderVal = ko.observable(0);
@@ -37,10 +42,16 @@ function viewModel () {
 	self.holes = ko.observableArray([]);
 	self.courseData = ko.observableArray([]);
 	self.roundScores = ko.observableArray([]);
-	self.rounds = ko.observableArray([]);
-	
+
+	self.roundList = ko.observableArray([]);
+	self.roundCourses = ko.observableArray([]);
+
 	self.recentlyPlayedCourses = ko.observableArray([]);
 	self.courseList = ko.observableArray([]);
+
+
+	self.tempcoursename = ko.observable();
+
 
 
 	function prePopulateScores () {
@@ -171,7 +182,10 @@ function viewModel () {
 	
 	
 	self.nextHole = function () {
-		var curHole = parseInt(self.currentHole());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+
+		var curHole = parseInt(self.currentHole());		
+		
 	
 		self.showPoints(false);
 		self.noScoreEntered(true);
@@ -187,6 +201,8 @@ function viewModel () {
 	};
 	
 	self.previousHole = function() {
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+
 		var curHole = parseInt(self.currentHole());
 		self.noScoreEntered(false);
 
@@ -200,35 +216,6 @@ function viewModel () {
 			self.setHoleData();
 		};
 	}
-	
-	
-	self.getRoundsData = function (callback) {
-		var course = "1";
-		var d, t, x;
-		$.ajax({
-			type: 'POST',
-			async: 'true',
-			 url: 'readrounds.php',
-			data: { round : d },
-	        dataType: "json",
-			success: function(d) {
-				 t = JSON.stringify(d);
-				 x = JSON.parse(t);
-				callback(x);
-
-			}
-		});
-	};
-
-	function roundsDataCb(x) {
-		for (var i = 0, j = x.length; i < j; i++) {
-			self.rounds.push(x[i]);
-		};
-		self.getGolferData();
-//		self.setCourseGeneralData(); 
-//		self.getCourseHoleData(courseHoleDataCb);
-	};
-	
 	
 	self.currentHolePoints = ko.computed(function() {
 		var curHcpPar = parseInt(self.currentHoleHcpPar());
@@ -252,7 +239,7 @@ function viewModel () {
 		}
 	});
 	
-	
+/*	
 	self.saveScores = function () {
 		var data = [];
 		
@@ -269,17 +256,17 @@ function viewModel () {
 			type: 'POST',
 			url: 'saveround.php',
 			data: { data : data },
-			success: function() {
-				self.rounds.removeAll(); // en saanu listviewiä päivittymään kun kierros on pelattu, rumaruma hack mikä hakee uudestaan serveriltä koko paskan
-				self.getRounds();        //
+			success: function() { */
+//				self.rounds.removeAll(); // en saanu listviewiä päivittymään kun kierros on pelattu, rumaruma hack mikä hakee uudestaan serveriltä koko paskan
+	//			self.getRounds();        //
 
-				$.mobile.changePage('#f_page');
+		//		$.mobile.changePage('#f_page');
 /*				setTimeout(function () {
 					myScroll.refresh();
 				}, 200);	 */
-			}
-		});
-	};
+//			}
+	//	});
+//	};
 
 		
 	self.setScore = function () {
@@ -538,6 +525,28 @@ function viewModel () {
 		);
 	};
 	
+	self.leaveRound = function () {
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+		$.mobile.changePage("#f_page");
+		
+	};
+		
+	
+	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score) {
+		var data = {
+			round_id : round_id,
+			round_hcp : round_hcp,
+			hole_id : hole_id,
+			hole_score : hole_score
+		};
+		
+		apexEventProxy.createNewRoundScore(
+			{ data : data },
+			function (data)	{
+			}
+		);
+	};
+	
 	
 	self.startNewRound = function(course_id) {
 		var data = { course_id : course_id };
@@ -545,41 +554,63 @@ function viewModel () {
 			{ data : data},
 			function (data) {
 				var round_id = data.round_id;
+				var start_time = data.round_start_time;
 				var data = {
 					round_id: round_id
 				};
 				apexEventProxy.createNewRoundGolfer(
 					{ data : data },
 					function (data)	{
-						var round_hcp = self.playerExactHcp();
-						var data = {
-							round_id: round_id,
-							round_hcp: round_hcp
-							};
-						apexEventProxy.createNewRoundScore(
-							{ data: data },
-							function (data) {
-								}
-									
-							);
-						}
-					);
-				}
-			);
-			
+						self.round_id(round_id);
+						self.course_id(course_id);
+						self.round_hcp(self.playerExactHcp());
+						self.roundStartTime(start_time);
+					}
+				);
+			}
+		);
 		self.getCourseGeneralData(course_id);
 		self.getHoleData(course_id);
-		
-//		self.setHoleData(); 
 		prePopulateScores();
 		
 		$.mobile.changePage("#s_page");
-		
-//		alert(course_id);
 	};
 			
+	self.getCourseNameById = function(course_id) {
+		var data = { course_id: course_id }
+		var course_name;
+		apexEventProxy.getCourseData(
+			{ data : data },
+			function (data) {
+				self.tempcoursename(data.course.name);
+				alert (data.course.name);
+				return data.course.name;
+			}
+		);
+//		alert (self.tempcoursename());
+//		return self.tempcoursename();
+	}
 	
-	self.getCourseList = function (callback) {
+	self.getRoundList = ko.computed(function () {
+		var a;
+//		var round_list = {};
+		apexEventProxy.getRoundList(
+			{ a : a },
+			function (data) {
+				for (var i = 0, m = data.rounds.length; i < m; i++) {
+					self.roundList.push({
+						id: data.rounds[i].id,
+						course_name: data.courses[i].name,
+						start_time : data.rounds[i].start_time
+					});
+				}
+			}
+		);
+	});
+	
+	self.getRoundList();
+	
+	self.getCourseList = ko.computed(function (callback) {
 		var a;
 		apexEventProxy.getCourseList(
 		{ a : a },
@@ -587,15 +618,10 @@ function viewModel () {
 //			alert(data.courses[0].name);
 			for (var i = 0, m = data.courses.length; i < m; i++) {
 				self.courseList.push(data.courses[i]);
-			}
-	//		self.courseList.push(data);
-/*			self.playerName(data.golfer.name);
-			self.playerExactHcp(data.golfer.handicap);
-			self.playerDefaultTee(data.golfer.tee);
-			self.playerGender(data.golfer.gender); */
+				}
 			}
 		);
-	};
+	});
 
 
 	

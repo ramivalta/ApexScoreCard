@@ -33,3 +33,8 @@ round_json_new:
     pattern: /json/new/round
     defaults: { _controller: "ApexScoreBundle:Round:createNewRound", _format: json }
     requirements: { _method: post }
+    
+round_json_get_list:
+    pattern: /json/get/list
+    defaults: { _controller: "ApexScoreBundle:Round:getRoundList", _format: json }
+    requirements: { _method: post }

@@ -238,4 +238,22 @@ class CourseController extends BaseController
     	
     	return new Response(json_encode(array('course' => $course)));
     }
+
+ /*   public function getCourseNameById()
+    {
+    	$json = $this->getRequestJson();
+    	
+    	$course_id = $json->data->course_id;
+    	$em = $this->getDoctrine()->getManager();
+    	
+		$n = $em->getRepository('ApexScoreBundle:Course')-find($course_id);
+		
+		$name = $m->getJson();
+    	
+    	return new Response(json_encode(array('course' => $name)));
+    	
+    } */
+    
 }
+
+

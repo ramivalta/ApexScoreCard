@@ -50,17 +50,16 @@
 		
 		<div id="f_roundList">
 			<div id="scrollWrapper">
-				<ul data-role="listview" data-theme="d" data-bind="mobileList: rounds, foreach: rounds"> 
-					<li><a href="#"><span data-bind="text: course"></span><span style="font-size: 75%"> / Score: 
-						<span  data-bind="text: score"></span> Points <span data-bind="text: points"></span></a>
+				<ul data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
+					<li><a href="#"><span data-bind="text: course_name">&nbsp;</span><span style="font-size: 75%"> / Id: 
+						<span  data-bind="text: id"></span></a>
 					</li>
 				</ul> 
-				
 			</div>
 		</div>
 	
 	
-<!--	<div style="color: black; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
+	<div style="color: black; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> 
 	 
 	
 		<div id="f_courseList" style="display: none">
@@ -101,7 +100,7 @@
 
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
 
-		<a href="#" data-role="button" data-bind="click: saveScores" data-icon="home" data-iconpos="notext"></a>
+		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="click: leaveRound"></a>
 
 		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
@@ -199,9 +198,10 @@
 
 	<div data-theme="c" data-role="header" id="dialogHeader">
 
-			<span id="scCourse" data-bind="text: courseName"></span>
-			<span id="scPlayer" data-bind="text: playerName"></span>
-			<span id="scPlayerHcp" data-bind="text: playerExactHcp"></span>
+			<span id="scCourse" data-bind="text: courseName"></span>&nbsp;
+			<span id="scPlayer" data-bind="text: playerName"></span>&nbsp;
+<!--			<span id="scPlayerHcp" data-bind="text: playerExactHcp"></span> -->
+			<span id="scStartTime" data-bind="text: roundStartTime"></span>
 
 	</div>
 
