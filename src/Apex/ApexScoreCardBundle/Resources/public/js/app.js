@@ -97,7 +97,6 @@ function viewModel () {
 		}
 	});
 	
-
 	self.totalScore = ko.computed(function() {
 		var s = 0;
 		for (var n = 0, m = self.roundScores().length; n < m; n++) {
@@ -146,10 +145,6 @@ function viewModel () {
 			}
 	});
 
-
-
-/* observablet loppuu */
-
 	self.setHoleData = function () {
 		var idx = parseInt(self.currentHole()) -1 ; // index fix, sanity?
 		
@@ -162,7 +157,6 @@ function viewModel () {
 		var curScore = parseInt(self.currentHoleScore());
 		var curPoints = parseInt(self.currentHolePoints());
 				
-		
 		for (var i = 0; i < self.roundScores().length; i++) {
 		    if (self.roundScores()[i].hole() == curHole) {
 				self.currentHoleScore(parseInt(self.roundScores()[i].score()));
@@ -173,7 +167,6 @@ function viewModel () {
 		if (self.currentHoleScore() == 0) {
 			self.noScoreEntered(true);
 		}
-
 	};
 	
 	
@@ -181,8 +174,7 @@ function viewModel () {
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
 
 		var curHole = parseInt(self.currentHole());		
-		
-	
+			
 		self.showPoints(false);
 		self.noScoreEntered(true);
 
@@ -235,36 +227,6 @@ function viewModel () {
 		}
 	});
 	
-/*	
-	self.saveScores = function () {
-		var data = [];
-		
-		data[0] = parseInt(1);
-		data[1] = self.courseName;
-		data[2] = parseInt(self.totalScore());
-		data[3] = parseInt(self.totalPoints());
-		
-		for (var i = 0, n = 4; i < self.roundScores().length; i++, n++) {
-			data[n] = parseInt(self.roundScores()[i].score());
-		}
-		
-		$.ajax ({
-			type: 'POST',
-			url: 'saveround.php',
-			data: { data : data },
-			success: function() { */
-//				self.rounds.removeAll(); // en saanu listviewiä päivittymään kun kierros on pelattu, rumaruma hack mikä hakee uudestaan serveriltä koko paskan
-	//			self.getRounds();        //
-
-		//		$.mobile.changePage('#f_page');
-/*				setTimeout(function () {
-					myScroll.refresh();
-				}, 200);	 */
-//			}
-	//	});
-//	};
-
-		
 	self.sliderMove = function () {
 	
 		var sVal = parseInt(self.sliderVal());
@@ -312,7 +274,6 @@ function viewModel () {
 	};
 		
 	
-
 	self.upScore = function () {
 		if (self.hasSlid() == false) {
 			var y = self.currentHoleScore();
@@ -372,16 +333,17 @@ function viewModel () {
 	   			});
 	        }
     	    valueAccessor().subscribe(setSliderValue);
-
 	    }
 	}; 
 	
 	ko.bindingHandlers.mobileList = {
 		'update': function (element, valueAccessor) {
 			setTimeout(function () { //To make sure the refresh fires after the DOM is updated
-	        console.log("listview refresh");
-	        $(element).listview('refresh');
-
+//	        console.log("listview refresh");
+			var instance = $.data(element, 'listview');
+			if (instance) {
+		        $(element).listview('refresh', true);
+				}
 		    }, 0);
 		}
 	};
@@ -395,9 +357,7 @@ function viewModel () {
             if (valueUnwrapped == $(element).val()) {
                 $(element).prop("checked", "true").checkboxradio("refresh");
             } else {
-  //              $(element).prop('checked', false);
 				$(element).removeProp("checked").checkboxradio("refresh");
-				
             }
         }
     };
@@ -474,7 +434,7 @@ function viewModel () {
 			}
 		);
 	};
-	
+
 	
 	self.getHoleData = function(course_id) {
 	
@@ -571,14 +531,13 @@ function viewModel () {
 						self.round_id(round_id);
 						self.course_id(course_id);
 						self.round_hcp(self.playerExactHcp());
-						self.roundStartTime(start_time);
+						self.roundStartTime(start_time.date);
 						
 						self.roundList.unshift({
 							id : round_id,
 							course_name : course_name,
 							start_time : start_time
 						});
-						
 					}
 				);
 			}
@@ -596,9 +555,7 @@ function viewModel () {
 	
 		self.holes.removeAll();
 		self.roundScores.removeAll();
-	
-//		self.holes.removeAll();
-//		self.roundScores.removeAll();
+
 		prePopulateScores();
 		
 		var round_id = round_id;
@@ -616,42 +573,54 @@ function viewModel () {
 				self.round_id(round_id);
 				self.course_id(course_id);
 				self.roundStartTime(start_time.date);
-//				alert (self.roundStartTime().date);
 			}
 		);
 		
 		$.mobile.changePage("#s_page");
 	};
-	
-	
+		
 	self.getRoundScores = function(round_id) {
 
 		var data = { round_id : round_id };
 		apexEventProxy.getRoundScores(
 			{ data : data },
 			function (data) {
-				self.round_hcp(data.scores[0].round_hcp);
 			
 				for (var i = 0; i < data.scores.length; i++) {
 					for (var z = 0; z < self.roundScores().length; z++) {
 						if (self.roundScores()[z].hole() == data.scores[i].hole_id) {
 							self.roundScores()[z].score(data.scores[i].score);
+							self.round_hcp(data.scores[i].round_hcp);
 						}
 					}
+				}
+				
+				if (self.round_hcp() == undefined) {
+					self.round_hcp(self.playerExactHcp());
 				}
 				
 				self.currentHole(1);
 				self.currentHoleScore(parseInt(self.roundScores()[0].score()));
 				self.noScoreEntered(false);
-				
 			}
 		);
 	};
-				
-			
+	
+	self.setHolePoints  = function() {
+		var y = curHcpPar - curScore + 2;
+			self.showPoints(true);
+			if (y > 0) {
+				return y;
+				}
+			else {
+				return 0;
+			}
+		};
+		
+	
+							
 	self.getRoundList = function () {
 		var a;
-//		var round_list = {};
 		apexEventProxy.getRoundList(
 			{ a : a },
 			function (data) {
@@ -716,7 +685,7 @@ function viewModel () {
 	
 	
 	self.hcpScroller = function () {
-		var whl1 = {'-2':'-2', '-1':'-1', '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53' 
+		var whl1 = {'-3' : '-3', '-2':'-2', '-1':'-1', '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53' 
 		   };
 	
 		var whl2 = {'0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9'
@@ -730,9 +699,9 @@ function viewModel () {
 		$('#i').scroller({
 			display: 'inline',
 			mode: 'scroller',
-			theme: 'android',
+			theme: 'ios',
 			wheels: wheel,
-			width: 20,
+			width: 30,
 			height: 30,
 			showLabel: false,
 			formatResult: function (a) {
