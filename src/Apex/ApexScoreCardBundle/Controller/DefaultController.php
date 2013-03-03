@@ -20,7 +20,7 @@ class DefaultController extends Controller
     }
     
         
-    public function loginAction() 
+  /*  public function loginAction() 
     {
         if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -33,7 +33,7 @@ class DefaultController extends Controller
             'error'         => $error,
         ));
     }
-    
+    */
     
     
 }

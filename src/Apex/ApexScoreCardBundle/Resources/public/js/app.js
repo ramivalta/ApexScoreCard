@@ -50,10 +50,6 @@ function viewModel () {
 	self.courseList = ko.observableArray([]);
 
 
-	self.tempcoursename = ko.observable();
-
-
-
 	function prePopulateScores () {
 		for (var i = 0; i < 18; i++) {
 			var el = {};
@@ -128,7 +124,7 @@ function viewModel () {
 
 	self.playerPlayingHcp = ko.computed(function () {
 		/* GA PLAYING HANDICAP FORMULA the “EGA Playing Handicap Formula” converts exact handicaps into playing handicaps. PLAYING HCP = EXACT HCP x (SR / 113) + (CR - PAR) */
-		var a = parseFloat(self.playerExactHcp());
+		var a = parseFloat(self.round_hcp());
 		var b = parseFloat(self.courseSl()) / 113;
 		var c = parseFloat(self.courseCr()) - parseFloat(self.coursePar());
 		var playhcp = a * b + c;
@@ -215,7 +211,7 @@ function viewModel () {
 			self.currentHole(curHole - 1);
 			self.setHoleData();
 		};
-	}
+	};
 	
 	self.currentHolePoints = ko.computed(function() {
 		var curHcpPar = parseInt(self.currentHoleHcpPar());
@@ -269,7 +265,7 @@ function viewModel () {
 //	};
 
 		
-	self.setScore = function () {
+	self.sliderMove = function () {
 	
 		var sVal = parseInt(self.sliderVal());
 
@@ -300,17 +296,22 @@ function viewModel () {
 		var curScore = parseInt(self.currentHoleScore()) ;
 		var curPoints = parseInt(self.currentHolePoints());
 		var curHolePar = parseInt(self.currentHolePar());
-		var idx = curHole - 1;
 
-		for (var i = 0; i < self.roundScores().length; i++) {
-			if (self.roundScores()[i].hole() == curHole) {
-				self.roundScores()[i].score(curScore);
-				self.roundScores()[i].points(curPoints);
-				self.roundScores()[i].scoreToPar(curScore - curHolePar);
-			}
-		};
+		self.setScore(curHole, curScore, curPoints, curHolePar);
 			
 	};
+	
+	self.setScore = function (hole, score, points, holePar) {
+		for (var i = 0; i < self.roundScores().length; i++) {
+			if (self.roundScores()[i].hole() == hole) {
+				self.roundScores()[i].score(score);
+				self.roundScores()[i].points(points);
+				self.roundScores()[i].scoreToPar(score - holePar);
+			}
+		};
+	};
+		
+	
 
 	self.upScore = function () {
 		if (self.hasSlid() == false) {
@@ -380,7 +381,7 @@ function viewModel () {
 			setTimeout(function () { //To make sure the refresh fires after the DOM is updated
 	        console.log("listview refresh");
 	        $(element).listview('refresh');
-//	        $(element).trigger("create");
+
 		    }, 0);
 		}
 	};
@@ -476,6 +477,7 @@ function viewModel () {
 	
 	
 	self.getHoleData = function(course_id) {
+	
 		var data = { course_id : course_id };
 		apexEventProxy.getHoleData(
 			{ data : data },
@@ -527,8 +529,9 @@ function viewModel () {
 	
 	self.leaveRound = function () {
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+
+//		self.getRoundList();
 		$.mobile.changePage("#f_page");
-		
 	};
 		
 	
@@ -548,7 +551,11 @@ function viewModel () {
 	};
 	
 	
-	self.startNewRound = function(course_id) {
+	self.startNewRound = function(course_id, course_name) {
+	
+		self.holes.removeAll();
+		self.roundScores.removeAll();
+	
 		var data = { course_id : course_id };
 		apexEventProxy.createNewRound(
 			{ data : data},
@@ -565,6 +572,13 @@ function viewModel () {
 						self.course_id(course_id);
 						self.round_hcp(self.playerExactHcp());
 						self.roundStartTime(start_time);
+						
+						self.roundList.unshift({
+							id : round_id,
+							course_name : course_name,
+							start_time : start_time
+						});
+						
 					}
 				);
 			}
@@ -573,25 +587,69 @@ function viewModel () {
 		self.getHoleData(course_id);
 		prePopulateScores();
 		
+		self.currentHole(1);
+		
 		$.mobile.changePage("#s_page");
 	};
-			
-	self.getCourseNameById = function(course_id) {
-		var data = { course_id: course_id }
-		var course_name;
-		apexEventProxy.getCourseData(
+	
+	self.loadRound = function(round_id) {
+	
+		self.holes.removeAll();
+		self.roundScores.removeAll();
+	
+//		self.holes.removeAll();
+//		self.roundScores.removeAll();
+		prePopulateScores();
+		
+		var round_id = round_id;
+		var data = { round_id : round_id };
+		apexEventProxy.getRound(
 			{ data : data },
 			function (data) {
-				self.tempcoursename(data.course.name);
-				alert (data.course.name);
-				return data.course.name;
+				var course_id = data.round.course_id;
+				var start_time = data.round.start_time;
+				var round_hcp = data.round.round_hcp;
+				self.getRoundScores(round_id);
+				self.round_hcp(round_hcp);
+				self.getCourseGeneralData(course_id);
+				self.getHoleData(course_id);
+				self.round_id(round_id);
+				self.course_id(course_id);
+				self.roundStartTime(start_time.date);
+//				alert (self.roundStartTime().date);
 			}
 		);
-//		alert (self.tempcoursename());
-//		return self.tempcoursename();
-	}
+		
+		$.mobile.changePage("#s_page");
+	};
 	
-	self.getRoundList = ko.computed(function () {
+	
+	self.getRoundScores = function(round_id) {
+
+		var data = { round_id : round_id };
+		apexEventProxy.getRoundScores(
+			{ data : data },
+			function (data) {
+				self.round_hcp(data.scores[0].round_hcp);
+			
+				for (var i = 0; i < data.scores.length; i++) {
+					for (var z = 0; z < self.roundScores().length; z++) {
+						if (self.roundScores()[z].hole() == data.scores[i].hole_id) {
+							self.roundScores()[z].score(data.scores[i].score);
+						}
+					}
+				}
+				
+				self.currentHole(1);
+				self.currentHoleScore(parseInt(self.roundScores()[0].score()));
+				self.noScoreEntered(false);
+				
+			}
+		);
+	};
+				
+			
+	self.getRoundList = function () {
 		var a;
 //		var round_list = {};
 		apexEventProxy.getRoundList(
@@ -601,12 +659,14 @@ function viewModel () {
 					self.roundList.push({
 						id: data.rounds[i].id,
 						course_name: data.courses[i].name,
-						start_time : data.rounds[i].start_time
+						start_time : data.rounds[i].start_time,
+
 					});
+//				alert (data.rounds[i].start_time.date)
 				}
 			}
 		);
-	});
+	};
 	
 	self.getRoundList();
 	
@@ -622,8 +682,6 @@ function viewModel () {
 			}
 		);
 	});
-
-
 	
 	self.saveGolfer = function (callback) {
 		var data = {
@@ -746,7 +804,6 @@ $(document).on('pageinit', function() {
 //	ko.applyBindings(vm);
 	ko.applyBindings(vm, document.getElementById("f_page"));
 
-		
 	ko.applyBindings(vm, document.getElementById("scoreCard"));
 
 	ko.applyBindings(vm, document.getElementById("courseSelect"));
@@ -759,10 +816,15 @@ $(document).on('pageinit', function() {
 		ko.applyBindings(vm, document.getElementById("prefs"));
 		vm.hcpScroller();
 
+//		$('#prefs').live('pagecreate', function(event) {
+//			$('#gender').selectmenu('refresh', true);
+//		});
+
+
 //		$("#prefs").selectmenu();
-  //      $("#prefs").selectmenu('refresh', true);
+//        $("#prefs").selectmenu('refresh', true);
 	});
-		
+	
 	
 	$(document).off('pageinit');
 

@@ -270,10 +270,12 @@ class RoundController extends BaseController
     	
     	$round_id = $entity->getId();
 
-    	$start_time = date('H:1, d.m.Y', time());
+//    	$start_time = date('YYYY-MM-DD HH:mm:ss Z', time());
+
+//		$start_time = $datet
 
     	
-    	return new Response(json_encode(array('message' => 'OK', 'round_id' => $round_id, 'round_start_time' => $start_time)));
+    	return new Response(json_encode(array('message' => 'OK', 'round_id' => $round_id, 'round_start_time' => $datet)));
     }
     
     public function getRoundListAction()
@@ -295,37 +297,28 @@ class RoundController extends BaseController
 		
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
 		
-//		$f_courses = $em->getRepository('ApexScoreBundle:Course')->findById($f_rounds->getId());
-		
-		$course_ids = array();
-
-
-
 
 		foreach ($f_rounds as $f) {
 			$roundses[] = $f->getJson();
 			$courses[] = $f->getCourse()->getJson();
-//			$courses[] = 
-//			error_log($f->getCourseId());
 		}
-		
-//		$g_courses = $em->getRepository('ApexScoreBundle:Course')->findById($course_ids);
-		
-//		$courseNames = array();
-		
-//		foreach ($g_courses as $g) {
-//			$courseNames[] = $g->getCourseName();
-//			error_log($g->getCourseName());
-//		}
-		
-		
-		
-		
-		
-//		$rounds = $g_rounds->getRounds()->getJson();
 
 		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses)));	
     }
+    
+    public function getRoundAction()
+    {
+    	$json = $this->getRequestJson();
     	
+    	$round_id = $json->data->round_id;
+    	
+		$em = $this->getDoctrine()->getManager();
+    	
+    	$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+    	
+    	$round = $entity->getJson();
+    	
+    	return new Response(json_encode(array('round' => $round)));
+    }
 
 }

@@ -186,4 +186,15 @@ class roundScore
     {
         return $this->round_hcp;
     }
+    
+    public function getJson()
+    {
+    	return array(
+    		'id' 		=> $this->id,
+    		'round_id'  => $this->roundId,
+    		'hole_id' 	=> $this->holeId,
+    		'score' 	=> $this->score,
+    		'round_hcp' => $this->round_hcp,
+    	);
+    }
 }

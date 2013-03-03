@@ -360,28 +360,6 @@ class Course
         return $this->crYellowLadies;
     }
 
-    /**
-     * Set crWhiteLadies
-     *
-     * @param float $crWhiteLadies
-     * @return Course
-     */
-    public function setCrWhiteLadies($crWhiteLadies)
-    {
-        $this->crWhiteLadies = $crWhiteLadies;
-    
-        return $this;
-    }
-
-    /**
-     * Get crWhiteLadies
-     *
-     * @return float 
-     */
-    public function getCrWhiteLadies()
-    {
-        return $this->crWhiteLadies;
-    }
 
     /**
      * Set slRedMen
@@ -544,28 +522,6 @@ class Course
         return $this->slYellowLadies;
     }
 
-    /**
-     * Set slWhiteLadies
-     *
-     * @param float $slWhiteLadies
-     * @return Course
-     */
-    public function setSlWhiteLadies($slWhiteLadies)
-    {
-        $this->slWhiteLadies = $slWhiteLadies;
-    
-        return $this;
-    }
-
-    /**
-     * Get slWhiteLadies
-     *
-     * @return float 
-     */
-    public function getSlWhiteLadies()
-    {
-        return $this->slWhiteLadies;
-    }
     /**
      * Constructor
      */

@@ -242,5 +242,24 @@ class roundScoreController extends BaseController
 		return new Response(json_encode(array('message' => 'OK')));
     	
     }
+    
+    public function getRoundScoresAction()
+    {
+    	$json = $this->getRequestJson();
+    	
+    	$round_id = $json->data->round_id;
+    	$em = $this->getDoctrine()->getManager();
+    	$entities = $em->getRepository('ApexScoreBundle:roundScore')->findByRoundId($round_id);
+    	
+    	$scores = array();
+    	
+    	foreach ($entities as $e) {
+  //  		error_log($e->getScore());
+    		$scores[] = $e->getJson();
+    	}
+    	
+    	return new Response(json_encode(array('scores' => $scores)));
+    	
+    }
     	
 }

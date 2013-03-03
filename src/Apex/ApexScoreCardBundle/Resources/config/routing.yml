@@ -1,7 +1,6 @@
-#apex_score_homepage:
-#    pattern:  /
-#    defaults: { _controller: ApexScoreBundle:Default:login }
-
+apex_score_homepage:
+    pattern:  /
+    defaults: { _controller: ApexScoreBundle:App:index }
 
 ApexScoreBundle_course:
     resource: "@ApexScoreBundle/Resources/config/routing/course.yml"
@@ -35,22 +34,6 @@ GlobalJs:
     pattern: /js/global.js
     defaults: { _controller: ApexScoreBundle:Default:globaljs, _format: js }
 
-
-#apex_score_app: 
-#    pattern: /App
-#    defaults: { _controller: ApexScoreBundle:App:index }
-
-#login:
-#    pattern: /login
-#    defaults: { _controller: ApexScoreBundle:Default:login }
-
-#login_check:
-#    pattern: /login_check
-    
-#admin:
-#    pattern: /admin/poo
-#    defaults: { _controller: "ApexScoreBundle:app:index" }
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -70,4 +53,6 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
     
-    
+login_check:
+    pattern: /login_check
+    defaults: { _controller : ApexScoreBundle:App:index }

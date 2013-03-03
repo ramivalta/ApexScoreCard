@@ -1,6 +1,11 @@
 <?php
 
+//require __DIR__.'/../vendor/symfony/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
+
 use Doctrine\Common\Annotations\AnnotationRegistry;
+//use Symfony\Component\ClassLoader\ApcUniversalClassLoader;
+
+//$loader = new ApcUniversalClassLoader('uniqcache');
 
 $loader = require __DIR__.'/../vendor/autoload.php';
 

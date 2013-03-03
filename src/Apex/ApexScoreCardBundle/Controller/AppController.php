@@ -22,17 +22,17 @@ class AppController extends BaseController
 
     public function indexAction()
     {
-    	$user_id = $this->get('security.context')->getToken()->getUser()->getId();
+/*    	$user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         
-		$golfers = $em->getRepository('ApexScoreBundle:Golfer')->find($user_id);
+		$golfers = $em->getRepository('ApexScoreBundle:Golfer')->find($user_id); */
 
-		return array(
-			'golfers' => $golfers,
-		);
+	//	return array(
+//			'golfers' => $golfers,
+	//	);
     
     
-#        return $this->render('ApexScoreBundle:App:index.html.twig');
+        return $this->render('ApexScoreBundle:App:index.html.twig');
     }
     
       public function showAction()
