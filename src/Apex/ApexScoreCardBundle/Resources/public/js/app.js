@@ -50,14 +50,15 @@ function viewModel () {
 	self.courseList = ko.observableArray([]);
 
 
-	function prePopulateScores () {
-		for (var i = 0; i < 18; i++) {
+	self.prePopulateScores = function(num_holes) {
+		for (var i = 0; i < num_holes; i++) {
 			var el = {};
 			el['hole'] = ko.observable(i + 1);
 			el['score'] = ko.observable(0);
 			el['points'] = ko.observable(0);
 			el['scoreToPar'] = ko.observable(0);
 			self.roundScores.push(el);
+
 		}
 	};
 	
@@ -69,7 +70,13 @@ function viewModel () {
 		return s;
 	});
 
-//computeds 
+	self.courseLength = ko.computed(function() {
+		var s = 0;
+		for (var i = 0; i < self.holes().length; i++) {
+			s = s + parseInt(self.holes()[i].hole_length());
+			}
+		return s;
+	});
 
 	self.holeScoreName = ko.computed(function() {
 		if (self.noScoreEntered()) {
@@ -125,7 +132,13 @@ function viewModel () {
 		/* GA PLAYING HANDICAP FORMULA the “EGA Playing Handicap Formula” converts exact handicaps into playing handicaps. PLAYING HCP = EXACT HCP x (SR / 113) + (CR - PAR) */
 		var a = parseFloat(self.round_hcp());
 		var b = parseFloat(self.courseSl()) / 113;
-		var c = parseFloat(self.courseCr()) - parseFloat(self.coursePar());
+		
+		if (self.holes().length == 9) {
+			var par = parseInt(self.coursePar()) * 2;
+		}
+		else { var par = self.coursePar(); }
+		
+		var c = parseFloat(self.courseCr()) - parseFloat(par);
 		var playhcp = a * b + c;
 		return Math.round(playhcp);
 	});
@@ -186,6 +199,9 @@ function viewModel () {
 			self.currentHole(self.currentHole() + 1);
 			self.setHoleData();
 		};
+
+	 $.mobile.changePage('#s_page', { transition: "slidefade",
+                                    allowSamePageTransition: true});
 	};
 	
 	self.previousHole = function() {
@@ -203,6 +219,9 @@ function viewModel () {
 			self.currentHole(curHole - 1);
 			self.setHoleData();
 		};
+		
+		 $.mobile.changePage('#s_page', { transition: "slidefade", reverse: true,
+                                    allowSamePageTransition: true});
 	};
 	
 	self.currentHolePoints = ko.computed(function() {
@@ -435,13 +454,15 @@ function viewModel () {
 		);
 	};
 
-	
 	self.getHoleData = function(course_id) {
 	
 		var data = { course_id : course_id };
 		apexEventProxy.getHoleData(
 			{ data : data },
 			function (data) {
+			
+				self.prePopulateScores(data.holes.length);
+			
 				if (self.playerDefaultTee() == "yellow") {
 					for (var i = 0, m = data.holes.length; i < m; i++) {
 						self.holes.push({
@@ -482,7 +503,9 @@ function viewModel () {
 							});
 						};
 					}
-				self.setHoleData(); 
+				
+				self.setHoleData();
+
 			}
 		);
 	};
@@ -514,7 +537,6 @@ function viewModel () {
 	self.startNewRound = function(course_id, course_name) {
 	
 		self.holes.removeAll();
-		self.roundScores.removeAll();
 	
 		var data = { course_id : course_id };
 		apexEventProxy.createNewRound(
@@ -544,7 +566,6 @@ function viewModel () {
 		);
 		self.getCourseGeneralData(course_id);
 		self.getHoleData(course_id);
-		prePopulateScores();
 		
 		self.currentHole(1);
 		
@@ -555,9 +576,10 @@ function viewModel () {
 	
 		self.holes.removeAll();
 		self.roundScores.removeAll();
-
-		prePopulateScores();
 		
+		self.prePopulateScores();
+
+
 		var round_id = round_id;
 		var data = { round_id : round_id };
 		apexEventProxy.getRound(
@@ -565,60 +587,53 @@ function viewModel () {
 			function (data) {
 				var course_id = data.round.course_id;
 				var start_time = data.round.start_time;
-				var round_hcp = data.round.round_hcp;
 				self.getRoundScores(round_id);
-				self.round_hcp(round_hcp);
 				self.getCourseGeneralData(course_id);
 				self.getHoleData(course_id);
 				self.round_id(round_id);
 				self.course_id(course_id);
 				self.roundStartTime(start_time.date);
+
 			}
 		);
-		
+	
 		$.mobile.changePage("#s_page");
 	};
-		
-	self.getRoundScores = function(round_id) {
 
+	self.getRoundScores = function(round_id) {
+	
 		var data = { round_id : round_id };
 		apexEventProxy.getRoundScores(
 			{ data : data },
 			function (data) {
-			
 				for (var i = 0; i < data.scores.length; i++) {
 					for (var z = 0; z < self.roundScores().length; z++) {
 						if (self.roundScores()[z].hole() == data.scores[i].hole_id) {
 							self.roundScores()[z].score(data.scores[i].score);
 							self.round_hcp(data.scores[i].round_hcp);
+						
+						//self.roundScores()[z].points(self.setHolePoints(data.scores[i].score, self.holes()[i].hole_par(), self.holes()[i].hole_hcp(), self.round_hcp())); puke
 						}
 					}
 				}
 				
 				if (self.round_hcp() == undefined) {
 					self.round_hcp(self.playerExactHcp());
-				}
+				};
 				
 				self.currentHole(1);
-				self.currentHoleScore(parseInt(self.roundScores()[0].score()));
-				self.noScoreEntered(false);
+
+				if (parseInt(self.roundScores()[0].score()) != 0) {
+					self.currentHoleScore(parseInt(self.roundScores()[0].score()));
+					self.noScoreEntered(false);
+				}
+				else {
+					self.noScoreEntered(true);
+				}
 			}
 		);
 	};
 	
-	self.setHolePoints  = function() {
-		var y = curHcpPar - curScore + 2;
-			self.showPoints(true);
-			if (y > 0) {
-				return y;
-				}
-			else {
-				return 0;
-			}
-		};
-		
-	
-							
 	self.getRoundList = function () {
 		var a;
 		apexEventProxy.getRoundList(
@@ -685,7 +700,8 @@ function viewModel () {
 	
 	
 	self.hcpScroller = function () {
-		var whl1 = {'-3' : '-3', '-2':'-2', '-1':'-1', '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53' 
+		var whl1 = {
+		'-2':'-2','-1':'-1','0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53', '54':'54'
 		   };
 	
 		var whl2 = {'0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9'

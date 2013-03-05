@@ -213,7 +213,7 @@ class CourseController extends BaseController
     public function getCourseListAction()
     {
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('ApexScoreBundle:Course')->findAll();
+		$entities = $em->getRepository('ApexScoreBundle:Course')->findBy(array(), array('courseName' => 'ASC'));;
 		
 		if (!$entities) {
     		throw $this->createNotFoundException('Unable to find Course entity');

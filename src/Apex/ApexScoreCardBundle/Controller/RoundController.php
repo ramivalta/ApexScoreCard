@@ -255,15 +255,12 @@ class RoundController extends BaseController
     	$datet = new \DateTime;
     	
     	$em = $this->getDoctrine()->getManager();
-    	
     	$entity = new Round();
 
 	  	$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
     	
     	$entity->setCourse($course);
     	$entity->setStartTime($datet);
-    	
-
     	
     	$em->persist($entity);
     	$em->flush();
@@ -309,11 +306,9 @@ class RoundController extends BaseController
     public function getRoundAction()
     {
     	$json = $this->getRequestJson();
-    	
     	$round_id = $json->data->round_id;
     	
 		$em = $this->getDoctrine()->getManager();
-    	
     	$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
     	
     	$round = $entity->getJson();
