@@ -120,8 +120,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin: auto;
 }
 
-
-
 #il {
 	width: 100%;
 }
@@ -129,7 +127,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #ir {
 	width: 100%;
 }
-	
 
 #scoreDisplay {
 	font-size: 3em !important;
@@ -143,7 +140,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	color: #000;
 	text-shadow: -1px -1px 1px rgba(175,175,175,0.85), 1px -1px 1px rgba(165,165,165,0.85), -1px 1px 1px rgba(255,255,255,0.85), 1px 1px 1px rgba(255,255,255,0.85);
 //	position: relative;
-
 
 }
 
