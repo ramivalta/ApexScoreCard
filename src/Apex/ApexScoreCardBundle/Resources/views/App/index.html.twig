@@ -38,8 +38,6 @@
 
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
 	
-	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/jquery.mobile.iscrollview.css') }}" type="text/css" media="screen" rel="stylesheet" />
-
 <!--    <script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/apexscore/js/app.js') }}"></script> -->
 
@@ -61,30 +59,29 @@
 <div id="f_page" data-role="page" data-title="Rounds">
 	
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
-
-			<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="click: loadPrefs"></a>
-
+		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="click: loadPrefs"></a>
 		<div id="headerText">Rounds for <span data-bind="text: playerName"></span></div>
-				<a href="#courseSelect"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
-	</div> <!-- data-rel="dialog" -->
+		<a href="#courseSelect"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
+	</div>
+	
+	<!-- data-rel="dialog" -->
 		
+		<script type="text/javascript">
+		moment.lang('en', {
+			longDateFormat : {
+				LT: "HH:mm",
+				L: "MM/DD/YYYY",
+				l: "M/D/YYYY",
+				LL: "MMMM Do YYYY",
+				ll: "MMM D YYYY",
+				LLL: "MMMM Do YYYY LT",
+				lll: "MMM D YYYY LT",
+				LLLL: "dddd, MMMM Do YYYY LT",
+				llll: "ddd, MMM D YYYY LT"
+			}
+		});
 
-<script type="text/javascript">
-moment.lang('en', {
-	longDateFormat : {
-		LT: "HH:mm",
-		L: "MM/DD/YYYY",
-        l: "M/D/YYYY",
-        LL: "MMMM Do YYYY",
-        ll: "MMM D YYYY",
-        LLL: "MMMM Do YYYY LT",
-        lll: "MMM D YYYY LT",
-        LLLL: "dddd, MMMM Do YYYY LT",
-        llll: "ddd, MMM D YYYY LT"
-    }
-});
-
-</script>
+		</script>
 		
 	<div id="f_roundList">
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
@@ -101,61 +98,54 @@ moment.lang('en', {
 
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
 		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="click: leaveRound"></a>
-
 		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
 		</div>
 
-		<a href="#scoreCard"  data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext" data-close-btn="none" data-transition="slidedown" ></a>
-		
+		<a data-bind="click: showScoreCard" data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext" data-close-btn="none" data-transition="slidedown"></a>
 	</div>
 
-<div id="top" data-role="content" data-theme="b">
-
-	<div id="scoreWrappi" class="ui-grid-b">
-		<div id="holeScore" class="ui-block-a">
-			<span data-bind="text: holeScoreName" data-bind="visible: showPoints"></span><br>
-			<span data-bind="text: currentHolePoints, visible: showPoints" style="font-size: 75%"></span>
-			<span style="font-size: 75%" data-bind="visible: showPoints"> points</span>
-		</div>
+	<div id="top" data-role="content" data-theme="b">
+		<div id="scoreWrappi" class="ui-grid-b">
+			<div id="holeScore" class="ui-block-a">
+				<span data-bind="text: holeScoreName, visible: showPoints"></span><br>
+				<span data-bind="text: currentHolePoints, visible: showPoints" style="font-size: 75%"></span>
+			</div>
 	
-		<div id="scoreB" class="ui-block-b">
-			<div id="scoreC">
-			
-				<div id="il"></div>
-			
-				<div id="score">
-					<div id="scoreDisplay" data-bind="visible:  noScoreEntered">-</div>
-					<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
+			<div id="scoreB" class="ui-block-b">
+				<div id="scoreC">
+					<div id="il"></div>
+					<div id="score">
+						<div id="scoreDisplay" data-bind="visible:  noScoreEntered">-</div>
+						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
+					</div>
+					<div id="ir"></div>
 				</div>
-				<div id="ir"></div>
-				
 			</div>
+	
+			<div id="roundScore" class="ui-block-c">
+				Score: <span data-bind="text: totalScore"></span><br>
+				<span style="font-size: 75%"> Points:</span>
+	<!--			<span data-bind="text: totalPoints" style="font-size: 75%"> -->
+				<span data-bind="text: totalPoints" style="font-size: 75%"> 
+				</span>
+			</div>
+			
 		</div>
-	
-	
-	
-		<div id="roundScore" class="ui-block-c">
-			Score: <span data-bind="text: totalScore"></span><br>
-			<span style="font-size: 75%"> Points:</span>
-			<span data-bind="text: totalPoints" style="font-size: 75%"></span>
+
+
+		<div id="sliderWrappi" class="ui-grid-b">
+			<div id="leftFill" class="ui-block-a"></div>
+				<div id="sliderW" class="ui-block-b">
+					<div id="slideri">
+						<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-100" max="100" /> 
+					</div>
+				</div>
+			<div id="rightFill" class="ui-block-c"></div>
 		</div>
 	</div>
 
-	<div id="sliderWrappi" class="ui-grid-b">
-		<div id="leftFill" class="ui-block-a"></div>
-		<div id="sliderW" class="ui-block-b">
-			<div id="slideri">
-				<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-100" max="100" /> 
-
-			</div>
-		</div>
-		<div id="rightFill" class="ui-block-c"></div>
-	</div>
-
-</div>
-
-<!-- <div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
+<!-- <div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div>   -->
 
 
 	<div id="holeData" >
@@ -188,7 +178,7 @@ moment.lang('en', {
 </div>	
 	
 	
-<div id="scoreCard" data-role="page" data-close-btn="none">
+<div id="scoreCard" data-role="page" data-close-btn="none" data-theme="c">
 
 	<div data-theme="c" data-role="header" id="dialogHeader">
 			<span id="scCourse" data-bind="text: courseName"></span>&nbsp;
@@ -197,113 +187,95 @@ moment.lang('en', {
 			<span id="scStartTime" data-bind="text: roundStartTime"></span>
 	</div>
 
-	<div data-theme="b" data-role="content" id="dialogContent">
-	
-	<div id="dialogCenter">
-		<div id="scLeftSide">
-
-		<table id="scoreCardHoles">
-			<tr>
-				<td id="scHeaders">Hole</td>
-				<td id="scHeaders">Par</td>
-				<td id="scHeaders">HCP</td>
-				<td id="scHeaders">Length</td>
-			</tr>
-			<tbody data-bind="foreach: holes" id="koHoles">
+	<div data-role="content" id="dialogContent">
+		<div id="dialogCenter">
+			<table id="scoreCardTable">
 				<tr>
-					<td id="scCells" data-bind="text: hole_number"></td>
-					<td id="scCells" data-bind="text: hole_par"></td>
-					<td id="scCells" data-bind="text: hole_hcp"></td>
-					<td id="scCells"><span data-bind="text: hole_length"></span> m</td>
+					<td id="scHeaders">Hole</td>
+					<td id="scHeaders">Par</td>
+					<td id="scHeaders">HCP</td>
+					<td id="scHeaders">Length</td>
+					<td id="scHeaders">Score</td>
+					<td id="scHeaders">To Par</td>
+					<td id="scHeaders">Points</td>
 				</tr>
-			</tbody>
-			<tbody>
-				<tr>
-					<td id="scTotals"></td>
-					<td id="scTotals" data-bind="text: coursePar"></td>
-					<td id="scTotals"></td>
-					<td id="scTotals"><span data-bind="text: courseLength"></span> m</td>
-				</tr>
-			</tbody>
-		</table>
-		</div>
-		
-		<div id="scRightSide">
-	
-		<table id="scoreCardScores">
-			<tr>
-				<td id="scHeaders">Score</td>
-				<td id="scHeaders">To Par</td>
-				<td id="scHeaders">Points</td>
-			</tr>
-			<tbody data-bind="foreach: roundScores">
-				<tr>
-					<!-- ko if: score() > 0 -->
-						<!-- ko if: scoreToPar() < 0 -->
-						<td id="scScoreCells" data-bind="text: score" style="background: #C2F0C2"></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar() >= 0 -->
-						<td id="scScoreCells" data-bind="text: score"></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar() > 0 -->
-						<td id="scScoreCells">+<span data-bind="text: scoreToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar() < 0 -->
-						<td id="scScoreCells" style="background: #C2F0C2"><span data-bind="text: scoreToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar() == 0 -->
-						<td id="scScoreCells"><span>E</span></td>
-						<!-- /ko -->
+				<tbody data-bind="foreach: scoreCard">
+					<tr>
+						<td id="scCells" data-bind="text: hole_number"></td>
+						<td id="scCells" data-bind="text: hole_par"></td>
+						<td id="scCells" data-bind="text: hole_hcp"></td>
+						<td id="scCells"><span data-bind="text: hole_length"></span> m
+						</td>
+					
+						<!-- ko if: score() > 0 -->
+							<!-- ko if: scoreToPar < 0 -->
+							<td id="scScoreCells" data-bind="text: score" style="background: #C2F0C2"></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar > 0 -->
+								<td id="scScoreCells" data-bind="text: score" style="background: #CEE0CE"></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar == 0 -->
+								<td id="scScoreCells" data-bind="text: score"></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar > 0 -->
+								<td id="scCells" style="background: #CEE0CE">+<span data-bind="text: scoreToPar"></span></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar < 0 -->
+								<td id="scCells" style="background: #C2F0C2"><span data-bind="text: scoreToPar"></span></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar == 0 -->
+								<td id="scCells"><span>E</span></td>
+							<!-- /ko -->
 						
-						<td id="scPointsCells" data-bind="text: points"></td>
+							<td id="scCells" data-bind="text: points"></td>
 					
-					<!-- /ko -->
+						<!-- /ko -->
 					
-					<!-- ko if: score() == 0 -->
-						<td id="scScoreCells">&nbsp;</td>
-						<td id="scScoreCells">&nbsp;</td>
-						<td id="scPointsCells">&nbsp;</td>
-					<!-- /ko -->
-				</tr>
-			</tbody>
-		</table>
-			<table id="scoreCardScoreTotals">
-				<tr>
-				<!-- ko if: totalToPar() < 0 -->
-					<td id="scTotalScore" data-bind="text: totalScore" style="background: #C2F0C2"></td>
-				<!-- /ko -->
-				<!-- ko if: totalToPar() >= 0 -->	
-					<td id="scTotalScore" data-bind="text: totalScore"></td>
-				<!-- /ko -->				
-					<!-- ko if: totalToPar() > 0 -->
-						<td id="scTotalScore">+<span data-bind="text: totalToPar"></span></td>
-					<!-- /ko -->
-					<!-- ko if: totalToPar() < 0 -->
-						<td id="scTotalScore" style="background-color: #C2F0C2"><span data-bind="text: totalToPar" ></span></td>
-					<!-- /ko -->
-					<!-- ko if: totalToPar() == 0 -->
-						<td id="scTotalScore"><span>E</span></td>
-					<!-- /ko -->
+						<!-- ko if: score() == 0 -->
+							<td id="scScoreCells">&nbsp;</td>
+							<td id="scCells">&nbsp;</td>
+							<td id="scCells">&nbsp;</td>
+						<!-- /ko -->
+					</tr>
+				</tbody>
+					<tr>
+						<td id="scTotals"></td>
+						<td id="scTotals" data-bind="text: coursePar"></td>
+						<td id="scTotals"></td>
+						<td id="scTotals"><span data-bind="text: courseLength"></span> m</td>
+
+						<!-- ko if: totalToPar() < 0 -->
+							<td id="scTotals" data-bind="text: totalScore" style="background: #C2F0C2"></td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() >= 0 -->	
+							<td id="scTotals" data-bind="text: totalScore"></td>
+						<!-- /ko -->				
+						<!-- ko if: totalToPar() > 0 -->
+							<td id="scTotals">+<span data-bind="text: totalToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() < 0 -->
+							<td id="scTotals" style="background-color: #C2F0C2"><span data-bind="text: totalToPar" ></span></td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() == 0 -->
+							<td id="scTotals"><span>E</span></td>
+						<!-- /ko -->
 					
-					<td id="scTotalPoints" data-bind="text: totalPoints"></td> 
-				</tr>
+						<td id="scTotals" data-bind="text: scoreCardTotalPoints"></td> 
+					</tr>
+				</tbody>
 			</table>
-		
-			</div>
-	
-			</div>
-		
-			<div id="scoreCardButtons">
-				<a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a>
-				<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true"  id="scoreCardClose">Close</a>
-			</div>
+		</div>
 	</div>
+	
+	<div id="scoreCardButtons">
+		<a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a>
+		<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true"  id="scoreCardClose">Close</a>
+	</div>
+
 </div>
 
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
-
-	
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
 			<a href="#" data-role="Home" data-bind="click: saveGolfer" data-icon="home" data-iconpos="notext"></a>
 

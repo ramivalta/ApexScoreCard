@@ -14,6 +14,8 @@ body {
 //	background: url('img/wild_oliva.png') !important;
 	background: black;
 	background-color: black;
+	padding: 0;
+	margin: 0;
 } 
 
 #s_page {
@@ -29,10 +31,9 @@ body {
 	width: 100%;
 	height: 44px;
 	position: fixed;
-
 	top: 0px;
-//	margin-top: 0px;
-//	padding-top: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
 }
 
 #headerText {
@@ -152,9 +153,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	width: 100%;
 	height: 38px;
 	position: fixed;
-	padding: 1px;
+	padding: 0px;
 	padding-bottom: 0px !important;
-	bottom: -1px !important;
+//	bottom: -1px !important;
+	bottom: 0px;
 	margin: 0px;
 	}
 	
@@ -296,141 +298,67 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #dialogHeader {
-	padding: 10px;
+	padding: 6px;
 	text-align: center;
 }
 
 #dialogContent {
 	text-align: center;
+	clear: both;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 47px !important;
 }
 	
-#scoreCardHoles {
+#scoreCardTable {
 	padding: 0px;
 	float: left;
 	color: black;
 	text-align: center;
 	border-spacing: 0px;
 	width: 100%;
-		border-color: #5c5c5c;
-			border-collapse: collapse;
-				border-width: 1px;
-}
-
-#scoreCardScores {
-	padding: 0px;
-	color: black;
-	text-align: center;
-	border-spacing: 0px;
-	width: 100%;
-		border-color: #5c5c5c;
-					border-collapse: collapse;
-						border-width: 1px;
+	border-color: #5c5c5c;
+	border-collapse: collapse;
+	border-width: 1px;
 }
 
 #scHeaders {
 	border-width: 1px;
 //	border-color: black; 
 	border-style: solid;
-		border-color: #5c5c5c;
+	border-color: #5c5c5c;
 	border-collapse: collapse;
 	font-weight: bold;
+	background : #eee;
 }
 
-#dialogCenter {
-	clear: both;
-	margin-left: auto;
-	margin-right: auto;
-
-}
 
 #scCells {
-
 	padding: 0px;
 	border-style: solid;
 //	border-color: black;
-		border-color: #5c5c5c;
-			border-width: 1px;
-
-}
-
-#scScoreCells {
-	padding: 0px;
-	border-style: solid;
-	background: #efefef;
-	border-color: #5c5c5c;
-		border-width: 1px;
-	border-left-width: 0px;;
-
-}
-#scPointsCells {
-	padding: 0px;
-	border-style: solid;
-	background: #e3e3e3;
 	border-color: #5c5c5c;
 	border-width: 1px;
 }
 
-#scLeftSide {
-	float: left;
-	width: 50%;
-	padding-bottom: 47px;
-}
 
-#scRightSide {
-	float: left;
-	width: 50%;
-	padding-bottom: 47px;
-}
-
-#scoreCardScoreTotals {
-	border-spacing: 0px;
-	width: 50%;
-	position: absolute;
-	bottom: 62px;
-
-	text-align: center;
+#scScoreCells {
+	padding: 0px;
+	border-style: solid;
+//	border-color: black;
 	border-color: #5c5c5c;
-	border-bottom-width: 1px;
-	font-weight: bold;
-
-}
-
-#scTotalScore {
-
-	padding: 0px;
-	border-style: solid;
-//	border-color: black;
-	background: #efefef;
-	width: 33%;
-		border-color: #5c5c5c;
-			border-width: 0px;
-	border-bottom-width: 1px;
-	font-weight: bold;
-}
-
-#scTotalPoints {
-
-	padding: 0px;
-	border-style: solid;
-//	border-color: black;
-	background: #efefef;
-	width: 33%;
-		border-color: #5c5c5c;
-			border-width: 0px;
-	border-bottom-width: 1px;
-	border-right-width: 1px;
-	font-weight: bold;
+	border-width: 1px;
+	background: #fff;
 }
 
 #scTotals {
+	border-width: 1px;
 	border-style: solid;
-//	border-color: black;
-	padding: 0px;
 	border-color: #5c5c5c;
-		border-width: 1px;
-		font-weight: bold;
+	border-collapse: collapse;
+	font-weight: bold;
+	background : #fff;
 }
-
 
 #scoreCardButtons {
 	clear: both;
@@ -442,7 +370,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 
 #scoreCardShare {
-	width: 49%;
+	width: 40%;
 	bottom: 0px;
 	position: absolute;
 	left: 0px;
@@ -451,8 +379,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #scoreCardClose {
-
-	width: 49%;
+	width: 40%;
 	height: auto;
 	position: absolute;
 	bottom: 0px;
@@ -538,11 +465,4 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	width: 100%;
 }
 
-c_footer {
-	height: 40px;
-	position: fixed;
-	bottom: 0px;
-	padding: 1px;
-	margin: 1px;
-}
 
