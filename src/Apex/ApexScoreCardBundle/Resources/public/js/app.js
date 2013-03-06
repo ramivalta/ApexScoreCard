@@ -41,11 +41,9 @@ function viewModel () {
 	self.holes = ko.observableArray([]);
 	self.courseData = ko.observableArray([]);
 	self.roundScores = ko.observableArray([]);
-
 	self.roundList = ko.observableArray([]);
-	self.roundCourses = ko.observableArray([]);
 
-	self.recentlyPlayedCourses = ko.observableArray([]);
+	self.recentlyPlayedCourses = ko.observableArray([]); // to be implemented
 	self.courseList = ko.observableArray([]);
 
 	self.scoreCardTotalPoints = ko.observable();

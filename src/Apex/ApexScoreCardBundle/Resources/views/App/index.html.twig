@@ -64,9 +64,7 @@
 		<a href="#courseSelect"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
 	
-	<!-- data-rel="dialog" -->
-		
-		<script type="text/javascript">
+	<script type="text/javascript">
 		moment.lang('en', {
 			longDateFormat : {
 				LT: "HH:mm",
@@ -80,8 +78,7 @@
 				llll: "ddd, MMM D YYYY LT"
 			}
 		});
-
-		</script>
+	</script>
 		
 	<div id="f_roundList">
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
@@ -91,7 +88,6 @@
 		</ul>  
 	</div>
 </div>
-	
 	
 
 <div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
@@ -126,7 +122,6 @@
 			<div id="roundScore" class="ui-block-c">
 				Score: <span data-bind="text: totalScore"></span><br>
 				<span style="font-size: 75%"> Points:</span>
-	<!--			<span data-bind="text: totalPoints" style="font-size: 75%"> -->
 				<span data-bind="text: totalPoints" style="font-size: 75%"> 
 				</span>
 			</div>
@@ -169,12 +164,9 @@
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed">
 		<span style="float: left""><a href="#s_page" data-role="button" data-icon="arrow-l"  data-transition="slidefade" data-direction="reverse" data-bind="click: previousHole" data-iconpos="notext"></a></span>
 
-
 		<span style="float: right"><a data-role="button" data-icon="arrow-r" data-bind="click: nextHole"  data-iconpos="notext"></a>
 		</span>	
-		
 	</div>
-
 </div>	
 	
 	
@@ -271,7 +263,6 @@
 		<a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a>
 		<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true"  id="scoreCardClose">Close</a>
 	</div>
-
 </div>
 
 
@@ -283,14 +274,12 @@
 	</div>
 
 	<div id="prefsWrappi">
-	
 		<div id="mainPrefs">
 			<h5>Handicap</h5>
 			<div id="prefsPlayerHcp" data-enhance="false"> 
 				<input id="i" style="display: none"
 				data-bind="value: playerExactHcp" />
 			</div>
-			
 <!--				<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
 			
 			<div id="tees">
@@ -343,14 +332,17 @@
 </div>		
 
 {% else %}
-<div data-theme="b" data-role="page">
+<div data-theme="b" data-role="page" id="login">
 
-              <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-              
-              
+  <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+	<script type="text/javascript">
+		setTimeout(function () { 
+					$.mobile.changePage("{{ path('fos_user_security_login') }}");	
+			    }, 500);
+	</script>
+</div>
 
 {% endif %}
-	
 
 </body>
 </html>

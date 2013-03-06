@@ -63,8 +63,7 @@ body {
 	line-height: 1.1em; 
 	color: #333;
 	text-shadow: 0px 1px 1px #fcfcfc;
-	
-	}
+}
 	
 #holeScore {
 	border: 0px;
@@ -77,8 +76,7 @@ body {
 	line-height: 1.1em; 
 	color: #333;
 	text-shadow: 0px 1px 1px #fcfcfc;
-	
-	}
+}
 
 #scoreWrappi
 	{
@@ -89,7 +87,7 @@ body {
 	background-color: transparent;
 	padding-top: 5px;
 	height: 75px;
-	}
+}
 	
 #scoreWrappi .ui-block-a { width: 30%}
 #scoreWrappi .ui-block-b { width: 40%}
@@ -126,11 +124,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 #il {
 	width: 100%;
-	}
+}
 	
 #ir {
 	width: 100%;
-	}
+}
 	
 
 #scoreDisplay {
@@ -267,25 +265,23 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-bottom-style: solid;
 }
 
-
 #holeData {
 	clear: both;
 	text-align: left;
 	width: 90%;
 	margin: auto;
 	line-height: 1.1em;
-//	background: #7e7e7e;
-//	padding: 10px;
 	border-style: solid;
 	border-radius: 4px;
 	border-top-color: #ADADAD;
 	border-bottom-color: #707070;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
+	border-width: 1px;
+//	border-top-width: 1px;
+//	border-bottom-width: 1px;
 	border-right-color: #ADADAD;
 	border-left-color: #ADADAD;
-	border-right-width: 1px;
-	border-left-width: 1px;
+//	border-right-width: 1px;
+//	border-left-width: 1px;
 	font-size: 0.8em;
 	color: #fff;
 	text-shadow: 0px 1px 1px #000;
@@ -324,7 +320,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 #scHeaders {
 	border-width: 1px;
-//	border-color: black; 
 	border-style: solid;
 	border-color: #5c5c5c;
 	border-collapse: collapse;
@@ -332,20 +327,16 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	background : #eee;
 }
 
-
 #scCells {
 	padding: 0px;
 	border-style: solid;
-//	border-color: black;
 	border-color: #5c5c5c;
 	border-width: 1px;
 }
 
-
 #scScoreCells {
 	padding: 0px;
 	border-style: solid;
-//	border-color: black;
 	border-color: #5c5c5c;
 	border-width: 1px;
 	background: #fff;
@@ -366,24 +357,24 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
+
 }
 
-
 #scoreCardShare {
-	width: 40%;
-	bottom: 0px;
+	width: 125px;
+	bottom: 5px;
 	position: absolute;
-	left: 0px;
+	left: 12px;
 	height: auto;
 	margin: 2px;
 }
 
 #scoreCardClose {
-	width: 40%;
+	width: 125px;
 	height: auto;
 	position: absolute;
-	bottom: 0px;
-	right: 0px;
+	bottom: 5px;
+	right: 12px;
 	margin: 2px;
 }
 
@@ -391,7 +382,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	background-color: rgba(0,0,0,0.0);
 	box-shadow: none
 }
-
 
 #prefsPlayerHcp {
 }
