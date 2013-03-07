@@ -615,7 +615,7 @@ function viewModel () {
 				
 				setTimeout(function () { 
 					self.fillScoreCard();	
-			    }, 100); // hax :(
+			    }, 300); // hax :(
 				
 				if (self.round_hcp() == undefined) {
 					self.round_hcp(self.playerExactHcp());

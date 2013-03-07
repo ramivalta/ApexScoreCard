@@ -17,8 +17,8 @@
 	
 	<script type="text/javascript">
 		$.mobile.changePage.defaults.allowSamePageTransition = true;
-        $.mobile.ignoreContentEnabled = true;
-         $.mobile.defaultHomeScroll = 0;
+//        $.mobile.ignoreContentEnabled = true;
+ //        $.mobile.defaultHomeScroll = 0;
 	</script>
 
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
@@ -72,7 +72,7 @@
 
 <div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
 
-	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="score_header">
 		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="click: leaveRound"></a>
 		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
@@ -140,7 +140,7 @@
 	</div>
 
 
-	<div id="footer" data-role="footer" data-theme="a" data-position="fixed">
+	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<span style="float: left""><a href="#s_page" data-role="button" data-icon="arrow-l"  data-transition="slidefade" data-direction="reverse" data-bind="click: previousHole" data-iconpos="notext"></a></span>
 
 		<span style="float: right"><a data-role="button" data-icon="arrow-r" data-bind="click: nextHole"  data-iconpos="notext"></a>
@@ -254,9 +254,10 @@
 	<div id="prefsWrappi">
 		<div id="mainPrefs">
 			<h5>Handicap</h5>
-			<div id="prefsPlayerHcp" data-enhance="false"> 
+			<div id="prefsPlayerHcp">
+			<!--  data-enhance="false"> -->
 				<input id="i" style="display: none"
-				data-bind="value: playerExactHcp" />
+				data-bind="value: playerExactHcp" data-role="none" />
 			</div>
 <!--				<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
 			
