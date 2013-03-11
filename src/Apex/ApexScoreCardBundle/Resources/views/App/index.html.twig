@@ -121,7 +121,6 @@
 
 <!-- <div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div>   -->
 
-
 	<div id="holeData" >
 		<div  class="ui-grid-a" data-role="content" data-theme="c">
 			<div id="1" class="ui-block-a">
@@ -135,10 +134,11 @@
 				Player: <span id="player" data-bind="text: playerName"></span><br>
 				Handicap: <span id="playerhcp" data-bind="text: round_hcp"></span><br>
 				Course handicap: <span id="playerplayhcp" data-bind="text: playerPlayingHcp"></span><br>
+				Tee: <span id="playerTee" data-bind="text: round_tee"></span> <br>
+				Round duration: <span id="duration" data-bind="text: moment(roundStartTime()).fromNow(true)"></span><br>
 			</div>
 		</div>
 	</div>
-
 
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<span style="float: left""><a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="click: previousHole" data-iconpos="notext"></a></span>
@@ -151,106 +151,158 @@
 	
 <div id="scoreCard" data-role="page" data-close-btn="none" data-theme="b">
 
+	<script type="text/javascript">
+		moment.lang('en', {
+			longDateFormat : {
+				LT: "HH:mm",
+				L: "MM/DD/YYYY",
+				l: "M/D/YYYY",
+				LL: "MMMM Do YYYY",
+				ll: "MMM D YYYY",
+				LLL: "MMMM Do YYYY LT",
+				lll: "MMM D YYYY LT",
+				LLLL: "dddd, MMMM Do YYYY LT",
+				llll: "ddd, MMM D YYYY LT"
+			}
+		});
+	</script>
+
 	<div data-theme="c" data-role="header" id="dialogHeader">
-			<span id="scCourse" data-bind="text: courseName"></span>&nbsp;
-<!--			<span id="scPlayer" data-bind="text: playerName"></span>&nbsp; -->
-			<span id="scStartTime" data-bind="text: roundStartTime"></span>
+			<span id="scCourse" data-bind="text: courseName"></span>
+			-
+			<span id="scStartTime" data-bind="text: moment(roundStartTime()).format('LLL')"></span>
 	</div>
 
 	<div data-role="content" id="dialogContent" data-theme="b">
-	<!--	<div id="scPlayer">
-				<p>Player: <span data-bind="text: playerName"></span> &nbsp; Handicap: <span data-bind="text: round_hcp"></span>
-			</div> -->
-		<div id="dialogCenter">
-		
-			<table id="scoreCardTable">
+		<table id="scoreCardTable">
+			<tr>
+				<td id="scHeaders">Hole</td>
+				<td id="scHeaders">Par</td>
+				<td id="scHeaders">HCP</td>
+				<td id="scHeaders">Length</td>
+				<td id="scHeaders">Score</td>
+				<td id="scHeaders">To Par</td>
+				<td id="scHeaders">Points</td>
+			</tr>
+			<tbody data-bind="foreach: scoreCard">
 				<tr>
-					<td id="scHeaders">Hole</td>
-					<td id="scHeaders">Par</td>
-					<td id="scHeaders">HCP</td>
-					<td id="scHeaders">Length</td>
-					<td id="scHeaders">Score</td>
-					<td id="scHeaders">To Par</td>
-					<td id="scHeaders">Points</td>
-				</tr>
-				<tbody data-bind="foreach: scoreCard">
-					<tr>
-						<td id="scCells" data-bind="text: hole_number"></td>
-						<td id="scCells" data-bind="text: hole_par"></td>
-						<td id="scCells" data-bind="text: hole_hcp"></td>
-						<td id="scCells"><span data-bind="text: hole_length"></span> m
+					<td id="scCells" data-bind="text: hole_number"></td>
+					<td id="scCells" data-bind="text: hole_par"></td>
+					<td id="scCells" data-bind="text: hole_hcp"></td>
+					
+					<!-- ko if: $parent.round_tee() == "yellow" -->
+						<td id="teeYellow"><span data-bind="text: hole_length"></span> m
 						</td>
+					<!-- /ko -->
+					<!-- ko if: $parent.round_tee() == "red" -->
+						<td id="teeRed"><span data-bind="text: hole_length"></span> m
+						</td>
+					<!-- /ko -->
+					<!-- ko if: $parent.round_tee() == "blue" -->
+						<td id="teeBlue"><span data-bind="text: hole_length"></span> m
+						</td>
+					<!-- /ko -->
+					<!-- ko if: $parent.round_tee() == "white" -->
+						<td id="teeWhite"><span data-bind="text: hole_length"></span> m
+						</td>
+					<!-- /ko -->
 					
-						<!-- ko if: score() > 0 -->
-							<!-- ko if: scoreToPar == -1 -->
-							<td id="scBirdie"><span id="circle" data-bind="text: score"></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar == -2 -->
-							<td id="scEagle"><span id="doublecircle"><span id="circle" data-bind="text: score"></span></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar == 1 -->
-								<td id="scBogey"><span id="rectangle" data-bind="text: score"></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar > 1 -->
-								<td id="scDouble" data-bind="text: score"></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar == 0 -->
-								<td id="scScoreCells" data-bind="text: score"></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar == 1 -->
-								<td id="scBogey">+<span data-bind="text: scoreToPar"></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar > 1 -->
-								<td id="scDouble">+<span data-bind="text: scoreToPar"></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar == -1 -->
-								<td id="scBirdie"><span data-bind="text: scoreToPar"></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar < -1 -->
-								<td id="scEagle"><span data-bind="text: scoreToPar"></span></td>
-							<!-- /ko -->
-							<!-- ko if: scoreToPar == 0 -->
-								<td id="scScoreCells"><span>E</span></td>
-							<!-- /ko -->
-						
-							<td id="scCells" data-bind="text: points"></td>
-					
+				
+					<!-- ko if: score() > 0 -->
+						<!-- ko if: scoreToPar == -1 -->
+						<td id="scBirdie"><span id="circle" data-bind="text: score"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar < -1 -->
+						<td id="scEagle"><span id="doublecircle"><span id="circle" data-bind="text: score"></span></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar == 1 -->
+							<td id="scBogey"><span id="rectangle" data-bind="text: score"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar > 1 -->
+							<td id="scDouble" data-bind="text: score"></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar == 0 -->
+							<td id="scScoreCells" data-bind="text: score"></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar == 1 -->
+							<td id="scBogey">+<span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar > 1 -->
+							<td id="scDouble">+<span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar == -1 -->
+							<td id="scBirdie"><span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar < -1 -->
+							<td id="scEagle"><span data-bind="text: scoreToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: scoreToPar == 0 -->
+							<td id="scScoreCells"><span>E</span></td>
 						<!-- /ko -->
 					
-						<!-- ko if: score() == 0 -->
-							<td id="scScoreCells">&nbsp;</td>
-							<td id="scCells">&nbsp;</td>
-							<td id="scCells">&nbsp;</td>
-						<!-- /ko -->
-					</tr>
-				</tbody>
-					<tr>
-						<td id="scTotals"></td>
-						<td id="scTotals" data-bind="text: coursePar"></td>
-						<td id="scTotals"></td>
-						<td id="scTotals"><span data-bind="text: courseLength"></span> m</td>
+						<td id="scCells" data-bind="text: points"></td>
+				
+					<!-- /ko -->
+				
+					<!-- ko if: score() == 0 -->
+						<td id="scScoreCells">&nbsp;</td>
+						<td id="scCells">&nbsp;</td>
+						<td id="scCells">&nbsp;</td>
+					<!-- /ko -->
+				</tr>
+			</tbody>
+				<tr>
+					<td id="scTotals"></td>
+					<td id="scTotals" data-bind="text: coursePar"></td>
+					<td id="scTotals"></td>
+					
+					<!-- ko if: round_tee() == "yellow" -->
+						<td id="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						</td>
+					<!-- /ko -->
+					<!-- ko if: round_tee() == "red" -->
+						<td id="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						</td>
+					<!-- /ko -->
+					<!-- ko if: round_tee() == "blue" -->
+						<td id="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						</td>
+					<!-- /ko -->
+					<!-- ko if: round_tee() == "white" -->
+						<td id="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						</td>
+					<!-- /ko -->
+					
+					<!-- ko if: totalToPar() < 0 -->
+						<td id="scBirdie" data-bind="text: totalScore"></td>
+					<!-- /ko -->
+					<!-- ko if: totalToPar() >= 0 -->	
+						<td id="scTotals" data-bind="text: totalScore"></td>
+					<!-- /ko -->				
+					<!-- ko if: totalToPar() > 0 -->
+						<td id="scTotals">+<span data-bind="text: totalToPar"></span></td>
+					<!-- /ko -->
+					<!-- ko if: totalToPar() < 0 -->
+						<td id="scBirdie"><span data-bind="text: totalToPar" ></span></td>
+					<!-- /ko -->
+					<!-- ko if: totalToPar() == 0 -->
+						<td id="scTotals"><span>E</span></td>
+					<!-- /ko -->
+				
+					<td id="scTotals" data-bind="text: scoreCardTotalPoints"></td> 
+				</tr>
+			</tbody>
+		</table>
 
-						<!-- ko if: totalToPar() < 0 -->
-							<td id="scBirdie" data-bind="text: totalScore"></td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() >= 0 -->	
-							<td id="scTotals" data-bind="text: totalScore"></td>
-						<!-- /ko -->				
-						<!-- ko if: totalToPar() > 0 -->
-							<td id="scTotals">+<span data-bind="text: totalToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() < 0 -->
-							<td id="scBirdie"><span data-bind="text: totalToPar" ></span></td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() == 0 -->
-							<td id="scTotals"><span>E</span></td>
-						<!-- /ko -->
-					
-						<td id="scTotals" data-bind="text: scoreCardTotalPoints"></td> 
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<div style="padding-top: 2px">&nbsp;</div>
+		
+		<table id="scoreCardTable">
+			<tr>
+				<td id="scCells">Player: <span data-bind="text: playerName" style="font-weight: bold"></span></td>
+				<td id="scCells">Handicap: <span data-bind="text: round_hcp" style="font-weight: bold"></span></td>
+				<td id="scCells">Date: <span style="font-weight: bold" data-bind="text: moment(roundStartTime()).format('LL')"></span></td>
+			</tr>
+		</table>
 	</div>
 	
 	<div id="scoreCardButtons">

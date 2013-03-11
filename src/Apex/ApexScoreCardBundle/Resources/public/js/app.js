@@ -31,6 +31,7 @@ function viewModel () {
 	self.round_id = ko.observable();
 	self.course_id = ko.observable();
 	self.round_hcp = ko.observable();
+	self.round_tee = ko.observable();
 	self.roundStartTime = ko.observable();
 	
 	self.noScoreEntered = ko.observable(true);
@@ -184,7 +185,7 @@ function viewModel () {
 	
 	
 	self.nextHole = function () {
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
 		var curHole = parseInt(self.currentHole());		
 			
@@ -207,7 +208,7 @@ function viewModel () {
 	};
 	
 	self.previousHole = function() {
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
 		var curHole = parseInt(self.currentHole());
 		self.noScoreEntered(false);
@@ -517,7 +518,7 @@ function viewModel () {
 	};
 	
 	self.leaveRound = function () {
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
 		self.scoreCard.removeAll();
 		self.scoreCardTotalPoints(0);
@@ -530,12 +531,13 @@ function viewModel () {
 	};
 		
 	
-	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score) {
+	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee) {
 		var data = {
 			round_id : round_id,
 			round_hcp : round_hcp,
 			hole_id : hole_id,
-			hole_score : hole_score
+			hole_score : hole_score,
+			round_tee : round_tee
 		};
 		
 		apexEventProxy.createNewRoundScore(
@@ -575,6 +577,7 @@ function viewModel () {
 						self.course_id(course_id);
 						self.round_hcp(self.playerExactHcp());
 						self.roundStartTime(start_time.date);
+						self.round_tee(self.playerDefaultTee());
 						
 						self.roundList.unshift({
 							id : round_id,
@@ -595,7 +598,7 @@ function viewModel () {
 	
 	self.loadRound = function(round_id, start_time) {
 
-		var loc = $("span").parent().offset().top;
+		var loc = $("a").parent().offset().top;
 		self.scrollPos(loc);
 
 		if (self.loadedRoundStartTime() != undefined) {
@@ -640,6 +643,7 @@ function viewModel () {
 						if (self.roundScores()[z].hole() == data.scores[i].hole_id) {
 							self.roundScores()[z].score(data.scores[i].score);
 							self.round_hcp(data.scores[i].round_hcp);
+							self.round_tee(data.scores[i].round_tee);
 						}
 					}
 				}
@@ -648,8 +652,15 @@ function viewModel () {
 					self.fillScoreCard();	
 			    }, 300); // hax :(
 				
-				if (self.round_hcp() == undefined) {
+				if (self.round_hcp() === "") {
 					self.round_hcp(self.playerExactHcp());
+	//				console.log("round_hcp not set");
+				};
+				
+	
+				if (self.round_tee() === "") {
+					self.round_tee(self.playerDefaultTee());
+//					console.log("round_tee not set");
 				};
 				
 				self.currentHole(1);
@@ -852,7 +863,6 @@ $(document).on('pageinit', function() {
 	window.vm = new viewModel();
 	
 	ko.applyBindings(vm, document.getElementById("f_page"));
-	
 	ko.applyBindings(vm, document.getElementById("courseSelect"));
 	
 //	ko.applyBindings(vm, document.getElementById("scoreCard"));
@@ -874,13 +884,11 @@ $(document).on('pageinit', function() {
 		if (vm.loadedRoundStartTime() != undefined) {
 			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
 			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
-//			var loc = ($(el).offset().top) -62;
 			$.mobile.silentScroll(vm.scrollPos());
 
 //			$('body,html').stop().animate({scrollTop : loc}, 1000);
 		}
 	});
-			
 
 	$('#prefs').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("prefs"));

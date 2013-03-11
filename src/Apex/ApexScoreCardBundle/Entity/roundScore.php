@@ -50,6 +50,13 @@ class roundScore
     private $round_hcp;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="round_tee", type="string", length=255)
+     */
+    private $round_tee;
+
+    /**
      * @var Apex\ApexScoreCardBundle\Entity\Round
      *
      * @ORM\ManyToOne(targetEntity="Apex\ApexScoreCardBundle\Entity\Round", inversedBy="round_s")
@@ -165,6 +172,29 @@ class roundScore
     }
 
     /**
+     * Set round_tee
+     *
+     * @param string $roundTee
+     * @return roundScore
+     */
+    public function setRoundTee($roundTee)
+    {
+        $this->round_tee = $roundTee;
+        
+        return $this;
+    }
+
+    /**
+     * Get round_tee
+     *
+     * @return string
+     */
+    public function getRoundTee()
+    {
+        return $this->round_tee;
+    }
+
+    /**
      * Set round_hcp
      *
      * @param float $roundHcp
@@ -195,6 +225,7 @@ class roundScore
     		'hole_id' 	=> $this->holeId,
     		'score' 	=> $this->score,
     		'round_hcp' => $this->round_hcp,
+    		'round_tee' => $this->round_tee,
     	);
     }
 }

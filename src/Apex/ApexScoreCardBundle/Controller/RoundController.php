@@ -272,7 +272,7 @@ class RoundController extends BaseController
 //		$start_time = $datet
 
     	
-    	return new Response(json_encode(array('message' => 'OK', 'round_id' => $round_id, 'round_start_time' => $datet)));
+    	return new Response(json_encode(array('round_id' => $round_id, 'round_start_time' => $datet)));
     }
     
     public function getRoundListAction()

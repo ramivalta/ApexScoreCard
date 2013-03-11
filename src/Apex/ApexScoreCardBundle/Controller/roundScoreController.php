@@ -217,6 +217,7 @@ class roundScoreController extends BaseController
     	$round_hcp = $json->data->round_hcp;
     	$hole_score = $json->data->hole_score;
     	$hole_id = $json->data->hole_id;
+    	$round_tee = $json->data->round_tee;
     	
     	$em = $this->getDoctrine()->getManager();
     	    	
@@ -234,6 +235,7 @@ class roundScoreController extends BaseController
 			$entity->setRoundHcp($round_hcp);
 			$entity->setHoleId($hole_id);
 			$entity->setScore($hole_score);
+			$entity->setRoundTee($round_tee);
 	    	$em->persist($entity);
     	}
 	    	
