@@ -37,6 +37,7 @@ function viewModel () {
 	self.showPoints = ko.observable(false);
 	self.sliderVal = ko.observable(0);
 	self.hasSlid = ko.observable(false);
+	self.loadedRoundStartTime = ko.observable();
 
 	self.holes = ko.observableArray([]);
 	self.courseData = ko.observableArray([]);
@@ -49,6 +50,9 @@ function viewModel () {
 	self.scoreCardTotalPoints = ko.observable();
 	self.totalToPar = ko.observable();
 	self.scoreCard = ko.observableArray();
+	
+	self.scrollPos = ko.observable();
+	
 
 	
 	self.prePopulateScores = function () {
@@ -194,7 +198,7 @@ function viewModel () {
 			self.setHoleData();
 		}
 		else {
-			self.currentHole(self.currentHole() + 1);
+			self.currentHole(curHole + 1);
 			self.setHoleData();
 		};
 
@@ -401,6 +405,11 @@ function viewModel () {
 	};
 	
 	self.loadPrefs = function() {
+		if (self.loadedRoundStartTime() != undefined) {
+			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', '');
+			self.scrollPos(0);
+		};
 		$.mobile.changePage("#prefs");
 
 	};
@@ -516,6 +525,8 @@ function viewModel () {
 		self.prePopulateScores();
 
 		$.mobile.changePage("#f_page");
+		
+		
 	};
 		
 	
@@ -536,6 +547,14 @@ function viewModel () {
 	
 	
 	self.startNewRound = function(course_id, course_name) {
+	
+		if (self.loadedRoundStartTime() != undefined) {
+			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', '');
+		};
+		
+		self.scrollPos(0);
+	
 	
 		self.holes.removeAll();
 //		self.roundScores.removeAll();
@@ -574,8 +593,20 @@ function viewModel () {
 		$.mobile.changePage("#s_page");
 	};
 	
-	self.loadRound = function(round_id) {
-	
+	self.loadRound = function(round_id, start_time) {
+
+		var loc = $("span").parent().offset().top;
+		self.scrollPos(loc);
+
+		if (self.loadedRoundStartTime() != undefined) {
+			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', '');
+		};
+
+
+
+		self.loadedRoundStartTime(start_time);
+
 		self.holes.removeAll();
 //		self.prePopulateScores(18);
 
@@ -819,27 +850,38 @@ window.vm = new viewModel();
 $(document).on('pageinit', function() {
 	
 	window.vm = new viewModel();
+	
 	ko.applyBindings(vm, document.getElementById("f_page"));
+	
 	ko.applyBindings(vm, document.getElementById("courseSelect"));
 	
 //	ko.applyBindings(vm, document.getElementById("scoreCard"));
 	
 	$('#scoreCard').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("scoreCard"));
-
 	});
 	
 	$('#s_page').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("s_page"));
 	});
-	
 
 	// https://github.com/jquery/jquery-mobile/issues/4078
-	$('#s_page').bind('pageshow', function(e) {
+	$('#s_page').on('pageshow', function(e) {
 		$(this).addClass('ui-page-active');
 	});
 	
-	
+	$('#f_page').on('pageshow', function(e) {
+		if (vm.loadedRoundStartTime() != undefined) {
+			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
+//			var loc = ($(el).offset().top) -62;
+			$.mobile.silentScroll(vm.scrollPos());
+
+//			$('body,html').stop().animate({scrollTop : loc}, 1000);
+		}
+	});
+			
+
 	$('#prefs').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("prefs"));
 		vm.hcpScroller();

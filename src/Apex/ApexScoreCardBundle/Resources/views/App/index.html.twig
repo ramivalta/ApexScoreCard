@@ -62,8 +62,8 @@
 		
 	<div id="f_roundList">
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
-			<li><a href="#" data-bind="click: $root.loadRound.bind($data, id)"><span data-bind="text: course_name"></span><span style="font-size: 66%">   
-				<div><span style="color: #999" data-bind="text: moment(start_time.date).calendar()"></div></a>
+			<li><a href="#" data-bind="click: $root.loadRound.bind($data, id, start_time.date)"><span data-bind="text: course_name"></span><span style="font-size: 66%"><span data-bind="text: start_time.date" style="visibility: hidden"></span>   
+				<div><span style="color: #999" data-bind="text: moment(start_time.date).calendar()"></span></div></a>
 			</li>
 		</ul>  
 	</div>
@@ -141,24 +141,28 @@
 
 
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
-		<span style="float: left""><a href="#s_page" data-role="button" data-icon="arrow-l"  data-transition="slidefade" data-direction="reverse" data-bind="click: previousHole" data-iconpos="notext"></a></span>
+		<span style="float: left""><a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="click: previousHole" data-iconpos="notext"></a></span>
 
-		<span style="float: right"><a data-role="button" data-icon="arrow-r" data-bind="click: nextHole"  data-iconpos="notext"></a>
+		<span style="float: right"><a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="click: nextHole"  data-iconpos="notext"></a>
 		</span>	
 	</div>
 </div>	
 	
 	
-<div id="scoreCard" data-role="page" data-close-btn="none" data-theme="c">
+<div id="scoreCard" data-role="page" data-close-btn="none" data-theme="b">
 
 	<div data-theme="c" data-role="header" id="dialogHeader">
 			<span id="scCourse" data-bind="text: courseName"></span>&nbsp;
-			<span id="scPlayer" data-bind="text: playerName"></span>&nbsp;
+<!--			<span id="scPlayer" data-bind="text: playerName"></span>&nbsp; -->
 			<span id="scStartTime" data-bind="text: roundStartTime"></span>
 	</div>
 
-	<div data-role="content" id="dialogContent">
+	<div data-role="content" id="dialogContent" data-theme="b">
+	<!--	<div id="scPlayer">
+				<p>Player: <span data-bind="text: playerName"></span> &nbsp; Handicap: <span data-bind="text: round_hcp"></span>
+			</div> -->
 		<div id="dialogCenter">
+		
 			<table id="scoreCardTable">
 				<tr>
 					<td id="scHeaders">Hole</td>
@@ -178,23 +182,35 @@
 						</td>
 					
 						<!-- ko if: score() > 0 -->
-							<!-- ko if: scoreToPar < 0 -->
-							<td id="scScoreCells" data-bind="text: score" style="background: #C2F0C2"></td>
+							<!-- ko if: scoreToPar == -1 -->
+							<td id="scBirdie"><span id="circle" data-bind="text: score"></span></td>
 							<!-- /ko -->
-							<!-- ko if: scoreToPar > 0 -->
-								<td id="scScoreCells" data-bind="text: score" style="background: #CEE0CE"></td>
+							<!-- ko if: scoreToPar == -2 -->
+							<td id="scEagle"><span id="doublecircle"><span id="circle" data-bind="text: score"></span></span></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar == 1 -->
+								<td id="scBogey"><span id="rectangle" data-bind="text: score"></span></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar > 1 -->
+								<td id="scDouble" data-bind="text: score"></td>
 							<!-- /ko -->
 							<!-- ko if: scoreToPar == 0 -->
 								<td id="scScoreCells" data-bind="text: score"></td>
 							<!-- /ko -->
-							<!-- ko if: scoreToPar > 0 -->
-								<td id="scCells" style="background: #CEE0CE">+<span data-bind="text: scoreToPar"></span></td>
+							<!-- ko if: scoreToPar == 1 -->
+								<td id="scBogey">+<span data-bind="text: scoreToPar"></span></td>
 							<!-- /ko -->
-							<!-- ko if: scoreToPar < 0 -->
-								<td id="scCells" style="background: #C2F0C2"><span data-bind="text: scoreToPar"></span></td>
+							<!-- ko if: scoreToPar > 1 -->
+								<td id="scDouble">+<span data-bind="text: scoreToPar"></span></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar == -1 -->
+								<td id="scBirdie"><span data-bind="text: scoreToPar"></span></td>
+							<!-- /ko -->
+							<!-- ko if: scoreToPar < -1 -->
+								<td id="scEagle"><span data-bind="text: scoreToPar"></span></td>
 							<!-- /ko -->
 							<!-- ko if: scoreToPar == 0 -->
-								<td id="scCells"><span>E</span></td>
+								<td id="scScoreCells"><span>E</span></td>
 							<!-- /ko -->
 						
 							<td id="scCells" data-bind="text: points"></td>
@@ -215,7 +231,7 @@
 						<td id="scTotals"><span data-bind="text: courseLength"></span> m</td>
 
 						<!-- ko if: totalToPar() < 0 -->
-							<td id="scTotals" data-bind="text: totalScore" style="background: #C2F0C2"></td>
+							<td id="scBirdie" data-bind="text: totalScore"></td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() >= 0 -->	
 							<td id="scTotals" data-bind="text: totalScore"></td>
@@ -224,7 +240,7 @@
 							<td id="scTotals">+<span data-bind="text: totalToPar"></span></td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() < 0 -->
-							<td id="scTotals" style="background-color: #C2F0C2"><span data-bind="text: totalToPar" ></span></td>
+							<td id="scBirdie"><span data-bind="text: totalToPar" ></span></td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() == 0 -->
 							<td id="scTotals"><span>E</span></td>
@@ -255,7 +271,6 @@
 		<div id="mainPrefs">
 			<h5>Handicap</h5>
 			<div id="prefsPlayerHcp">
-			<!--  data-enhance="false"> -->
 				<input id="i" style="display: none"
 				data-bind="value: playerExactHcp" data-role="none" />
 			</div>
