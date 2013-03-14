@@ -85,7 +85,9 @@ var ApexEventProxy = function() {
 	self.getRound = function (data, done, always, fail) {
     	self.proxy.post('{{path('round_json_get')}}', data, done, fail, always);
     };
-
+	self.endRound = function (data, done, always, fail) {
+    	self.proxy.post('{{path('round_json_end')}}', data, done, fail, always);
+    };
 
 };
 var apexEventProxy = new ApexEventProxy();

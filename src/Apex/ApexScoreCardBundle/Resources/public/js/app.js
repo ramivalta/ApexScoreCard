@@ -33,12 +33,13 @@ function viewModel () {
 	self.round_hcp = ko.observable();
 	self.round_tee = ko.observable();
 	self.roundStartTime = ko.observable();
+	self.roundEndTime = ko.observable("");
 	
 	self.noScoreEntered = ko.observable(true);
 	self.showPoints = ko.observable(false);
 	self.sliderVal = ko.observable(0);
 	self.hasSlid = ko.observable(false);
-	self.loadedRoundStartTime = ko.observable();
+	self.loadedRoundStartTime = ko.observable("");
 
 	self.holes = ko.observableArray([]);
 	self.courseData = ko.observableArray([]);
@@ -54,6 +55,7 @@ function viewModel () {
 	
 	self.scrollPos = ko.observable();
 	
+	self.roundDuration = ko.observable();
 
 	
 	self.prePopulateScores = function () {
@@ -68,7 +70,33 @@ function viewModel () {
 	};
 	
 	self.prePopulateScores();
-	
+
+	self.calcRoundDuration = function() {
+		if (self.roundEndTime() != "") {
+			var secs = moment(self.roundEndTime()).diff(self.roundStartTime(), 'seconds');
+		}
+		else {
+			var date = new Date();
+			var temp = date.getFullYear() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			var formatted = moment(temp).format("YYYY-MM-DD HH:mm:ss"); 
+			var secs = moment(formatted).diff(self.roundStartTime(), 'seconds');
+		}			
+		
+		var minutes = secs / 60;
+		var hours = minutes / 60;
+		var seconds = secs.mod(3600);
+		
+		if (hours < 1) {
+			hours = "";
+		}
+		else {
+			hours = (Math.floor(hours) + " h");
+		}
+		
+		minutes = (Math.floor(minutes) + " min");
+		self.roundDuration(hours + " " + minutes);
+	};
+
 	self.coursePar = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
@@ -255,7 +283,7 @@ function viewModel () {
 	
 		var sVal = parseInt(self.sliderVal());
 
-		if (sVal <50 && sVal >1 || sVal < -1 && sVal > -50 ) {
+		if (sVal <50 && sVal >0 || sVal < 0 && sVal > -50 ) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 				self.noScoreEntered(false);
@@ -406,10 +434,11 @@ function viewModel () {
 	};
 	
 	self.loadPrefs = function() {
-		if (self.loadedRoundStartTime() != undefined) {
+		if (self.loadedRoundStartTime() != "") {
 			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
 			el.parent().parent().parent().parent().parent().attr('style', '');
 			self.scrollPos(0);
+			self.loadedRoundStartTime("");
 		};
 		$.mobile.changePage("#prefs");
 
@@ -424,7 +453,7 @@ function viewModel () {
 				self.courseAlias(data.course.alias);
 				
 				if (self.playerDefaultTee() == "yellow") {
-					if (self.playerGender ()== "Male") {
+					if (self.playerGender()== "Male") {
 						self.courseCr(data.course.crYellowMen);
 						self.courseSl(data.course.slYellowMen);
 					}
@@ -520,6 +549,24 @@ function viewModel () {
 	self.leaveRound = function () {
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
+		if (self.roundEndTime() == "")
+		{
+			var d = new Date();
+			d = d.format("yyyy-mm-dd HH:MM:ss");
+			var data = { 
+				round_id : self.round_id(),
+				end_time : d
+			};
+			apexEventProxy.endRound(
+				{ data : data },
+				function (data) {
+					
+				}
+			);
+			
+		};
+
+		self.roundEndTime("")
 		self.scoreCard.removeAll();
 		self.scoreCardTotalPoints(0);
 		self.roundScores.removeAll();
@@ -550,15 +597,8 @@ function viewModel () {
 	
 	self.startNewRound = function(course_id, course_name) {
 	
-		if (self.loadedRoundStartTime() != undefined) {
-			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', '');
-		};
-		
-		self.scrollPos(0);
-	
-	
 		self.holes.removeAll();
+
 //		self.roundScores.removeAll();
 	
 		var data = { course_id : course_id };
@@ -575,8 +615,8 @@ function viewModel () {
 					function (data)	{
 						self.round_id(round_id);
 						self.course_id(course_id);
-						self.round_hcp(self.playerExactHcp());
 						self.roundStartTime(start_time.date);
+						self.round_hcp(self.playerExactHcp());
 						self.round_tee(self.playerDefaultTee());
 						
 						self.roundList.unshift({
@@ -590,6 +630,7 @@ function viewModel () {
 		);
 		self.getCourseGeneralData(course_id);
 		self.getHoleData(course_id);
+
 		
 		self.currentHole(1);
 		
@@ -601,15 +642,13 @@ function viewModel () {
 		var loc = $("a").parent().offset().top;
 		self.scrollPos(loc);
 
-		if (self.loadedRoundStartTime() != undefined) {
+		if (self.loadedRoundStartTime() != "") {
 			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
 			el.parent().parent().parent().parent().parent().attr('style', '');
 		};
 
 
-
 		self.loadedRoundStartTime(start_time);
-
 		self.holes.removeAll();
 //		self.prePopulateScores(18);
 
@@ -620,12 +659,19 @@ function viewModel () {
 			function (data) {
 				var course_id = data.round.course_id;
 				var start_time = data.round.start_time;
+				var end_time = data.round.end_time;
 				self.getRoundScores(round_id);
 				self.getCourseGeneralData(course_id);
 				self.getHoleData(course_id);
 				self.round_id(round_id);
 				self.course_id(course_id);
 				self.roundStartTime(start_time.date);
+				if (end_time == null) {
+					self.roundEndTime("");					
+				}
+				else {
+					self.roundEndTime(end_time.date);
+				}
 			}
 		);
 	
@@ -650,7 +696,7 @@ function viewModel () {
 				
 				setTimeout(function () { 
 					self.fillScoreCard();	
-			    }, 300); // hax :(
+			    }, 500); // hax :(
 				
 				if (self.round_hcp() === "") {
 					self.round_hcp(self.playerExactHcp());
@@ -852,6 +898,12 @@ function viewModel () {
 	};
 			
 	self.loadCourseSelect = function () {
+		if (self.loadedRoundStartTime() != "") {
+			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', '');
+			self.scrollPos(0);
+		}
+		self.loadedRoundStartTime("");
 		$.mobile.changePage('#courseSelect');
 	}
 }	
@@ -873,21 +925,33 @@ $(document).on('pageinit', function() {
 	
 	$('#s_page').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("s_page"));
+//		setTimeout(vm.roundDuration(), 1000);
 	});
 
 	// https://github.com/jquery/jquery-mobile/issues/4078
 	$('#s_page').on('pageshow', function(e) {
 		$(this).addClass('ui-page-active');
+		
+		vm.calcRoundDuration();
+		var clock = setInterval(function() { 
+		//	var date = new Date();
+			vm.calcRoundDuration();
+		} , 20000); 
+		
 	});
 	
 	$('#f_page').on('pageshow', function(e) {
-		if (vm.loadedRoundStartTime() != undefined) {
+		if (vm.loadedRoundStartTime() != "") {
 			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
 			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
 			$.mobile.silentScroll(vm.scrollPos());
 
 //			$('body,html').stop().animate({scrollTop : loc}, 1000);
 		}
+		
+//		if (clock) { clearInterval(clock) };
+		
+		
 	});
 
 	$('#prefs').on('pageinit', function () {

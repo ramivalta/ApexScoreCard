@@ -275,6 +275,26 @@ class RoundController extends BaseController
     	return new Response(json_encode(array('round_id' => $round_id, 'round_start_time' => $datet)));
     }
     
+    public function endRoundAction()
+    {
+    	$json = $this->getRequestJson();
+    	$round_id = $json->data->round_id;
+    	$end_time = $json->data->end_time;
+    	
+    	$dated = new \DateTime($end_time);
+    	
+    	
+    	$em = $this->getDoctrine()->getManager();
+		$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+		
+		$entity->setEndTime($dated);
+		
+		$em->persist($entity);
+		$em->flush();
+		
+		return new Response(json_encode(array('message' => 'OK')));
+    }
+    
     public function getRoundListAction()
     {
    		$user_id = $this->get('security.context')->getToken()->getUser()->getId();

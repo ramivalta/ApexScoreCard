@@ -19,7 +19,7 @@ class RegistrationFormType extends BaseType
         $builder->add('tee');
         $builder->add('gender');
         $builder->add('handicap');
-    }
+	}
 
     public function getName()
     {

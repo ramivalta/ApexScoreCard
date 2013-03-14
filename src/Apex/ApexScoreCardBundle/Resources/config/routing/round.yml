@@ -43,3 +43,8 @@ round_json_get:
     pattern: /json/get/round
     defaults: { _controller: "ApexScoreBundle:Round:getRound", _format: json }
     requirements: { _method: post|get }
+
+round_json_end:
+    pattern: /json/end/round
+    defaults: { _controller: "ApexScoreBundle:Round:endRound", _format: json }
+    requirements: { _method: post }
