@@ -246,7 +246,6 @@ class RoundController extends BaseController
     public function createNewRoundAction()
     {
     	$json = $this->getRequestJson();
-    
     	$course_id = $json->data->course_id;
 //    	$date = date('Y-m-d H:i:s');
     	
@@ -270,7 +269,6 @@ class RoundController extends BaseController
 //    	$start_time = date('YYYY-MM-DD HH:mm:ss Z', time());
 
 //		$start_time = $datet
-
     	
     	return new Response(json_encode(array('round_id' => $round_id, 'round_start_time' => $datet)));
     }
@@ -302,14 +300,10 @@ class RoundController extends BaseController
     	$em = $this->getDoctrine()->getManager();
     	
 		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $user_id));
-		
-//		, array('id' => 'ASC'));
-		
-		$rounds = array();
 
+		$rounds = array();
 		foreach ($g_rounds as $g) {
 			$rounds[] = $g->getRoundId();
-//			error_log($g->getRoundId());
 		}
 		
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 

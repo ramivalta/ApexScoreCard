@@ -5,46 +5,41 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
    	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/jquery.mobile-1.3.0.min.css') }}" />
+  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
+    <link href="{{ asset('bundles/apexscore/css/mobiscroll-2.4.1.custom.min.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
 	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
+			<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
+
     <script src="{{ asset('bundles/apexscore/js/knockout-2.2.1.js') }}"></script>
     <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
-
-
-    <link href="{{ asset('bundles/apexscore/css/mobiscroll-2.4.1.custom.min.css') }}" rel="stylesheet" type="text/css" />
 	<script src="{{ asset('bundles/apexscore/js/mobiscroll-2.4.1.custom.min.js') }}"></script> 
-
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
 	
-	<script type="text/javascript">
-		$.mobile.changePage.defaults.allowSamePageTransition = true;
-//        $.mobile.ignoreContentEnabled = true;
- //        $.mobile.defaultHomeScroll = 0;
-	</script>
 
-	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
+	
+	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
+
+
 	
 
+
+	
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" /> 
 	<meta name="apple-mobile-web-app-status-bar-style" content="white" />  
 
-</head>
-<body>
-
-{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
-<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
-
-                
-<div id="f_page" data-role="page" data-title="Rounds">
-	<div id="header" data-role="header" data-theme="b" data-position="fixed">
-		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="click: loadPrefs"></a>
-		<div id="headerText">Rounds for <span data-bind="text: playerName"></span></div>
-		<a href="#" data-bind="click: loadCourseSelect"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
-	</div>
+	<script type="text/javascript">
+		$.mobile.changePage.defaults.allowSamePageTransition = true;
+	</script>
 	
+
 	<script type="text/javascript">
 		moment.lang('en', {
 			longDateFormat : {
@@ -60,6 +55,26 @@
 			}
 		});
 	</script>
+
+	
+	
+</head>
+<body>
+
+
+
+
+
+
+                
+<div id="f_page" data-role="page" data-title="Rounds">
+	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="click: loadPrefs"></a>
+		<div id="headerText">Rounds for <span data-bind="text: playerName"></span></div>
+		<a href="#" data-bind="click: loadCourseSelect"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
+	</div>
+	
+
 		
 	<div id="f_roundList">
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
@@ -113,7 +128,7 @@
 			<div id="leftFill" class="ui-block-a"></div>
 				<div id="sliderW" class="ui-block-b">
 					<div id="slideri">
-						<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-100" max="100" /> 
+						<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-200" max="200" /> 
 					</div>
 				</div>
 			<div id="rightFill" class="ui-block-c"></div>
@@ -159,22 +174,6 @@
 	
 	
 <div id="scoreCard" data-role="page" data-close-btn="none" data-theme="b">
-
-	<script type="text/javascript">
-		moment.lang('en', {
-			longDateFormat : {
-				LT: "HH:mm",
-				L: "MM/DD/YYYY",
-				l: "M/D/YYYY",
-				LL: "MMMM Do YYYY",
-				ll: "MMM D YYYY",
-				LLL: "MMMM Do YYYY LT",
-				lll: "MMM D YYYY LT",
-				LLLL: "dddd, MMMM Do YYYY LT",
-				llll: "ddd, MMM D YYYY LT"
-			}
-		});
-	</script>
 
 	<div data-theme="c" data-role="header" id="dialogHeader">
 			<span id="scCourse" data-bind="text: courseName"></span>
@@ -315,7 +314,7 @@
 						<td id="scTotals"><span>E</span></td>
 					<!-- /ko -->
 				
-					<td id="scTotals" data-bind="text: scoreCardTotalPoints"></td> 
+					<td id="scTotals" data-bind="text: totalPoints"></td> 
 				</tr>
 			</tbody>
 		</table>
@@ -323,7 +322,7 @@
 	
 	<div id="scoreCardButtons">
 		<a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a>
-		<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true"  id="scoreCardClose">Close</a>
+		<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true" id="scoreCardClose">Close</a>
 	</div>
 </div>
 
@@ -394,13 +393,19 @@
 </div>		
 
 {% else %}
+
+		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
+
+
+</head>
+<body>
+
 <div data-theme="b" data-role="page" id="login">
 
   <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
 	<script type="text/javascript">
-		setTimeout(function () { 
-					$.mobile.changePage("{{ path('fos_user_security_login') }}");	
-			    }, 500);
+		window.location.href="{{ path('fos_user_security_login') }}";
 	</script>
 </div>
 

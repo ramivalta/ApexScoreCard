@@ -49,7 +49,6 @@ function viewModel () {
 	self.recentlyPlayedCourses = ko.observableArray([]); // to be implemented
 	self.courseList = ko.observableArray([]);
 
-	self.scoreCardTotalPoints = ko.observable();
 	self.totalToPar = ko.observable();
 	self.scoreCard = ko.observableArray();
 	
@@ -82,9 +81,15 @@ function viewModel () {
 			var secs = moment(formatted).diff(self.roundStartTime(), 'seconds');
 		}			
 		
-		var minutes = secs / 60;
-		var hours = minutes / 60;
+		var hours = secs / 3600;
 		var seconds = secs.mod(3600);
+		var minutes = seconds / 60;
+		var seconds = seconds.mod(60);
+		
+		
+/* var minutes = secs / 60;
+		var hours = minutes / 60;
+		var seconds = secs.mod(3600); */
 		
 		if (hours < 1) {
 			hours = "";
@@ -283,14 +288,14 @@ function viewModel () {
 	
 		var sVal = parseInt(self.sliderVal());
 
-		if (sVal <50 && sVal >0 || sVal < 0 && sVal > -50 ) {
+		if (sVal <100 && sVal >0 || sVal < 0 && sVal > -100 ) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 				self.noScoreEntered(false);
 			}
 		} 
 
-		if (sVal >= 51) {
+		if (sVal >= 101) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 			}
@@ -298,7 +303,7 @@ function viewModel () {
 			self.noScoreEntered(false);
 		}
 			
-		if (sVal < -51) {
+		if (sVal < -101) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 			}
@@ -568,7 +573,6 @@ function viewModel () {
 
 		self.roundEndTime("")
 		self.scoreCard.removeAll();
-		self.scoreCardTotalPoints(0);
 		self.roundScores.removeAll();
 		self.prePopulateScores();
 
@@ -634,6 +638,10 @@ function viewModel () {
 		
 		self.currentHole(1);
 		
+//		setTimeout(function () { 
+//			self.fillScoreCard();	
+//	    }, 500); // hax :(
+		
 		$.mobile.changePage("#s_page");
 	};
 	
@@ -646,7 +654,6 @@ function viewModel () {
 			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
 			el.parent().parent().parent().parent().parent().attr('style', '');
 		};
-
 
 		self.loadedRoundStartTime(start_time);
 		self.holes.removeAll();
@@ -786,7 +793,7 @@ function viewModel () {
 		$.mobile.changePage("#scoreCard", { transition: 'slidedown', role: 'dialog'});
 	};
 	
-	
+	/* kaipaa kipeästi rewriteä, näkevä lagi käylissä kun tää vedetään joka kerta uusiks korttia katsottaessa */
 	self.fillScoreCard = function (callback) {
 		self.scoreCard.removeAll();
 		var totalpoints = 0;
@@ -798,29 +805,25 @@ function viewModel () {
 			line['hole_hcp'] = self.holes()[i].hole_hcp;
 			line['hole_length'] = self.holes()[i].hole_length;
 			line['score'] = self.roundScores()[i].score;
-				
+
 			var t = self.getHolePoints(self.roundScores()[i].score(), self.holes()[i].hole_par(), self.holes()[i].hole_hcp()); 
-			
+
+			line['points'] = t;
+			self.roundScores()[i].points(t); // laitetaan scorenäkymälle näkyvään observableen 
+
 			if (self.roundScores()[i].score() > 0) {
 				var p = self.roundScores()[i].score() - self.holes()[i].hole_par();
 			}
 			else { var p = 0; }
 			
 			line['scoreToPar'] = p;
-			line['points'] = t;
 			
 			self.scoreCard.push(line);
-			
-			self.roundScores()[i].points(t); // laitetaan käylille näkyvään observableen että uusissa kierroksella näkee juoksevan totalpointsin
-			
-			totalpoints = totalpoints + parseInt(t);
 			totaltopar = totaltopar + parseInt(p);
 		}
 		
-		self.scoreCardTotalPoints(totalpoints);
 		self.totalToPar(totaltopar);
 	};
-	
 	
 	self.getHolePoints = function(score, par, hole_hcp) {
 		
@@ -908,16 +911,18 @@ function viewModel () {
 	}
 }	
 	
-window.vm = new viewModel();
+//window.vm = new viewModel();
 
 $(document).on('pageinit', function() {
 	
 	window.vm = new viewModel();
 	
 	ko.applyBindings(vm, document.getElementById("f_page"));
-	ko.applyBindings(vm, document.getElementById("courseSelect"));
 	
-//	ko.applyBindings(vm, document.getElementById("scoreCard"));
+	$('#courseSelect').on('pageinit', function () {
+		ko.applyBindings(vm, document.getElementById("courseSelect"));
+//		$('#courseSelect').off('pageinit');
+	});
 	
 	$('#scoreCard').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("scoreCard"));
@@ -925,7 +930,6 @@ $(document).on('pageinit', function() {
 	
 	$('#s_page').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("s_page"));
-//		setTimeout(vm.roundDuration(), 1000);
 	});
 
 	// https://github.com/jquery/jquery-mobile/issues/4078
@@ -948,7 +952,6 @@ $(document).on('pageinit', function() {
 
 //			$('body,html').stop().animate({scrollTop : loc}, 1000);
 		}
-		
 //		if (clock) { clearInterval(clock) };
 		
 		
