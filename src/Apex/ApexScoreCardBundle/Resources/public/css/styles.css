@@ -164,7 +164,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #sliderWrappi {
 	top: 10px;
 	margin: 0px;
-	height: 60px;
+	height: 80px;
 
 	}
 
@@ -204,7 +204,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1e1e', end
 
 #slideri .ui-slider .ui-slider-handle {
 	width:100px !important; 
-	height:60px !important; 
+	height:80px !important; 
 //	background: blue;
 	outline: none;
 	border-radius: 0px !important;
@@ -214,6 +214,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1e1e', end
 	background-size: 100%;
 	margin-left: -50px !important;
 	margin-top: -40px !important;
+	margin-bottom: 0px !important;
+	
 }
 
 .ui-slider .ui-slider-handle .ui-btn-inner {
@@ -235,8 +237,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1e1e', end
     box-shadow: none ;
 }
 
-/* a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
-a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
+// a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
+// a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 
 #scoreSlider {
 	display: none;
@@ -247,6 +249,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-bottom: 1px;
 	border-bottom-color: #ADADAD;
 	border-bottom-style: solid;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 #holeData {
