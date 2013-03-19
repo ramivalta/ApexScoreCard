@@ -56,6 +56,8 @@ function viewModel () {
 	
 	self.roundDuration = ko.observable();
 
+	self.roundListLoaded = ko.observable(false);
+
 	
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
@@ -218,15 +220,14 @@ function viewModel () {
 	
 	
 	self.nextHole = function () {
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
-
 		var curHole = parseInt(self.currentHole());		
-			
+		
+		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, self.currentHoleScore(), self.round_tee());
+
 		self.showPoints(false);
 		self.noScoreEntered(true);
 
 		var c_len = self.holes().length;
-
 		if (curHole == c_len) {
 			self.currentHole(1);
 			self.setHoleData();
@@ -235,30 +236,28 @@ function viewModel () {
 			self.currentHole(curHole + 1);
 			self.setHoleData();
 		};
-
-	 $.mobile.changePage('#s_page', { transition: "slide",
+		$.mobile.changePage('#s_page', { transition: "slidefade",
                                     allowSamePageTransition: true});
 	};
 	
 	self.previousHole = function() {
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
-
 		var curHole = parseInt(self.currentHole());
+		
+		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, self.currentHoleScore(), self.round_tee());
+
 		self.noScoreEntered(false);
 
 		var c_len = self.holes().length;
-
 		if (curHole === 1) {
 			self.currentHole(c_len);
 			self.setHoleData();
 		}
-
 		else {
 			self.currentHole(curHole - 1);
 			self.setHoleData();
 		};
 		
-		$.mobile.changePage('#s_page', { transition: "slide", reverse: true,
+		$.mobile.changePage('#s_page', { transition: "slidefade", reverse: true,
                                     allowSamePageTransition: true});
 	};
 	
@@ -266,10 +265,7 @@ function viewModel () {
 		var curHcpPar = parseInt(self.currentHoleHcpPar());
 		var curScore = parseInt(self.currentHoleScore());
 		
-		if (self.noScoreEntered()) {
-			return "";
-			}
-		else if ( curScore == 0) {
+		if (self.noScoreEntered() || curScore == 0) {
 			return "";
 			}
 		else {		
@@ -288,14 +284,14 @@ function viewModel () {
 	
 		var sVal = parseInt(self.sliderVal());
 
-		if (sVal <100 && sVal >0 || sVal < 0 && sVal > -100 ) {
+		if (sVal <25 && sVal >= 0 || sVal <= 0 && sVal > -25 ) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 				self.noScoreEntered(false);
 			}
 		} 
 
-		if (sVal >= 101) {
+		if (sVal >= 26) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 			}
@@ -303,7 +299,7 @@ function viewModel () {
 			self.noScoreEntered(false);
 		}
 			
-		if (sVal < -101) {
+		if (sVal < -26) {
 			if (self.noScoreEntered()) {
 				self.currentHoleScore(self.currentHolePar());
 			}
@@ -317,7 +313,6 @@ function viewModel () {
 		var curHolePar = parseInt(self.currentHolePar());
 
 		self.setScore(curHole, curScore, curPoints, curHolePar);
-			
 	};
 	
 	self.setScore = function (hole, score, points, holePar) {
@@ -369,9 +364,38 @@ function viewModel () {
 	
 	
 	self.resetSlider = function () {
-		var sVal = self.sliderVal();
+	
+	
+/*		var sVal = parseInt(self.sliderVal());
+		
+		if (sVal < 0) {
+			function uloopy () {
+				setTimeout(function () {
+					self.sliderVal(sVal);
+					sVal = sVal + 10;
+					if (sVal < 0) {
+						uloopy();
+					}
+				}, 5)
+			}
+			uloopy();
+		}
+		else if (sVal > 0) {
+			function loopy () {
+				setTimeout(function () {
+					self.sliderVal(sVal);
+					sVal = sVal - 10;
+					if (sVal > 0) {
+						loopy();
+					}
+				}, 5)
+			}
+			loopy();
+		} */
+		
 		self.hasSlid(false);
 		self.sliderVal(0);
+//		$('#scoreSlider').val(0);
 	};
 	
 	
@@ -445,7 +469,7 @@ function viewModel () {
 			self.scrollPos(0);
 			self.loadedRoundStartTime("");
 		};
-		$.mobile.changePage("#prefs");
+		$.mobile.changePage('#prefs', { transition: "slidefade", reverse:true });
 
 	};
 	
@@ -576,9 +600,7 @@ function viewModel () {
 		self.roundScores.removeAll();
 		self.prePopulateScores();
 
-		$.mobile.changePage("#f_page");
-		
-		
+		$.mobile.changePage("#f_page", { transition: "slidefade", reverse: true });
 	};
 		
 	
@@ -602,7 +624,6 @@ function viewModel () {
 	self.startNewRound = function(course_id, course_name) {
 	
 		self.holes.removeAll();
-
 //		self.roundScores.removeAll();
 	
 		var data = { course_id : course_id };
@@ -634,7 +655,6 @@ function viewModel () {
 		);
 		self.getCourseGeneralData(course_id);
 		self.getHoleData(course_id);
-
 		
 		self.currentHole(1);
 		
@@ -642,7 +662,8 @@ function viewModel () {
 //			self.fillScoreCard();	
 //	    }, 500); // hax :(
 		
-		$.mobile.changePage("#s_page");
+	$.mobile.changePage('#s_page', { transition: "slidefade",
+                                    allowSamePageTransition: true});
 	};
 	
 	self.loadRound = function(round_id, start_time) {
@@ -682,7 +703,7 @@ function viewModel () {
 			}
 		);
 	
-		$.mobile.changePage("#s_page");
+		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 	};
 
 	self.getRoundScores = function(round_id) {
@@ -729,7 +750,7 @@ function viewModel () {
 		);
 	};
 	
-	self.getRoundList = function () {
+	self.getRoundList = function (callback) {
 		var a;
 		apexEventProxy.getRoundList(
 			{ a : a },
@@ -742,11 +763,15 @@ function viewModel () {
 					});
 //				alert (data.rounds[i].start_time.date)
 				}
+//			$.mobile.loading("hide");
+			self.roundListLoaded(true);	
 			}
 		);
 	};
 	
 	self.getRoundList();
+	
+	
 	
 	self.getCourseList = ko.computed(function (callback) {
 		var a;
@@ -770,7 +795,7 @@ function viewModel () {
 		apexEventProxy.saveGolferData(
 			{ data : data },
 			function (data) {
-				$.mobile.changePage('#f_page');
+				$.mobile.changePage('#f_page', { transition: "slidefade" });
 			}
 		);
 	};
@@ -907,17 +932,27 @@ function viewModel () {
 			self.scrollPos(0);
 		}
 		self.loadedRoundStartTime("");
-		$.mobile.changePage('#courseSelect');
+		$.mobile.changePage('#courseSelect', { transition: "slidefade" });
+
 	}
 }	
 	
 //window.vm = new viewModel();
 
 $(document).on('pageinit', function() {
+
+	window.addEventListener('load', function() {
+			new FastClick(document.body);
+	}, false);
 	
 	window.vm = new viewModel();
 	
 	ko.applyBindings(vm, document.getElementById("f_page"));
+	
+/*	if (vm.roundListLoaded() == false) {
+		console.log("showload");
+		$.mobile.loading("show");
+	}	 */
 	
 	$('#courseSelect').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("courseSelect"));
@@ -938,14 +973,16 @@ $(document).on('pageinit', function() {
 		
 		vm.calcRoundDuration();
 		var clock = setInterval(function() { 
-		//	var date = new Date();
 			vm.calcRoundDuration();
 		} , 20000); 
 		
 	});
 	
 	$('#f_page').on('pageshow', function(e) {
+	
+		
 		if (vm.loadedRoundStartTime() != "") {
+		
 			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
 			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
 			$.mobile.silentScroll(vm.scrollPos());

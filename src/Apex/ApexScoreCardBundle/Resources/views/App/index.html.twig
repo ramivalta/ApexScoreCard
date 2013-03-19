@@ -13,30 +13,28 @@
 
 
 	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-			<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
+	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
 
     <script src="{{ asset('bundles/apexscore/js/knockout-2.2.1.js') }}"></script>
     <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/mobiscroll-2.4.1.custom.min.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
-	
+
+
+	<script src="{{ asset('bundles/apexscore/js/fastclick.js') }}"></script>
 
 	
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
 
-
-	
-
-
-	
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0" />
 	<meta name="apple-mobile-web-app-capable" content="yes" /> 
 	<meta name="apple-mobile-web-app-status-bar-style" content="white" />  
 
 	<script type="text/javascript">
 		$.mobile.changePage.defaults.allowSamePageTransition = true;
+		$.mobile.loader.prototype.options.theme = "d";
+		$.mobile.loader.prototype.options.textVisible = true;
 	</script>
 	
 
@@ -128,7 +126,7 @@
 			<div id="leftFill" class="ui-block-a"></div>
 				<div id="sliderW" class="ui-block-b">
 					<div id="slideri">
-						<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-200" max="200" /> 
+						<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-50" max="50" /> 
 					</div>
 				</div>
 			<div id="rightFill" class="ui-block-c"></div>
@@ -329,7 +327,7 @@
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
-			<a href="#" data-role="Home" data-bind="click: saveGolfer" data-icon="home" data-iconpos="notext"></a>
+			<a href="#" data-prefetch data-role="Home" data-bind="click: saveGolfer" data-icon="home" data-iconpos="notext"></a>
 
 		<div id="headerText">Preferences</div>
 	</div>
