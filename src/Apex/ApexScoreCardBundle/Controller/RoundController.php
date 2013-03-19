@@ -307,14 +307,86 @@ class RoundController extends BaseController
 		}
 		
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
-		
 
+
+/* hakee kierrosten scoret */
+/* hajoaa jos ei kierrokselle ei ole syötetty yhtään scorea */
+
+		$g_scores =  $em->getRepository('ApexScoreBundle:roundScore')->findBy(array('roundId' => $rounds), array('roundId' => 'DESC'));
+
+		if (!$g_scores) {
+    		throw $this->createNotFoundException('Unable to find roundScores entity');
+    	}
+		
+		$scores = array();
+		$total = null;
+		$prev_id = null;
+		$len = count($g_scores);
+		
+		foreach ($g_scores as $g) {
+			$id = $g->getRoundId();
+			if ($id == $prev_id) {
+				$total = $total + $g->getScore();
+			}
+			else {
+				if ($total) {
+					$scores[] = $total;
+					}
+				$total = $g->getScore();
+			}
+			
+			if ($len <= 1) {
+				$scores[] = $total;
+			}
+
+			$len--;
+			$prev_id = $id;
+		}
+/* */	
+
+
+/*
+		$cour = array();
+		foreach ($f_rounds as $r) {
+			$cour[] = $r->getCourse()->getId();
+		}
+	
+		$c_pars = $em->getRepository('ApexScoreBundle:Hole')->findBy(array('courseId' => $cour));
+		
+		$pars = array();
+		$par = null;
+		$prev_id = null;
+		$c_len = count($c_pars);
+		
+		foreach ($c_pars as $c) {
+			$id = $c->getCourseId();
+			if ($id == $prev_id) {
+				$par = $par + $c->getPar();
+			}
+			else {
+				if ($par) {
+					$pars[] = $par;
+					error_log($par);
+					}
+				$par = $c->getPar();
+			}
+			
+			if ($c_len <= 1) {
+				$pars[] = $par;
+			}
+			
+			$c_len--;
+			$prev_id = $id;
+		}
+*/
+	
+	
 		foreach ($f_rounds as $f) {
 			$roundses[] = $f->getJson();
 			$courses[] = $f->getCourse()->getJson();
 		}
 
-		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses)));	
+		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses, 'scores' => $scores)));	
     }
     
     public function getRoundAction()

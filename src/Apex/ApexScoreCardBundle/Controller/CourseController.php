@@ -220,7 +220,7 @@ class CourseController extends BaseController
     	}
 		
 		$courses = array();
-		foreach ($entities as $poops) { // homopaskakyrpä, kaks tuntia meni tähänkin
+		foreach ($entities as $poops) { 
     		$courses[] = $poops->getJson();
     	}
     	return new Response(json_encode(array('courses' => $courses)));

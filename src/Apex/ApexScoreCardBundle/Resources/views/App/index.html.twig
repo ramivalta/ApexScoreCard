@@ -77,7 +77,7 @@
 	<div id="f_roundList">
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
 			<li><a href="#" data-bind="click: $root.loadRound.bind($data, id, start_time.date)"><span data-bind="text: course_name"></span><span style="font-size: 66%"><span data-bind="text: start_time.date" style="visibility: hidden"></span>   
-				<div><span style="color: #999" data-bind="text: moment(start_time.date).calendar()"></span></div></a>
+				<div style="color: #999"><span data-bind="text: moment(start_time.date).calendar()"></span> / Score: <span data-bind="text: score"></span></div></a>
 			</li>
 		</ul>  
 	</div>
@@ -378,7 +378,7 @@
 
 <div id="courseSelect" data-role="page" data-title="New round" data-theme="b">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
-		<a href="#f_page" data-role="button" id="Home" data-icon="home" data-iconpos="notext"></a>
+		<a href="#f_page" data-transition="slidefade" data-direction="reverse"  data-role="button" id="Home" data-icon="home" data-iconpos="notext"></a>
 		<div id="headerText">Choose course</div>
 	</div>
 	<div id="courseListWrap">

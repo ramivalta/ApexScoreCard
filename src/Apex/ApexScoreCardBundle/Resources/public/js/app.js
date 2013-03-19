@@ -88,11 +88,6 @@ function viewModel () {
 		var minutes = seconds / 60;
 		var seconds = seconds.mod(60);
 		
-		
-/* var minutes = secs / 60;
-		var hours = minutes / 60;
-		var seconds = secs.mod(3600); */
-		
 		if (hours < 1) {
 			hours = "";
 		}
@@ -730,7 +725,6 @@ function viewModel () {
 					self.round_hcp(self.playerExactHcp());
 	//				console.log("round_hcp not set");
 				};
-				
 	
 				if (self.round_tee() === "") {
 					self.round_tee(self.playerDefaultTee());
@@ -760,6 +754,7 @@ function viewModel () {
 						id: data.rounds[i].id,
 						course_name: data.courses[i].name,
 						start_time : data.rounds[i].start_time,
+						score : data.scores[i],
 					});
 //				alert (data.rounds[i].start_time.date)
 				}
