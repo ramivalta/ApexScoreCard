@@ -21,7 +21,7 @@
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
 
 
-	<script src="{{ asset('bundles/apexscore/js/fastclick.js') }}"></script>
+<!--	<script src="{{ asset('bundles/apexscore/js/fastclick.js') }}"></script> -->
 
 	
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
@@ -42,8 +42,8 @@
 		moment.lang('en', {
 			longDateFormat : {
 				LT: "HH:mm",
-				L: "MM/DD/YYYY",
-				l: "M/D/YYYY",
+				L: "DD/MM/YYYY",
+				l: "D/M/YYYY",
 				LL: "MMMM Do YYYY",
 				ll: "MMM D YYYY",
 				LLL: "MMMM Do YYYY LT",
@@ -67,9 +67,9 @@
                 
 <div id="f_page" data-role="page" data-title="Rounds">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
-		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="click: loadPrefs"></a>
+		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="event: { tap: loadPrefs }"></a>
 		<div id="headerText">Rounds for <span data-bind="text: playerName"></span></div>
-		<a href="#" data-bind="click: loadCourseSelect"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
+		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
 	
 
@@ -77,7 +77,9 @@
 	<div id="f_roundList">
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
 			<li><a href="#" data-bind="click: $root.loadRound.bind($data, id, start_time.date)"><span data-bind="text: course_name"></span><span style="font-size: 66%"><span data-bind="text: start_time.date" style="visibility: hidden"></span>   
-				<div style="color: #999"><span data-bind="text: moment(start_time.date).calendar()"></span> / Score: <span data-bind="text: score"></span></div></a>
+				<div style="color: #999"><span data-bind="text: moment(start_time.date).calendar()"></span>
+				<!--/ Score: <span data-bind="text: score"></span> -->
+				</div></a>
 			</li>
 		</ul>  
 	</div>
@@ -87,12 +89,12 @@
 <div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
 
 	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="score_header">
-		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="click: leaveRound"></a>
+		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="event: { tap: leaveRound }"></a>
 		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
 		</div>
 
-		<a data-bind="click: showScoreCard" data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext" data-close-btn="none" data-transition="slidedown"></a>
+		<a data-bind="event: { tap: showScoreCard }" data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext" data-close-btn="none" data-transition="slidedown"></a>
 	</div>
 
 	<div id="top" data-role="content" data-theme="b">
@@ -135,37 +137,40 @@
 
 <!-- <div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div>    -->
 
-	<div id="holeData" >
-		<div  class="ui-grid-a" data-role="content" data-theme="c">
-			<div id="1" class="ui-block-a">
-				<span id="course" data-bind="text: courseName"></span><br>
-				Hole <span id="hole" data-bind="text: currentHole"></span><br>
-				Par <span id="par" data-bind="text: currentHolePar"></span><br>
-				Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
-				<span id="length" data-bind="text: currentHoleLength"></span> meters<br>
-			</div>
-			<div id="2" class="ui-block-b" style="text-align: right">
-				Player: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
-				Handicap: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
-				Course handicap: <span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
-				Tee: <span id="playerTee" data-bind="text: round_tee" style="font-weight: bold"></span><br>
-				Duration: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
+	<div id="bottom">
+		<div id="holeData" >
+			<div  class="ui-grid-a" data-role="content" data-theme="c">
+				<div id="1" class="ui-block-a">
+					<span id="course" data-bind="text: courseName"></span><br>
+					Hole <span id="hole" data-bind="text: currentHole"></span><br>
+					Par <span id="par" data-bind="text: currentHolePar"></span><br>
+					Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
+					<span id="length" data-bind="text: currentHoleLength"></span> meters<br>
+				</div>
+				<div id="2" class="ui-block-b" style="text-align: right">
+					Player: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
+					Handicap: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
+					Course handicap: <span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
+					Tee: <span id="playerTee" data-bind="text: round_tee" style="font-weight: bold"></span><br>
+					Duration: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
 
-					<span data-bind="if: roundEndTime()">End time:
-					<span data-bind="text: moment(roundEndTime()).format('HH:mm:ss')" style="font-weight: bold">
-					</span>
-				</span> 
+						<span data-bind="if: roundEndTime()">End time:
+						<span data-bind="text: moment(roundEndTime()).format('HH:mm:ss')" style="font-weight: bold">
+						</span>
+					</span> 
+				</div>
 			</div>
 		</div>
+	
 	</div>
 
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<span style="float: left">
-		<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="click: previousHole" data-iconpos="notext"></a>
+		<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="notext"></a>
 		</span>
 
 		<span style="float: right"> 
-		<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="click: nextHole"  data-iconpos="notext"></a>
+		<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="notext"></a>
 		</span>	
 	</div>
 </div>	
@@ -327,7 +332,7 @@
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
-			<a href="#" data-prefetch data-role="Home" data-bind="click: saveGolfer" data-icon="home" data-iconpos="notext"></a>
+			<a href="#" data-prefetch data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
 
 		<div id="headerText">Preferences</div>
 	</div>

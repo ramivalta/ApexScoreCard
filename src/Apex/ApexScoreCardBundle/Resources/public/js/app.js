@@ -190,7 +190,7 @@ function viewModel () {
 	
 
 	self.setHoleData = function () {
-		var idx = parseInt(self.currentHole()) -1 ; // index fix, sanity?
+		var idx = parseInt(self.currentHole()) -1;
 		
 		var par = parseInt(self.holes()[idx].hole_par());
 		self.currentHolePar(par);
@@ -587,7 +587,6 @@ function viewModel () {
 					
 				}
 			);
-			
 		};
 
 		self.roundEndTime("")
@@ -653,11 +652,7 @@ function viewModel () {
 		
 		self.currentHole(1);
 		
-//		setTimeout(function () { 
-//			self.fillScoreCard();	
-//	    }, 500); // hax :(
-		
-	$.mobile.changePage('#s_page', { transition: "slidefade",
+		$.mobile.changePage('#s_page', { transition: "slidefade",
                                     allowSamePageTransition: true});
 	};
 	
@@ -936,9 +931,9 @@ function viewModel () {
 
 $(document).on('pageinit', function() {
 
-	window.addEventListener('load', function() {
+/*	window.addEventListener('load', function() {
 			new FastClick(document.body);
-	}, false);
+	}, false); */
 	
 	window.vm = new viewModel();
 	
