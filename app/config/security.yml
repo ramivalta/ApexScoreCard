@@ -20,9 +20,14 @@ security:
                 login_path: /login
                 always_use_default_target_path: true
                 default_target_path: /profile
+            remember_me:
+                key: seeekret
+                lifetime: 360000
+                always_remember_me: true
+                path: /
+                domain: magrathea.kortex.jyu.fi
                 
-                
-            logout:       true
+
             anonymous:    true
             
     access_control:
