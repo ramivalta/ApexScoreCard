@@ -7,5 +7,7 @@
 /bin/
 /composer.phar
 /app/config/parameters.yml
+/app/config/security.yml
 .DS_Store
 /.DS_Store
+
