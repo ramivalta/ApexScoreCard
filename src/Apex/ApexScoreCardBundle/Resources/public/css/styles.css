@@ -47,7 +47,7 @@ body {
 }
 	
 
-#header .ui-btn { margin: 0px; padding: 0px; top: 5px; width: 44px; height: 34px; border-radius: 8px; }
+#header .ui-btn { margin: 0px; padding: 0px; top: 5px; width: 44px; height: 34px; border-radius: 6px; }
 #header .ui-btn-inner { border: 0px; padding: 0px; margin-top: 6px; margin-left: 10px;}
 #header .ui-btn-text { font-size: 1.2em, }
 
@@ -251,6 +251,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1e1e', end
 	border-bottom-style: solid;
 	padding-bottom: 0px;
 	margin-bottom: 0px;
+}
+
+#bottom {
+	border-top: 1px;
+	border-top-color: #eee;
+	border-top-style: solid;
+	padding-top: 0px;
+	margin-top: 0px;
 }
 
 #holeData {
