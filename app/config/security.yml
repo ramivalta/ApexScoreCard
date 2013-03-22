@@ -23,7 +23,7 @@ security:
             remember_me:
                 key: seeekret
                 lifetime: 360000
-                always_remember_me: true
+#                always_remember_me: true
                 path: /
                 domain: magrathea.kortex.jyu.fi
                 

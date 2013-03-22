@@ -65,23 +65,51 @@
 
 
                 
-<div id="f_page" data-role="page" data-title="Rounds">
+<div id="f_page" data-role="page" data-title="Bogikortti v0.1 - Bugikortti">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
 		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="event: { tap: loadPrefs }"></a>
-		<div id="headerText">Rounds for <span data-bind="text: playerName"></span></div>
+		<div id="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
 		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
 	
 
 		
 	<div id="f_roundList">
+	
+	<!-- ko if: firstRun() == "working" -->
+		<div data-theme="c" data-role="content">
+			Loading rounds...
+		</div>
+	<!-- /ko -->	
+	
+	<!-- ko if: firstRun() == false -->
+	<div data-theme="d" data-role="content">
+	
 		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
 			<li><a href="#" data-bind="click: $root.loadRound.bind($data, id, start_time.date)"><span data-bind="text: course_name"></span><span style="font-size: 66%"><span data-bind="text: start_time.date" style="visibility: hidden"></span>   
 				<div style="color: #999"><span data-bind="text: moment(start_time.date).calendar()"></span>
 				<!--/ Score: <span data-bind="text: score"></span> -->
 				</div></a>
 			</li>
-		</ul>  
+		</ul>
+	</div>
+	
+	<!-- /ko -->
+	<!-- ko if: firstRun() == true -->
+		<div data-theme="b" data-role="content">
+			<div style="width: 100%; margin-left: 10px; float:left">
+				<img src="{{asset('bundles/apexscore/images/arrow_left.png') }}" style="float:left">
+				<img src="{{asset('bundles/apexscore/images/arrow_right.png') }}" style="float:right; margin-right: 30px">
+			</div>
+			
+			<div style="width: 100%" style="float:left">
+				<span style="float:left; margin: 5px">Set your handicap and tee</span>
+				<span style="float: right; margin: 5px">Start new round</span>
+			</div>
+		</div>	
+	<!-- /ko -->		
+	
+	
 	</div>
 </div>
 	

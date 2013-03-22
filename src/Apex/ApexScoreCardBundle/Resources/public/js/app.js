@@ -58,6 +58,8 @@ function viewModel () {
 
 	self.roundListLoaded = ko.observable(false);
 
+	self.firstRun = ko.observable("working");
+
 	
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
@@ -751,6 +753,11 @@ function viewModel () {
 						start_time : data.rounds[i].start_time,
 						score : data.scores[i],
 					});
+				if (self.roundList().length > 0) {
+					self.firstRun(false);
+				}
+					else { self.firstRun(true);
+				}
 //				alert (data.rounds[i].start_time.date)
 				}
 //			$.mobile.loading("hide");

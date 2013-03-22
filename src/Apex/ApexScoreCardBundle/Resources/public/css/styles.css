@@ -5,15 +5,15 @@ body {
 //	max-width: 800px;
 	width: 100%;
 //	background: url('img/wild_oliva.png') !important;
-	background-color: black;
-	background: black;
+//	background-color: black;
+//	background: black;
 	overflow-y: visible;
 }
 	
 .ui-page.ui-body-c  {
 //	background: url('img/wild_oliva.png') !important;
-	background: black;
-	background-color: black;
+//	background: black;
+//	background-color: black;
 	padding: 0;
 	margin: 0;
 } 
@@ -37,7 +37,7 @@ body {
 }
 
 #headerText {
-	font-size: 1.1em;
+	font-size: 1.0em;
 	font-family: tahoma, arial;
 	color: white;
 	text-align: center;
