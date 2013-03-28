@@ -252,6 +252,17 @@ class HoleController extends BaseController
 // 		error_log($course_id);
 
 		$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
+		
+		$course_holes = $course->getHoles();
+		
+// tää varmaan pitäis tehdä jotenkin fiksummin
+
+		if ($course_holes) {
+			foreach ($course_holes as $ch) {
+				$em->remove($ch);
+				$em->flush();
+			}
+		}
 
  		
  		foreach ($ar as $h) {
@@ -271,19 +282,11 @@ class HoleController extends BaseController
 			$em->flush();	
 		}
 		
-
-// 		error_log($ar[7]->hole_par);
- 		
- 		
- 		
  		
 		return new Response
 			(json_encode
 				(array('message' => 'OK'))
 			);
-
- 		
- 		
  	}
 
 }

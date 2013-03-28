@@ -85,7 +85,7 @@ function viewModel () {
 	
 	
 	self.saveCourse = function() {
-		alert (self.course_id());
+//		alert (self.course_id());
 	
 		// use normal tees if championship tees aren't set.
 		if (self.blueTeeEnabled() == false) {
@@ -145,6 +145,7 @@ function viewModel () {
 					{ data : data,
 					  course_id : course_id },
 					function (data) {
+						alert ("success");
 					}
 				);
 			}
@@ -192,6 +193,7 @@ function viewModel () {
 	});
 
 	self.getCourseGeneralData = function (course_id) {
+//		self.resetForm();
 		var data = { course_id : course_id };
 		apexEventProxy.getCourseData(
 			{ data : data },

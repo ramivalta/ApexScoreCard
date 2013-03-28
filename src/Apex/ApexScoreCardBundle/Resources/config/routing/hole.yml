@@ -37,4 +37,4 @@ hole_json_get_all:
 hole_json_set:
     pattern: /json/set/holes
     defaults: { _controller: "ApexScoreBundle:Hole:saveHoleData" }
-    requirements: { _method: post }
+    requirements: { _method: post|get }

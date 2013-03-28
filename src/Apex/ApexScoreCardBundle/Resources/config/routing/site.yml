@@ -1,17 +1,7 @@
 site:
     pattern:  /
-    defaults: { _controller: "ApexScoreBundle:site:index" }
+    defaults: { _controller: "ApexScoreBundle:Site:index" }
 
 site_addcourse:
     pattern:  /new/course
-    defaults: { _controller: "ApexScoreBundle:site:course_add" }
-
-#roundScore_json_new:
-#    pattern: /json/new/roundScore
-#    defaults: { _controller: "ApexScoreBundle:roundScore:createNewRoundScore", _format: json }
-#    requirements: { _method: post|get }
-    
-#roundScore_json_get_scores:
-#   pattern: /json/get/roundScores
-#  defaults: { _controller: "ApexScoreBundle:roundScore:getRoundScores", format: json }
-#    requirements: { _method: post }
+    defaults: { _controller: "ApexScoreBundle:Site:course_add" }
