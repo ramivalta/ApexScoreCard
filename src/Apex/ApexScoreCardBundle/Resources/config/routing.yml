@@ -30,6 +30,10 @@ ApexScoreBundle_app:
     resource: "@ApexScoreBundle/Resources/config/routing/app.yml"
     prefix: /app
 
+ApexScoreBundle_site:
+    resource: "@ApexScoreBundle/Resources/config/routing/site.yml"
+    prefix: /site
+
 GlobalJs:
     pattern: /js/global.js
     defaults: { _controller: ApexScoreBundle:Default:globaljs, _format: js }

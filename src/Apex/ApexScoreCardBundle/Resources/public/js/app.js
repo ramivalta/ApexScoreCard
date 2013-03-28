@@ -53,11 +53,8 @@ function viewModel () {
 	self.scoreCard = ko.observableArray();
 	
 	self.scrollPos = ko.observable();
-	
 	self.roundDuration = ko.observable();
-
 	self.roundListLoaded = ko.observable(false);
-
 	self.firstRun = ko.observable("working");
 
 	
@@ -660,7 +657,7 @@ function viewModel () {
 	
 	self.loadRound = function(round_id, start_time) {
 
-		var loc = $("a").parent().offset().top;
+		var loc = $(window).scrollTop();
 		self.scrollPos(loc);
 
 		if (self.loadedRoundStartTime() != "") {
@@ -670,7 +667,6 @@ function viewModel () {
 
 		self.loadedRoundStartTime(start_time);
 		self.holes.removeAll();
-//		self.prePopulateScores(18);
 
 		var round_id = round_id;
 		var data = { round_id : round_id };
@@ -934,26 +930,28 @@ function viewModel () {
 	}
 }	
 	
-//window.vm = new viewModel();
-
 $(document).on('pageinit', function() {
 
-/*	window.addEventListener('load', function() {
-			new FastClick(document.body);
-	}, false); */
-	
 	window.vm = new viewModel();
-	
 	ko.applyBindings(vm, document.getElementById("f_page"));
 	
-/*	if (vm.roundListLoaded() == false) {
-		console.log("showload");
-		$.mobile.loading("show");
-	}	 */
+	
+	$('#f_page').on('pageshow', function() {
+		if (vm.loadedRoundStartTime() != "") {
+			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
+			$.mobile.silentScroll(vm.scrollPos());
+		}
+		
+
+//		if (vm.scrollPos()) {
+	//		$.mobile.silentScroll(vm.scrollPos());
+		//}
+
+	});
 	
 	$('#courseSelect').on('pageinit', function () {
 		ko.applyBindings(vm, document.getElementById("courseSelect"));
-//		$('#courseSelect').off('pageinit');
 	});
 	
 	$('#scoreCard').on('pageinit', function () {
@@ -964,10 +962,12 @@ $(document).on('pageinit', function() {
 		ko.applyBindings(vm, document.getElementById("s_page"));
 	});
 
-	// https://github.com/jquery/jquery-mobile/issues/4078
+
 	$('#s_page').on('pageshow', function(e) {
-		$(this).addClass('ui-page-active');
-		
+	
+ 	//  https://github.com/jquery/jquery-mobile/issues/4078
+	//	$(this).addClass('ui-page-active');
+
 		vm.calcRoundDuration();
 		var clock = setInterval(function() { 
 			vm.calcRoundDuration();
@@ -975,20 +975,10 @@ $(document).on('pageinit', function() {
 		
 	});
 	
-	$('#f_page').on('pageshow', function(e) {
-	
-		
-		if (vm.loadedRoundStartTime() != "") {
-		
-			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
-			$.mobile.silentScroll(vm.scrollPos());
-
-//			$('body,html').stop().animate({scrollTop : loc}, 1000);
-		}
-//		if (clock) { clearInterval(clock) };
-		
-		
+	$('#s_page').on('pagehide', function() {
+//		if (clock) {
+	//		clearInterval(clock);
+		//}
 	});
 
 	$('#prefs').on('pageinit', function () {
@@ -997,5 +987,4 @@ $(document).on('pageinit', function() {
 	});
 	
 	$(document).off('pageinit');
-
 });	

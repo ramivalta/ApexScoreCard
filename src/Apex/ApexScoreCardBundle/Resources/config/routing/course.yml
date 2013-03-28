@@ -35,6 +35,11 @@ course_json_get:
     requirements: { _method: post }
     
 course_json_get_data:
-    pattern: json/get/course/data
+    pattern: /json/get/course/data
     defaults: { _controller: "ApexScoreBundle:Course:getCourseData" }
+    requirements: { _method: post }
+    
+course_json_set:
+    pattern: /json/set/course/data
+    defaults: { _controller: "ApexScoreBundle:Course:saveCourseData" }
     requirements: { _method: post }

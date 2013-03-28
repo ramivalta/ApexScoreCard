@@ -239,5 +239,51 @@ class HoleController extends BaseController
  		return new Response(json_encode(array('holes' => $holes)));
  	
  	}
+ 	
+ 	public function saveHoleDataAction()
+ 	{
+ 		$json = $this->getRequestJson();
+
+ 		$ar = json_decode($json->data);
+ 		$course_id = $json->course_id;
+
+ 		$em = $this->getDoctrine()->getManager();
+ 		
+// 		error_log($course_id);
+
+		$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
+
+ 		
+ 		foreach ($ar as $h) {
+			$entity = new Hole();
+			$entity->setCourse($course);	
+			$entity->setCourseId($course_id);
+			error_log($course_id);
+			$entity->setHoleNumber($h->hole_number);
+			$entity->setPar($h->hole_par);
+			$entity->setHcp($h->hole_hcp);
+			$entity->setLengthRed($h->hole_length_red);
+			$entity->setLengthBlue($h->hole_length_blue);
+			$entity->setLengthYellow($h->hole_length_yellow);
+			$entity->setLengthWhite($h->hole_length_white);
+
+			$em->persist($entity);
+			$em->flush();	
+		}
+		
+
+// 		error_log($ar[7]->hole_par);
+ 		
+ 		
+ 		
+ 		
+		return new Response
+			(json_encode
+				(array('message' => 'OK'))
+			);
+
+ 		
+ 		
+ 	}
 
 }

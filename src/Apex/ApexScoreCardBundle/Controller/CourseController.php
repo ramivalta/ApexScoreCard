@@ -209,7 +209,6 @@ class CourseController extends BaseController
         ;
     }
     
-    
     public function getCourseListAction()
     {
 		$em = $this->getDoctrine()->getManager();
@@ -253,6 +252,75 @@ class CourseController extends BaseController
     	return new Response(json_encode(array('course' => $name)));
     	
     } */
+    
+    public function saveCourseDataAction()
+    {
+    	$json = $this->getRequestJson();
+    	
+    	$course_id 			= $json->data->course_id;
+    	$course_name 		= $json->data->courseName;
+    	$course_alias 		= $json->data->courseAlias;
+    	$cr_red_men 		= $json->data->crRedMen;
+    	$cr_blue_men 		= $json->data->crBlueMen;
+    	$cr_yellow_men 		= $json->data->crYellowMen;
+    	$cr_white_men 		= $json->data->crWhiteMen;
+    	$sl_red_men 		= $json->data->slRedMen;
+    	$sl_blue_men 		= $json->data->slBlueMen;
+    	$sl_yellow_men 		= $json->data->slYellowMen;
+    	$sl_white_men 		= $json->data->slWhiteMen;
+    	$cr_red_ladies 		= $json->data->crRedLadies;
+    	$cr_blue_ladies 	= $json->data->crBlueLadies;
+    	$cr_yellow_ladies 	= $json->data->crYellowLadies;
+    	$sl_red_ladies 		= $json->data->slYellowLadies;
+    	$sl_blue_ladies 	= $json->data->slBlueLadies;
+    	$sl_yellow_ladies 	= $json->data->slYellowLadies;
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	if ($course_id == "new" ) {
+			$course = new Course();
+//			error_log($course->getId());
+//			$course_id = $course->getId();
+//			error_log("course_id course controllerissa:");
+//			error_log($course_id);
+		}
+		else {
+	    	$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
+	    	
+/*			error_log("course_id vanhassa:");
+			error_log($course_id + " <- course_id"); */
+    	}
+    
+  		$course->setCourseName($course_name);
+		$course->setCourseAlias($course_alias);
+		
+		$course->setCrRedMen($cr_red_men);
+		$course->setCrBlueMen($cr_blue_men);
+		$course->setCrYellowMen($cr_yellow_men);
+		$course->setCrWhiteMen($cr_white_men);
+		
+		$course->setSlRedMen($sl_red_men);
+		$course->setSlBlueMen($sl_blue_men);
+		$course->setSlYellowMen($sl_yellow_men);
+		$course->setSlWhiteMen($sl_white_men);
+		
+		$course->setCrRedLadies($cr_red_ladies);
+		$course->setCrBlueLadies($cr_blue_ladies);
+		$course->setCrYellowLadies($cr_yellow_ladies);
+		
+		$course->setSlRedLadies($sl_red_ladies);
+		$course->setSlBlueLadies($sl_blue_ladies);
+		$course->setSlYellowLadies($sl_yellow_ladies);
+		
+		$em->persist($course);
+		$em->flush();
+		
+		$course_id = $course->getId();
+		
+		return new Response
+			(json_encode
+				(array('message' => 'OK', 'course_id' => $course_id))
+			);
+	}
     
 }
 

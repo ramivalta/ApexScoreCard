@@ -8,9 +8,7 @@
   	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
     <link href="{{ asset('bundles/apexscore/css/mobiscroll-2.4.1.custom.min.css') }}" rel="stylesheet" type="text/css" />
 
-
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
 
 	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
@@ -20,10 +18,6 @@
 	<script src="{{ asset('bundles/apexscore/js/mobiscroll-2.4.1.custom.min.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
 
-
-<!--	<script src="{{ asset('bundles/apexscore/js/fastclick.js') }}"></script> -->
-
-	
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
 
@@ -36,7 +30,6 @@
 		$.mobile.loader.prototype.options.theme = "d";
 		$.mobile.loader.prototype.options.textVisible = true;
 	</script>
-	
 
 	<script type="text/javascript">
 		moment.lang('en', {
@@ -53,18 +46,10 @@
 			}
 		});
 	</script>
-
-	
-	
 </head>
+
 <body>
 
-
-
-
-
-
-                
 <div id="f_page" data-role="page" data-title="Bogikortti v0.1 - Bugikortti">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed">
 		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="event: { tap: loadPrefs }"></a>
@@ -73,28 +58,33 @@
 	</div>
 	
 
-		
 	<div id="f_roundList">
 	
 	<!-- ko if: firstRun() == "working" -->
 		<div data-theme="c" data-role="content">
 			Loading rounds...
 		</div>
-	<!-- /ko -->	
+	<!-- /ko -->		
 	
 	<!-- ko if: firstRun() == false -->
-	<div data-theme="d" data-role="content">
-	
-		<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
-			<li><a href="#" data-bind="click: $root.loadRound.bind($data, id, start_time.date)"><span data-bind="text: course_name"></span><span style="font-size: 66%"><span data-bind="text: start_time.date" style="visibility: hidden"></span>   
-				<div style="color: #999"><span data-bind="text: moment(start_time.date).calendar()"></span>
-				<!--/ Score: <span data-bind="text: score"></span> -->
-				</div></a>
-			</li>
-		</ul>
-	</div>
-	
+		<div>	
+			<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
+				<li>
+					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
+					<span data-bind="text: course_name"></span>
+					<span style="font-size: 66%">
+						<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
+						<div style="color: #999">
+							<span data-bind="text: moment(start_time.date).calendar()">						</span>
+						</div>
+					</span>
+					</a>
+				</li>
+			</ul>
+		</div>
 	<!-- /ko -->
+	
+	
 	<!-- ko if: firstRun() == true -->
 		<div data-theme="b" data-role="content">
 			<div style="width: 100%; margin-left: 10px; float:left">
@@ -107,9 +97,10 @@
 				<span style="float: right; margin: 5px">Start new round</span>
 			</div>
 		</div>	
-	<!-- /ko -->		
-	
-	
+	<!-- /ko -->	
+		
+		
+		
 	</div>
 </div>
 	
@@ -193,13 +184,21 @@
 	</div>
 
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
-		<span style="float: left">
-		<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="notext"></a>
-		</span>
+		<div style="float: left">
+		
+<!--		id="baz" style="float: left; width: 44px; border-right-style: solid !important; border-right-width: 1px !important; border-right-color: #848484 !important; padding: 0px !important; margin: 0px !important" > -->
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="notext"></a>
+		</div>
+		
+		<div>
+	<!-- id="bar" style="width: 100%; border-right-style: solid !important; border-right-style: solid !important; border-right-width: 1px !important; border-right-color: #848484 !important; border-left-color: #848484 !important; border-left-width: 1px !important; padding: 0px, margin: 0px; text-align: center; border: 25px !important"> 
+			herpderpderpderp -->
+		</div>
 
-		<span style="float: right"> 
-		<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="notext"></a>
-		</span>	
+		<div style="float: right"> 
+		<!-- id="foo" style="float: right; width: 44px; border-left-style: solid !important; border-left-width: 1px !important; border-left-color: #A7A7A7 !important">  -->
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="notext" ></a>
+		</div>	
 	</div>
 </div>	
 	

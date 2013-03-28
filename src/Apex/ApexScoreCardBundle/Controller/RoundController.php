@@ -296,8 +296,7 @@ class RoundController extends BaseController
     public function getRoundListAction()
     {
    		$user_id = $this->get('security.context')->getToken()->getUser()->getId();
-    
-    	$em = $this->getDoctrine()->getManager();
+       	$em = $this->getDoctrine()->getManager();
     	
 		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $user_id));
 
@@ -307,7 +306,6 @@ class RoundController extends BaseController
 		}
 		
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
-
 
 /* hakee kierrosten scoret */
 /* hajoaa jos ei kierrokselle ei ole syötetty yhtään scorea */
