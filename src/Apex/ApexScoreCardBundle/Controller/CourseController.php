@@ -271,23 +271,16 @@ class CourseController extends BaseController
     	$cr_red_ladies 		= $json->data->crRedLadies;
     	$cr_blue_ladies 	= $json->data->crBlueLadies;
     	$cr_yellow_ladies 	= $json->data->crYellowLadies;
-    	$sl_red_ladies 		= $json->data->slYellowLadies;
+    	$sl_red_ladies 		= $json->data->slRedLadies;
     	$sl_blue_ladies 	= $json->data->slBlueLadies;
     	$sl_yellow_ladies 	= $json->data->slYellowLadies;
     	
     	$em = $this->getDoctrine()->getManager();
     	if ($course_id == "new" ) {
 			$course = new Course();
-//			error_log($course->getId());
-//			$course_id = $course->getId();
-//			error_log("course_id course controllerissa:");
-//			error_log($course_id);
 		}
 		else {
 	    	$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
-	    	
-/*			error_log("course_id vanhassa:");
-			error_log($course_id + " <- course_id"); */
     	}
     
   		$course->setCourseName($course_name);
