@@ -248,14 +248,11 @@ class HoleController extends BaseController
  		$course_id = $json->course_id;
 
  		$em = $this->getDoctrine()->getManager();
- 		
-// 		error_log($course_id);
-
 		$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
 		
 		$course_holes = $course->getHoles();
 		
-// tää varmaan pitäis tehdä jotenkin fiksummin
+		// tää varmaan pitäis tehdä jotenkin fiksummin
 
 		if ($course_holes) {
 			foreach ($course_holes as $ch) {
@@ -269,7 +266,6 @@ class HoleController extends BaseController
 			$entity = new Hole();
 			$entity->setCourse($course);	
 			$entity->setCourseId($course_id);
-			error_log($course_id);
 			$entity->setHoleNumber($h->hole_number);
 			$entity->setPar($h->hole_par);
 			$entity->setHcp($h->hole_hcp);
