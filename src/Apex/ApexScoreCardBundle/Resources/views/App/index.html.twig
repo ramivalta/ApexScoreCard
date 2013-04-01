@@ -51,7 +51,7 @@
 <body>
 
 <div id="f_page" data-role="page" data-title="Bogikortti v0.1 - Bugikortti">
-	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="event: { tap: loadPrefs }"></a>
 		<div id="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
 		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
@@ -107,7 +107,7 @@
 
 <div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
 
-	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="score_header">
+	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="event: { tap: leaveRound }"></a>
 		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
@@ -358,7 +358,7 @@
 
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
-	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 			<a href="#" data-prefetch data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
 
 		<div id="headerText">Preferences</div>
@@ -409,7 +409,7 @@
 
 
 <div id="courseSelect" data-role="page" data-title="New round" data-theme="b">
-	<div id="header" data-role="header" data-theme="b" data-position="fixed">
+	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-transition="slidefade" data-direction="reverse"  data-role="button" id="Home" data-icon="home" data-iconpos="notext"></a>
 		<div id="headerText">Choose course</div>
 	</div>
