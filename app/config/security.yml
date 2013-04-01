@@ -9,7 +9,7 @@ security:
 
     providers:
         fos_userbundle:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
 
     firewalls:
         main:
@@ -22,7 +22,7 @@ security:
                 default_target_path: /profile
             remember_me:
                 key: seeekret
-                lifetime: 360000
+                lifetime: 96000000
 #                always_remember_me: true
                 path: /
                 domain: magrathea.kortex.jyu.fi

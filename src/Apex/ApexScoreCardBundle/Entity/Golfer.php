@@ -52,7 +52,7 @@ class Golfer extends BaseUser implements UserInterface, \Serializable
      *
      * @ORM\Column(name="tee", type="string", length=255)
      */
-    private $tee;
+    private $tee = "yellow";
 
     /**
      * @var string
@@ -67,7 +67,7 @@ class Golfer extends BaseUser implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="handicap", type="float")
 	 */
-	private $handicap;
+	private $handicap = 36;
 
     /**
      * @var string $password
