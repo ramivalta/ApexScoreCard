@@ -226,23 +226,7 @@ class RoundController extends BaseController
         ;
     }
     
-    public function jsonRound()
-    {
-    	$round_id = $this->get('security.context')->getToken()->getUser()->getId();
-    	
-    	$em = $this->getDoctrine()->getManager();
-    	
-    	$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
-    	
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find Round entity');
-    	}
-    	
-    	$round = $entity->getJson();
-    	
-    	return new Response(json_encode(array('round' => $round)));
-    }
-    
+   
     public function createNewRoundAction()
     {
     	$json = $this->getRequestJson();
@@ -257,6 +241,10 @@ class RoundController extends BaseController
     	$entity = new Round();
 
 	  	$course = $em->getRepository('ApexScoreBundle:Course')->find($course_id);
+
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Course entity.');
+		}
     	
     	$entity->setCourse($course);
     	$entity->setStartTime($datet);
@@ -285,6 +273,10 @@ class RoundController extends BaseController
     	$em = $this->getDoctrine()->getManager();
 		$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
 		
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Round entity.');
+        }
+		
 		$entity->setEndTime($dated);
 		
 		$em->persist($entity);
@@ -299,6 +291,11 @@ class RoundController extends BaseController
        	$em = $this->getDoctrine()->getManager();
     	
 		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $user_id));
+
+	   if (!$g_rounds) {
+//               throw $this->createNotFoundException('Unable to find roundGolfer entity.');
+			return new Response(json_encode(array('message' => 'fail')));
+        }
 
 		$rounds = array();
 		foreach ($g_rounds as $g) {
@@ -394,6 +391,10 @@ class RoundController extends BaseController
     	
 		$em = $this->getDoctrine()->getManager();
     	$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+    	
+   	   if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Round entity.');
+		}
     	
     	$round = $entity->getJson();
     	

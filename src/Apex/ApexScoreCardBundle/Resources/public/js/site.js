@@ -44,6 +44,9 @@ function viewModel () {
 	self.courseData = ko.observableArray([]);
 	self.courseHoles = ko.observableArray([]);
 	
+	self.showHoleToggle = ko.observable(false);
+	self.saveSuccess = ko.observable(false);
+	
 	
 	self.resetForm = function() {
 		self.courseName = ko.observable();
@@ -64,6 +67,7 @@ function viewModel () {
 		self.courseCrBlueLadies = ko.observable();
 		self.courseSlBlueLadies = ko.observable();
 		self.holes.removeAll();
+		self.saveSuccess(false);
 	}
 	
 	self.newCourse = function() {
@@ -80,6 +84,8 @@ function viewModel () {
 				hole_length_white: ko.observable(0),
 			});
 			self.course_id("new");
+			
+			self.showHoleToggle(true);
 		}
 	};
 	
@@ -99,7 +105,7 @@ function viewModel () {
 			self.courseCrWhiteMen(self.courseCrYellowMen());
 			self.courseSlWhiteMen(self.courseSlYellowMen());
 		}
-	
+		
 		var data = {
 			course_id		: self.course_id(),
 			courseName		: self.courseName(),
@@ -145,7 +151,8 @@ function viewModel () {
 					{ data : data,
 					  course_id : course_id },
 					function (data) {
-						alert ("success");
+//						alert ("success");
+						self.saveSuccess(true);
 					}
 				);
 			}
@@ -193,7 +200,8 @@ function viewModel () {
 	});
 
 	self.getCourseGeneralData = function (course_id) {
-//		self.resetForm();
+		self.resetForm();
+		self.showHoleToggle(false);
 		var data = { course_id : course_id };
 		apexEventProxy.getCourseData(
 			{ data : data },
