@@ -290,57 +290,44 @@ class RoundController extends BaseController
    		$user_id = $this->get('security.context')->getToken()->getUser()->getId();
        	$em = $this->getDoctrine()->getManager();
     	
-		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $user_id));
+		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $user_id), array('id' => 'DESC'));
 
 	   if (!$g_rounds) {
 //               throw $this->createNotFoundException('Unable to find roundGolfer entity.');
 			return new Response(json_encode(array('message' => 'fail')));
         }
 
+
+/* järki mukaan lyöntien laskemiseen kierrosnäkymässä */
+
 		$rounds = array();
+		$scores = array();
+
+		
 		foreach ($g_rounds as $g) {
+			$round = $g->getRoundId();
 			$rounds[] = $g->getRoundId();
+			
+			// laskee scoren kierrokselle
+			
+			$score = 0;
+			$g_scores = $em->getRepository('ApexScoreBundle:roundScore')->findByRoundId($round);
+			if (!$g_scores) {
+				$score = 0;
+				}
+			else {
+				foreach ($g_scores as $s) {
+					$score += $s->getScore();
+				}
+			}
+			$scores[] = $score;
 		}
 		
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
 
-/* hakee kierrosten scoret */
-/* hajoaa jos ei kierrokselle ei ole syötetty yhtään scorea */
 
-		$g_scores =  $em->getRepository('ApexScoreBundle:roundScore')->findBy(array('roundId' => $rounds), array('roundId' => 'DESC'));
+// paskaaa
 
-		if (!$g_scores) {
-    		throw $this->createNotFoundException('Unable to find roundScores entity');
-    	}
-		
-		$scores = array();
-		$total = null;
-		$prev_id = null;
-		$len = count($g_scores);
-		
-		foreach ($g_scores as $g) {
-			$id = $g->getRoundId();
-			if ($id == $prev_id) {
-				$total = $total + $g->getScore();
-			}
-			else {
-				if ($total) {
-					$scores[] = $total;
-					}
-				$total = $g->getScore();
-			}
-			
-			if ($len <= 1) {
-				$scores[] = $total;
-			}
-
-			$len--;
-			$prev_id = $id;
-		}
-/* */	
-
-
-/*
 		$cour = array();
 		foreach ($f_rounds as $r) {
 			$cour[] = $r->getCourse()->getId();
@@ -373,15 +360,15 @@ class RoundController extends BaseController
 			$c_len--;
 			$prev_id = $id;
 		}
-*/
-	
+
+
 	
 		foreach ($f_rounds as $f) {
 			$roundses[] = $f->getJson();
 			$courses[] = $f->getCourse()->getJson();
 		}
 
-		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses, 'scores' => $scores)));	
+		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses, 'scores' => $scores, 'pars' => $pars)));	
     }
     
     public function getRoundAction()

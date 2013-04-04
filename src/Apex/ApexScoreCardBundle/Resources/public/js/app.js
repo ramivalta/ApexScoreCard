@@ -169,8 +169,7 @@ function viewModel () {
 		var playhcp = a * b + c;
 		return Math.round(playhcp);
 	});
-	
-	
+		
 	self.currentHoleHcpPar = ko.computed(function () {
 		var par = self.currentHolePar();
 		var crhcp = parseInt(self.playerPlayingHcp());
@@ -186,7 +185,6 @@ function viewModel () {
 		}
 	});
 	
-
 	self.setHoleData = function () {
 		var idx = parseInt(self.currentHole()) -1;
 		
@@ -210,8 +208,7 @@ function viewModel () {
 			self.noScoreEntered(true);
 		}
 	};
-	
-	
+		
 	self.nextHole = function () {
 		var curHole = parseInt(self.currentHole());		
 		
@@ -320,7 +317,7 @@ function viewModel () {
 		
 	
 	self.upScore = function () {
-		if (self.hasSlid() == false) {
+		if (self.hasSlid() === false) {
 			var y = self.currentHoleScore();
 			self.currentHoleScore(parseInt(y) + 1);
 			$("#score").animate({ 
@@ -590,6 +587,14 @@ function viewModel () {
 			};
 		};
 
+		for (var i = 0; i < self.roundList().length; i++) {
+			if (self.roundList()[i].id == self.round_id()) {
+				self.roundList()[i].score(self.totalScore());
+				self.roundList()[i].par(self.coursePar());
+
+			}
+		}
+
 		self.roundEndTime("")
 		self.scoreCard.removeAll();
 		self.roundScores.removeAll();
@@ -619,7 +624,6 @@ function viewModel () {
 	self.startNewRound = function(course_id, course_name) {
 	
 		self.holes.removeAll();
-//		self.roundScores.removeAll();
 	
 		var data = { course_id : course_id };
 		apexEventProxy.createNewRound(
@@ -642,7 +646,9 @@ function viewModel () {
 						self.roundList.unshift({
 							id : round_id,
 							course_name : course_name,
-							start_time : start_time
+							start_time : start_time,
+							score : ko.observable(),
+							par : ko.observable(),
 						});
 					}
 				);
@@ -651,7 +657,7 @@ function viewModel () {
 		self.getCourseGeneralData(course_id);
 		self.getHoleData(course_id);
 		
-		self.currentHole(1);
+		self.currentHole(1); // kymppireiältä alkavat kierrokset?
 		
 		$.mobile.changePage('#s_page', { transition: "slidefade",
                                     allowSamePageTransition: true});
@@ -750,7 +756,8 @@ function viewModel () {
 							id: data.rounds[i].id,
 							course_name: data.courses[i].name,
 							start_time : data.rounds[i].start_time,
-							score : data.scores[i],
+							score : ko.observable(data.scores[i]),
+							par : ko.observable(data.pars[i]),
 						});
 					if (self.roundList().length > 0) {
 						self.firstRun(false);
@@ -937,6 +944,7 @@ function viewModel () {
 	}
 }	
 	
+	
 $(document).on('pageinit', function() {
 
 	window.vm = new viewModel();
@@ -950,7 +958,6 @@ $(document).on('pageinit', function() {
 			$.mobile.silentScroll(vm.scrollPos());
 		}
 		
-
 //		if (vm.scrollPos()) {
 	//		$.mobile.silentScroll(vm.scrollPos());
 		//}

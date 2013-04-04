@@ -68,14 +68,15 @@
 	
 	<!-- ko if: firstRun() == false -->
 		<div>	
-			<ul id="roundList" data-role="listview" data-theme="d" data-bind="mobileList: roundList, foreach: roundList"> 
+			<ul id="roundList" data-role="listview" data-theme="c" data-bind="mobileList: roundList, foreach: roundList"> 
 				<li>
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 					<span data-bind="text: course_name"></span>
 					<span style="font-size: 66%">
 						<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
 						<div style="color: #999">
-							<span data-bind="text: moment(start_time.date).calendar()">						</span>
+							<span data-bind="text: moment(start_time.date).calendar()">						</span> - Score
+							<span data-bind="text: score"></span> / <span data-bind="text: par"> 
 						</div>
 					</span>
 					</a>
@@ -414,7 +415,7 @@
 		<div id="headerText">Choose course</div>
 	</div>
 	<div id="courseListWrap">
-		<ul data-theme="d" data-role="listview" data-filter="true" data-filter-placeholder="Course name or abbreviation..." data-filter-theme="a" id="courseList" data-bind="mobileList: courseList, foreach: courseList">
+		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Course name or abbreviation..." data-filter-theme="a" id="courseList" data-bind="mobileList: courseList, foreach: courseList">
 			<li data-bind="attr: { 'data-filtertext': alias +' '+ name}">
 				<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
 			</li>
