@@ -327,7 +327,7 @@ class RoundController extends BaseController
 
 
 // paskaaa
-
+/*
 		$cour = array();
 		foreach ($f_rounds as $r) {
 			$cour[] = $r->getCourse()->getId();
@@ -360,12 +360,13 @@ class RoundController extends BaseController
 			$c_len--;
 			$prev_id = $id;
 		}
-
+*/
 
 	
 		foreach ($f_rounds as $f) {
 			$roundses[] = $f->getJson();
 			$courses[] = $f->getCourse()->getJson();
+			$pars[] = $f->getCourse()->getCoursePar();
 		}
 
 		return new Response(json_encode(array('rounds' => $roundses, 'courses' => $courses, 'scores' => $scores, 'pars' => $pars)));	

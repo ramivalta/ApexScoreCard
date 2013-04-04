@@ -617,4 +617,23 @@ class Course
     {
         return $this->rounds;
     }
+    
+    
+    
+    
+    
+    public function getCoursePar()
+    {
+    	$holes = $this->holes;
+    	$par = 0;
+    	foreach ($holes as $h) {
+    		$par += $h->getPar();
+    	}
+    	
+    	return $par;
+    }
+    
+    
+    
+    
 }
