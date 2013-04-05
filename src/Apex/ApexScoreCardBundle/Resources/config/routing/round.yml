@@ -48,3 +48,8 @@ round_json_end:
     pattern: /json/end/round
     defaults: { _controller: "ApexScoreBundle:Round:endRound", _format: json }
     requirements: { _method: post }
+    
+round_json_delete:
+    pattern: /json/delete/round
+    defaults: { _controller: "ApexScoreBundle:Round:deleteRound", _format: json }
+    requirements: { _method: post }

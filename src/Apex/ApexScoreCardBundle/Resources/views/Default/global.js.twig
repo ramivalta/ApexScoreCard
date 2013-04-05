@@ -95,6 +95,10 @@ var ApexEventProxy = function() {
     	self.proxy.post('{{path('hole_json_set')}}', data, done, fail, always);
     };
 
+	self.deleteRound  = function (data, done, always, fail) {
+    	self.proxy.post('{{path('round_json_delete')}}', data, done, fail, always);
+    };
+
 
 };
 var apexEventProxy = new ApexEventProxy();

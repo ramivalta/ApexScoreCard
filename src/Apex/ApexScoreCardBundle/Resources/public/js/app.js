@@ -55,7 +55,9 @@ function viewModel () {
 	self.scrollPos = ko.observable();
 	self.roundDuration = ko.observable();
 	self.firstRun = ko.observable("working");
-
+	
+	self.clickedRound = ko.observable();
+	self.clickedRoundStartTime = ko.observable("");
 	
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
@@ -701,6 +703,56 @@ function viewModel () {
 	
 		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 	};
+	
+	self.deleteRoundDialog = function(round_id, start_time) {
+		self.clickedRound(round_id);
+
+		if (start_time) {
+			var el = $("span:contains('" + start_time + "')");
+			el.parent().parent().parent().parent().parent().attr('style', 'background: #FFFFC0');
+			self.clickedRoundStartTime(start_time);
+		};
+		
+
+		$("#delPopUp").popup( "open", { transition: "pop", positionTo: '#header'  });
+		
+/*		$.mobile.changePage("#delPopUp", { transition: "pop", role: "popup" }); */
+		
+	};
+	
+	self.deleteRound = function() {
+		var data = { round_id : self.clickedRound() };
+		apexEventProxy.deleteRound(
+			{ data : data },
+			function (data) {
+				for (var i = 0; i < self.roundList().length; i++) {
+					if (self.roundList()[i].id == self.clickedRound()) {
+						self.roundList.splice(i, 1);
+					}
+				}
+			}
+		);
+
+		self.clickedRoundStartTime("");
+		
+		$("#delPopUp").popup( "close", { transition: "fade" });
+		
+	}
+	
+	self.cancelRoundDelete = function() {
+	
+		if (self.clickedRoundStartTime() != "") {
+			var el = $("span:contains('" + self.clickedRoundStartTime() + "')");
+			el.parent().parent().parent().parent().parent().attr('style', '');
+			self.clickedRoundStartTime("");
+		}	
+			
+	
+		$("#delPopUp").popup( "close", { transition: "fade" });
+		
+	
+	}
+
 
 	self.getRoundScores = function(round_id) {
 	

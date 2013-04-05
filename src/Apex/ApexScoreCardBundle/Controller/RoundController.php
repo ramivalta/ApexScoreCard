@@ -325,44 +325,6 @@ class RoundController extends BaseController
 		
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
 
-
-// paskaaa
-/*
-		$cour = array();
-		foreach ($f_rounds as $r) {
-			$cour[] = $r->getCourse()->getId();
-		}
-	
-		$c_pars = $em->getRepository('ApexScoreBundle:Hole')->findBy(array('courseId' => $cour));
-		
-		$pars = array();
-		$par = null;
-		$prev_id = null;
-		$c_len = count($c_pars);
-		
-		foreach ($c_pars as $c) {
-			$id = $c->getCourseId();
-			if ($id == $prev_id) {
-				$par = $par + $c->getPar();
-			}
-			else {
-				if ($par) {
-					$pars[] = $par;
-					error_log($par);
-					}
-				$par = $c->getPar();
-			}
-			
-			if ($c_len <= 1) {
-				$pars[] = $par;
-			}
-			
-			$c_len--;
-			$prev_id = $id;
-		}
-*/
-
-	
 		foreach ($f_rounds as $f) {
 			$roundses[] = $f->getJson();
 			$courses[] = $f->getCourse()->getJson();
@@ -388,5 +350,47 @@ class RoundController extends BaseController
     	
     	return new Response(json_encode(array('round' => $round)));
     }
+
+	public function deleteRoundAction()
+	{
+		$json = $this->getRequestJson();
+		$round_id = $json->data->round_id;
+		
+		$em = $this->getDoctrine()->getManager();
+		$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
+
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Round entity.');
+		}
+
+		$t_scores = $entity->getScore();
+		
+		foreach ($t_scores as $s) {
+//			error_log($s->getScore());
+			$scores[] = $em->getRepository('ApexScoreBundle:roundScore')->find($s->getId());			
+		}
+
+		$round_golfer = $em->getRepository('ApexScoreBundle:roundGolfer')->find($round_id);
+
+//		$golfer = $entity->getGolfer();
+
+		foreach ($scores as $s) {
+//			error_log($s);
+//			$entity->removeScore($s);			
+			$em->remove($s);
+		}
+		
+		$em->remove($round_golfer);
+//		$entity->removeGolfer($golfer);
+		$em->remove($entity);
+
+		$em->flush();
+		
+//		$em->remove($entity-
+		
+		return new Response(json_encode(array('message' => 'OK')));
+		
+	}
+
 
 }

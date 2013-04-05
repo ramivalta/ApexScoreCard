@@ -47,9 +47,16 @@ body {
 }
 	
 
-#header .ui-btn { margin: 0px; padding: 0px; top: 5px; width: 44px; height: 34px; border-radius: 6px; }
+
+#header .ui-btn { margin: 0px; padding-left: 8px; padding-right: 8px; top: 4px; height: 34px; border-radius: 6px; }
+
+#header .ui-btn-inner { border: 0px; margin-top: 5px;}
+
+
+
+/* #header .ui-btn { margin: 0px; padding: 0px; top: 5px; width: 44px; height: 34px; border-radius: 6px; }
 #header .ui-btn-inner { border: 0px; padding: 0px; margin-top: 6px; margin-left: 10px;}
-#header .ui-btn-text { font-size: 1.2em, }
+#header .ui-btn-text { font-size: 1.2em; } */
 
 
 #roundScore {
@@ -236,8 +243,8 @@ body {
     box-shadow: none ;
 }
 
-// a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
-// a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
+a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
+a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 
 #scoreSlider {
 	display: none;

@@ -52,7 +52,7 @@
 
 <div id="f_page" data-role="page" data-title="Bogikortti v0.1 - Bugikortti">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" id="prefsButton" data-bind="event: { tap: loadPrefs }"></a>
+		<a href="#" id="txt-only" data-role="button" data-icon="gear" data-iconpos="notext" data-bind="event: { tap: loadPrefs }"></a>
 		<div id="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
 		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
@@ -68,7 +68,7 @@
 	
 	<!-- ko if: firstRun() == false -->
 		<div>	
-			<ul id="roundList" data-role="listview" data-theme="c" data-bind="mobileList: roundList, foreach: roundList"> 
+			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"> 
 				<li>
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 					<span data-bind="text: course_name"></span>
@@ -79,12 +79,31 @@
 							<span data-bind="text: score"></span> / <span data-bind="text: par"> 
 						</div>
 					</span>
-					</a>
+					<span>
+						<a data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu" data-position-to="origin"></a>
+					</span>
 				</li>
 			</ul>
+			
+	
+			
 		</div>
 	<!-- /ko -->
 	
+			<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissable="true" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
+				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+					<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
+				</div>
+				<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
+				  <h3 class="ui-title">Do you want to remove this round?</h3>
+				  <p>Round will be permanently deleted.</p>
+					<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Cancel</a>
+					<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Remove Round</a>
+				</div>
+			</div>
+	
+	
+
 	
 	<!-- ko if: firstRun() == true -->
 		<div data-theme="b" data-role="content">
