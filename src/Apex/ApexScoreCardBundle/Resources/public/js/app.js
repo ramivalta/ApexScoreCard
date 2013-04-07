@@ -753,7 +753,6 @@ function viewModel () {
 	
 	}
 
-
 	self.getRoundScores = function(round_id) {
 	
 		var data = { round_id : round_id };

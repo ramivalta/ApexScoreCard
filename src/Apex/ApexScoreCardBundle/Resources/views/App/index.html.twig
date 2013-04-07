@@ -80,7 +80,7 @@
 						</div>
 					</span>
 					<span>
-						<a data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu" data-position-to="origin"></a>
+						<a data-theme="d" data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu"></a>
 					</span>
 				</li>
 			</ul>
@@ -95,7 +95,7 @@
 					<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
 				</div>
 				<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
-				  <h3 class="ui-title">Do you want to remove this round?</h3>
+				  <h5 class="ui-title">Remove this round?</h5>
 				  <p>Round will be permanently deleted.</p>
 					<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Cancel</a>
 					<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Remove Round</a>

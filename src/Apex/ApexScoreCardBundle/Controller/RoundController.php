@@ -366,31 +366,27 @@ class RoundController extends BaseController
 		$t_scores = $entity->getScore();
 		
 		foreach ($t_scores as $s) {
-//			error_log($s->getScore());
 			$scores[] = $em->getRepository('ApexScoreBundle:roundScore')->find($s->getId());			
 		}
 
-		$round_golfer = $em->getRepository('ApexScoreBundle:roundGolfer')->find($round_id);
-
-//		$golfer = $entity->getGolfer();
+		$r_golfer = $em->getRepository('ApexScoreBundle:roundGolfer')->findByRoundId($round_id);
+		
+		$round_golfer = $em->getRepository('ApexScoreBundle:roundGolfer')->find($r_golfer[0]->getId());
 
 		foreach ($scores as $s) {
-//			error_log($s);
-//			$entity->removeScore($s);			
 			$em->remove($s);
 		}
 		
-		$em->remove($round_golfer);
-//		$entity->removeGolfer($golfer);
-		$em->remove($entity);
+/*		error_log($r_golfer[0]->getId());
+		error_log($round_golfer->getId());
+		error_log($round_golfer->getRoundId()); */
+//		error_log($round_golfer[0]->getGolferId());
 
+		$em->remove($round_golfer);
+
+		$em->remove($entity);
 		$em->flush();
 		
-//		$em->remove($entity-
-		
 		return new Response(json_encode(array('message' => 'OK')));
-		
 	}
-
-
 }
