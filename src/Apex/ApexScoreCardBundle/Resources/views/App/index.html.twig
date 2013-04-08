@@ -90,7 +90,7 @@
 		</div>
 	<!-- /ko -->
 	
-			<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissable="true" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
+			<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissable="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
 				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
 					<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
 				</div>
@@ -179,14 +179,14 @@
 	<div id="bottom">
 		<div id="holeData" >
 			<div  class="ui-grid-a" data-role="content" data-theme="c">
-				<div id="1" class="ui-block-a">
+				<div class="ui-block-a">
 					<span id="course" data-bind="text: courseName"></span><br>
 					Hole <span id="hole" data-bind="text: currentHole"></span><br>
 					Par <span id="par" data-bind="text: currentHolePar"></span><br>
 					Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
 					<span id="length" data-bind="text: currentHoleLength"></span> meters<br>
 				</div>
-				<div id="2" class="ui-block-b" style="text-align: right">
+				<div class="ui-block-b" style="text-align: right">
 					Player: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
 					Handicap: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
 					Course handicap: <span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
@@ -200,24 +200,19 @@
 				</div>
 			</div>
 		</div>
-	
 	</div>
 
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<div style="float: left">
-		
-<!--		id="baz" style="float: left; width: 44px; border-right-style: solid !important; border-right-width: 1px !important; border-right-color: #848484 !important; padding: 0px !important; margin: 0px !important" > -->
-			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="notext"></a>
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="notext" style="padding-right: 30px"></a>
 		</div>
 		
 		<div>
-	<!-- id="bar" style="width: 100%; border-right-style: solid !important; border-right-style: solid !important; border-right-width: 1px !important; border-right-color: #848484 !important; border-left-color: #848484 !important; border-left-width: 1px !important; padding: 0px, margin: 0px; text-align: center; border: 25px !important"> 
-			herpderpderpderp -->
+			<!-- -->
 		</div>
 
 		<div style="float: right"> 
-		<!-- id="foo" style="float: right; width: 44px; border-left-style: solid !important; border-left-width: 1px !important; border-left-color: #A7A7A7 !important">  -->
-			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="notext" ></a>
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="notext" style="padding-left: 30px"></a>
 		</div>	
 	</div>
 </div>	
@@ -379,10 +374,27 @@
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
 	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-			<a href="#" data-prefetch data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
+			<a href="#" data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
 
 		<div id="headerText">Preferences</div>
+		
+			<a href="#credsPopUp" id="credsBtn" data-rel="popup" data-position-to="#credsBtn" data-role="button" data-transition="flow" data-icon="info" data-theme="b" data-iconpos="notext"></a>
 	</div>
+	
+	<!-- credits -->
+		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissable="true" style="max-width: 250px" class="ui-corner-all" data-mini="true">
+				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
+					<h1>Credits</h1>
+				</div>
+				<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
+				  <h3 class="ui-title">Bogikortti v 0.1 - Bugikortti © Rami Valta 2013 </h3>
+				  <p>Thanks to: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko and Janne.</p>
+					<p><a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a></p>
+				</div>
+			</div>
+	<!-- -->
+	
 
 	<div id="prefsWrappi">
 		<div id="mainPrefs">
