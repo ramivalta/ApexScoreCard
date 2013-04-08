@@ -46,9 +46,15 @@ function viewModel () {
 	
 	self.showHoleToggle = ko.observable(false);
 	self.saveSuccess = ko.observable(false);
+	self.saveFailure = ko.observable(false);
+	
+	self.noOfHoles = ko.observable(0);
+	
+	self.nippedHoles = ko.observable([]);
 	
 	
 	self.resetForm = function() {
+
 		self.courseName = ko.observable();
 		self.courseAlias = ko.observable();
 		self.courseCrYellowMen = ko.observable();
@@ -66,6 +72,9 @@ function viewModel () {
 		self.courseSlYellowLadies = ko.observable();
 		self.courseCrBlueLadies = ko.observable();
 		self.courseSlBlueLadies = ko.observable();
+
+
+
 		self.holes.removeAll();
 		self.saveSuccess(false);
 	}
@@ -73,9 +82,11 @@ function viewModel () {
 	self.newCourse = function() {
 		self.resetForm();
 		
-		for (var i = 0; i < 18; i++) {
+		while (self.holes().length < 18) {
+		
+//		for (var i = 0; i < 18; i++) {
 			self.holes.push({
-				hole_number: ko.observable(i+1),
+				hole_number: ko.observable(self.holes().length + 1),
 				hole_par: ko.observable(0),
 				hole_hcp: ko.observable(),
 				hole_length_yellow: ko.observable(0),
@@ -83,16 +94,78 @@ function viewModel () {
 				hole_length_red: ko.observable(0),
 				hole_length_white: ko.observable(0),
 			});
-			self.course_id("new");
-			
-			self.showHoleToggle(true);
+	
 		}
+		self.course_id("new");
+		self.noOfHoles("18");
+		self.showHoleToggle(true);
+		
 	};
 	
+	self.holeNumToggle = ko.computed(function() {
+		if (self.noOfHoles() == 18) {
+//			if (self.holes().length < 18) {
+/*				if (self.nippedHoles().length > 1) {
+					for (var i = 0; i < self.nippedHoles().length; i++) {
+						self.holes.push(self.nippedHoles()[i]);
+					}
+				} */
+//				else {
+					var i = 0;
+					while (self.holes().length < 18) {
+//						console.log(self.holes().length);
+	//					console.log("lengthening");
+						self.holes.push({
+							hole_number: ko.observable(self.holes().length + 1),
+							hole_par: ko.observable(0),
+							hole_hcp: ko.observable(),
+							hole_length_yellow: ko.observable(0),
+							hole_length_blue: ko.observable(0),
+							hole_length_red: ko.observable(0),
+							hole_length_white: ko.observable(0),
+						});
+	//				}
+	//			}
+			}
+		}
+
+		else if (self.noOfHoles() == 9) {
+//			console.log("hurkadurka");
+			while (self.holes().length > 9) {
+//				self.nippedHoles().push(self.holes.pop());
+				self.holes.pop();
+//				console.log("shortening");					
+//				i++;
+		
+			}
+		}
+	});
+		
 	
 	self.saveCourse = function() {
-//		alert (self.course_id());
 	
+		var form = $('#form').parsley();
+		var form2 = $('#formi2').parsley();
+		
+
+
+//		$('#formi2').parsley('addItem', '#transparentInput');
+
+		$('#formi2').parsley( 'validate' );
+		$('#form').parsley( 'validate' );
+		
+
+		var valid = $('#form').parsley('isValid')
+		var valid2 = $('#formi2').parsley('isValid')
+		
+		console.log("form " + valid);
+		console.log("formi2 " + valid2);
+		
+		if (valid == false || valid2 == false) {
+			self.saveFailure(true);
+			return false;
+		}
+			
 		// use normal tees if championship tees aren't set.
 		if (self.blueTeeEnabled() == false) {
 			self.courseCrBlueMen(self.courseCrRedMen());
@@ -152,6 +225,7 @@ function viewModel () {
 					  course_id : course_id },
 					function (data) {
 //						alert ("success");
+						self.saveFailure(false);
 						self.saveSuccess(true);
 					}
 				);
@@ -238,6 +312,7 @@ function viewModel () {
 
 	self.getHoleData = function(course_id) {
 	
+		self.noOfHoles(0);
 		self.holes.removeAll();
 	
 		var data = { course_id : course_id };
@@ -255,6 +330,7 @@ function viewModel () {
 						hole_length_white: ko.observable(data.holes[i].length_white),
 					});
 				}
+
 			}
 //				self.setHoleData();
 		);
