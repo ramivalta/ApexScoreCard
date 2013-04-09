@@ -54,7 +54,6 @@ function viewModel () {
 	
 	
 	self.resetForm = function() {
-
 		self.courseName = ko.observable();
 		self.courseAlias = ko.observable();
 		self.courseCrYellowMen = ko.observable();
@@ -73,18 +72,16 @@ function viewModel () {
 		self.courseCrBlueLadies = ko.observable();
 		self.courseSlBlueLadies = ko.observable();
 
-
-
-		self.holes.removeAll();
+		self.holes.removeAll()
+		
 		self.saveSuccess(false);
+		self.saveFailure(false);
 	}
 	
 	self.newCourse = function() {
 		self.resetForm();
 		
 		while (self.holes().length < 18) {
-		
-//		for (var i = 0; i < 18; i++) {
 			self.holes.push({
 				hole_number: ko.observable(self.holes().length + 1),
 				hole_par: ko.observable(0),
@@ -96,6 +93,7 @@ function viewModel () {
 			});
 	
 		}
+		$( "#save" ).button({ enabled: true });
 		self.course_id("new");
 		self.noOfHoles("18");
 		self.showHoleToggle(true);
@@ -144,13 +142,11 @@ function viewModel () {
 	
 	self.saveCourse = function() {
 	
+		$("#save").button("disable");
+	
 		var form = $('#form').parsley();
 		var form2 = $('#formi2').parsley();
 		
-
-
-//		$('#formi2').parsley('addItem', '#transparentInput');
-
 		$('#formi2').parsley( 'validate' );
 		$('#form').parsley( 'validate' );
 		
@@ -158,11 +154,12 @@ function viewModel () {
 		var valid = $('#form').parsley('isValid')
 		var valid2 = $('#formi2').parsley('isValid')
 		
-		console.log("form " + valid);
-		console.log("formi2 " + valid2);
+/*		console.log("form " + valid);
+		console.log("formi2 " + valid2); */
 		
 		if (valid == false || valid2 == false) {
 			self.saveFailure(true);
+			$("#save").button("enable");
 			return false;
 		}
 			
@@ -225,6 +222,26 @@ function viewModel () {
 					  course_id : course_id },
 					function (data) {
 //						alert ("success");
+//						self.course_id(course_id);
+						$("#save").button("enable");
+						
+						if (self.course_id() == "new") {
+	//						console.log("hit");
+		/*					var course = {
+								name : self.courseName(),
+								id : self.course_id()
+							}; */
+
+							self.courseList.removeAll();
+							self.getCourseList();
+							self.course_id(course_id);
+						}
+						
+//						self.courseList().sort();
+						
+//							self.courseList.push(data.courses[i]);
+						
+						
 						self.saveFailure(false);
 						self.saveSuccess(true);
 					}
@@ -330,14 +347,17 @@ function viewModel () {
 						hole_length_white: ko.observable(data.holes[i].length_white),
 					});
 				}
+				$( "#save" ).button({ enabled: true });	
 
 			}
 //				self.setHoleData();
+
 		);
+
 	};
 	
 		
-	self.getCourseList = ko.computed(function (callback) {
+	self.getCourseList = function (callback) {
 		var a;
 		apexEventProxy.getCourseList(
 		{ a : a },
@@ -348,11 +368,12 @@ function viewModel () {
 				}
 			}
 		);
-	});
+	};
 	
 	self.getCourseList();
+	$( "#save" ).button({ enabled: true });
 	
-	self.saveGolfer = function (callback) {
+/*	self.saveGolfer = function (callback) {
 		var data = {
 			handicap: self.playerExactHcp(),
 			tee: self.playerDefaultTee(),
@@ -377,12 +398,12 @@ function viewModel () {
 				self.playerGender(data.golfer.gender);
 			}
 		);
-	};
+	}; */
 }	
 	
 
 $(document).ready(function() {
-	
+
 	window.vm = new viewModel();
 	ko.applyBindings(vm);
 });	

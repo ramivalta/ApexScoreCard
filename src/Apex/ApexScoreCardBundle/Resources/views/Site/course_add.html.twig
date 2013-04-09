@@ -55,7 +55,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="checkbox" name="menRed" data-bind="checked: redTeeEnabled" />
+<!--					<input type="checkbox" name="menRed" data-bind="checked: redTeeEnabled" /> -->
 				</td>
 				
 				<!-- ko if: redTeeEnabled() == true -->
@@ -103,7 +103,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="checkbox" name="menYellow" data-bind="checked: yellowTeeEnabled" />
+<!--					<input type="checkbox" name="menYellow" data-bind="checked: yellowTeeEnabled" /> -->
 				</td>
 			
 				<!-- ko if: yellowTeeEnabled() == true -->
@@ -159,7 +159,7 @@
 			
 			<tr>
 				<td>
-					<input type="checkbox" name="ladiesRed" data-bind="checked: redTeeEnabled" />
+<!--					<input type="checkbox" name="ladiesRed" data-bind="checked: redTeeEnabled" /> -->
 				</td>
 				<!-- ko if: redTeeEnabled() == true -->
 					<td>
@@ -201,7 +201,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="checkbox" name="ladiesRed" data-bind="checked: yellowTeeEnabled" />
+<!--					<input type="checkbox" name="ladiesRed" data-bind="checked: yellowTeeEnabled" /> -->
 				</td>
 				<!-- ko if: yellowTeeEnabled() == true -->
 					<td>
@@ -350,7 +350,7 @@
 <!--		<span data-bind="text: noOfHoles"></span><p> -->
 	
 	
-		<a href="#" data-bind="click: saveCourse">Save</a>
+		<button id="save" style="font-size: 120%" data-bind="click: saveCourse">Save</button>
 		<p>
 		<span id="message" data-bind="visible: saveSuccess">
 			<span style="color: green">Successfully saved!</span>
