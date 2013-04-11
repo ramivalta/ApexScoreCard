@@ -258,7 +258,8 @@ function viewModel () {
 		var curScore = parseInt(self.currentHoleScore());
 		
 		if (self.noScoreEntered() || curScore == 0) {
-			return "";
+			self.showPoints(false);
+			return 0;
 			}
 		else {		
 			var y = curHcpPar - curScore + 2;

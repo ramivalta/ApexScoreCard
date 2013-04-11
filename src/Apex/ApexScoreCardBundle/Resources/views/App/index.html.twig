@@ -144,13 +144,14 @@
 			</div>
 	
 			<div id="scoreB" class="ui-block-b">
-				<div id="scoreC">
-					<div id="il"></div>
-					<div id="score">
-						<div id="scoreDisplay" data-bind="visible:  noScoreEntered">-</div>
+				<div id="score">
+					<!-- ko if: currentHoleScore() == 0 -->
+						<div id="scoreDisplay">	- </div>
+					<!-- /ko -->
+						
+					<!-- ko if: currentHoleScore() > 0 -->
 						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
-					</div>
-					<div id="ir"></div>
+					<!-- /ko -->
 				</div>
 			</div>
 	
