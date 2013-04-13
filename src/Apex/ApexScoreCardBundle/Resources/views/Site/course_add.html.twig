@@ -22,7 +22,7 @@
 
 <body style="font-family: arial">
 
-	<div class="ui-widget" style="float:left; margin: 5px; padding: 15px">
+	<div class="ui-widget" style="float:left; margin: 5px; padding: 15px; overflow:scroll;position:absolute;bottom:0;top:0; width: 250px">
 		<div>
 		<span style="font-weight:bold; font-size: 120%"><a href="#" data-bind="click: newCourse">Add new course</a></span>
 			<ul data-bind="foreach: courseList">
@@ -30,12 +30,14 @@
 				<a href="#" data-bind="click: $root.getCourseGeneralData.bind($data, id)"><span data-bind="text: name"></span></a>
 				</li>
 			</ul>
+		<span data-bind="text: courseList().length"></span><span> courses</span>
 		</div>
 	</div>
 
 	<!-- ko if: holes().length > 0 -->	
 
-	<div class="ui-widget-content" style="margin: 5px; padding: 15px; float:left">
+	<div class="ui-widget-content" style="margin: 5px; padding: 15px; float:left; margin-left: 300px">
+
 	
 		<form data-validate="parsley" id="form">
 	
