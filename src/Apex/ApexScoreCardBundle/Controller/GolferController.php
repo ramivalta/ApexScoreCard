@@ -208,8 +208,8 @@ class GolferController extends BaseController
             ->getForm()
         ;
     }
-    
-    public function jsonGolferAction()
+
+    public function getGolferAction()
     {
 //    	$json = $this->getRequestJson();
     	
@@ -228,7 +228,8 @@ class GolferController extends BaseController
     	
     	return new Response(json_encode(array('golfer' => $golfer)));
     }
-    
+
+
     public function saveGolferPrefsAction()
     {
 		$json = $this->getRequestJson();

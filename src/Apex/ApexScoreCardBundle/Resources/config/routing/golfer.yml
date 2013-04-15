@@ -31,7 +31,7 @@ golfer_delete:
 
 golfer_json_get:
     pattern: /json/show/golfer
-    defaults: { _controller: "ApexScoreBundle:Golfer:jsonGolfer", _format: json }
+    defaults: { _controller: "ApexScoreBundle:Golfer:getGolfer", _format: json }
     requirements: { _method: post|get }
 
 golfer_json_set:
