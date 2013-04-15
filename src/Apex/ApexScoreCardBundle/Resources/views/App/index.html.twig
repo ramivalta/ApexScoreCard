@@ -68,7 +68,7 @@
 	
 	<!-- ko if: firstRun() == false -->
 		<div>	
-			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"> 
+			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList" style="-webkit-transform: translate3d(0,0,0)"> 
 				<li>
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 					<span data-bind="text: course_name"></span>
@@ -150,7 +150,7 @@
 					<!-- /ko -->
 						
 					<!-- ko if: currentHoleScore() > 0 -->
-						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
+						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore" style="-webkit-transform: translate3d(0,0,0)"></div>
 					<!-- /ko -->
 				</div>
 			</div>
@@ -205,15 +205,23 @@
 
 	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<div style="float: left">
-			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="notext" style="padding-right: 30px"></a>
-		</div>
-		
-		<div>
-			<!-- -->
+			<!-- ko if: currentHole() == 1 -->
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span id="holenav">Hole </span><span id="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
+			<!-- /ko -->
+			
+			<!-- ko if: currentHole() != 1 -->
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false"><span id="holenav">Hole </span><span id="holenav" data-bind="text: currentHole() - 1" style="padding-right: 30px"></span> </a>
+			<!-- /ko -->
 		</div>
 
 		<div style="float: right"> 
-			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="notext" style="padding-left: 30px"></a>
+			<!-- ko if: currentHole() == holes().length -->
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span id="holenav">Hole </span><span id="holenav">1</span>  </a>
+			<!-- /ko -->
+		
+			<!-- ko if: currentHole() != holes().length -->
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span id="holenav">Hole </span><span id="holenav" data-bind="text: currentHole() + 1"></span>  </a>
+			<!-- /ko -->
 		</div>	
 	</div>
 </div>	

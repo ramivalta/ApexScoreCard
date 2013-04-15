@@ -161,11 +161,17 @@ body {
 	margin: 0px;
 	}
 	
-#footer .ui-btn { margin: 0px; padding: 0px; top: 0px; width: 44px; height: 44px; border-radius: 2px; border-color: transparent; box-shadow: none; background: transparent }
-#footer .ui-btn-inner { border: 0px; padding: 0px; margin-top: 9px; margin-left: 10px;}
+#footer .ui-btn { background: transparent; height: 44px;  top: 0px !important; bottom: 0px !important; padding: 0px; margin: 0px; border-color: transparent; box-shadow: none; padding: 0px}
+
+#footer .ui-btn-inner { margin-top: 6px; border: 0px }
+
 #footer .ui-icon {
 	background-color: rgba(0,0,0,0.0);
 	box-shadow: none;
+}
+
+#holenav {
+	color: #ccc;
 }
 
 #sliderWrappi {
