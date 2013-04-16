@@ -51,6 +51,20 @@ class GolferController extends BaseController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+//			$gender = $form["gender"]->getData();
+/*			$data = $form->getData();
+			$gender = $data["gender"];
+
+
+			error_log($gender);
+			if ($gender == "Male") {
+				$entity->setTee("yellow");
+				}
+			else {
+				$entity->setTee("red");
+			} */
+            
             $em->persist($entity);
             $em->flush();
 
