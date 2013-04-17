@@ -1,6 +1,6 @@
 Number.prototype.mod = function(n) {
 return ((this%n)+n)%n;
-}
+};
 
 function viewModel () {
 	var self = this;
@@ -72,11 +72,11 @@ function viewModel () {
 		self.courseCrBlueLadies = ko.observable();
 		self.courseSlBlueLadies = ko.observable();
 
-		self.holes.removeAll()
+		self.holes.removeAll();
 		
 		self.saveSuccess(false);
 		self.saveFailure(false);
-	}
+	};
 	
 	self.newCourse = function() {
 		self.resetForm();
@@ -101,7 +101,7 @@ function viewModel () {
 	};
 	
 	self.holeNumToggle = ko.computed(function() {
-		if (self.noOfHoles() == 18) {
+		if (self.noOfHoles() === 18) {
 //			if (self.holes().length < 18) {
 /*				if (self.nippedHoles().length > 1) {
 					for (var i = 0; i < self.nippedHoles().length; i++) {
@@ -127,7 +127,7 @@ function viewModel () {
 			}
 		}
 
-		else if (self.noOfHoles() == 9) {
+		else if (self.noOfHoles() === 9) {
 //			console.log("hurkadurka");
 			while (self.holes().length > 9) {
 //				self.nippedHoles().push(self.holes.pop());
@@ -151,27 +151,27 @@ function viewModel () {
 		$('#form').parsley( 'validate' );
 		
 
-		var valid = $('#form').parsley('isValid')
-		var valid2 = $('#formi2').parsley('isValid')
+		var valid = $('#form').parsley('isValid');
+		var valid2 = $('#formi2').parsley('isValid');
 		
 /*		console.log("form " + valid);
 		console.log("formi2 " + valid2); */
 		
-		if (valid == false || valid2 == false) {
+		if (valid === false || valid2 === false) {
 			self.saveFailure(true);
 			$("#save").button("enable");
 			return false;
 		}
 			
 		// use normal tees if championship tees aren't set.
-		if (self.blueTeeEnabled() == false) {
+		if (self.blueTeeEnabled() === false) {
 			self.courseCrBlueMen(self.courseCrRedMen());
 			self.courseSlBlueMen(self.courseSlRedMen());
 			self.courseCrBlueLadies(self.courseCrRedLadies());
 			self.courseSlBlueLadies(self.courseSlRedLadies());
 		}
 		
-		if (self.whiteTeeEnabled() == false) {
+		if (self.whiteTeeEnabled() === false) {
 			self.courseCrWhiteMen(self.courseCrYellowMen());
 			self.courseSlWhiteMen(self.courseSlYellowMen());
 		}
@@ -203,14 +203,15 @@ function viewModel () {
 				// response
 				
 				var course_id = data.course_id;
+				var i;
 				
-				if (self.blueTeeEnabled() == false) {
-					for (var i = 0; i < self.holes().length; i++) {
+				if (self.blueTeeEnabled() === false) {
+					for (i = 0; i < self.holes().length; i++) {
 					self.holes()[i].hole_length_blue(self.holes()[i].hole_length_red());
 					}
 				}
-				if (self.whiteTeeEnabled() == false) {
-					for (var i = 0; i < self.holes().length; i++) {
+				if (self.whiteTeeEnabled() === false) {
+					for (i = 0; i < self.holes().length; i++) {
 					self.holes()[i].hole_length_white(self.holes()[i].hole_length_yellow());
 					}
 				}
@@ -225,7 +226,7 @@ function viewModel () {
 //						self.course_id(course_id);
 						$("#save").button("enable");
 						
-						if (self.course_id() == "new") {
+						if (self.course_id() === "new") {
 	//						console.log("hit");
 		/*					var course = {
 								name : self.courseName(),
@@ -253,7 +254,7 @@ function viewModel () {
 	self.coursePar = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_par());
+			s = s + parseInt(self.holes()[i].hole_par(), 10);
 			}
 		return s;
 	});
@@ -261,7 +262,7 @@ function viewModel () {
 	self.courseLengthRed = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_red());
+			s = s + parseInt(self.holes()[i].hole_length_red(), 10);
 			}
 		return s;
 	});
@@ -269,7 +270,7 @@ function viewModel () {
 	self.courseLengthBlue = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_blue());
+			s = s + parseInt(self.holes()[i].hole_length_blue(), 10);
 			}
 		return s;
 	});
@@ -277,7 +278,7 @@ function viewModel () {
 	self.courseLengthYellow = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_yellow());
+			s = s + parseInt(self.holes()[i].hole_length_yellow(), 10);
 			}
 		return s;
 	});
@@ -285,7 +286,7 @@ function viewModel () {
 	self.courseLengthWhite = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_white());
+			s = s + parseInt(self.holes()[i].hole_length_white(), 10);
 			}
 		return s;
 	});
