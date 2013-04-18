@@ -1,6 +1,6 @@
 apex_score_homepage:
     pattern:  /
-    defaults: { _controller: ApexScoreBundle:App:index }
+    defaults: { _controller: ApexScoreBundle:Site:index }
 
 ApexScoreBundle_course:
     resource: "@ApexScoreBundle/Resources/config/routing/course.yml"
