@@ -53,6 +53,8 @@ function viewModel () {
 	self.clickedRound = ko.observable();
 	self.clickedRoundStartTime = ko.observable("");
 	
+	self.bogikorttiVersion = ko.observable("Bogikortti 0.1 - Bugikortti");
+	
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
 			var el = {};
