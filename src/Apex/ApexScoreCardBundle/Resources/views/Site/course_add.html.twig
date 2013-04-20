@@ -22,7 +22,7 @@
 
 <body style="font-family: arial">
 
-	<div class="ui-widget" style="float:left; margin: 5px; padding: 15px; overflow:scroll;position:absolute;bottom:0;top:0; width: 250px">
+	<div class="ui-widget" style="float:left; margin: 5px; padding: 15px; overflow:auto; position:absolute; bottom:0; top:0; width: 250px">
 		<div>
 		<span style="font-weight:bold; font-size: 120%"><a href="#" data-bind="click: newCourse">Add new course</a></span>
 			<ul data-bind="foreach: courseList">
@@ -36,10 +36,10 @@
 
 	<!-- ko if: holes().length > 0 -->	
 
-	<div class="ui-widget-content" style="margin: 5px; padding: 15px; float:left; margin-left: 300px">
+	<div id="content" style="margin: 5px; padding: 15px; float:left; margin-left: 300px">
 
 	
-		<form data-validate="parsley" id="form">
+		<form data-validate="parsley" id="form"> 
 	
 		<label for="courseName">Course name:</label><br>
 		<input type="text" id="teeWhite" maxlength="255" data-bind="value: courseName" name="courseName" data-required="true" data-trigger="change" /><br>
@@ -238,7 +238,7 @@
 	</div>	
 
 
-	<div class="ui-widget-content" style="margin: 5px; padding: 15px; float:left">
+	<div id="content" style="margin: 5px; padding: 15px; float:left">
 	
 		<form data-validate="parsley" id="formi2">
 	
@@ -347,7 +347,7 @@
 	</div>
 
 	
-	<div class="ui-widget-content" style="margin: 5px; padding: 15px; float:left">
+	<div id="content" style="margin: 5px; padding: 15px; float:left">
 	
 <!--		<span data-bind="text: noOfHoles"></span><p> -->
 	

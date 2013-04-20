@@ -4,10 +4,15 @@ body {
 //	position: fixed;
 //	max-width: 800px;
 	width: 100%;
-	background: url('../images/textured_stripes.png') !important;
+	background: url('../images/subtle_white_feathers.png') !important;
 //	background-color: black;
 //	background: black;
 	overflow-y: visible;
+}
+
+#content {
+//	background: url('../images/white_wall_hash.png') !important;
+	background: transparent;
 }
 	
 .ui-page.ui-body-c  {
