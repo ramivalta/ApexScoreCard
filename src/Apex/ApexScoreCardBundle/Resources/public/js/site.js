@@ -38,6 +38,11 @@ function viewModel () {
 	
 	self.courseNumberOfHoles = ko.observable();
 	
+	self.playerName = ko.observable();
+	self.playerExactHcp = ko.observable();
+	self.playerDefaultTee = ko.observable();
+	self.playerGender = ko.observable();
+	
 	
 	self.courseList = ko.observableArray([]);
 
@@ -49,6 +54,10 @@ function viewModel () {
 	self.saveFailure = ko.observable(false);
 	
 	self.noOfHoles = ko.observable(0);
+	self.addedBy = ko.observable();
+	self.adderName = ko.observable();
+	
+	self.playerId = ko.observable();
 	
 	self.nippedHoles = ko.observable([]);
 	
@@ -80,6 +89,7 @@ function viewModel () {
 	
 	self.newCourse = function() {
 		self.resetForm();
+		self.noOfHoles("18");
 		
 		while (self.holes().length < 18) {
 			self.holes.push({
@@ -95,13 +105,13 @@ function viewModel () {
 		}
 		$( "#save" ).button({ enabled: true });
 		self.course_id("new");
-		self.noOfHoles("18");
+
 		self.showHoleToggle(true);
 		
 	};
 	
 	self.holeNumToggle = ko.computed(function() {
-		if (self.noOfHoles() === 18) {
+		if (parseInt(self.noOfHoles(), 10) === 18) {
 //			if (self.holes().length < 18) {
 /*				if (self.nippedHoles().length > 1) {
 					for (var i = 0; i < self.nippedHoles().length; i++) {
@@ -127,7 +137,7 @@ function viewModel () {
 			}
 		}
 
-		else if (self.noOfHoles() === 9) {
+		else if (parseInt(self.noOfHoles(), 10) === 9) {
 //			console.log("hurkadurka");
 			while (self.holes().length > 9) {
 //				self.nippedHoles().push(self.holes.pop());
@@ -176,6 +186,14 @@ function viewModel () {
 			self.courseSlWhiteMen(self.courseSlYellowMen());
 		}
 		
+		var adder;
+		if (self.addedBy() !== "") {
+			adder = self.addedBy();
+		}
+		else {
+			adder = self.playerId();
+		}
+		
 		var data = {
 			course_id		: self.course_id(),
 			courseName		: self.courseName(),
@@ -195,6 +213,7 @@ function viewModel () {
 			slRedLadies		: self.courseSlRedLadies(),
 			slBlueLadies	: self.courseSlBlueLadies(),
 			slYellowLadies 	: self.courseSlYellowLadies(),
+			addedBy			: adder
 		};
 		
 		apexEventProxy.saveCourseData(
@@ -321,10 +340,27 @@ function viewModel () {
 				
 				self.courseCrWhiteMen(data.course.crWhiteMen);
 				self.courseSlWhiteMen(data.course.slWhiteMen);
+				
+				if (data.course.addedBy != null) {
+					self.addedBy(data.course.addedBy);
+					self.getGolferById(parseInt(self.addedBy(), 10));
+				}
+				
+				else {
+//					console.log("no adder");
+					self.addedBy("");
+					self.adderName("");
+				}
 			}
 		);
 		self.course_id(course_id);
 		self.getHoleData(course_id);
+		
+//		console.log(self.addedBy());
+		
+//		if (self.addedBy() !== undefined) {
+//			self.getGolferById(parseInt(self.addedBy(), 10));
+//		};
 		
 	};
 
@@ -372,7 +408,7 @@ function viewModel () {
 	};
 	
 	self.getCourseList();
-	$( "#save" ).button({ enabled: true });
+//	$( "#save" ).button({ enabled: true });
 	
 /*	self.saveGolfer = function (callback) {
 		var data = {
@@ -386,9 +422,9 @@ function viewModel () {
 				$.mobile.changePage('#f_page', { transition: "slidefade" });
 			}
 		);
-	};
+	}; */
 
-	self.getGolferData = function (callback) {
+	self.getGolferData = function () {
 			var a;
 			apexEventProxy.getGolferData(
 			{ a : a },
@@ -397,9 +433,33 @@ function viewModel () {
 				self.playerExactHcp(data.golfer.handicap);
 				self.playerDefaultTee(data.golfer.tee);
 				self.playerGender(data.golfer.gender);
+				self.playerId(data.golfer.id);
 			}
 		);
-	}; */
+	};
+
+	self.getGolferById = function (golfer_id) {
+			if (golfer_id == undefined) {
+				return null;
+			};
+//			console.log(golfer_id);
+			var data = { golfer_id : golfer_id };
+			apexEventProxy.getGolferDataById(
+			{ data : data },
+			function(data) {
+				if (data.message !== "failed") {
+					self.adderName(data.golfer.name);
+//					console.log("adder name " + data.golfer.name);
+				}
+//				self.playerExactHcp(data.golfer.handicap);
+	//			self.playerDefaultTee(data.golfer.tee);
+		//		self.playerGender(data.golfer.gender);
+			}
+		);
+	};
+	
+	self.getGolferData();
+
 }	
 	
 
