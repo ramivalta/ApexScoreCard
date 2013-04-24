@@ -67,6 +67,7 @@ function viewModel () {
 	};
 	
 	self.prePopulateScores();
+	
 
 	self.calcRoundDuration = function() {
 		var secs;
@@ -226,7 +227,7 @@ function viewModel () {
 			self.currentHole(curHole + 1);
 			self.setHoleData();
 		}
-		$.mobile.changePage('#s_page', { transition: "slidefade",
+		$.mobile.changePage('#s_page', { transition: "slide",
                                     allowSamePageTransition: true});
 	};
 	
@@ -247,7 +248,7 @@ function viewModel () {
 			self.setHoleData();
 		}
 		
-		$.mobile.changePage('#s_page', { transition: "slidefade", reverse: true,
+		$.mobile.changePage('#s_page', { transition: "slide", reverse: true,
                                     allowSamePageTransition: true});
 	};
 	
