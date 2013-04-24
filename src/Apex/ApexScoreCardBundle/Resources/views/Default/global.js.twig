@@ -50,6 +50,10 @@ var ApexEventProxy = function() {
         self.proxy.post('{{ path('golfer_json_get')}}', data, done, fail, always);
     };
     
+    self.getGolferDataById = function(data, done, always, fail){
+        self.proxy.post('{{ path('golfer_json_get_by_id')}}', data, done, fail, always);
+    };
+    
     self.saveGolferData = function(data, done, always, fail) {
         self.proxy.post('{{path('golfer_json_set')}}', data, done, fail, always);
     };

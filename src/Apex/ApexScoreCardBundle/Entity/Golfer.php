@@ -294,6 +294,7 @@ class Golfer extends BaseUser implements UserInterface, \Serializable
 			'tee' => $this->tee,
 			'gender' => $this->gender,
 			'handicap' => $this->handicap,
+			'id' => $this->id,
 		);
 	}
     

@@ -34,6 +34,11 @@ golfer_json_get:
     defaults: { _controller: "ApexScoreBundle:Golfer:getGolfer", _format: json }
     requirements: { _method: post|get }
 
+golfer_json_get_by_id:
+    pattern: /json/get/golfer_by_id
+    defaults: { _controller: "ApexScoreBundle:Golfer:getGolferById", _format: json }
+    requirements: { _method: post|get }
+
 golfer_json_set:
     pattern: /json/save/golfer
     defaults: { _controller: "ApexScoreBundle:Golfer:saveGolferPrefs", _format: json }

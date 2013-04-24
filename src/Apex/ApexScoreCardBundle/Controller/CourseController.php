@@ -274,6 +274,7 @@ class CourseController extends BaseController
     	$sl_red_ladies 		= $json->data->slRedLadies;
     	$sl_blue_ladies 	= $json->data->slBlueLadies;
     	$sl_yellow_ladies 	= $json->data->slYellowLadies;
+    	$addedBy			= $json->data->addedBy;
     	
     	$em = $this->getDoctrine()->getManager();
     	if ($course_id == "new" ) {
@@ -303,6 +304,8 @@ class CourseController extends BaseController
 		$course->setSlRedLadies($sl_red_ladies);
 		$course->setSlBlueLadies($sl_blue_ladies);
 		$course->setSlYellowLadies($sl_yellow_ladies);
+		
+		$course->setAddedBy($addedBy);
 		
 		$em->persist($course);
 		$em->flush();

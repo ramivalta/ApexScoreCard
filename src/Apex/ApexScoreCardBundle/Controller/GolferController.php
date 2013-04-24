@@ -242,6 +242,31 @@ class GolferController extends BaseController
     	
     	return new Response(json_encode(array('golfer' => $golfer)));
     }
+    
+    public function getGolferByIdAction()
+    {
+    	$json = $this->getRequestJson();
+    	
+    	$golfer_id = $json->data->golfer_id;
+    	
+//    	error_log($golfer_id);
+    	
+    	if (!$golfer_id) {
+    		return new Response(json_encode(array('message' => 'failed')));
+    	}
+    	
+		$em = $this->getDoctrine()->getManager();
+		$entity = $em->getRepository('ApexScoreBundle:Golfer')->find($golfer_id);
+		
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Golfer entity');
+		}
+		
+		$golfer = $entity->getJson();
+		
+		return new Response(json_encode(array('golfer' => $golfer)));
+    }
+
 
 
     public function saveGolferPrefsAction()

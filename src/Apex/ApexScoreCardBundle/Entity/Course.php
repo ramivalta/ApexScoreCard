@@ -132,6 +132,14 @@ class Course
      * @ORM\Column(name="slYellowLadies", type="float")
      */
     private $slYellowLadies;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="addedBy", type="integer", nullable=true)
+     */
+     
+    private $addedBy;
 
     /**
      * @ORM\OneToMany(targetEntity="Apex\ApexScoreCardBundle\Entity\Hole", mappedBy="course")
@@ -406,6 +414,30 @@ class Course
     {
         return $this->slBlueMen;
     }
+    
+    
+    /**
+     * Set addedBy
+     *
+     * @param integer $addedBy
+     * @return Course
+     */
+    public function setAddedBy($addedBy)
+    {
+    	$this->addedBy = $addedBy;
+    	
+    	return $this;
+    }
+    
+    /**
+     * Get addedBy
+     *
+     * @return integer
+     */
+    public function getAddedBy()
+    {
+    	return $this->addedBy;
+    }
 
     /**
      * Set slYellowMen
@@ -582,6 +614,7 @@ class Course
     		'slRedLadies' 		=> $this->slRedLadies,
     		'slBlueLadies' 		=> $this->slBlueLadies,
     		'slYellowLadies' 	=> $this->slYellowLadies,
+    		'addedBy'			=> $this->addedBy,
     	);
     }
 
@@ -618,13 +651,9 @@ class Course
         return $this->rounds;
     }
     
-    
-    
-    
-    
     public function getCoursePar()
     {
-    	$holes = $this->holes;
+    	$holes = $this->getHoles();
     	$par = 0;
     	foreach ($holes as $h) {
     		$par += $h->getPar();
@@ -632,8 +661,5 @@ class Course
     	
     	return $par;
     }
-    
-    
-    
     
 }
