@@ -226,9 +226,19 @@ class GolferController extends BaseController
     public function getGolferAction()
     {
 //    	$json = $this->getRequestJson();
+
+		$securityContext = $this->get('security.context');
+		
+		if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+	    	$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
+		}
+		else {
+			return new Response(json_encode(array('message' => 'failed')));
+		}
     	
-    	$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
+//    	$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
     	
+   	
     	$em = $this->getDoctrine()->getManager();
     	
     	$entity = $em->getRepository('ApexScoreBundle:Golfer')->find($golfer_id);

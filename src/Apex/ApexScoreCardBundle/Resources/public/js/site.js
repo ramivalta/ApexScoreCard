@@ -429,11 +429,16 @@ function viewModel () {
 			apexEventProxy.getGolferData(
 			{ a : a },
 			function(data) {
-				self.playerName(data.golfer.name);
-				self.playerExactHcp(data.golfer.handicap);
-				self.playerDefaultTee(data.golfer.tee);
-				self.playerGender(data.golfer.gender);
-				self.playerId(data.golfer.id);
+				if (data.message === "failed") {
+					alert ("not logged in");
+				}
+				else {
+					self.playerName(data.golfer.name);
+					self.playerExactHcp(data.golfer.handicap);
+					self.playerDefaultTee(data.golfer.tee);
+					self.playerGender(data.golfer.gender);
+					self.playerId(data.golfer.id);
+				}
 			}
 		);
 	};
