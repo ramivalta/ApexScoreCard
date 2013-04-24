@@ -227,7 +227,7 @@ function viewModel () {
 			self.currentHole(curHole + 1);
 			self.setHoleData();
 		}
-		$.mobile.changePage('#s_page', { transition: "slide",
+		$.mobile.changePage('#s_page', { transition: "slidefade",
                                     allowSamePageTransition: true});
 	};
 	
@@ -248,7 +248,7 @@ function viewModel () {
 			self.setHoleData();
 		}
 		
-		$.mobile.changePage('#s_page', { transition: "slide", reverse: true,
+		$.mobile.changePage('#s_page', { transition: "slidefade", reverse: true,
                                     allowSamePageTransition: true});
 	};
 	
@@ -1003,8 +1003,8 @@ $(document).on('pageinit', function() {
 
 	$('#s_page').on('pageshow', function(e) {
 	
- 	//  https://github.com/jquery/jquery-mobile/issues/4078
-	//	$(this).addClass('ui-page-active');
+ 	// https://github.com/jquery/jquery-mobile/issues/4078
+		$(this).addClass('ui-page-active');
 
 		vm.calcRoundDuration();
 		var clock = setInterval(function() { 
