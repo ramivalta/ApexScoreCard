@@ -11,8 +11,8 @@
 <!-- twitter bootstrap css -->
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/jquery-ui-1.10.0.custom.css') }}"> 
 
-	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-	<script src="http://knockoutjs.com/downloads/knockout-2.2.1.js"></script>
+	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
 
    	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
  	<script src="{{ asset('bundles/apexscore/js/jquery-ui.js') }}" type="text/javascript"></script>
@@ -21,10 +21,12 @@
 </head>
 
 <body style="font-family: arial">
-
-	<div class="ui-widget" style="float:left; margin: 5px; padding: 15px; overflow:auto; position:absolute; bottom:0; top:0; width: 250px">
-		<div>
+	<div style="margin: 15px">
 		<span style="font-weight:bold; font-size: 120%"><a href="#" data-bind="click: newCourse">Add new course</a></span>
+	</div>
+	<div class="ui-widget" style="float:left; margin: 5px; padding: 15px; overflow:auto; position:absolute; bottom:0; top:30px; width: 250px">
+		<div>
+
 			<ul data-bind="foreach: courseList">
 				<li>
 				<a href="#" data-bind="click: $root.getCourseGeneralData.bind($data, id)"><span data-bind="text: name"></span></a>
@@ -41,209 +43,179 @@
 	
 		<form data-validate="parsley" id="form"> 
 	
-		<label for="courseName">Course name:</label><br>
-		<input type="text" id="teeWhite" maxlength="255" data-bind="value: courseName" name="courseName" data-required="true" data-trigger="change" /><br>
-		
-		<label for="courseAlias">Course alias:</label><br>
-		<input type="text" id="teeWhite" maxlength="255"  data-bind="value: courseAlias" name="courseAlias" data-required="true" data-trigger="change"/><br>
-		<table>
-			<tr>
-				<th colspan=3>Men</th>
-			</tr>
-			<tr>
-				<th></th>
-				<th>Cr</th>
-				<th>Sl</th>
-			</tr>
-			<tr>
-				<td>
-<!--					<input type="checkbox" name="menRed" data-bind="checked: redTeeEnabled" /> -->
-				</td>
-				
-				<!-- ko if: redTeeEnabled() == true -->
-					<td>
-						<input type="text" data-bind="value: courseCrRedMen" id="teeRed" maxlength="4" style="width: 2.5em" data-required="true" data-type="number" data-trigger="keyup"/>
-					</td>
-					<td>
-						<input type="text" id="teeRed" maxlength="3" style="width: 2.5em" data-bind="value: courseSlRedMen" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-				<!-- /ko -->
-
-				<!-- ko if: redTeeEnabled() == false -->
-					<td>
-						<input type="text" data-bind="value: courseCrRedMen" id="teeRedDisabled" maxlength="4" style="width: 2.5em" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeRedDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlRedMen" disabled />
-					</td>
-				<!-- /ko -->
-			</tr>
-			
-			
-			
-			<tr>
-				<td>
-					<input type="checkbox" name="menBlue" data-bind="checked: blueTeeEnabled"  />
-				</td>
-
-				<!-- ko if: blueTeeEnabled() == true -->
-					<td>
-						<input type="text" id="teeBlue" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueMen" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-					<td>
-						<input type="text" id="teeBlue" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueMen" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-				<!-- /ko -->
-				<!-- ko if: blueTeeEnabled() == false -->
-					<td>
-						<input type="text" id="teeBlueDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueMen" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeBlueDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueMen" disabled />
-					</td>		
-				<!-- /ko -->
-			</tr>
-			<tr>
-				<td>
-<!--					<input type="checkbox" name="menYellow" data-bind="checked: yellowTeeEnabled" /> -->
-				</td>
-			
-				<!-- ko if: yellowTeeEnabled() == true -->
-					<td>
-						<input type="text" id="teeYellow" maxlength="4" style="width: 2.5em" data-bind="value: courseCrYellowMen" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-					<td>
-						<input type="text" id="teeYellow" maxlength="3" style="width: 2.5em" data-bind="value: courseSlYellowMen" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-				<!-- /ko -->
-				
-				<!-- ko if: yellowTeeEnabled() == false -->
-					<td>
-						<input type="text" id="teeYellow" maxlength="4" style="width: 2.5em" data-bind="value: courseCrYellowMen" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeYellow" maxlength="3" style="width: 2.5em" data-bind="value: courseSlYellowMen" disabled />
-					</td>
-				<!-- /ko -->
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" name="menWhite" data-bind="checked: whiteTeeEnabled" />
-				</td>
-				<!-- ko if: whiteTeeEnabled() == true -->
-					<td>
-						<input type="text" id="teeWhite" maxlength="4" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-					<td>
-						<input type="text" id="teeWhite" maxlength="3" style="width: 2.5em" data-bind="value: courseSlWhiteMen" data-required="true" data-type="number" data-trigger="change"/><br>
-					</td>
-				<!-- /ko -->
-				<!-- ko if: whiteTeeEnabled() == false -->
-					<td>
-						<input type="text" id="teeWhiteDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrWhiteMen" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeWhiteDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlWhiteMen" disabled /><br>
-					</td>				
-				<!-- /ko -->
-			</tr>
-		</table>
-	<p>
-		<table>
-			<tr>
-				<th colspan=3>Ladies</th>
-			</tr>
-			<tr>
-				<th></td>
-				<th>Cr</th>
-				<th>Sl</th>
-			</tr>
-			
-			<tr>
-				<td>
-<!--					<input type="checkbox" name="ladiesRed" data-bind="checked: redTeeEnabled" /> -->
-				</td>
-				<!-- ko if: redTeeEnabled() == true -->
-					<td>
-						<input type="text" id="teeRed" maxlength="4" style="width: 2.5em" data-bind="value: courseCrRedLadies" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-					<td>
-						<input type="text" id="teeRed" maxlength="3" style="width: 2.5em" data-bind="value: courseSlRedLadies" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-				<!-- /ko -->
-				<!-- ko if: redTeeEnabled() == false -->
-					<td>
-						<input type="text" id="teeRedDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrRedLadies" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeRedDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlRedLadies" disabled />
-					</td>
-				<!-- /ko -->
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" name="ladiesRed" data-bind="checked: blueTeeEnabled" />
-				</td>
-				<!-- ko if: blueTeeEnabled() == true -->
-					<td>
-						<input type="text" id="teeBlue" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueLadies" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-					<td>
-						<input type="text" id="teeBlue" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueLadies" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-				<!-- /ko -->
-				<!-- ko if: blueTeeEnabled() == false -->
-					<td>
-						<input type="text" id="teeBlueDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueLadies" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeBlueDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueLadies" disabled />
-					</td>
-				<!-- /ko -->
-			</tr>
-			<tr>
-				<td>
-<!--					<input type="checkbox" name="ladiesRed" data-bind="checked: yellowTeeEnabled" /> -->
-				</td>
-				<!-- ko if: yellowTeeEnabled() == true -->
-					<td>
-						<input type="text" id="teeYellow" maxlength="4" style="width: 2.5em" data-bind="value: courseCrYellowLadies" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-					<td>
-						<input type="text" id="teeYellow" maxlength="3" style="width: 2.5em" data-bind="value: courseSlYellowLadies" data-required="true" data-type="number" data-trigger="change"/>
-					</td>
-				<!-- /ko -->
-
-				<!-- ko if: yellowTeeEnabled() == false -->
-					<td>
-						<input type="text" id="teeYellowDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrYellowLadies" disabled />
-					</td>
-					<td>
-						<input type="text" id="teeYellowDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlYellowLadies" disabled />
-					</td>				
-				<!-- /ko -->
-			</tr>
-			
-		</form>
-			
-		</table>
-		<p>
-		
-		<div id="hole_toggle" data-bind="visible: showHoleToggle">
-		<!--	<form action=""> -->
-				<input type="radio" name="holes" value="9" data-bind="checked: noOfHoles" />9 hole course<br>
-				<input type="radio" name="holes" value="18" data-bind="checked: noOfHoles" />18 hole course
-<!--			</form> -->
+		<div style="float: left">
+			<label for="courseName">Course name:</label><br>
+			<input type="text" id="teeWhite" maxlength="255" data-bind="value: courseName" name="courseName" data-required="true" data-trigger="keyup" />
 		</div>
-	</div>	
+		<div style="float: left">
+			<label for="courseAlias">Course alias:</label><br>
+			<input type="text" id="teeWhite" maxlength="255"  data-bind="value: courseAlias" name="courseAlias" data-required="true" data-trigger="keyup"/>
+		</div>
+
+		<div id="hole_toggle" data-bind="visible: showHoleToggle" style="clear: both; padding: 5px">
+			<input type="radio" name="holes" value="9" data-bind="checked: noOfHoles" />9 hole course 
+			<input type="radio" name="holes" value="18" data-bind="checked: noOfHoles" />18 hole course
+		</div>
+		
+
+		<br>
+		
+
+		<div style="float: right">
+			<table style="border-spacing: 0; border-collapse: collapse">
+				<td>
+					<tr>
+						<td></td>
+						<td></td>
+						<td colspan="3"></td>
+						<td style="text-align: center">
+							<input type="checkbox" name="menBlue" data-bind="checked: blueTeeEnabled"  />
+						</td>
+						<td></td>
+						<td style="text-align: center">
+							<input type="checkbox" name="menWhite" data-bind="checked: whiteTeeEnabled" />
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="2" style="padding: 5px">Men</td>
+						<th colspan="3" style="padding: 5px">Cr</th>
+				
+						<!-- ko if: redTeeEnabled() == true -->
+							<td>
+								<span id="error" style="font-size: 66%"></span>
+								<input type="text" data-bind="value: courseCrRedMen" id="teeRed" maxlength="4" style="width: 2.5em" data-required="true" data-type="number" data-trigger="keyup" data-error-container="#error" />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == true -->
+							<td>
+								<span id="error" style="font-size: 66%"></span>
+								<input type="text" id="teeBlue" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueMen" data-required="true" data-type="number" data-trigger="keyup" data-error-container="#error" />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == false -->
+							<td>
+								<input type="text" id="teeBlueDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueMen" data-required="true" data-type="number" data-trigger="keyup" disabled />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: yellowTeeEnabled() == true -->
+							<td>
+								<input type="text" id="teeYellow" maxlength="4" style="width: 2.5em" data-bind="value: courseCrYellowMen" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: whiteTeeEnabled() == true -->
+						<td>
+								<input type="text" id="teeWhite" maxlength="3" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="keyup"/><br>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: whiteTeeEnabled() == false -->
+						<td>
+								<input type="text" id="teeWhiteDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="keyup" disabled /><br>
+							</td>
+						<!-- /ko -->
+					</tr>
+					<tr>
+						<th colspan=3 style="padding: 5px">Sl</th>
+						<!-- ko if: redTeeEnabled() == true -->
+							<td>
+								<input type="text" id="teeRed" maxlength="3" style="width: 2.5em" data-bind="value: courseSlRedMen" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == true -->
+						<td>
+								<input type="text" id="teeBlue" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueMen" data-required="true" data-type="number" data-trigger="keyup" />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == false -->
+						<td>
+								<input type="text" id="teeBlueDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueMen" data-required="true" data-type="number" data-trigger="keyup" disabled />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: yellowTeeEnabled() == true -->
+						<td>
+								<input type="text" id="teeYellow" maxlength="3" style="width: 2.5em" data-bind="value: courseSlYellowMen" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: whiteTeeEnabled() == true -->
+							<td>
+								<input type="text" id="teeWhite" maxlength="4" style="width: 2.5em" data-bind="value: courseSlWhiteMen" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->		
+						<!-- ko if: whiteTeeEnabled() == false -->
+							<td>
+								<input type="text" id="teeWhiteDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseSlWhiteMen" data-required="true" data-type="number" data-trigger="keyup" disabled />
+							</td>
+						<!-- /ko -->	
+					</tr>
+				</td>
+			</table>
+		</div>
+		
+		<div style="clear: both; float: right">
+			<table style="border-spacing: 0; border-collapse: collapse">
+				<td>
+					<tr>
+						<td rowspan="2" style="padding: 5px">Ladies</td>
+						<th colspan="3" style="padding: 5px">Cr</th>
+				
+						<!-- ko if: redTeeEnabled() == true -->
+							<td>
+								<input type="text" data-bind="value: courseCrRedLadies" id="teeRed" maxlength="4" style="width: 2.5em" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == true -->
+							<td>
+								<input type="text" id="teeBlue" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueLadies" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == false -->
+							<td>
+								<input type="text" id="teeBlueDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrBlueLadies" data-required="true" data-type="number" data-trigger="keyup" disabled />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: yellowTeeEnabled() == true -->
+							<td>
+								<input type="text" id="teeYellow" maxlength="4" style="width: 2.5em" data-bind="value: courseCrYellowLadies" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<td>
+							<input id="teeWhiteDisabled" type="text" maxlength="3" style="width: 2.5em; opacity: 0" disabled />
+						</td>
+					</tr>
+					<tr>
+						<th colspan="3" style="padding: 5px">Sl</th>
+						<!-- ko if: redTeeEnabled() == true -->
+							<td>
+								<input type="text" id="teeRed" maxlength="3" style="width: 2.5em" data-bind="value: courseSlRedLadies" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == true -->
+						<td>
+								<input type="text" id="teeBlue" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueLadies" data-required="true" data-type="number" data-trigger="keyup" />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: blueTeeEnabled() == false -->
+						<td>
+								<input type="text" id="teeBlueDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseSlBlueLadies" data-required="true" data-type="number" data-trigger="keyup" disabled />
+							</td>
+						<!-- /ko -->
+						<!-- ko if: yellowTeeEnabled() == true -->
+						<td>
+								<input type="text" id="teeYellow" maxlength="3" style="width: 2.5em" data-bind="value: courseSlYellowLadies" data-required="true" data-type="number" data-trigger="keyup"/>
+							</td>
+						<!-- /ko -->
+						<td>
+							<input id="teeWhiteDisabled" type="text" maxlength="3" style="width: 2.5em; opacity: 0" disabled />
+						</td>
+					</tr>
+				</td>
+			</table>
+		</div>
 
 
-	<div id="content" style="margin: 5px; padding: 15px; float:left">
 	
 		<form data-validate="parsley" id="formi2">
 	
-	
-		<table style="text-align: center; border-spacing: 0; border-collapse: collapse">
+		<table style="text-align: center; border-spacing: 0; border-collapse: collapse; width: 100%">
 			<tr>
 				<th id="scHeaders">#</span></th>
 				<th id="scHeaders">Par</th>
@@ -349,11 +321,22 @@
 	
 	<div id="content" style="margin: 5px; padding: 15px; float:left">
 	
-<!--		<span data-bind="text: noOfHoles"></span><p> -->
-	
+	<!-- ko if: playerId() == addedBy() || addedBy() == "" -->	
 	
 		<button id="save" style="font-size: 120%" data-bind="click: saveCourse">Save</button>
+	<!-- /ko -->
+
+	<!-- ko if: playerId() != addedBy() && addedBy() != "" -->
+	
+		<button id="save" style="font-size: 120%" disabled>Save</button>
+		<br>
+		<span style="font-size: 90%">You're not permitted to make changes to this course.</span>
+	<!-- /ko -->
 		<p>
+		
+		<span data-bind="visible: adderName">Added by user</span>
+		<span data-bind="text: adderName"></span><p>
+		
 		<span id="message" data-bind="visible: saveSuccess">
 			<span style="color: green">Successfully saved!</span>
 		</span>
