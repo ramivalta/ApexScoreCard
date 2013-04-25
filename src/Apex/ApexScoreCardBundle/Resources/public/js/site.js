@@ -80,6 +80,11 @@ function viewModel () {
 		self.courseSlYellowLadies = ko.observable();
 		self.courseCrBlueLadies = ko.observable();
 		self.courseSlBlueLadies = ko.observable();
+		
+		self.redTeeEnabled = ko.observable(true);
+		self.blueTeeEnabled = ko.observable(true);
+		self.yellowTeeEnabled = ko.observable(true);
+		self.whiteTeeEnabled = ko.observable(true);
 
 		self.holes.removeAll();
 		
@@ -198,7 +203,7 @@ function viewModel () {
 		}
 		
 		var adder;
-		if (self.addedBy() !== "") {
+		if (self.addedBy() != null) {
 			adder = self.addedBy();
 		}
 		else {
@@ -230,8 +235,6 @@ function viewModel () {
 		apexEventProxy.saveCourseData(
 			{ data : data },
 			function (data) {
-				// response
-				
 				var course_id = data.course_id;
 				var i;
 				
@@ -252,26 +255,13 @@ function viewModel () {
 					{ data : data,
 					  course_id : course_id },
 					function (data) {
-//						alert ("success");
-//						self.course_id(course_id);
 						$("#save").button("enable");
 						
 						if (self.course_id() === "new") {
-	//						console.log("hit");
-		/*					var course = {
-								name : self.courseName(),
-								id : self.course_id()
-							}; */
-
 							self.courseList.removeAll();
 							self.getCourseList();
 							self.course_id(course_id);
 						}
-						
-//						self.courseList().sort();
-						
-//							self.courseList.push(data.courses[i]);
-						
 						
 						self.saveFailure(false);
 						self.saveSuccess(true);
@@ -358,7 +348,7 @@ function viewModel () {
 				}
 				
 				else {
-					self.addedBy("anon");
+					self.addedBy(null);
 					self.adderName("");
 				}
 				
@@ -404,7 +394,6 @@ function viewModel () {
 		apexEventProxy.getCourseList(
 		{ a : a },
 		function(data) {
-//			alert(data.courses[0].name);
 			for (var i = 0, m = data.courses.length; i < m; i++) {
 				self.courseList.push(data.courses[i]);
 				}
@@ -413,21 +402,7 @@ function viewModel () {
 	};
 	
 	self.getCourseList();
-//	$( "#save" ).button({ enabled: true });
-	
-/*	self.saveGolfer = function (callback) {
-		var data = {
-			handicap: self.playerExactHcp(),
-			tee: self.playerDefaultTee(),
-			gender: self.playerGender()
-		};
-		apexEventProxy.saveGolferData(
-			{ data : data },
-			function (data) {
-				$.mobile.changePage('#f_page', { transition: "slidefade" });
-			}
-		);
-	}; */
+
 
 	self.getGolferData = function () {
 			var a;
@@ -454,18 +429,14 @@ function viewModel () {
 			if (golfer_id == undefined) {
 				return null;
 			};
-//			console.log(golfer_id);
 			var data = { golfer_id : golfer_id };
 			apexEventProxy.getGolferDataById(
 			{ data : data },
 			function(data) {
 				if (data.message !== "failed") {
 					self.adderName(data.golfer.name);
-//					console.log("adder name " + data.golfer.name);
 				}
-//				self.playerExactHcp(data.golfer.handicap);
-	//			self.playerDefaultTee(data.golfer.tee);
-		//		self.playerGender(data.golfer.gender);
+
 			}
 		);
 	};

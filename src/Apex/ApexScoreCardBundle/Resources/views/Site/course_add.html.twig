@@ -112,12 +112,12 @@
 						<!-- /ko -->
 						<!-- ko if: whiteTeeEnabled() == true -->
 						<td>
-								<input type="text" id="teeWhite" maxlength="3" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="keyup"/><br>
+								<input type="text" id="teeWhite" maxlength="4" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="keyup"/><br>
 							</td>
 						<!-- /ko -->
 						<!-- ko if: whiteTeeEnabled() == false -->
 						<td>
-								<input type="text" id="teeWhiteDisabled" maxlength="3" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="keyup" disabled /><br>
+								<input type="text" id="teeWhiteDisabled" maxlength="4" style="width: 2.5em" data-bind="value: courseCrWhiteMen" data-required="true" data-type="number" data-trigger="keyup" disabled /><br>
 							</td>
 						<!-- /ko -->
 					</tr>
@@ -145,7 +145,7 @@
 						<!-- /ko -->
 						<!-- ko if: whiteTeeEnabled() == true -->
 							<td>
-								<input type="text" id="teeWhite" maxlength="4" style="width: 2.5em" data-bind="value: courseSlWhiteMen" data-required="true" data-type="number" data-trigger="keyup"/>
+								<input type="text" id="teeWhite" maxlength="3" style="width: 2.5em" data-bind="value: courseSlWhiteMen" data-required="true" data-type="number" data-trigger="keyup"/>
 							</td>
 						<!-- /ko -->		
 						<!-- ko if: whiteTeeEnabled() == false -->
@@ -329,18 +329,23 @@
 	
 	<div id="content" style="margin: 5px; padding: 15px; float:left">
 	
-	<!-- ko if: playerId() == addedBy() || addedBy() == "anon" || course_id() == "new"  -->	
+	<!-- ko if: playerId() == addedBy() || addedBy() == null || course_id() == "new"  -->	
 	
 		<button id="save" style="font-size: 120%" data-bind="click: saveCourse">Save</button>
 	<!-- /ko -->
 
-	<!-- ko if: playerId() != addedBy() && addedBy() != "anon" && course_id() != "new" -->
+	<!-- ko if: playerId() != addedBy() && addedBy() != null && course_id() != "new" -->
 	
 		<button id="save" style="font-size: 120%" disabled>Save</button>
 		<br>
 		<span style="font-size: 90%">You're not permitted to make changes to this course.</span>
 	<!-- /ko -->
 		<p>
+		
+<!--		<br> player Id <span data-bind="text: playerId"></span>
+		<br> added by <span data-bind="text: addedBy"></span>
+		<br> course id <span data-bind="text: course_id"></span>
+		<br> -->
 		
 		<span data-bind="visible: adderName">Added by user</span>
 		<span data-bind="text: adderName"></span><p>
