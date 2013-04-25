@@ -90,6 +90,7 @@ function viewModel () {
 	self.newCourse = function() {
 		self.resetForm();
 		self.noOfHoles("18");
+		self.adderName("");
 		
 		while (self.holes().length < 18) {
 			self.holes.push({
@@ -103,8 +104,9 @@ function viewModel () {
 			});
 	
 		}
-		$( "#save" ).button({ enabled: true });
 		self.course_id("new");
+		
+		$( "#save" ).button({ enabled: true });
 
 		self.showHoleToggle(true);
 		
@@ -356,20 +358,15 @@ function viewModel () {
 				}
 				
 				else {
-//					console.log("no adder");
-					self.addedBy("");
+					self.addedBy("anon");
 					self.adderName("");
 				}
+				
+				self.getHoleData(course_id);
 			}
 		);
+		
 		self.course_id(course_id);
-		self.getHoleData(course_id);
-		
-//		console.log(self.addedBy());
-		
-//		if (self.addedBy() !== undefined) {
-//			self.getGolferById(parseInt(self.addedBy(), 10));
-//		};
 		
 	};
 
@@ -393,10 +390,9 @@ function viewModel () {
 						hole_length_white: ko.observable(data.holes[i].length_white),
 					});
 				}
-				$( "#save" ).button({ enabled: true });	
 
+			$( "#save" ).button({ enabled: true });	
 			}
-//				self.setHoleData();
 
 		);
 

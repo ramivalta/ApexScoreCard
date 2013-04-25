@@ -329,12 +329,12 @@
 	
 	<div id="content" style="margin: 5px; padding: 15px; float:left">
 	
-	<!-- ko if: playerId() == addedBy() || addedBy() == "" -->	
+	<!-- ko if: playerId() == addedBy() || addedBy() == "anon" || course_id() == "new"  -->	
 	
 		<button id="save" style="font-size: 120%" data-bind="click: saveCourse">Save</button>
 	<!-- /ko -->
 
-	<!-- ko if: playerId() != addedBy() && addedBy() != "" -->
+	<!-- ko if: playerId() != addedBy() && addedBy() != "anon" && course_id() != "new" -->
 	
 		<button id="save" style="font-size: 120%" disabled>Save</button>
 		<br>
