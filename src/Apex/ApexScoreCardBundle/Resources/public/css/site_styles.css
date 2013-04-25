@@ -581,6 +581,7 @@ body {
 	padding: 0px;
 	text-shadow: 0px 1px 1px #fff;
 	color: #ccc;
+	opacity: 0.5;
 	background: rgb(236,248,252); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(236,248,252,1) 0%, rgba(231,246,253,1) 50%, rgba(212,238,250,1) 51%, rgba(212,236,254,1) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(236,248,252,1)), color-stop(50%,rgba(231,246,253,1)), color-stop(51%,rgba(212,238,250,1)), color-stop(100%,rgba(212,236,254,1))); /* Chrome,Safari4+ */
@@ -613,6 +614,7 @@ body {
 	border-color: #5c5c5c;
 	color: #ccc;
 	padding: 0px;
+	opacity: 0.5;
 	text-shadow: 0px 1px 1px #fff;
 	background: rgb(255,255,255); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(248,248,248,1) 50%, rgba(240,240,240,1) 51%, rgba(251,251,251,1) 100%); /* FF3.6+ */

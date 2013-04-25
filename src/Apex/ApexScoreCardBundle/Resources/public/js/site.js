@@ -110,6 +110,15 @@ function viewModel () {
 		
 	};
 	
+	self.setNine = function () {
+		self.noOfHoles(9);
+	};
+	
+	self.setEighteen = function () {
+		self.noOfHoles(18);
+	};
+	
+	
 	self.holeNumToggle = ko.computed(function() {
 		if (parseInt(self.noOfHoles(), 10) === 18) {
 //			if (self.holes().length < 18) {
@@ -431,6 +440,8 @@ function viewModel () {
 			function(data) {
 				if (data.message === "failed") {
 					alert ("not logged in");
+					self.playerName("anon");
+					self.playerId("");
 				}
 				else {
 					self.playerName(data.golfer.name);

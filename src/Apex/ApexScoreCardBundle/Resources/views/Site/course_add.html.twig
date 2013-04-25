@@ -43,18 +43,26 @@
 	
 		<form data-validate="parsley" id="form"> 
 	
-		<div style="float: left">
+		<div style="float: left; width: 100%">
 			<label for="courseName">Course name:</label><br>
-			<input type="text" id="teeWhite" maxlength="255" data-bind="value: courseName" name="courseName" data-required="true" data-trigger="keyup" />
+			<input type="text" id="teeWhite" maxlength="255" data-bind="value: courseName" name="courseName" data-required="true" data-trigger="keyup" style="width: 100%" />
 		</div>
-		<div style="float: left">
+		<br>
+		<div style="float: left; width: 100%"">
 			<label for="courseAlias">Course alias:</label><br>
-			<input type="text" id="teeWhite" maxlength="255"  data-bind="value: courseAlias" name="courseAlias" data-required="true" data-trigger="keyup"/>
+			<input type="text" id="teeWhite" maxlength="255"  data-bind="value: courseAlias" name="courseAlias" data-required="true" data-trigger="keyup" style="width: 100%" />
 		</div>
 
 		<div id="hole_toggle" data-bind="visible: showHoleToggle" style="clear: both; padding: 5px">
-			<input type="radio" name="holes" value="9" data-bind="checked: noOfHoles" />9 hole course 
+
+			<span data-bind="click: setNine">
+			<input type="radio" name="holes" value="9" data-bind="checked: noOfHoles" />9 hole course
+			</span>
+
+			<span data-bind="click: setEighteen">
 			<input type="radio" name="holes" value="18" data-bind="checked: noOfHoles" />18 hole course
+			</span>
+			
 		</div>
 		
 
