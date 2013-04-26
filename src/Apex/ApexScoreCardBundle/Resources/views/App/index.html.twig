@@ -10,6 +10,8 @@
     <link href="{{ asset('bundles/apexscore/css/mobiscroll-2.4.1.custom.min.css') }}" rel="stylesheet" type="text/css" />
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
 
 	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
@@ -17,13 +19,18 @@
     <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/mobiscroll-2.4.1.custom.min.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
-
+	
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
+
+
+	<script type="application/javascript" src="{{ asset('bundles/apexscore/js/add2home.js') }}"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0" />
 	<meta name="apple-mobile-web-app-capable" content="yes" /> 
 	<meta name="apple-mobile-web-app-status-bar-style" content="white" />  
+	
+	<meta name="apple-mobile-web-app-title" content="Bogikortti" >
 
 	<script type="text/javascript">
 		$.mobile.changePage.defaults.allowSamePageTransition = true;
@@ -50,7 +57,7 @@
 
 <body>
 
-<div id="f_page" data-role="page" data-title="Bogikortti v0.1 - Bugikortti">
+<div id="f_page" data-role="page" data-title="Bogikortti" >
 	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#" id="txt-only" data-role="button" data-icon="gear" data-iconpos="notext" data-bind="event: { tap: loadPrefs }"></a>
 		<div id="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
@@ -67,7 +74,7 @@
 	<!-- /ko -->		
 	
 	<!-- ko if: firstRun() == false -->
-		<div>	
+		<div data-role="content">
 			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList" style="-webkit-transform: translate3d(0,0,0)"> 
 				<li>
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
@@ -95,7 +102,7 @@
 					<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
 				</div>
 				<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
-				  <h5 class="ui-title">Remove this round?</h5>
+<!--				  <h5 class="ui-title">Remove this round?</h5> -->
 				  <p>Round will be permanently deleted.</p>
 					<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Cancel</a>
 					<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Remove Round</a>
@@ -467,8 +474,8 @@
 
 {% else %}
 
-		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.0.min.js') }}"></script>
+		<script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.1.min.js') }}"></script>
 
 
 </head>

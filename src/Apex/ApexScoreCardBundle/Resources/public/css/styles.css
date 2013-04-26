@@ -655,7 +655,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin-right: 0px !important;
     width    : 100%;
     z-index  : 1;
-}​
+}
 
 #courseSelect {
 	width: 100%;
@@ -665,6 +665,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	width: 100%;
 }
 
-#scroller {
-}
+
 

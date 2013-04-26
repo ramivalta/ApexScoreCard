@@ -1004,7 +1004,7 @@ $(document).on('pageinit', function() {
 	$('#s_page').on('pageshow', function(e) {
 	
  	// https://github.com/jquery/jquery-mobile/issues/4078
-		$(this).addClass('ui-page-active');
+	//	$(this).addClass('ui-page-active');
 
 		vm.calcRoundDuration();
 		var clock = setInterval(function() { 
