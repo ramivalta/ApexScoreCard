@@ -58,9 +58,9 @@
 <body>
 
 <div id="f_page" data-role="page" data-title="Bogikortti" >
-	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
+	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#" id="txt-only" data-role="button" data-icon="gear" data-iconpos="notext" data-bind="event: { tap: loadPrefs }"></a>
-		<div id="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
+		<div class="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
 		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
 	
@@ -134,9 +134,9 @@
 
 <div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
 
-	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
+	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="event: { tap: leaveRound }"></a>
-		<div id="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
+		<div class="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
 		</div>
 
@@ -210,26 +210,24 @@
 		</div>
 	</div>
 		
-	<div id="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
+	<div class="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<div style="float: left">
 			<!-- ko if: currentHole() == 1 -->
 			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span id="holenav">Hole </span><span id="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 			
 			<!-- ko if: currentHole() != 1 -->
-			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false"><span id="holenav">Hole </span><span id="holenav" data-bind="text: currentHole() - 1" style="padding-right: 30px"></span> </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false"><span class="holenav">Hole </span><span class="holenav" data-bind="text: currentHole() - 1" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 		</div>
 
-
-
 		<div style="float: right"> 
 			<!-- ko if: currentHole() == holes().length -->
-			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span id="holenav">Hole </span><span id="holenav">1</span>  </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Hole </span><span class="holenav">1</span>  </a>
 			<!-- /ko -->
 		
 			<!-- ko if: currentHole() != holes().length -->
-			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span id="holenav">Hole </span><span id="holenav" data-bind="text: currentHole() + 1"></span>  </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Hole </span><span class="holenav" data-bind="text: currentHole() + 1"></span>  </a>
 			<!-- /ko -->
 		</div>	
 	</div>
@@ -248,136 +246,136 @@
 	
 		<table id="scoreCardTable">
 			<tr>
-				<td id="scHeaders">Course</td>
-				<td id="scHeaders">Date</td>
-				<td id="scHeaders">Player</td>
-				<td id="scHeaders">Hcp</td>
+				<td class="scHeaders">Course</td>
+				<td class="scHeaders">Date</td>
+				<td class="scHeaders">Player</td>
+				<td class="scHeaders">Hcp</td>
 			</tr>
 			<tr>
-				<td id="scCells" data-bind="text: courseName"></td>
-				<td id="scCells" data-bind="text: moment(roundStartTime()).format('LL')"></td>
-				<td id="scCells" data-bind="text: playerName"></td>
-				<td id="scCells" data-bind="text: round_hcp"></td>
+				<td class="scCells" data-bind="text: courseName"></td>
+				<td class="scCells" data-bind="text: moment(roundStartTime()).format('LL')"></td>
+				<td class="scCells" data-bind="text: playerName"></td>
+				<td class="scCells" data-bind="text: round_hcp"></td>
 			<tr>
 		</table> 
 	
 		<table id="scoreCardTable">
 			<tr>
-				<td id="scHeaders">Hole</td>
-				<td id="scHeaders">Par</td>
-				<td id="scHeaders">HCP</td>
-				<td id="scHeaders">Length</td>
-				<td id="scHeaders">Score</td>
-				<td id="scHeaders">To Par</td>
-				<td id="scHeaders">Points</td>
+				<td class="scHeaders">Hole</td>
+				<td class="scHeaders">Par</td>
+				<td class="scHeaders">HCP</td>
+				<td class="scHeaders">Length</td>
+				<td class="scHeaders">Score</td>
+				<td class="scHeaders">To Par</td>
+				<td class="scHeaders">Points</td>
 			</tr>
 			<tbody data-bind="foreach: scoreCard">
 				<tr>
-					<td id="scCells" data-bind="text: hole_number"></td>
-					<td id="scCells" data-bind="text: hole_par"></td>
-					<td id="scCells" data-bind="text: hole_hcp"></td>
+					<td class="scCells" data-bind="text: hole_number"></td>
+					<td class="scCells" data-bind="text: hole_par"></td>
+					<td class="scCells" data-bind="text: hole_hcp"></td>
 					
 					<!-- ko if: $parent.round_tee() == "yellow" -->
-						<td id="teeYellow"><span data-bind="text: hole_length"></span> m
+						<td class="teeYellow"><span data-bind="text: hole_length"></span> m
 						</td>
 					<!-- /ko -->
 					<!-- ko if: $parent.round_tee() == "red" -->
-						<td id="teeRed"><span data-bind="text: hole_length"></span> m
+						<td class="teeRed"><span data-bind="text: hole_length"></span> m
 						</td>
 					<!-- /ko -->
 					<!-- ko if: $parent.round_tee() == "blue" -->
-						<td id="teeBlue"><span data-bind="text: hole_length"></span> m
+						<td class="teeBlue"><span data-bind="text: hole_length"></span> m
 						</td>
 					<!-- /ko -->
 					<!-- ko if: $parent.round_tee() == "white" -->
-						<td id="teeWhite"><span data-bind="text: hole_length"></span> m
+						<td class="teeWhite"><span data-bind="text: hole_length"></span> m
 						</td>
 					<!-- /ko -->
 					
 				
 					<!-- ko if: score() > 0 -->
 						<!-- ko if: scoreToPar == -1 -->
-						<td id="scBirdie"><span id="circle" data-bind="text: score"></span></td>
+						<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar < -1 -->
-						<td id="scEagle"><span id="doublecircle"><span id="circle" data-bind="text: score"></span></span></td>
+						<td class="scEagle"><span id="doublecircle"><span id="circle" data-bind="text: score"></span></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar == 1 -->
-							<td id="scBogey"><span id="rectangle" data-bind="text: score"></span></td>
+							<td class="scBogey"><span id="rectangle" data-bind="text: score"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar > 1 -->
-							<td id="scDouble" data-bind="text: score"></td>
+							<td class="scDouble" data-bind="text: score"></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar == 0 -->
-							<td id="scScoreCells" data-bind="text: score"></td>
+							<td class="scScoreCells" data-bind="text: score"></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar == 1 -->
-							<td id="scBogey">+<span data-bind="text: scoreToPar"></span></td>
+							<td class="scBogey">+<span data-bind="text: scoreToPar"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar > 1 -->
-							<td id="scDouble">+<span data-bind="text: scoreToPar"></span></td>
+							<td class="scDouble">+<span data-bind="text: scoreToPar"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar == -1 -->
-							<td id="scBirdie"><span data-bind="text: scoreToPar"></span></td>
+							<td class="scBirdie"><span data-bind="text: scoreToPar"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar < -1 -->
-							<td id="scEagle"><span data-bind="text: scoreToPar"></span></td>
+							<td class="scEagle"><span data-bind="text: scoreToPar"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar == 0 -->
-							<td id="scScoreCells"><span>E</span></td>
+							<td class="scScoreCells"><span>E</span></td>
 						<!-- /ko -->
 					
-						<td id="scCells" data-bind="text: points"></td>
+						<td class="scCells" data-bind="text: points"></td>
 				
 					<!-- /ko -->
 				
 					<!-- ko if: score() == 0 -->
-						<td id="scScoreCells">&nbsp;</td>
-						<td id="scCells">&nbsp;</td>
-						<td id="scCells">&nbsp;</td>
+						<td class="scScoreCells">&nbsp;</td>
+						<td class="scCells">&nbsp;</td>
+						<td class="scCells">&nbsp;</td>
 					<!-- /ko -->
 				</tr>
 			</tbody>
 			<tbody>
 				<tr>
-					<td id="scTotals"></td>
-					<td id="scTotals" data-bind="text: coursePar"></td>
-					<td id="scTotals"></td>
+					<td class="scTotals"></td>
+					<td class="scTotals" data-bind="text: coursePar"></td>
+					<td class="scTotals"></td>
 					
 					<!-- ko if: round_tee() == "yellow" -->
-						<td id="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 						</td>
 					<!-- /ko -->
 					<!-- ko if: round_tee() == "red" -->
-						<td id="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						<td class="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 						</td>
 					<!-- /ko -->
 					<!-- ko if: round_tee() == "blue" -->
-						<td id="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 						</td>
 					<!-- /ko -->
 					<!-- ko if: round_tee() == "white" -->
-						<td id="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+						<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 						</td>
 					<!-- /ko -->
 					
 					<!-- ko if: totalToPar() < 0 -->
-						<td id="scBirdie" data-bind="text: totalScore"></td>
+						<td class="scBirdie" data-bind="text: totalScore"></td>
 					<!-- /ko -->
 					<!-- ko if: totalToPar() >= 0 -->	
-						<td id="scTotals" data-bind="text: totalScore"></td>
+						<td class="scTotals" data-bind="text: totalScore"></td>
 					<!-- /ko -->				
 					<!-- ko if: totalToPar() > 0 -->
-						<td id="scTotals">+<span data-bind="text: totalToPar"></span></td>
+						<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
 					<!-- /ko -->
 					<!-- ko if: totalToPar() < 0 -->
-						<td id="scBirdie"><span data-bind="text: totalToPar" ></span></td>
+						<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
 					<!-- /ko -->
 					<!-- ko if: totalToPar() == 0 -->
-						<td id="scTotals"><span>E</span></td>
+						<td class="scTotals"><span>E</span></td>
 					<!-- /ko -->
 				
-					<td id="scTotals" data-bind="text: totalPoints"></td> 
+					<td class="scTotals" data-bind="text: totalPoints"></td> 
 				</tr>
 			</tbody>
 		</table>
@@ -391,10 +389,10 @@
 
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
-	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
+	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 			<a href="#" data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
 
-		<div id="headerText">Preferences</div>
+		<div class="headerText">Preferences</div>
 		
 			<a href="#credsPopUp" id="credsBtn" data-rel="popup" data-position-to="#credsBtn" data-role="button" data-transition="flow" data-icon="info" data-theme="b" data-iconpos="notext"></a>
 	</div>
@@ -459,9 +457,9 @@
 
 
 <div id="courseSelect" data-role="page" data-title="New round" data-theme="b">
-	<div id="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
+	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-transition="slidefade" data-direction="reverse"  data-role="button" id="Home" data-icon="home" data-iconpos="notext"></a>
-		<div id="headerText">Choose course</div>
+		<div class="headerText">Choose course</div>
 	</div>
 	<div id="courseListWrap">
 		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Course name or abbreviation..." data-filter-theme="a" id="courseList" data-bind="mobileList: courseList, foreach: courseList">
