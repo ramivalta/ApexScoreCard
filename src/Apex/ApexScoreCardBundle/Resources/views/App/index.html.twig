@@ -60,7 +60,7 @@
 <div id="f_page" data-role="page" data-title="Bogikortti" >
 	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#" id="txt-only" data-role="button" data-icon="gear" data-iconpos="notext" data-bind="event: { tap: loadPrefs }"></a>
-		<div class="headerText">Bogikortti - <span data-bind="text: playerName"></span></div>
+		<div class="headerText" id="f_header">Bogikortti - <span data-bind="text: playerName"></span></div>
 		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
 	
@@ -76,7 +76,10 @@
 	<!-- ko if: firstRun() == false -->
 		<div data-role="content">
 			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList" style="-webkit-transform: translate3d(0,0,0)"> 
-				<li>
+				
+				<li data-bind="css: { highlightDeleted: $root.highlightDeleted(start_time.date), highlightLoaded: $root.highlightLoaded(start_time.date) } ">
+				 
+				 
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 					<span data-bind="text: course_name"></span>
 					<span style="font-size: 66%">
@@ -213,7 +216,7 @@
 	<div class="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<div style="float: left">
 			<!-- ko if: currentHole() == 1 -->
-			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span id="holenav">Hole </span><span id="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span class="holenav">Hole </span><span class="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 			
 			<!-- ko if: currentHole() != 1 -->
@@ -234,12 +237,12 @@
 </div>	
 	
 	
-<div id="scoreCard" data-role="page" data-close-btn="none" data-theme="b">
+<div id="scoreCard" class="scorecard-dialog" data-role="page" data-close-btn="none" data-theme="b">
 
 	<div data-theme="c" data-role="header" id="dialogHeader">
-			<span id="scCourse" data-bind="text: courseName"></span>
+		<span id="scCourse" data-bind="text: courseName"></span>
 			-
-			<span id="scStartTime" data-bind="text: moment(roundStartTime()).format('LLL')"></span>
+		<span id="scStartTime" data-bind="text: moment(roundStartTime()).format('LLL')"></span>
 	</div>
 
 	<div data-role="content" id="dialogContent" data-theme="b">

@@ -424,8 +424,8 @@ function viewModel () {
 	
 	self.loadPrefs = function() {
 		if (self.loadedRoundStartTime() !== "") {
-			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', '');
+//			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+//			el.parent().parent().parent().parent().parent().attr('style', '');
 			self.scrollPos(0);
 			self.loadedRoundStartTime("");
 		}
@@ -634,15 +634,27 @@ function viewModel () {
                                     allowSamePageTransition: true});
 	};
 	
+	self.highlightLoaded = function(start_time) {
+		if (start_time == self.loadedRoundStartTime()) return true;
+
+		else return false;
+	};
+	
+	self.highlightDeleted = function(start_time) {
+		if (start_time == self.clickedRoundStartTime()) return true;
+
+		else return false;
+	};
+	
 	self.loadRound = function(round_id, start_time) {
 
 		var loc = $(window).scrollTop();
 		self.scrollPos(loc);
 
-		if (self.loadedRoundStartTime() !== "") {
-			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', '');
-		}
+//		if (self.loadedRoundStartTime() !== "") {
+//			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+	//		el.parent().parent().parent().parent().parent().attr('style', '');
+//		}
 
 		self.loadedRoundStartTime(start_time);
 		self.holes.removeAll();
@@ -680,12 +692,11 @@ function viewModel () {
 		if (start_time) {
 			var el = $("span:contains('" + start_time + "')");
 			self.el(el);
-			el.parent().parent().parent().parent().parent().attr('style', 'background: #FFFFC0');
 			self.clickedRoundStartTime(start_time);
 		}
 		
 
-		$("#delPopUp").popup( "open", { transition: "pop", positionTo: '#header'  });
+		$("#delPopUp").popup( "open", { transition: "pop", positionTo: '#f_header'  });
 		
 /*		$.mobile.changePage("#delPopUp", { transition: "pop", role: "popup" }); */
 		
@@ -721,8 +732,8 @@ function viewModel () {
 
 	self.cancelRoundDelete = function() {
 		if (self.clickedRoundStartTime() !== "") {
-			var el = $("span:contains('" + self.clickedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', '');
+	//		var el = $("span:contains('" + self.clickedRoundStartTime() + "')");
+		//	el.parent().parent().parent().parent().parent().attr('style', '');
 			self.clickedRoundStartTime("");
 		}	
 		$("#delPopUp").popup( "close", { transition: "fade" });
@@ -962,8 +973,8 @@ function viewModel () {
 			
 	self.loadCourseSelect = function () {
 		if (self.loadedRoundStartTime() !== "") {
-			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', '');
+//			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
+//			el.parent().parent().parent().parent().parent().attr('style', '');
 			self.scrollPos(0);
 		}
 		self.loadedRoundStartTime("");
@@ -981,8 +992,8 @@ $(document).on('pageinit', function() {
 	
 	$('#f_page').on('pageshow', function() {
 		if (vm.loadedRoundStartTime() !== "") {
-			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
-			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
+//			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
+//			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
 			$.mobile.silentScroll(vm.scrollPos());
 		}
 
