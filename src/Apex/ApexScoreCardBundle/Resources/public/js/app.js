@@ -58,10 +58,10 @@ function viewModel () {
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
 			var el = {};
-			el['hole'] = ko.observable(i + 1);
-			el['score'] = ko.observable(0);
-			el['points'] = ko.observable(0);
-			el['scoreToPar'] = ko.observable(0);
+			el.hole = ko.observable(i + 1);
+			el.score = ko.observable(0);
+			el.points = ko.observable(0);
+			el.scoreToPar = ko.observable(0);
 			self.roundScores.push(el);
 		}
 	};
@@ -641,7 +641,12 @@ function viewModel () {
 	};
 	
 	self.highlightDeleted = function(start_time) {
-		if (start_time == self.clickedRoundStartTime()) return true;
+		if (start_time == self.clickedRoundStartTime()) {
+			if (self.highlightLoaded(start_time) === true) {
+				self.loadedRoundStartTime("");
+			}
+			return true;
+		}
 
 		else return false;
 	};
@@ -868,15 +873,15 @@ function viewModel () {
 		var totaltopar = 0;
 		for (var i = 0; i < self.holes().length; i++) {
 			var line = {};
-			line['hole_number'] = self.holes()[i].hole_number;
-			line['hole_par'] = self.holes()[i].hole_par;
-			line['hole_hcp'] = self.holes()[i].hole_hcp;
-			line['hole_length'] = self.holes()[i].hole_length;
-			line['score'] = self.roundScores()[i].score;
+			line.hole_number = self.holes()[i].hole_number;
+			line.hole_par = self.holes()[i].hole_par;
+			line.hole_hcp = self.holes()[i].hole_hcp;
+			line.hole_length = self.holes()[i].hole_length;
+			line.score = self.roundScores()[i].score;
 
 			var t = self.getHolePoints(self.roundScores()[i].score(), self.holes()[i].hole_par(), self.holes()[i].hole_hcp()); 
 
-			line['points'] = t;
+			line.points = t;
 			self.roundScores()[i].points(t); // laitetaan scorenäkymälle näkyvään observableen 
 	
 			var p;
@@ -886,7 +891,7 @@ function viewModel () {
 			}
 			else { p = 0; }
 			
-			line['scoreToPar'] = p;
+			line.scoreToPar = p;
 			
 			self.scoreCard.push(line);
 			totaltopar = totaltopar + parseInt(p, 10);
