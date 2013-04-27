@@ -295,10 +295,13 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 
 #scoreCard {
 	font-size: 0.65em;
+	width: 100%;
 }
 
 #dialogHeader {
 	padding: 6px;
+	padding-right: 0px;
+	padding-left: 0px;
 	text-align: center;
 }
 
@@ -306,9 +309,21 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 	text-align: center;
 	clear: both;
 	padding-top: 0px;
-	margin-left: auto;
-	margin-right: auto;
+	padding: 6px;
+//	margin-left: auto;
+//	margin-right: auto;
+	margin-left: 0px;
+	margin-right: 0px;
 	padding-bottom: 47px !important;
+}
+
+.ui-dialog.scorecard-dialog .ui-dialog-contain {
+//	margin: 5% auto 6px auto;
+	margin-top: 0px;
+	width: 100%;
+	max-width: 720px;
+	padding: 0px;
+	top: 0px;
 }
 
 #scPlayer {
@@ -570,6 +585,37 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 }
 
 
+.highlightDeleted.ui-btn-icon-right {
+//	color:#cc0000;
+//	background: '#FFFFC0';
+//	background: yellow;
+	background: Beige;
+	opacity: 0.4;
+}
+
+.highlightLoaded.ui-btn-icon-right {
+//	background: '#D7DBDD' !important;
+	background: Silver;
+}
+
+.highlightDeleted.ui-li {
+/*	color:#333;
+	overflow:show;
+	text-overflow:clip;
+	white-space:normal;
+//	height:28px;
+	margin-bottom:0px; */
+//	background: '#FFFFC0' !important;
+}
+
+.highlightLoaded.ui-li {
+	background: '#D7DBDD' !important;
+}
+
+.highlightDeleted {
+	background: '#FFFFC0' !important;
+}
+
 #scoreCardButtons {
 	clear: both;
 	width: 100%;
@@ -664,6 +710,5 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 #courseList {
 	width: 100%;
 }
-
 
 
