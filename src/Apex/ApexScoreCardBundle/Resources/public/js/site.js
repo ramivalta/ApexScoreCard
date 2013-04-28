@@ -434,7 +434,7 @@ function viewModel () {
 			{ data : data },
 			function(data) {
 				if (data.message !== "failed") {
-					self.adderName(data.golfer.name);
+					self.adderName(data.golfer.username);
 				}
 
 			}
@@ -450,4 +450,7 @@ $(document).ready(function() {
 
 	window.vm = new viewModel();
 	ko.applyBindings(vm);
+	
+	$(document).foundation();
+	
 });	
