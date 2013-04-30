@@ -348,18 +348,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 }
 
-/* #circle {
-	border-radius: 50%;
-	border-width: 1px;
-	border-style: solid;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
-//	border-color: #333;
-	border-color: black;
-} */
-	
 .scEagle {
 //	color: red;
 	padding:1px;
@@ -426,15 +414,31 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-color: black;
 } */
 
-/* #doublecircle {
+
+.circle {
+	border-radius: 50%;
+	border-width: 1px;
+	border-style: solid;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+//	padding-top: 2px;
+//	padding-bottom: 2px;
+//	border-color: #333;
+	border-color: black;
+}
+
+
+.doublecircle {
 	border-radius: 50%;
 	border-width: 1px;
 	border-style: solid;
 	padding: 2px;
-	border-color: #333;
-}	*/
+	border-color: black;
+}
 	
-#scoreCardTable {
+.scoreCardTable {
 	padding: 1px;
 	float: left;
 	color: black;
