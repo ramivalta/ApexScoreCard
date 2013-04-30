@@ -23,7 +23,7 @@ body {
 }
 
 #f_page {
-	overflow: auto;
+//	overflow: auto;
 	width: 100%;
 }
 	
@@ -51,7 +51,7 @@ body {
 .header .ui-btn { margin: 0px; padding-left: 8px; padding-right: 8px; top: 4px; height: 34px; border-radius: 6px; }
 
 .header .ui-btn-inner { border: 0px; margin-top: 5px;}
-
+ 
 
 
 /* #header .ui-btn { margin: 0px; padding: 0px; top: 5px; width: 44px; height: 34px; border-radius: 6px; }
@@ -249,8 +249,8 @@ body {
     box-shadow: none ;
 }
 
-a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
-a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
+/* a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
+a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 #scoreSlider {
 	display: none;
@@ -586,16 +586,11 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 
 
 .highlightDeleted.ui-btn-icon-right {
-//	color:#cc0000;
-//	background: '#FFFFC0';
-//	background: yellow;
-	background: Beige;
-	opacity: 0.4;
+
 }
 
 .highlightLoaded.ui-btn-icon-right {
-//	background: '#D7DBDD' !important;
-	background: Silver;
+
 }
 
 .highlightDeleted.ui-li {
@@ -609,11 +604,11 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 }
 
 .highlightLoaded.ui-li {
-	background: '#D7DBDD' !important;
+	background: #DCDCDC;
 }
 
 .highlightDeleted {
-	background: '#FFFFC0' !important;
+	background: #F5F5DC !important;
 }
 
 #scoreCardButtons {
@@ -682,6 +677,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 
 #f_roundList {
 	width: 100%;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translate3d(0,0,0);
 }
 	
 #courseListWrap {
@@ -692,6 +689,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 	margin: 0;
 	width: 100%;
 	padding-top: 15px;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translate3d(0,0,0);
 }
 
 #courseListWrap form {
@@ -701,6 +700,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; }
 	margin-right: 0px !important;
     width    : 100%;
     z-index  : 1;
+   	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translate3d(0,0,0);
 }
 
 #courseSelect {
