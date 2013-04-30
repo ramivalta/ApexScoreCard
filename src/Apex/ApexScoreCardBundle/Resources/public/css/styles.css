@@ -677,8 +677,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 #f_roundList {
 	width: 100%;
-	-webkit-overflow-scrolling: touch;
-	-webkit-transform: translate3d(0,0,0);
+//	-webkit-overflow-scrolling: touch;
+//	-webkit-transform: translate3d(0,0,0);
 }
 	
 #courseListWrap {
@@ -689,8 +689,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	margin: 0;
 	width: 100%;
 	padding-top: 15px;
-	-webkit-overflow-scrolling: touch;
-	-webkit-transform: translate3d(0,0,0);
+//	-webkit-overflow-scrolling: touch;
+//	-webkit-transform: translate3d(0,0,0);
 }
 
 #courseListWrap form {
@@ -700,8 +700,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	margin-right: 0px !important;
     width    : 100%;
     z-index  : 1;
-   	-webkit-overflow-scrolling: touch;
-	-webkit-transform: translate3d(0,0,0);
+//   	-webkit-overflow-scrolling: touch;
+//	-webkit-transform: translate3d(0,0,0);
 }
 
 #courseSelect {
