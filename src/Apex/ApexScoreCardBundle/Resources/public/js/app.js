@@ -43,7 +43,7 @@ function viewModel () {
 	self.recentlyPlayedCourses = ko.observableArray([]); // to be implemented
 	self.courseList = ko.observableArray([]);
 
-	self.totalToPar = ko.observable();
+//	self.totalToPar = ko.observable();
 	self.scoreCard = ko.observableArray();
 	
 	self.scrollPos = ko.observable();
@@ -867,38 +867,59 @@ function viewModel () {
 		$.mobile.changePage("#scoreCard", { transition: 'slidedown', role: 'dialog'});
 	};
 	
-	/* kaipaa kipeästi rewriteä, näkevä lagi käylissä kun tää vedetään joka kerta uusiks korttia katsottaessa */
+	self.totalToPar = ko.computed(function() {
+		var toPar = 0;
+		var y;
+		for (var i = 0; i < self.roundScores().length; i++) {
+			y = parseInt(self.roundScores()[i].score(), 10);
+			if (y > 0) toPar += y - self.holes()[i].hole_par();
+		}
+		
+		return toPar;
+		
+	});
+	
+	self.validateRound = ko.computed(function() {
+/*		var h = self.holes().length;
+		for (var i = 0; i < h; i++) {
+//			console.log(parseInt(self.roundScores()[i].score(), 10));
+			if (parseInt(self.roundScores()[i].score(), 10) == 0) {
+				console.log(self.roundScores()[i].hole() + " " +  parseInt(self.roundScores()[i].score(), 10));
+				return false;
+			}
+
+		} */
+		return true;
+	});
+	
 	self.fillScoreCard = function (callback) {
 		self.scoreCard.removeAll();
-		var totalpoints = 0;
-		var totaltopar = 0;
 		for (var i = 0; i < self.holes().length; i++) {
-			var line = {};
-			line.hole_number = self.holes()[i].hole_number;
-			line.hole_par = self.holes()[i].hole_par;
-			line.hole_hcp = self.holes()[i].hole_hcp;
-			line.hole_length = self.holes()[i].hole_length;
-			line.score = self.roundScores()[i].score;
-
+		
 			var t = self.getHolePoints(self.roundScores()[i].score(), self.holes()[i].hole_par(), self.holes()[i].hole_hcp()); 
 
-			line.points = t;
 			self.roundScores()[i].points(t); // laitetaan scorenäkymälle näkyvään observableen 
 	
 			var p;
-
 			if (self.roundScores()[i].score() > 0) {
 				p = self.roundScores()[i].score() - self.holes()[i].hole_par();
 			}
 			else { p = 0; }
-			
-			line.scoreToPar = p;
+
+			var line = {
+				hole_number : self.holes()[i].hole_number,
+				hole_par : self.holes()[i].hole_par,
+				hole_hcp : self.holes()[i].hole_hcp,
+				hole_length : self.holes()[i].hole_length,
+				score : self.roundScores()[i].score,
+				scoreToPar : p,
+				points : t
+			};
 			
 			self.scoreCard.push(line);
-			totaltopar = totaltopar + parseInt(p, 10);
 		}
 		self.calcHcpPreview();
-		self.totalToPar(totaltopar);
+
 	};
 	
 	self.getHolePoints = function(score, par, hole_hcp) {

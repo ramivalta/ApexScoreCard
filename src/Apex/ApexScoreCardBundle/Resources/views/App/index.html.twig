@@ -163,10 +163,25 @@
 			</div>
 	
 			<div id="roundScore" class="ui-block-c">
-				Score: <span data-bind="text: totalScore"></span><br>
-				<span style="font-size: 75%"> Points:</span>
-				<span data-bind="text: totalPoints" style="font-size: 75%"> 
+				Score: <span data-bind="text: totalScore"></span>
+				
+				<span style="opacity: 0.8">
+					<!-- ko if: totalToPar() > 0 -->
+						(+<span data-bind="text: totalToPar"></span>)
+					<!-- /ko -->
+					<!-- ko if: totalToPar() < 0 -->
+						(<span data-bind="text: totalToPar"></span>)
+					<!-- /ko -->
+				
+					<!-- ko if: totalToPar() == 0 -->
+						(E)
+					<!-- /ko -->
 				</span>
+
+				<br>
+				
+				<span style="font-size: 75%"> Points:</span>
+				<span data-bind="text: totalPoints" style="font-size: 75%"></span> 
 			</div>
 		</div>
 
@@ -359,21 +374,49 @@
 						</td>
 					<!-- /ko -->
 					
-					<!-- ko if: totalToPar() < 0 -->
-						<td class="scBirdie" data-bind="text: totalScore"></td>
+					<!-- ko if: validateRound() == false -->
+					
+						<!-- ko if: totalToPar() < 0 -->
+							<td class="scBirdie"><span data-bind="text: totalScore"></span>* </td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() >= 0 -->	
+							<td class="scTotals"><span data-bind="text: totalScore"></span>* </td>
+						<!-- /ko -->				
+						
+						<!-- ko if: totalToPar() > 0 -->
+							<td class="scTotals">+<span data-bind="text: totalToPar"></span>*</td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() < 0 -->
+							<td class="scBirdie"><span data-bind="text: totalToPar" ></span>*</td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() == 0 -->
+							<td class="scTotals"><span>E</span>*</td>
+						<!-- /ko -->
+						
 					<!-- /ko -->
-					<!-- ko if: totalToPar() >= 0 -->	
-						<td class="scTotals" data-bind="text: totalScore"></td>
-					<!-- /ko -->				
-					<!-- ko if: totalToPar() > 0 -->
-						<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
+					
+					<!-- ko if: validateRound() == true -->
+					
+						<!-- ko if: totalToPar() < 0 -->
+							<td class="scBirdie"><span data-bind="text: totalScore"></span></td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() >= 0 -->	
+							<td class="scTotals"><span data-bind="text: totalScore"></span></td>
+						<!-- /ko -->
+									
+						<!-- ko if: totalToPar() > 0 -->
+							<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() < 0 -->
+							<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
+						<!-- /ko -->
+						<!-- ko if: totalToPar() == 0 -->
+							<td class="scTotals"><span>E</span></td>
+						<!-- /ko -->
+
 					<!-- /ko -->
-					<!-- ko if: totalToPar() < 0 -->
-						<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
-					<!-- /ko -->
-					<!-- ko if: totalToPar() == 0 -->
-						<td class="scTotals"><span>E</span></td>
-					<!-- /ko -->
+					
+	
 				
 					<td class="scTotals" data-bind="text: totalPoints"></td> 
 				</tr>
