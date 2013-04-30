@@ -53,3 +53,8 @@ round_json_delete:
     pattern: /json/delete/round
     defaults: { _controller: "ApexScoreBundle:Round:deleteRound", _format: json }
     requirements: { _method: post|get }
+    
+round_json_get_recent_courses:
+    pattern: /json/get/course/recent
+    defaults: { _controller: "ApexScoreBundle:Round:getRecentCourses", _format: json }
+    requirements: { _method: post }

@@ -389,4 +389,48 @@ class RoundController extends BaseController
 		
 		return new Response(json_encode(array('message' => 'OK')));
 	}
+	
+	public function getRecentCoursesAction()
+	{
+	
+		$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		
+		
+		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $golfer_id), array('id' => 'DESC'));
+		
+		$rounds = [];
+		foreach ($g_rounds as $g) {
+			$rounds[] = $g->getRoundId();
+		}
+
+		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
+		
+		$recent = [];
+		
+		$i = 0;
+		
+		foreach ($f_rounds as $f) {
+			if (count($recent) < 3) {
+				if ($i > 0) {
+					if (!in_array ($f->getCourse()->getJson(), $recent))
+					{
+						$recent[] = $f->getCourse()->getJson();
+					}
+				}
+				else $recent[] = $f->getCourse()->getJson();
+
+			}
+			
+			else break;
+		$i++;
+		}
+		
+
+		return new Response(json_encode(array('courses' => $recent)));
+
+	}
+
 }

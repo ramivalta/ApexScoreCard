@@ -40,7 +40,8 @@ function viewModel () {
 	self.roundScores = ko.observableArray([]);
 	self.roundList = ko.observableArray([]);
 
-	self.recentlyPlayedCourses = ko.observableArray([]); // to be implemented
+	self.recentlyPlayedCourses = ko.observableArray([]); 
+
 	self.courseList = ko.observableArray([]);
 
 //	self.totalToPar = ko.observable();
@@ -69,6 +70,26 @@ function viewModel () {
 	
 	self.prePopulateScores();
 	
+	
+	self.loadRecentCourses = function () {
+		var data;
+
+		apexEventProxy.getRecentCourses(
+			{ data : data },
+			function (data) {
+				for (var i = 0; i < data.courses.length; i++) {
+					var l = {};
+					l.id = ko.observable(data.courses[i].id);
+					l.name = ko.observable(data.courses[i].name);
+					l.alias = ko.observable(data.courses[i].name);
+					self.recentlyPlayedCourses.push(l);
+				}
+			}
+		);
+
+	};
+
+	self.loadRecentCourses();
 
 	self.calcRoundDuration = function() {
 		var secs;
@@ -622,6 +643,14 @@ function viewModel () {
 							score : ko.observable(),
 							par : ko.observable()
 						});
+						
+						self.recentlyPlayedCourses.unshift({
+							id : round_id,
+							name : course_name
+						});
+						
+						self.recentlyPlayedCourses.pop();
+
 					}
 				);
 			}
@@ -804,6 +833,7 @@ function viewModel () {
 						});
 					if (self.roundList().length > 0) {
 						self.firstRun(false);
+
 					}
 						else { self.firstRun(true);
 					}
@@ -880,17 +910,17 @@ function viewModel () {
 	}).extend({throttle: 500 });
 	
 	self.validateRound = ko.computed(function() {
-/*		var h = self.holes().length;
+		var h = self.holes().length;
 		for (var i = 0; i < h; i++) {
-//			console.log(parseInt(self.roundScores()[i].score(), 10));
-			if (parseInt(self.roundScores()[i].score(), 10) == 0) {
-				console.log(self.roundScores()[i].hole() + " " +  parseInt(self.roundScores()[i].score(), 10));
+			var y = parseInt(self.roundScores()[i].score(), 10);
+			if (y === 0) {
 				return false;
 			}
 
-		} */
+		}
 		return true;
-	});
+		
+	}).extend({throttle: 1000 });
 	
 	self.fillScoreCard = function (callback) {
 		self.scoreCard.removeAll();
@@ -1107,6 +1137,10 @@ function viewModel () {
 $(document).on('pageinit', function() {
 
 	window.vm = new viewModel();
+	
+	ko.virtualElements.allowedBindings.mobileList = true;
+
+	
 	ko.applyBindings(vm, document.getElementById("f_page"));
 	
 	

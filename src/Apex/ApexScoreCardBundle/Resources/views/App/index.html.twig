@@ -259,7 +259,7 @@
 
 	<div data-role="content" id="dialogContent" data-theme="b">
 	
-		<table id="scoreCardTable">
+		<table class="scoreCardTable">
 			<tr>
 				<td class="scHeaders">Course</td>
 				<td class="scHeaders">Date</td>
@@ -274,7 +274,7 @@
 			<tr>
 		</table> 
 	
-		<table id="scoreCardTable">
+		<table class="scoreCardTable">
 			<tr>
 				<td class="scHeaders">Hole</td>
 				<td class="scHeaders">Par</td>
@@ -313,10 +313,10 @@
 						<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar < -1 -->
-						<td class="scEagle"><span id="doublecircle"><span id="circle" data-bind="text: score"></span></span></td>
+						<td class="scEagle"><span class="doublecircle"> <span class=" circle" data-bind="text: score"></span></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar == 1 -->
-							<td class="scBogey"><span id="rectangle" data-bind="text: score"></span></td>
+							<td class="scBogey"><span class="rectangle" data-bind="text: score"></span></td>
 						<!-- /ko -->
 						<!-- ko if: scoreToPar > 1 -->
 							<td class="scDouble" data-bind="text: score"></td>
@@ -420,11 +420,12 @@
 				
 					<td class="scTotals" data-bind="text: totalPoints"></td> 
 				</tr>
+			</tbody>
+		</table>
+		<table class="scoreCardTable">
+			<tbody>
 				<tr>
-
-					<td colspan="5"></td>
-					
-					<td class="scTotals" colspan="2">Hcp preview: <span data-bind="text: hcpPreview"></span></td>
+					<td style="float: right; border-top: 0px" class="scHeaders">Hcp preview: <span data-bind="text: hcpPreview"></span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -511,10 +512,29 @@
 		<div class="headerText">Choose course</div>
 	</div>
 	<div id="courseListWrap">
-		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Course name or abbreviation..." data-filter-theme="a" id="courseList" data-bind="mobileList: courseList, foreach: courseList">
+		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Course name or abbreviation..." data-filter-theme="c" id="courseList">
+		<!-- data-bind="mobileList: courseList, foreach: courseList"> -->
+
+			<li data-role="list-divider" data-theme="d">Recently played courses</il>
+
+			<!-- ko mobileList: recentlyPlayedCourses, foreach: recentlyPlayedCourses -->
+
+			<li>
+			<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
+			</li>
+			
+			<!-- /ko -->
+			
+			<li data-role="list-divider" data-theme="d">All courses</il>
+			
+			<!-- ko mobileList: courseList, foreach: courseList -->
+			
 			<li data-bind="attr: { 'data-filtertext': alias +' '+ name}">
 				<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
 			</li>
+			
+			<!-- /ko -->
+			
 		</ul>
 	</div>
 </div>		

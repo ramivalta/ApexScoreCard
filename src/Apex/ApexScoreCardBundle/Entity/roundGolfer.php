@@ -152,4 +152,13 @@ class roundGolfer
     
         return $this;
     }
+    
+    public function getJson()
+    {
+   	   	return array(
+    		'id' => $this->id,
+    		'round_id' => $this->roundId,
+    		'golfer_id' => $this->golferId,
+    	);
+    }
 }
