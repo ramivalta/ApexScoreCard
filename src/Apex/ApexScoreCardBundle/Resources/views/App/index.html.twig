@@ -77,8 +77,7 @@
 		<div data-role="content">
 			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList" style="-webkit-transform: translate3d(0,0,0)"> 
 				
-				<li data-bind="css: { highlightDeleted: $root.highlightDeleted(start_time.date), highlightLoaded: $root.highlightLoaded(start_time.date) } ">
-				 
+				<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) } ">
 				 
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 					<span data-bind="text: course_name"></span>
@@ -94,13 +93,11 @@
 					</span>
 				</li>
 			</ul>
-			
-	
-			
+		
 		</div>
 	<!-- /ko -->
 	
-			<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissable="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
+			<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
 				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
 					<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
 				</div>
@@ -380,6 +377,12 @@
 				
 					<td class="scTotals" data-bind="text: totalPoints"></td> 
 				</tr>
+				<tr>
+
+					<td colspan="5"></td>
+					
+					<td class="scTotals" colspan="2">Hcp preview: <span data-bind="text: hcpPreview"></span></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -401,7 +404,7 @@
 	</div>
 	
 	<!-- credits -->
-		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissable="true" style="max-width: 250px" class="ui-corner-all" data-mini="true">
+		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" style="max-width: 250px" class="ui-corner-all" data-mini="true">
 				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
 					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
 					<h1>Credits</h1>
