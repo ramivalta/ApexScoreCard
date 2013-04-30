@@ -72,6 +72,7 @@ function viewModel () {
 	
 	
 	self.loadRecentCourses = function () {
+		self.recentlyPlayedCourses.removeAll();
 		var data;
 
 		apexEventProxy.getRecentCourses(
@@ -79,9 +80,9 @@ function viewModel () {
 			function (data) {
 				for (var i = 0; i < data.courses.length; i++) {
 					var l = {};
-					l.id = ko.observable(data.courses[i].id);
-					l.name = ko.observable(data.courses[i].name);
-					l.alias = ko.observable(data.courses[i].name);
+					l.id = data.courses[i].id;
+					l.name = data.courses[i].name;
+					l.alias = data.courses[i].alias;
 					self.recentlyPlayedCourses.push(l);
 				}
 			}
@@ -617,6 +618,9 @@ function viewModel () {
 	self.startNewRound = function(course_id, course_name) {
 	
 		self.holes.removeAll();
+		
+//		console.log("course id: " + course_id);
+//		console.log("course name: " + course_name);
 	
 		var data = { course_id : course_id };
 		apexEventProxy.createNewRound(
@@ -644,13 +648,7 @@ function viewModel () {
 							par : ko.observable()
 						});
 						
-						self.recentlyPlayedCourses.unshift({
-							id : round_id,
-							name : course_name
-						});
-						
-						self.recentlyPlayedCourses.pop();
-
+						self.loadRecentCourses();
 					}
 				);
 			}

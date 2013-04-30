@@ -75,7 +75,7 @@
 	
 	<!-- ko if: firstRun() == false -->
 		<div data-role="content">
-			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList" style="-webkit-transform: translate3d(0,0,0)"> 
+			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"> 
 				
 				<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) } ">
 				 
@@ -157,7 +157,7 @@
 					<!-- /ko -->
 						
 					<!-- ko if: currentHoleScore() > 0 -->
-						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore" style="-webkit-transform: translate3d(0,0,0)"></div>
+						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
 					<!-- /ko -->
 				</div>
 			</div>
