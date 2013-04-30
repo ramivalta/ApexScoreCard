@@ -165,17 +165,17 @@
 			<div id="roundScore" class="ui-block-c">
 				Score: <span data-bind="text: totalScore"></span>
 				
-				<span style="opacity: 0.8">
-					<!-- ko if: totalToPar() > 0 -->
-						(+<span data-bind="text: totalToPar"></span>)
-					<!-- /ko -->
-					<!-- ko if: totalToPar() < 0 -->
-						(<span data-bind="text: totalToPar"></span>)
-					<!-- /ko -->
+				<span style="opacity: 0.7; font-size: 90%">
+				<!-- ko if: totalToPar() > 0 -->
+					(+<span data-bind="text: totalToPar"></span>)
+				<!-- /ko -->
+				<!-- ko if: totalToPar() < 0 -->
+					(<span data-bind="text: totalToPar"></span>)
+				<!-- /ko -->
 				
-					<!-- ko if: totalToPar() == 0 -->
-						(E)
-					<!-- /ko -->
+				<!-- ko if: totalToPar() == 0 -->
+					(E)
+				<!-- /ko -->
 				</span>
 
 				<br>

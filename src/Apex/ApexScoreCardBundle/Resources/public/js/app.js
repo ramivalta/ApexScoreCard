@@ -872,12 +872,12 @@ function viewModel () {
 		var y;
 		for (var i = 0; i < self.roundScores().length; i++) {
 			y = parseInt(self.roundScores()[i].score(), 10);
-			if (y > 0) toPar += y - self.holes()[i].hole_par();
+			if (y > 0) toPar += y - parseInt(self.holes()[i].hole_par(), 10);
 		}
 		
 		return toPar;
 		
-	});
+	}).extend({throttle: 500 });
 	
 	self.validateRound = ko.computed(function() {
 /*		var h = self.holes().length;
