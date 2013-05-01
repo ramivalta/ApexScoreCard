@@ -57,4 +57,4 @@ round_json_delete:
 round_json_get_recent_courses:
     pattern: /json/get/course/recent
     defaults: { _controller: "ApexScoreBundle:Round:getRecentCourses", _format: json }
-    requirements: { _method: post }
+    requirements: { _method: post|get }

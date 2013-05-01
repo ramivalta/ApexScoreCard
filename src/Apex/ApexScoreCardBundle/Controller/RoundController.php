@@ -401,6 +401,13 @@ class RoundController extends BaseController
 		
 		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $golfer_id), array('id' => 'DESC'));
 		
+
+		if (!$g_rounds) {
+			return new Response(json_encode(array('message' => 'fail')));
+
+		}
+
+		
 		$rounds = [];
 		foreach ($g_rounds as $g) {
 			$rounds[] = $g->getRoundId();
