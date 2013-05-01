@@ -21,7 +21,7 @@
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
 	
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
-<!--	<script src="{{ asset('bundles/apexscore/js/jquery.scrollfix.js') }}"></script> -->
+	<script src="{{ asset('bundles/apexscore/js/jquery.transit.min.js') }}"></script>
 	
 	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
 
@@ -80,9 +80,9 @@
 		<div class="scrollInner" id="roundListWrap">
 
 <!--		<div data-role="content"> -->
-			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"> 
+			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"  class="round"> 
 				
-				<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) } ">
+				<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) }">
 				 
 					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 					<span data-bind="text: course_name"></span>
@@ -104,20 +104,17 @@
 	<!-- /ko -->
 	
 
-	
-	
-	
-			<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
-				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-					<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
-				</div>
-				<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
+	<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
+		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+				<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
+		</div>
+		<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
 <!--				  <h5 class="ui-title">Remove this round?</h5> -->
-				  <p>Round will be permanently deleted.</p>
-					<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Cancel</a>
-					<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Remove Round</a>
-				</div>
-			</div>
+		  <p>Round will be permanently deleted.</p>
+			<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Cancel</a>
+			<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Remove Round</a>
+		</div>
+	</div>
 	
 	
 
