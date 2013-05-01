@@ -78,12 +78,17 @@ function viewModel () {
 		apexEventProxy.getRecentCourses(
 			{ data : data },
 			function (data) {
-				for (var i = 0; i < data.courses.length; i++) {
-					var l = {};
-					l.id = data.courses[i].id;
-					l.name = data.courses[i].name;
-					l.alias = data.courses[i].alias;
-					self.recentlyPlayedCourses.push(l);
+				if (data.message === "fail") {
+					return;
+				}
+				else {
+					for (var i = 0; i < data.courses.length; i++) {
+						var l = {};
+						l.id = data.courses[i].id;
+						l.name = data.courses[i].name;
+						l.alias = data.courses[i].alias;
+						self.recentlyPlayedCourses.push(l);
+					}
 				}
 			}
 		);
@@ -739,7 +744,7 @@ function viewModel () {
 
 		var el = self.el();
 		var elli = el.parent().parent().parent().parent();
-		$(elli).slideUp();
+		$(elli).fadeOut();
 		
 		
 		var data = { round_id : self.clickedRound() };
@@ -1141,11 +1146,23 @@ $(document).on('pageinit', function() {
 	
 	ko.applyBindings(vm, document.getElementById("f_page"));
 	
+	$('body').on('touchmove', function (e) {
+	var searchTerms = '.scrollOuter',
+			$target = $(e.target),
+			parents = $target.parents(searchTerms);
+
+		if (parents.length || $target.hasClass(searchTerms)) {
+			// ignore as we want the scroll to happen
+			// (This is where we may need to check if at limit)
+		} else {
+			e.preventDefault();
+		}
+	});
+	
 	
 	$('#f_page').on('pageshow', function() {
+	
 		if (vm.loadedRoundStartTime() !== "") {
-//			var el = $("span:contains('" + vm.loadedRoundStartTime() + "')");
-//			el.parent().parent().parent().parent().parent().attr('style', 'background: #D7DBDD !important');
 			$.mobile.silentScroll(vm.scrollPos());
 		}
 
