@@ -744,29 +744,41 @@ function viewModel () {
 
 		var el = self.el();
 		var elli = el.parent().parent().parent().parent();
-		$(elli).fadeOut();
+		var round_id = self.clickedRound();
+		var divs = $(elli).length;
 		
-		
-		var data = { round_id : self.clickedRound() };
-		apexEventProxy.deleteRound(
+		$(elli).transition({x: '-500px', opacity: '0', duration: 500, complete: function() {
+			if ( --divs > 0) return;
+			delRound(round_id);
+		} });
+
+		function delRound (round_id) {
+			var data = { round_id : round_id };
+			apexEventProxy.deleteRound(
 			{ data : data },
-			function (data) {
-				for (var i = 0; i < self.roundList().length; i++) {
-					if (self.roundList()[i].id === self.clickedRound()) {
-						self.roundList.splice(i, 1);
-						if (self.roundList().length === 0) {
+				function (data) {
+					//
+				}
+			);
+			
+			for (var i = 0; i < self.roundList().length; i++) {
+				if (self.roundList()[i].id === self.clickedRound()) {
+					self.roundList.splice(i, 1);
+					if (self.roundList().length === 0) {
 							self.firstRun(true);
-						}
 					}
 				}
+				self.clickedRoundStartTime("");
 			}
-		);
+		};
 
-		self.clickedRoundStartTime("");
 		
 		$("#delPopUp").popup( "close", { transition: "fade" });
 		
 	};
+	
+
+
 
 	self.cancelRoundDelete = function() {
 		if (self.clickedRoundStartTime() !== "") {
