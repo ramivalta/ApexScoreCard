@@ -675,15 +675,17 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	overflow: auto;
 } 
 
-#prefsTees {
-	border-top: 5px;
-	border-bottom: 1px;
-	border-bottom-color: black;
-	border-right: 0px;
-	border-left: 0px;
-	border-style: solid;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
+.prefsTees {
+	border-top: 5px !important;
+	border-bottom: 1px !important;
+	border-bottom-color: black !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	border-style: solid !important;
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+//	font-size: 55% !important;
+	padding: 0px !important;
 }
 
 #mainPrefs {
@@ -834,23 +836,6 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	-webkit-backface-visibility: hidden;
 }
 
-*.ui-listview *.ui-btn-up-c,
-*.ui-listview *.ui-btn-down-c,
-*.ui-listview *.ui-btn-hover-c
-{
-  /* Copy your .ui-btn-up styles here */
-  	border: 1px solid 		#ccc /*{c-bup-border}*/;
-	background: 			#eee /*{c-bup-background-color}*/;
-	font-weight: bold;
-	color: 					#222 /*{c-bup-color}*/;
-	text-shadow: 0 /*{c-bup-shadow-x}*/ 1px /*{c-bup-shadow-y}*/ 0 /*{c-bup-shadow-radius}*/ #fff /*{c-bup-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #fff /*{c-bup-background-start}*/), to( #f1f1f1 /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #fff /*{c-bup-background-start}*/, #f1f1f1 /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #fff /*{c-bup-background-start}*/, #f1f1f1 /*{c-bup-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #fff /*{c-bup-background-start}*/, #f1f1f1 /*{c-bup-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #fff /*{c-bup-background-start}*/, #f1f1f1 /*{c-bup-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #fff /*{c-bup-background-start}*/, #f1f1f1 /*{c-bup-background-end}*/);
-}
 
 
 
