@@ -32,7 +32,7 @@ course_delete:
 course_json_get:
     pattern: /json/show/course
     defaults: { _controller: "ApexScoreBundle:Course:getCourseList" }
-    requirements: { _method: post }
+    requirements: { _method: post|get }
     
 course_json_get_data:
     pattern: /json/get/course/data
