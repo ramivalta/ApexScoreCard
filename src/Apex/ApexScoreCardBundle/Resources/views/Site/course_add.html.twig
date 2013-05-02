@@ -240,9 +240,11 @@
 		<!-- ko foreach: holes -->
 		
 			<tr style="font-size: 0.8em">
-				<td id="teeWhite" style="color: #ccc">
-				<span id="transparentInput">Hole</span>
-					<input id="transparentInput" type="text" maxlength="2" style="width: 1.5em; border-color: #ccc; color: #999; box-shadow: 0 0 0 ;" data-bind="value: hole_number" disabled />
+				<td id="teeWhite">
+				Hole  
+					<span data-bind="text: hole_number">
+					</span>
+<!--					<input id="transparentInput" type="text" maxlength="2" style="width: 1.5em; border-color: #ccc; color: #999; box-shadow: 0 0 0 ;" data-bind="value: hole_number" disabled /> -->
 				</td>
 				<td id="teeWhite">
 					<input id="transparentInput" type="text" maxlength="1" style="width: 1.5em" data-bind="value: hole_par" data-required="true" data-type="number" data-trigger="change" />
