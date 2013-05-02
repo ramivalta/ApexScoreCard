@@ -55,7 +55,7 @@ function viewModel () {
 	self.clickedRoundStartTime = ko.observable("");
 	self.hcpPreview = ko.observable("");
 	
-	self.bogikorttiVersion = ko.observable("Bogikortti 0.1 - Bugikortti");
+	self.bogikorttiVersion = ko.observable("Bogikortti v0.2 - 'Ykköstiille asti meni hyvin'");
 	
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
@@ -67,6 +67,8 @@ function viewModel () {
 			self.roundScores.push(el);
 		}
 	};
+	
+	moment().lang('fi');
 	
 	self.prePopulateScores();
 	
@@ -159,10 +161,10 @@ function viewModel () {
 				case 2: return "Double";
 			}
 			if (x > 2) {
-				return x + " over";
+				return x + " yli";
 			}
 			else if (x < -3) {
-				return Math.abs(x) + " under";
+				return Math.abs(x) + " alle";
 			}
 		}
 	});
@@ -292,10 +294,10 @@ function viewModel () {
 			var y = curHcpPar - curScore + 2;
 			self.showPoints(true);
 			if (y > 0) {
-				return (y + " points");
+				return (y + " pistettä");
 				}
 			else {
-				return (0 + " points");
+				return (0 + " pistettä");
 			}
 		}
 	});
@@ -408,11 +410,18 @@ function viewModel () {
 	ko.bindingHandlers.mobileList = {
 		'update': function (element, valueAccessor) {
 			setTimeout(function () { //To make sure the refresh fires after the DOM is updated
-//			console.log("listview refresh");
+				try {
+					$(element).listview('refresh', true); //
+				}
+				catch (err) {
+				}
+				
+			/* ei tunnu toimivan ko:n virtuaalielementtien kanssa, tehdään rumasti try/catchilla tän sijaan
 				var instance = $.data(element, 'listview');
 				if (instance) {
 					$(element).listview('refresh', true);
 					}
+			*/
 			}, 0);
 		}
 	};
@@ -598,7 +607,7 @@ function viewModel () {
 		self.scoreCard.removeAll();
 		self.roundScores.removeAll();
 		self.prePopulateScores();
-
+		
 		$.mobile.changePage("#f_page", { transition: "slidefade", reverse: true });
 	};
 		
@@ -889,9 +898,10 @@ function viewModel () {
 		apexEventProxy.saveGolferData(
 			{ data : data },
 			function (data) {
-				$.mobile.changePage('#f_page', { transition: "slidefade" });
+				//
 			}
 		);
+		$.mobile.changePage('#f_page', { transition: "slidefade" });
 	};
 
 	self.getGolferData = function (callback) {
@@ -1125,7 +1135,7 @@ function viewModel () {
 			while (p > par_points) {
 				group = self.getHcpGroup(hcp);
 				if (group == "9hole") {
-					self.hcpPreview("N/a for 9 hole rounds");
+					self.hcpPreview("Ei käytössä 9 reiän kierroksella");
 					return;
 				}
 				hcp = hcp - (1 * group.factor);
@@ -1137,7 +1147,7 @@ function viewModel () {
 		else {
 			group = self.getHcpGroup(hcp);
 			if (group == "9hole") {
-				self.hcpPreview("N/a for 9 hole rounds");
+				self.hcpPreview("Ei käytössä 9 reiän kierroksella");
 				return;
 			}
 			if (p >= par_points - group.buffer)	self.hcpPreview(hcp);
@@ -1171,7 +1181,6 @@ $(document).on('pageinit', function() {
 		}
 	});
 	
-	
 	$('#f_page').on('pageshow', function() {
 	
 		if (vm.loadedRoundStartTime() !== "") {
@@ -1192,6 +1201,9 @@ $(document).on('pageinit', function() {
 		ko.applyBindings(vm, document.getElementById("s_page"));
 	});
 
+	$('#courseSelect').on('pageshow', function(e) {
+		$('#courseList').listview('refresh');
+	});
 
 	$('#s_page').on('pageshow', function(e) {
 	

@@ -19,6 +19,7 @@
     <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/mobiscroll.custom-2.5.2.min.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
+	<script src="{{ asset('bundles/apexscore/js/lang/fi.js') }}"> </script>
 	
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/apexscore/js/jquery.transit.min.js') }}"></script>
@@ -41,8 +42,9 @@
 	</script>
 
 	<script type="text/javascript">
-		moment.lang('en', {
-			longDateFormat : {
+		moment().lang('fi');
+		/*, {
+/*			longDateFormat : {
 				LT: "HH:mm",
 				L: "DD/MM/YYYY",
 				l: "D/M/YYYY",
@@ -52,8 +54,8 @@
 				lll: "MMM D YYYY LT",
 				LLLL: "dddd, MMMM Do YYYY LT",
 				llll: "ddd, MMM D YYYY LT"
-			}
-		});
+			} */
+//		});
 	</script>
 </head>
 
@@ -70,7 +72,7 @@
 
 	<!-- ko if: firstRun() == "working" -->
 		<div data-theme="c" data-role="content">
-			Loading rounds...
+			Ladataan kierroksia...
 		</div>
 	<!-- /ko -->		
 	
@@ -89,12 +91,12 @@
 					<span style="font-size: 66%">
 						<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
 						<div style="color: #999">
-							<span data-bind="text: moment(start_time.date).calendar()">						</span> - Score:
+							<span data-bind="text: moment(start_time.date).calendar()">						</span> - Tulos:
 							<span data-bind="text: score"></span> / <span data-bind="text: par"> </span>
 						</div>
 					</span>
 					<span>
-						<a data-theme="d" data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu"></a>
+						<a data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu"></a>
 					</span>
 				</li>
 			</ul>
@@ -106,13 +108,13 @@
 
 	<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
 		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-				<span style="font-size: 1.5em; font-weight: bold">Remove round?</span>
+				<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
 		</div>
 		<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
 <!--				  <h5 class="ui-title">Remove this round?</h5> -->
-		  <p>Round will be permanently deleted.</p>
-			<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Cancel</a>
-			<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Remove Round</a>
+		  <p>Kierros poistetaan lopullisesti.</p>
+			<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
+			<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
 		</div>
 	</div>
 	
@@ -127,8 +129,8 @@
 			</div>
 			
 			<div style="width: 100%" style="float:left">
-				<span style="float:left; margin: 5px">Set your handicap and tee</span>
-				<span style="float: right; margin: 5px">Start new round</span>
+				<span style="float:left; margin: 5px">Aseta tasoituksesi ja valitse tii</span>
+				<span style="float: right; margin: 5px">Aloita uusi kierros</span>
 			</div>
 		</div>	
 	<!-- /ko -->	
@@ -141,7 +143,7 @@
 
 	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="event: { tap: leaveRound }"></a>
-		<div class="headerText">Hole <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
+		<div class="headerText">Reikä <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
 		</div>
 
@@ -168,7 +170,7 @@
 			</div>
 	
 			<div id="roundScore" class="ui-block-c">
-				Score: <span data-bind="text: totalScore"></span>
+				Lyönnit: <span data-bind="text: totalScore"></span>
 				
 				<span style="opacity: 0.7; font-size: 90%">
 				<!-- ko if: totalToPar() > 0 -->
@@ -185,7 +187,7 @@
 
 				<br>
 				
-				<span style="font-size: 75%"> Points:</span>
+				<span style="font-size: 75%"> Pisteet:</span>
 				<span data-bind="text: totalPoints" style="font-size: 75%"></span> 
 			</div>
 		</div>
@@ -209,17 +211,17 @@
 			<div id="tmp" class="ui-grid-a" data-role="content" data-theme="c">
 				<div class="ui-block-a">
 					<span id="course" data-bind="text: courseName"></span><br>
-					Hole <span id="hole" data-bind="text: currentHole"></span><br>
+					Reikä <span id="hole" data-bind="text: currentHole"></span><br>
 					Par <span id="par" data-bind="text: currentHolePar"></span><br>
 					Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
-					<span id="length" data-bind="text: currentHoleLength"></span> meters<br>
+					<span id="length" data-bind="text: currentHoleLength"></span> metriä<br>
 				</div>
 				<div class="ui-block-b" style="text-align: right">
-					Player: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
-					Handicap: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
-					Course handicap: <span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
-					Tee: <span id="playerTee" data-bind="text: round_tee" style="font-weight: bold"></span><br>
-					Duration: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
+					Pelaaja: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
+					Tasoitus: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
+					Pelitasoitus: <span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
+					Tii: <span id="playerTee" data-bind="text: round_tee" style="font-weight: bold"></span><br>
+					Kierroksen kesto: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
 
 <!--						<span data-bind="if: roundEndTime()">End time:
 						<span data-bind="text: moment(roundEndTime()).format('HH:mm:ss')" style="font-weight: bold">
@@ -233,21 +235,21 @@
 	<div class="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<div style="float: left">
 			<!-- ko if: currentHole() == 1 -->
-			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span class="holenav">Hole </span><span class="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span class="holenav">Reikä </span><span class="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 			
 			<!-- ko if: currentHole() != 1 -->
-			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false"><span class="holenav">Hole </span><span class="holenav" data-bind="text: currentHole() - 1" style="padding-right: 30px"></span> </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: currentHole() - 1" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 		</div>
 
 		<div style="float: right"> 
 			<!-- ko if: currentHole() == holes().length -->
-			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Hole </span><span class="holenav">1</span>  </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Reikä </span><span class="holenav">1</span>  </a>
 			<!-- /ko -->
 		
 			<!-- ko if: currentHole() != holes().length -->
-			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Hole </span><span class="holenav" data-bind="text: currentHole() + 1"></span>  </a>
+			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: currentHole() + 1"></span>  </a>
 			<!-- /ko -->
 		</div>	
 	</div>
@@ -266,10 +268,10 @@
 	
 		<table class="scoreCardTable">
 			<tr>
-				<td class="scHeaders">Course</td>
-				<td class="scHeaders">Date</td>
-				<td class="scHeaders">Player</td>
-				<td class="scHeaders">Hcp</td>
+				<td class="scHeaders">Kenttä</td>
+				<td class="scHeaders">Päiväys</td>
+				<td class="scHeaders">Pelaaja</td>
+				<td class="scHeaders">Tasoitus</td>
 			</tr>
 			<tr>
 				<td class="scCells" data-bind="text: courseName"></td>
@@ -281,13 +283,13 @@
 	
 		<table class="scoreCardTable">
 			<tr>
-				<td class="scHeaders">Hole</td>
+				<td class="scHeaders">Reikä</td>
 				<td class="scHeaders">Par</td>
 				<td class="scHeaders">HCP</td>
-				<td class="scHeaders">Length</td>
-				<td class="scHeaders">Score</td>
-				<td class="scHeaders">To Par</td>
-				<td class="scHeaders">Points</td>
+				<td class="scHeaders">Pituus</td>
+				<td class="scHeaders">Tulos</td>
+				<td class="scHeaders">+/-</td>
+				<td class="scHeaders">Pisteet</td>
 			</tr>
 			<tbody data-bind="foreach: scoreCard">
 				<tr>
@@ -430,7 +432,7 @@
 		<table class="scoreCardTable">
 			<tbody>
 				<tr>
-					<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Hcp preview: <span data-bind="text: hcpPreview"></span></td>
+					<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Uusi tasoitus: <span data-bind="text: hcpPreview"></span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -447,21 +449,24 @@
 	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 			<a href="#" data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
 
-		<div class="headerText">Preferences</div>
+		<div class="headerText">Asetukset</div>
 		
 			<a href="#credsPopUp" id="credsBtn" data-rel="popup" data-position-to="#credsBtn" data-role="button" data-transition="flow" data-icon="info" data-theme="b" data-iconpos="notext"></a>
 	</div>
 	
 	<!-- credits -->
-		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" style="max-width: 250px" class="ui-corner-all" data-mini="true">
+		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" style="max-width: 95%; width: 95%" class="ui-corner-all" data-mini="true">
 				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
 					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
-					<h1>Credits</h1>
+					<h1>Tietoja</h1>
 				</div>
 				<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
-				  <h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
-				  <p>Thanks to: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko and Janne.</p>
-					<p><a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a></p>
+					<h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
+	
+					<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu vihapuhe osoitteeseen <a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a> tai kasvotusten kentällä. Saatan kuunnella jos tarjoat oluen.</p>
+	
+			  
+				  <p>Kiitokset: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko ja Janne.</p>
 				</div>
 			</div>
 	<!-- -->
@@ -469,28 +474,28 @@
 
 	<div id="prefsWrappi">
 		<div id="mainPrefs">
-			<h5>Handicap</h5>
+			<h5>Tasoitus</h5>
 			<div id="prefsPlayerHcp">
 				<input id="i" style="display: none"
 				data-bind="value: playerExactHcp" data-role="none" />
 			</div>
 <!--				<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
 			
-			<div id="tees" class="content" data-theme="c">
-				<h5>Tee</h5>
+			<div id="tees">
+				<h5>Tii</h5>
 
 				<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
 					<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_red" style="border-top-color: red" id="prefsTees">Red</label>
+					<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Pun..en</label>
 
 					<input type="radio" name="blue" id="tees_blue" value="blue" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_blue" style="border-top-color: blue" id="prefsTees">Blue</label>
+					<label for="tees_blue" style="border-top-color: blue !important" class="prefsTees">Sin..en</label>
 
 					<input type="radio" name="yellow" id="tees_yellow" value="yellow"  data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_yellow" style="border-top-color: yellow" id="prefsTees">Yellow</label>
+					<label for="tees_yellow" style="border-top-color: yellow !important" class="prefsTees">Kel..en</label>
 
 					<input type="radio" name="white" id="tees_white" value="white" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_white" style="border-top-color: white" id="prefsTees">White</label>
+					<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Val..en</label>
 				</fieldset>
 			</div>
 <!--			
@@ -514,7 +519,7 @@
 <div id="courseSelect" data-role="page" data-title="New round" data-theme="b">
 	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-transition="slidefade" data-direction="reverse"  data-role="button" id="Home" data-icon="home" data-iconpos="notext"></a>
-		<div class="headerText">Choose course</div>
+		<div class="headerText">Valitse kenttä...</div>
 	</div>
 	
 	<div class="scrollOuter">
@@ -522,12 +527,12 @@
 	
 	<div class="scrollInner" id="courseListWrap">
 		
-		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Course name or abbreviation..." data-filter-theme="c" id="courseList">
-		<!-- data-bind="mobileList: courseList, foreach: courseList"> -->
+		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Kentän nimi tai lyhenne..." data-filter-theme="c" id="courseList">
+
 
 			<!-- ko if: recentlyPlayedCourses().length > 0 -->
 			
-				<li data-role="list-divider" data-theme="d">Recently played courses</il>
+				<li data-role="list-divider" data-theme="d">Viimeisimmät pelatut kentät</il>
 
 				<!-- ko mobileList: recentlyPlayedCourses, foreach: recentlyPlayedCourses -->
 
@@ -539,7 +544,7 @@
 			
 			<!-- /ko -->
 			
-			<li data-role="list-divider" data-theme="d">All courses</il>
+			<li data-role="list-divider" data-theme="d">Kaikki kentät</il>
 			
 			<!-- ko mobileList: courseList, foreach: courseList -->
 			
