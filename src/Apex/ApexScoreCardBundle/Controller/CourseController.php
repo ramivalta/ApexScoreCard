@@ -217,8 +217,8 @@ class CourseController extends BaseController
 		if (!$entities) {
     		throw $this->createNotFoundException('Unable to find Course entity');
     	}
-		
-		$courses = array();
+    	
+    	$courses = array();
 		foreach ($entities as $poops) { 
     		$courses[] = $poops->getJson();
     	}
