@@ -256,9 +256,9 @@
 </div>	
 	
 	
-<div id="scoreCard" class="scorecard-dialog" data-role="page" data-close-btn="none" data-theme="b">
+<div id="scoreCard" scorecard-dialog" data-role="page" data-close-btn="none" data-theme="b">
 
-	<div data-theme="c" data-role="header" id="dialogHeader">
+	<div data-theme="a" data-role="header" id="dialogHeader">
 		<span id="scCourse" data-bind="text: courseName"></span>
 			-
 		<span id="scStartTime" data-bind="text: moment(roundStartTime()).format('LLL')"></span>
@@ -440,7 +440,7 @@
 	
 	<div id="scoreCardButtons">
 		<a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a>
-		<a href="#s_page" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true" id="scoreCardClose">Close</a>
+		<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true" id="scoreCardClose">Close</a>
 	</div>
 </div>
 
