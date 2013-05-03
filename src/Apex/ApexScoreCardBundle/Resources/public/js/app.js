@@ -475,6 +475,14 @@ function viewModel () {
 		$.mobile.changePage('#prefs', { transition: "slidefade", reverse:true });
 
 	};
+
+	self.showScoreCard = function () {
+		$.mobile.changePage("#scoreCard", { transition: 'fade'});
+	};
+	
+	self.closeScoreCard = function() {
+		$.mobile.changePage('#s_page', { transition: 'fade', reverse:true });
+	};
 	
 	self.getCourseGeneralData = function (course_id) {
 		var data = { course_id : course_id };
@@ -610,7 +618,7 @@ function viewModel () {
 		}
 
 		self.roundEndTime("");
-		self.scoreCard.removeAll();
+	//	self.scoreCard.removeAll();
 		self.roundScores.removeAll();
 		self.prePopulateScores();
 		
@@ -820,9 +828,9 @@ function viewModel () {
 					}
 				}
 				
-				setTimeout(function () { 
+/*				setTimeout(function () { 
 					self.fillScoreCard();	
-			    }, 500); // hax :(
+			    }, 500); // hax :( */
 				
 				if (self.round_hcp() === "") {
 					self.round_hcp(self.playerExactHcp());
@@ -923,11 +931,6 @@ function viewModel () {
 		);
 	};
 		
-	self.showScoreCard = function () {
-		self.fillScoreCard();
-		$.mobile.changePage("#scoreCard", { transition: 'slidedown', role: 'dialog'});
-	};
-	
 	self.totalToPar = ko.computed(function() {
 		var toPar = 0;
 		var y;
@@ -953,7 +956,100 @@ function viewModel () {
 		
 	}).extend({throttle: 1000 });
 	
-	self.fillScoreCard = function (callback) {
+		
+	self.calcHcpPreview = function() {
+		var p = parseInt(self.totalPoints(), 10);
+		var hcp = parseFloat(self.playerExactHcp());
+
+		var num_holes = parseInt(self.holes().length, 10);
+		var par_points;
+		
+		if (num_holes === 9) par_points = 18;
+		else par_points = 36;
+		
+		var group;
+
+		if (p > par_points ) {
+			while (p > par_points) {
+				group = self.getHcpGroup(hcp);
+				if (group == "9hole") {
+					self.hcpPreview("Ei käytössä 9 reiän kierroksella");
+					return;
+				}
+				hcp = hcp - (1 * group.factor);
+				p--;
+			}
+			self.hcpPreview(parseFloat(hcp).toFixed(1));
+		}
+		
+		else {
+			group = self.getHcpGroup(hcp);
+			if (group == "9hole") {
+				self.hcpPreview("Ei käytössä 9 reiän kierroksella");
+				return;
+			}
+			if (p >= par_points - group.buffer)	self.hcpPreview(hcp);
+			else self.hcpPreview(hcp + group.incr);
+		}
+		
+	};
+	
+	self.getHcpGroup = function(hcp) {
+	
+		var h = hcp;
+		var num_holes = self.holes().length;
+		var group = {};
+		
+	
+		if (h >= 36.1) {
+			group.factor = 1;
+			group.buffer = 0;
+			group.incr = 0;
+		}
+			
+		if (h >= 26.5 && h <= 36.0) {
+			group.factor = 0.5;
+			group.incr = 0.2;
+			if (num_holes === 9) group.buffer = 3;
+			else group.buffer = 5;
+		}
+			
+		if (h >= 18.5 && h <= 26.4) {
+			group.factor = 0.4;
+			group.incr = 0.1;
+			if (num_holes === 9) group.buffer = 2;
+			else group.buffer = 4;
+		}
+			
+		if (h >= 11.5 && h <= 18.4) {
+			if (num_holes === 9) return "9hole";
+			else group.buffer = 3;
+			group.factor = 0.3;
+			group.incr = 0.1;
+		}
+			
+		if (h >= 4.5 && h <= 11.4) {
+			if (num_holes === 9) return "9hole";
+			group.buffer = 2;
+			group.factor = 0.2;
+			group.incr = 0.1;
+		}
+			
+		if (h <= 4.4) {
+			if (num_holes === 9) return "9hole";
+			group.factor = 0.1;
+			group.incr = 0.1;
+			group.buffer = 1;
+		}
+
+/*		console.log("factor: " + group.factor);
+		console.log("incr: " + group.incr);
+		console.log("buffer: " + group.buffer); */
+		return group;
+		
+	};
+	
+	self.fillScoreCard = ko.computed(function () {
 		self.scoreCard.removeAll();
 		for (var i = 0; i < self.holes().length; i++) {
 		
@@ -981,7 +1077,7 @@ function viewModel () {
 		}
 		self.calcHcpPreview();
 
-	};
+	}).extend( { throttle: 500 });
 	
 	self.getHolePoints = function(score, par, hole_hcp) {
 		
@@ -1068,98 +1164,6 @@ function viewModel () {
 		self.loadedRoundStartTime("");
 		$.mobile.changePage('#courseSelect', { transition: "slidefade" });
 
-	};
-	
-	self.getHcpGroup = function(hcp) {
-	
-		var h = hcp;
-		var num_holes = self.holes().length;
-		var group = {};
-		
-	
-		if (h >= 36.1) {
-			group.factor = 1;
-			group.buffer = 0;
-			group.incr = 0;
-		}
-			
-		if (h >= 26.5 && h <= 36.0) {
-			group.factor = 0.5;
-			group.incr = 0.2;
-			if (num_holes === 9) group.buffer = 3;
-			else group.buffer = 5;
-		}
-			
-		if (h >= 18.5 && h <= 26.4) {
-			group.factor = 0.4;
-			group.incr = 0.1;
-			if (num_holes === 9) group.buffer = 2;
-			else group.buffer = 4;
-		}
-			
-		if (h >= 11.5 && h <= 18.4) {
-			if (num_holes === 9) return "9hole";
-			else group.buffer = 3;
-			group.factor = 0.3;
-			group.incr = 0.1;
-		}
-			
-		if (h >= 4.5 && h <= 11.4) {
-			if (num_holes === 9) return "9hole";
-			group.buffer = 2;
-			group.factor = 0.2;
-			group.incr = 0.1;
-		}
-			
-		if (h <= 4.4) {
-			if (num_holes === 9) return "9hole";
-			group.factor = 0.1;
-			group.incr = 0.1;
-			group.buffer = 1;
-		}
-
-/*		console.log("factor: " + group.factor);
-		console.log("incr: " + group.incr);
-		console.log("buffer: " + group.buffer); */
-		return group;
-		
-	}
-	
-	self.calcHcpPreview = function() {
-		var p = parseInt(self.totalPoints(), 10);
-		var hcp = parseFloat(self.playerExactHcp());
-
-		var num_holes = parseInt(self.holes().length, 10);
-		var par_points;
-		
-		if (num_holes === 9) par_points = 18;
-		else par_points = 36;
-		
-		var group;
-
-		if (p > par_points ) {
-			while (p > par_points) {
-				group = self.getHcpGroup(hcp);
-				if (group == "9hole") {
-					self.hcpPreview("Ei käytössä 9 reiän kierroksella");
-					return;
-				}
-				hcp = hcp - (1 * group.factor);
-				p--;
-			}
-			self.hcpPreview(parseFloat(hcp).toFixed(1));
-		}
-		
-		else {
-			group = self.getHcpGroup(hcp);
-			if (group == "9hole") {
-				self.hcpPreview("Ei käytössä 9 reiän kierroksella");
-				return;
-			}
-			if (p >= par_points - group.buffer)	self.hcpPreview(hcp);
-			else self.hcpPreview(hcp + group.incr);
-		}
-		
 	};
 	
 }	
