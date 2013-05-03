@@ -72,6 +72,12 @@ function viewModel () {
 	
 	self.prePopulateScores();
 	
+	self.locale_tee = ko.computed(function() {
+		if (self.round_tee() === "yellow") return "keltainen";
+		else if (self.round_tee() === "blue") return "sininen";
+		else if (self.round_tee() === "red") return "punainen";
+		else if (self.round_tee() === "white") return "valkoinen";
+	});
 	
 	self.loadRecentCourses = function () {
 		self.recentlyPlayedCourses.removeAll();
