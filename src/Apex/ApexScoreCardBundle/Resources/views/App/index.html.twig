@@ -10,24 +10,48 @@
     <link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" />
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
     
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
 
 	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+	
+	{% if app.user.username == "kuikka" %}
+	
+		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/villespecial.css') }}">
+
+	{% endif %}		
+	
+	
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
-    <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
+	
+	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
+
+	{% javascripts
+		'@ApexScoreBundle/Resources/public/js/date.format.js'
+		'@ApexScoreBundle/Resources/public/js/mobiscroll.custom-2.5.2.min.js'
+		'@ApexScoreBundle/Resources/public/js/moment.min.js'
+		'@ApexScoreBundle/Resources/public/js/lang/fi.js'
+		'@ApexScoreBundle/Resources/public/js/moment.min.js'
+		'@ApexScoreBundle/Resources/public/js/jquery.transit.min.js'
+		'@ApexScoreBundle/Resources/public/js/app.js'
+		'@ApexScoreBundle/Resources/public/js/add2home.js'
+	%}
+	<script src="{{ asset_url }}"></script>
+
+	{% endjavascripts %}
+	
+<!--    <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/mobiscroll.custom-2.5.2.min.js') }}"></script> 
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
 	<script src="{{ asset('bundles/apexscore/js/lang/fi.js') }}"> </script>
-	
-	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
+
 	<script src="{{ asset('bundles/apexscore/js/jquery.transit.min.js') }}"></script>
-	
 	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
-
-
-	<script type="application/javascript" src="{{ asset('bundles/apexscore/js/add2home.js') }}"></script>
+	<script type="application/javascript" src="{{ asset('bundles/apexscore/js/add2home.js') }}"></script> -->
+	
+	
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0" />
 	<meta name="apple-mobile-web-app-capable" content="yes" /> 
@@ -455,7 +479,7 @@
 	</div>
 	
 	<!-- credits -->
-		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" style="max-width: 95%; width: 95%" class="ui-corner-all" data-mini="true">
+		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" class="ui-corner-all" data-mini="true">
 				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
 					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
 					<h1>Tietoja</h1>

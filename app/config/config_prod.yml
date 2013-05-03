@@ -25,3 +25,15 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+
+# Assetic Configuration
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        [ApexScoreBundle]
+    #java: /usr/bin/java
+    filters:
+        yui_js:
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+            apply_to: "\.js$"
+        cssrewrite: ~
