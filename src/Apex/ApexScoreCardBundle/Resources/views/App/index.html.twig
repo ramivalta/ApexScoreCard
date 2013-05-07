@@ -16,11 +16,11 @@
 
 	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
 	
-	{% if app.user.username == "kuikka" %}
+<!--	{% if app.user.username == "kuikka" %}
 	
 		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/villespecial.css') }}">
 
-	{% endif %}		
+	{% endif %}		-->
 	
 	
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
@@ -65,22 +65,6 @@
 		$.mobile.loader.prototype.options.textVisible = true;
 	</script>
 
-	<script type="text/javascript">
-		moment().lang('fi');
-		/*, {
-/*			longDateFormat : {
-				LT: "HH:mm",
-				L: "DD/MM/YYYY",
-				l: "D/M/YYYY",
-				LL: "MMMM Do YYYY",
-				ll: "MMM D YYYY",
-				LLL: "MMMM Do YYYY LT",
-				lll: "MMM D YYYY LT",
-				LLLL: "dddd, MMMM Do YYYY LT",
-				llll: "ddd, MMM D YYYY LT"
-			} */
-//		});
-	</script>
 </head>
 
 <body>
@@ -101,49 +85,42 @@
 	<!-- /ko -->		
 	
 	<!-- ko if: firstRun() == false -->
-
-	<div class="scrollMiddle">
-		<div class="scrollInner" id="roundListWrap">
-
-<!--		<div data-role="content"> -->
-			<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"  class="round"> 
+		<div class="scrollMiddle">
+			<div class="scrollInner" id="roundListWrap">
+				<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"  class="round"> 
 				
-				<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) }">
+					<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) }">
 				 
-					<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
-					<span data-bind="text: course_name"></span>
-					<span style="font-size: 66%">
-						<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
-						<div style="color: #999">
-							<span data-bind="text: moment(start_time.date).calendar()">						</span> - Tulos:
-							<span data-bind="text: score"></span> / <span data-bind="text: par"> </span>
-						</div>
-					</span>
-					<span>
-						<a data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu"></a>
-					</span>
-				</li>
-			</ul>
+						<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
+						<span data-bind="text: course_name"></span>
+						<span style="font-size: 66%">
+							<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
+							<div style="color: #999">
+								<span data-bind="text: moment(start_time.date).calendar()">						</span> - Tulos:
+								<span data-bind="text: score"></span> / <span data-bind="text: par"> </span>
+							</div>
+						</span>
+						<span>
+							<a data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu"></a>
+						</span>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</div>
-	
 	<!-- /ko -->
 	
 
-	<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
-		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-				<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
+		<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
+			<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+					<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
+			</div>
+			<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
+	<!--				  <h5 class="ui-title">Remove this round?</h5> -->
+			  <p>Kierros poistetaan lopullisesti.</p>
+				<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
+				<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
+			</div>
 		</div>
-		<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
-<!--				  <h5 class="ui-title">Remove this round?</h5> -->
-		  <p>Kierros poistetaan lopullisesti.</p>
-			<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
-			<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
-		</div>
-	</div>
-	
-	
-
 	
 	<!-- ko if: firstRun() == true -->
 		<div data-theme="b" data-role="content">
@@ -221,7 +198,7 @@
 			<div id="leftFill" class="ui-block-a"></div>
 				<div id="sliderW" class="ui-block-b">
 					<div id="slideri">
-						<input type="range" data-bind="value: sliderVal, slider: sliderVal,  event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-50" max="50" /> 
+						<input type="range" data-bind="value: sliderVal, slider: sliderVal, event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-50" max="50" /> 
 					</div>
 				</div>
 			<div id="rightFill" class="ui-block-c"></div>

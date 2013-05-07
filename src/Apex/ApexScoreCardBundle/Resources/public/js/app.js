@@ -308,41 +308,6 @@ function viewModel () {
 		}
 	});
 	
-	self.sliderMove = function () {
-	
-		var sVal = parseInt(self.sliderVal(), 10);
-
-		if (sVal <25 && sVal >= 0 || sVal <= 0 && sVal > -25 ) {
-			if (self.noScoreEntered()) {
-				self.currentHoleScore(self.currentHolePar());
-				self.noScoreEntered(false);
-			}
-		} 
-
-		if (sVal >= 26) {
-			if (self.noScoreEntered()) {
-				self.currentHoleScore(self.currentHolePar());
-			}
-			self.upScore() ;
-			self.noScoreEntered(false);
-		}
-			
-		if (sVal < -26) {
-			if (self.noScoreEntered()) {
-				self.currentHoleScore(self.currentHolePar());
-			}
-			self.downScore();
-			self.noScoreEntered(false);
-		}
-			
-		var curHole = parseInt(self.currentHole(), 10);
-		var curScore = parseInt(self.currentHoleScore(), 10);
-		var curPoints = parseInt(self.currentHolePoints(), 10);
-		var curHolePar = parseInt(self.currentHolePar(), 10);
-
-		self.setScore(curHole, curScore, curPoints, curHolePar);
-	};
-	
 	self.setScore = function (hole, score, points, holePar) {
 		for (var i = 0; i < self.roundScores().length; i++) {
 			if (self.roundScores()[i].hole() === hole) {
@@ -384,14 +349,48 @@ function viewModel () {
 					}
 				);
 			}
-		self.hasSlid(true);
 		}
+		self.hasSlid(true);
 	};
 	
 	
 	self.resetSlider = function () {
 		self.hasSlid(false);
 		self.sliderVal(0);
+	};
+	
+	self.sliderMove = function () {
+	
+		var sVal = parseInt(self.sliderVal(), 10);
+		var par = self.currentHolePar();
+
+		if (sVal <25 && sVal >= 0 || sVal <= 0 && sVal > -25 ) {
+			if (self.noScoreEntered()) {
+				self.currentHoleScore(par);
+			}
+		} 
+
+		if (sVal >= 26) {
+			if (self.noScoreEntered()) {
+				self.currentHoleScore(par);
+			}
+			self.upScore();
+		}
+			
+		if (sVal < -26) {
+			if (self.noScoreEntered()) {
+				self.currentHoleScore(par);
+			}
+			self.downScore();
+		}
+		self.noScoreEntered(false);			
+		var curHole = parseInt(self.currentHole(), 10);
+		var curScore = parseInt(self.currentHoleScore(), 10);
+		var curPoints = parseInt(self.currentHolePoints(), 10);
+		var curHolePar = parseInt(self.currentHolePar(), 10);
+
+		self.setScore(curHole, curScore, curPoints, curHolePar);
+		
 	};
 	
 	
@@ -668,12 +667,17 @@ function viewModel () {
 						self.round_hcp(self.playerExactHcp());
 						self.round_tee(self.playerDefaultTee());
 						
+						
+						self.saveHoleScore(round_id, self.playerExactHcp(), 1, 0, self.playerDefaultTee()); // TODO: pitäis tehdä controllerissa
+						
+						
+						
 						self.roundList.unshift({
 							id : round_id,
 							course_name : course_name,
 							start_time : start_time,
-							score : ko.observable(),
-							par : ko.observable()
+							score : ko.observable(0),
+							par : ko.observable(0)
 						});
 						
 						self.loadRecentCourses();
@@ -711,11 +715,6 @@ function viewModel () {
 
 		var loc = $(window).scrollTop();
 		self.scrollPos(loc);
-
-//		if (self.loadedRoundStartTime() !== "") {
-//			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
-	//		el.parent().parent().parent().parent().parent().attr('style', '');
-//		}
 
 		self.loadedRoundStartTime(start_time);
 		self.holes.removeAll();
@@ -818,28 +817,20 @@ function viewModel () {
 		apexEventProxy.getRoundScores(
 			{ data : data },
 			function (data) {
-				for (var i = 0; i < data.scores.length; i++) {
-					for (var z = 0; z < self.roundScores().length; z++) {
-						if (self.roundScores()[z].hole() === data.scores[i].hole_id) {
-							self.roundScores()[z].score(data.scores[i].score);
-							self.round_hcp(data.scores[i].round_hcp);
-							self.round_tee(data.scores[i].round_tee);
+				if (data.scores.length == 0) {
+					self.round_hcp(self.playerExactHcp());
+					self.round_tee(self.playerDefaultTee());
+				}
+				else {
+					for (var i = 0; i < data.scores.length; i++) {
+						for (var z = 0; z < self.roundScores().length; z++) {
+							if (self.roundScores()[z].hole() === data.scores[i].hole_id) {
+								self.roundScores()[z].score(data.scores[i].score);
+								self.round_hcp(data.scores[i].round_hcp);
+								self.round_tee(data.scores[i].round_tee);
+							}
 						}
 					}
-				}
-				
-/*				setTimeout(function () { 
-					self.fillScoreCard();	
-			    }, 500); // hax :( */
-				
-				if (self.round_hcp() === "") {
-					self.round_hcp(self.playerExactHcp());
-	//				console.log("round_hcp not set");
-				}
-	
-				if (self.round_tee() === "") {
-					self.round_tee(self.playerDefaultTee());
-//					console.log("round_tee not set");
 				}
 				
 				self.currentHole(1);
@@ -959,7 +950,7 @@ function viewModel () {
 		
 	self.calcHcpPreview = function() {
 		var p = parseInt(self.totalPoints(), 10);
-		var hcp = parseFloat(self.playerExactHcp());
+		var hcp = parseFloat(self.round_hcp());	
 
 		var num_holes = parseInt(self.holes().length, 10);
 		var par_points;
