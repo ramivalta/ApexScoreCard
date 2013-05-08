@@ -266,7 +266,7 @@
 	</div>	
 	
 
-	<div class="scrollOuter" data-theme="b" style="top: 22px !important">	
+	<div class="scrollOuter" data-theme="b" style="top: 36px !important">	
 	<div class="scrollMiddle" style="top: 0px !important">
 	<div class="scrollInner" id="">
 
@@ -398,28 +398,23 @@
 					
 						<!-- ko if: totalToPar() < 0 -->
 							<td class="scBirdie"><span data-bind="text: totalScore"></span>
-<!--							* -->
 							</td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() >= 0 -->	
 							<td class="scTotals"><span data-bind="text: totalScore"></span>
-<!--							* -->
 							</td>
 						<!-- /ko -->				
 						
 						<!-- ko if: totalToPar() > 0 -->
 							<td class="scTotals">+<span data-bind="text: totalToPar"></span>
-<!--							* -->
 							</td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() < 0 -->
 							<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
-<!--							* -->
 							</td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() == 0 -->
 							<td class="scTotals"><span>E</span>
-<!--							* -->
 							</td>
 						<!-- /ko -->
 						
@@ -459,20 +454,19 @@
 		</table>
 	</div>
 
-	<div data-role="fieldcontain" style="float: left">
-		<fieldset data-role="controlgroup">
-<!--			<legend>Merkitse kierros pelatuksi:</legend><br> -->
-			<label for="finish_round" style="width: 135px; margin: 5px">Maalissa</label>
-			<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" value="true" data-bind="checked: roundFinished, mobileradio: roundFinished" />
-		</fieldset>
-	</div>
+		<div id="scoreCardButtons">
 
-<!--	<div id="scoreCardButtons"> -->
-	
-	<!-- <a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a> -->
-	
-		<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true" id="scoreCardClose">Sulje</a>
-<!--	</div> -->
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+					<label for="finish_round" class="scoreCardFinish">Maalissa</label>
+					<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" data-bind="checked: roundFinished, mobileradio: roundFinished" value="true" style="display: none" />
+				</fieldset>
+			</div>
+
+			<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-inline="true" data-theme="a" data-icon="delete" data-mini="true" class="scoreCardClose">Sulje</a>
+		</div>
+
+
 	</div>
 	</div>
 	</div>

@@ -943,16 +943,15 @@ function viewModel () {
 		
 	}).extend({throttle: 250 });
 	
-	self.validateRound = ko.computed(function() { // TODO: tallennetaan serverille jos on merkannu pelatuksi kierroksen
-		if (self.roundFinished() === true) return true;
+	self.validateRound = ko.computed(function() {
+	// TODO: tallennetaan serverille jos on merkannu pelatuksi kierroksen
+		if (self.roundFinished() === "true") return true;
 		if (self.holes().length > 0 && self.roundScores().length > 0) 
 		{
 			var h = self.holes().length;
 			for (var i = 0; i < h; i++) {
 				var y = parseInt(self.roundScores()[i].score(), 10);
 				if (y === 0) {
-//					console.log("index: " + i);
-	//				console.log("nolla löyty");
 					return false;
 				}
 			}

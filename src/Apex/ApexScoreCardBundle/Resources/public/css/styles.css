@@ -334,7 +334,8 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	padding-right: 0px;
 	padding-left: 0px;
 	text-align: center;
-	height: 22px;
+	height: 36px;
+	font-size: 120%;
 }
 
 #dialogContent {
@@ -346,7 +347,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 //	margin-right: auto;
 	margin-left: 0px;
 	margin-right: 0px;
-	padding-bottom: 47px !important;
+//	padding-bottom: 47px !important;
 }
 
 .ui-dialog.scorecard-dialog .ui-dialog-contain {
@@ -648,31 +649,33 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 }
 
 #scoreCardButtons {
+	position: absolute;
 	clear: both;
 	width: 100%;
-	position: absolute;
 	bottom: 0px;
 	left: 0px;
+	right: 0px;
 }
 
-#scoreCardShare {
-	width: 125px;
-	bottom: 5px;
+
+.scoreCardFinish {
 	position: absolute;
-	left: 12px;
-	height: auto;
-	margin: 2px;
+	max-width: 125px;
+	float: left;
+	bottom: 5px;
+	left: 10px;
 }
 
-#scoreCardClose {
-	width: 125px;
-//	height: auto;
-//	position: absolute;
-//	bottom: 5px;
-//	right: 12px;
-//	margin: 2px;
-	float: right;
+
+.scoreCardClose {
+	position: absolute;
+	max-width: 125px;
+	float: right;	
+	bottom: 10px;
+	right: 10px;
+
 }
+
 
 #scoreCardClose .ui-icon {
 	background-color: rgba(0,0,0,0.0);
