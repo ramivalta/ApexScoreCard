@@ -110,13 +110,13 @@
 	<!-- /ko -->
 	
 
-		<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true">
+		<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true" id="deletiongPopup">
 			<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
 					<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
 			</div>
-			<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content">
+			<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content" id="deletionContent">
 	<!--				  <h5 class="ui-title">Remove this round?</h5> -->
-			  <p>Kierros poistetaan lopullisesti.</p>
+			  <p style="font-weight: bold">Kierros poistetaan lopullisesti.</p>
 				<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
 				<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
 			</div>
@@ -171,7 +171,7 @@
 			</div>
 	
 			<div id="roundScore" class="ui-block-c">
-				Lyönnit: <span data-bind="text: totalScore"></span>
+				Tulos: <span data-bind="text: totalScore"></span>
 				
 				<span style="opacity: 0.7; font-size: 90%">
 				<!-- ko if: totalToPar() > 0 -->
@@ -257,13 +257,18 @@
 </div>	
 	
 	
-<div id="scoreCard" scorecard-dialog" data-role="page" data-close-btn="none" data-theme="b">
+<div id="scoreCard" class="scorecard-dialog" data-role="page" data-close-btn="none" data-theme="b">
 
 	<div data-theme="a" data-role="header" id="dialogHeader">
 		<span id="scCourse" data-bind="text: courseName"></span>
 			-
 		<span id="scStartTime" data-bind="text: moment(roundStartTime()).format('LLL')"></span>
-	</div>
+	</div>	
+	
+
+	<div class="scrollOuter" data-theme="b" style="top: 22px !important">	
+	<div class="scrollMiddle" style="top: 0px !important">
+	<div class="scrollInner" id="">
 
 	<div data-role="content" id="dialogContent" data-theme="b">
 	
@@ -352,11 +357,18 @@
 				
 					<!-- /ko -->
 				
-					<!-- ko if: score() == 0 -->
+					<!-- ko if: score() == 0 && $root.validateRound() == false -->
 						<td class="scScoreCells">&nbsp;</td>
 						<td class="scCells">&nbsp;</td>
 						<td class="scCells">&nbsp;</td>
 					<!-- /ko -->
+					
+					<!-- ko if: score() == 0 && $root.validateRound() == true -->
+						<td class="scScoreCells">x</td>
+						<td class="scScoreCells">x</td>
+						<td class="scScoreCells">0</td>
+					<!-- /ko -->
+					
 				</tr>
 			</tbody>
 			<tbody>
@@ -385,20 +397,30 @@
 					<!-- ko if: validateRound() == false -->
 					
 						<!-- ko if: totalToPar() < 0 -->
-							<td class="scBirdie"><span data-bind="text: totalScore"></span>* </td>
+							<td class="scBirdie"><span data-bind="text: totalScore"></span>
+<!--							* -->
+							</td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() >= 0 -->	
-							<td class="scTotals"><span data-bind="text: totalScore"></span>* </td>
+							<td class="scTotals"><span data-bind="text: totalScore"></span>
+<!--							* -->
+							</td>
 						<!-- /ko -->				
 						
 						<!-- ko if: totalToPar() > 0 -->
-							<td class="scTotals">+<span data-bind="text: totalToPar"></span>*</td>
+							<td class="scTotals">+<span data-bind="text: totalToPar"></span>
+<!--							* -->
+							</td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() < 0 -->
-							<td class="scBirdie"><span data-bind="text: totalToPar" ></span>*</td>
+							<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
+<!--							* -->
+							</td>
 						<!-- /ko -->
 						<!-- ko if: totalToPar() == 0 -->
-							<td class="scTotals"><span>E</span>*</td>
+							<td class="scTotals"><span>E</span>
+<!--							* -->
+							</td>
 						<!-- /ko -->
 						
 					<!-- /ko -->
@@ -424,8 +446,6 @@
 
 					<!-- /ko -->
 					
-	
-				
 					<td class="scTotals" data-bind="text: totalPoints"></td> 
 				</tr>
 			</tbody>
@@ -438,10 +458,23 @@
 			</tbody>
 		</table>
 	</div>
+
+	<div data-role="fieldcontain" style="float: left">
+		<fieldset data-role="controlgroup">
+<!--			<legend>Merkitse kierros pelatuksi:</legend><br> -->
+			<label for="finish_round" style="width: 135px; margin: 5px">Maalissa</label>
+			<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" value="true" data-bind="checked: roundFinished, mobileradio: roundFinished" />
+		</fieldset>
+	</div>
+
+<!--	<div id="scoreCardButtons"> -->
 	
-	<div id="scoreCardButtons">
-		<a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a>
-		<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true" id="scoreCardClose">Close</a>
+	<!-- <a href="#" data-role="button" id="scoreCardShare" data-mini="true" >Share</a> -->
+	
+		<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-mini="true" id="scoreCardClose">Sulje</a>
+<!--	</div> -->
+	</div>
+	</div>
 	</div>
 </div>
 

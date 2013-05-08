@@ -55,6 +55,8 @@ function viewModel () {
 	self.clickedRoundStartTime = ko.observable("");
 	self.hcpPreview = ko.observable("");
 	
+	self.roundFinished = ko.observable(false);
+	
 	self.bogikorttiVersion = ko.observable("Bogikortti v0.2 - 'Ykköstiille asti meni hyvin'");
 	
 	self.prePopulateScores = function () {
@@ -589,7 +591,7 @@ function viewModel () {
 	self.leaveRound = function () {
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
-		if (self.roundEndTime() === "")
+		if (self.roundEndTime() === "" && self.validateRound() === true)
 		{
 			var d = new Date();
 			d = d.format("yyyy-mm-dd HH:MM:ss");
@@ -645,7 +647,7 @@ function viewModel () {
 	self.startNewRound = function(course_id, course_name) {
 	
 		self.holes.removeAll();
-		
+		self.roundFinished(false);
 //		console.log("course id: " + course_id);
 //		console.log("course name: " + course_name);
 	
@@ -716,6 +718,10 @@ function viewModel () {
 		var loc = $(window).scrollTop();
 		self.scrollPos(loc);
 
+		self.roundFinished(false);
+		
+		
+		
 		self.loadedRoundStartTime(start_time);
 		self.holes.removeAll();
 
@@ -923,29 +929,39 @@ function viewModel () {
 	};
 		
 	self.totalToPar = ko.computed(function() {
-		var toPar = 0;
-		var y;
-		for (var i = 0; i < self.roundScores().length; i++) {
-			y = parseInt(self.roundScores()[i].score(), 10);
-			if (y > 0) toPar += y - parseInt(self.holes()[i].hole_par(), 10);
-		}
-		
-		return toPar;
-		
-	}).extend({throttle: 500 });
-	
-	self.validateRound = ko.computed(function() {
-		var h = self.holes().length;
-		for (var i = 0; i < h; i++) {
-			var y = parseInt(self.roundScores()[i].score(), 10);
-			if (y === 0) {
-				return false;
+		if (self.holes().length > 0 && self.roundScores().length > 0) {
+			var toPar = 0;
+			var y;
+			for (var i = 0; i < self.roundScores().length; i++) {
+				y = parseInt(self.roundScores()[i].score(), 10);
+				if (y > 0) toPar += y - parseInt(self.holes()[i].hole_par(), 10);
 			}
-
-		}
-		return true;
 		
-	}).extend({throttle: 1000 });
+			return toPar;
+		}
+		else return 0;
+		
+	}).extend({throttle: 250 });
+	
+	self.validateRound = ko.computed(function() { // TODO: tallennetaan serverille jos on merkannu pelatuksi kierroksen
+		if (self.roundFinished() === true) return true;
+		if (self.holes().length > 0 && self.roundScores().length > 0) 
+		{
+			var h = self.holes().length;
+			for (var i = 0; i < h; i++) {
+				var y = parseInt(self.roundScores()[i].score(), 10);
+				if (y === 0) {
+//					console.log("index: " + i);
+	//				console.log("nolla löyty");
+					return false;
+				}
+			}
+			self.roundFinished("true");
+			return true;
+		}	
+		else return false;
+		
+	}).extend({throttle: 250 });
 	
 		
 	self.calcHcpPreview = function() {
