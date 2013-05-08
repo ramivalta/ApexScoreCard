@@ -944,8 +944,7 @@ function viewModel () {
 	}).extend({throttle: 250 });
 	
 	self.validateRound = ko.computed(function() {
-	// TODO: tallennetaan serverille jos on merkannu pelatuksi kierroksen
-		if (self.roundFinished() === "true") return true;
+		if (self.roundFinished() === true) return true;
 		if (self.holes().length > 0 && self.roundScores().length > 0) 
 		{
 			var h = self.holes().length;

@@ -357,13 +357,13 @@
 				
 					<!-- /ko -->
 				
-					<!-- ko if: score() == 0 && $root.validateRound() == false -->
+					<!-- ko if: score() == 0 && $root.validateRound() === false -->
 						<td class="scScoreCells">&nbsp;</td>
 						<td class="scCells">&nbsp;</td>
 						<td class="scCells">&nbsp;</td>
 					<!-- /ko -->
 					
-					<!-- ko if: score() == 0 && $root.validateRound() == true -->
+					<!-- ko if: score() == 0 && $root.validateRound() === true -->
 						<td class="scScoreCells">x</td>
 						<td class="scScoreCells">x</td>
 						<td class="scScoreCells">0</td>
@@ -394,7 +394,7 @@
 						</td>
 					<!-- /ko -->
 					
-					<!-- ko if: validateRound() == false -->
+					<!-- ko if: validateRound() === false -->
 					
 						<!-- ko if: totalToPar() < 0 -->
 							<td class="scBirdie"><span data-bind="text: totalScore"></span>
@@ -420,7 +420,7 @@
 						
 					<!-- /ko -->
 					
-					<!-- ko if: validateRound() == true -->
+					<!-- ko if: validateRound() === true -->
 					
 						<!-- ko if: totalToPar() < 0 -->
 							<td class="scBirdie"><span data-bind="text: totalScore"></span></td>
@@ -459,7 +459,7 @@
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup">
 					<label for="finish_round" class="scoreCardFinish">Maalissa</label>
-					<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" data-bind="checked: roundFinished, mobileradio: roundFinished" value="true" style="display: none" />
+					<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" value="true" data-bind="checked: roundFinished, mobileradio: roundFinished" style="display: none" />
 				</fieldset>
 			</div>
 
