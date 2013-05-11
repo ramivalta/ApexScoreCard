@@ -682,7 +682,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 //	top: 24px;
 	margin: 0px;
 	left: 6px;
-	bottom: -16px;
+	bottom: -18px;
 	border-radius: 8px !important;
 }
 
@@ -692,7 +692,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	float: right;	
 //	top: 24px;
 	margin: 0px;
-	bottom: 19px;
+	bottom: 15px;
 	right: 6px;
 	border-radius: 8px !important;
 }
