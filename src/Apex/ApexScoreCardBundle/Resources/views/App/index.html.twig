@@ -267,208 +267,208 @@
 	
 
 	<div class="scrollOuter" data-theme="b" style="top: 36px !important">	
-	<div class="scrollMiddle" style="top: 0px !important">
-	<div class="scrollInner" id="">
+		<div class="scrollMiddle" style="top: 0px !important">
+			<div class="scrollInner" id="">
 
-	<div data-role="content" id="dialogContent" data-theme="b">
+				<div data-role="content" id="dialogContent" data-theme="b">
+					<table class="scoreCardTable">
+						<tr>
+							<td class="scHeaders">Kenttä</td>
+							<td class="scHeaders">Päiväys</td>
+							<td class="scHeaders">Pelaaja</td>
+							<td class="scHeaders">Tasoitus</td>
+						</tr>
+						<tr>
+							<td class="scCells" data-bind="text: courseName"></td>
+							<td class="scCells" data-bind="text: moment(roundStartTime()).format('LL')"></td>
+							<td class="scCells" data-bind="text: playerName"></td>
+							<td class="scCells" data-bind="text: round_hcp"></td>
+						<tr>
+					</table> 
 	
-		<table class="scoreCardTable">
-			<tr>
-				<td class="scHeaders">Kenttä</td>
-				<td class="scHeaders">Päiväys</td>
-				<td class="scHeaders">Pelaaja</td>
-				<td class="scHeaders">Tasoitus</td>
-			</tr>
-			<tr>
-				<td class="scCells" data-bind="text: courseName"></td>
-				<td class="scCells" data-bind="text: moment(roundStartTime()).format('LL')"></td>
-				<td class="scCells" data-bind="text: playerName"></td>
-				<td class="scCells" data-bind="text: round_hcp"></td>
-			<tr>
-		</table> 
-	
-		<table class="scoreCardTable">
-			<tr>
-				<td class="scHeaders">Reikä</td>
-				<td class="scHeaders">Par</td>
-				<td class="scHeaders">HCP</td>
-				<td class="scHeaders">Pituus</td>
-				<td class="scHeaders">Tulos</td>
-				<td class="scHeaders">+/-</td>
-				<td class="scHeaders">Pisteet</td>
-			</tr>
-			<tbody data-bind="foreach: scoreCard">
-				<tr>
-					<td class="scCells" data-bind="text: hole_number"></td>
-					<td class="scCells" data-bind="text: hole_par"></td>
-					<td class="scCells" data-bind="text: hole_hcp"></td>
+					<table class="scoreCardTable">
+						<tr>
+							<td class="scHeaders">Reikä</td>
+							<td class="scHeaders">Par</td>
+							<td class="scHeaders">HCP</td>
+							<td class="scHeaders">Pituus</td>
+							<td class="scHeaders">Tulos</td>
+							<td class="scHeaders">+/-</td>
+							<td class="scHeaders">Pisteet</td>
+						</tr>
+						<tbody data-bind="foreach: scoreCard">
+							<tr>
+								<td class="scCells" data-bind="text: hole_number"></td>
+								<td class="scCells" data-bind="text: hole_par"></td>
+								<td class="scCells" data-bind="text: hole_hcp"></td>
 					
-					<!-- ko if: $parent.round_tee() == "yellow" -->
-						<td class="teeYellow"><span data-bind="text: hole_length"></span> m
-						</td>
-					<!-- /ko -->
-					<!-- ko if: $parent.round_tee() == "red" -->
-						<td class="teeRed"><span data-bind="text: hole_length"></span> m
-						</td>
-					<!-- /ko -->
-					<!-- ko if: $parent.round_tee() == "blue" -->
-						<td class="teeBlue"><span data-bind="text: hole_length"></span> m
-						</td>
-					<!-- /ko -->
-					<!-- ko if: $parent.round_tee() == "white" -->
-						<td class="teeWhite"><span data-bind="text: hole_length"></span> m
-						</td>
-					<!-- /ko -->
-					
+								<!-- ko if: $parent.round_tee() == "yellow" -->
+									<td class="teeYellow"><span data-bind="text: hole_length"></span> m
+									</td>
+								<!-- /ko -->
+								<!-- ko if: $parent.round_tee() == "red" -->
+									<td class="teeRed"><span data-bind="text: hole_length"></span> m
+									</td>
+								<!-- /ko -->
+								<!-- ko if: $parent.round_tee() == "blue" -->
+									<td class="teeBlue"><span data-bind="text: hole_length"></span> m
+									</td>
+								<!-- /ko -->
+								<!-- ko if: $parent.round_tee() == "white" -->
+									<td class="teeWhite"><span data-bind="text: hole_length"></span> m
+									</td>
+								<!-- /ko -->
 				
-					<!-- ko if: score() > 0 -->
-						<!-- ko if: scoreToPar == -1 -->
-						<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar < -1 -->
-						<td class="scEagle"><span class="doublecircle"> <span class=" circle" data-bind="text: score"></span></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar == 1 -->
-							<td class="scBogey"><span class="rectangle" data-bind="text: score"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar > 1 -->
-							<td class="scDouble" data-bind="text: score"></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar == 0 -->
-							<td class="scScoreCells" data-bind="text: score"></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar == 1 -->
-							<td class="scBogey">+<span data-bind="text: scoreToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar > 1 -->
-							<td class="scDouble">+<span data-bind="text: scoreToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar == -1 -->
-							<td class="scBirdie"><span data-bind="text: scoreToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar < -1 -->
-							<td class="scEagle"><span data-bind="text: scoreToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: scoreToPar == 0 -->
-							<td class="scScoreCells"><span>E</span></td>
-						<!-- /ko -->
+								<!-- ko if: score() > 0 -->
+									<!-- ko if: scoreToPar == -1 -->
+									<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar < -1 -->
+									<td class="scEagle"><span class="doublecircle"> <span class=" circle" data-bind="text: score"></span></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar == 1 -->
+										<td class="scBogey"><span class="rectangle" data-bind="text: score"></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar > 1 -->
+										<td class="scDouble" data-bind="text: score"></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar == 0 -->
+										<td class="scScoreCells" data-bind="text: score"></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar == 1 -->
+										<td class="scBogey">+<span data-bind="text: scoreToPar"></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar > 1 -->
+										<td class="scDouble">+<span data-bind="text: scoreToPar"></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar == -1 -->
+										<td class="scBirdie"><span data-bind="text: scoreToPar"></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar < -1 -->
+										<td class="scEagle"><span data-bind="text: scoreToPar"></span></td>
+									<!-- /ko -->
+									<!-- ko if: scoreToPar == 0 -->
+										<td class="scScoreCells"><span>E</span></td>
+									<!-- /ko -->
 					
-						<td class="scCells" data-bind="text: points"></td>
+									<td class="scCells" data-bind="text: points"></td>
 				
-					<!-- /ko -->
+								<!-- /ko -->
 				
-					<!-- ko if: score() == 0 && $root.validateRound() === false -->
-						<td class="scScoreCells">&nbsp;</td>
-						<td class="scCells">&nbsp;</td>
-						<td class="scCells">&nbsp;</td>
-					<!-- /ko -->
+								<!-- ko if: score() == 0 && $root.validateRound() === false -->
+									<td class="scScoreCells">&nbsp;</td>
+									<td class="scCells">&nbsp;</td>
+									<td class="scCells">&nbsp;</td>
+								<!-- /ko -->
 					
-					<!-- ko if: score() == 0 && $root.validateRound() === true -->
-						<td class="scScoreCells">x</td>
-						<td class="scScoreCells">x</td>
-						<td class="scScoreCells">0</td>
-					<!-- /ko -->
+								<!-- ko if: score() == 0 && $root.validateRound() === true -->
+									<td class="scScoreCells">x</td>
+									<td class="scScoreCells">x</td>
+									<td class="scCells">0</td>
+								<!-- /ko -->
 					
-				</tr>
-			</tbody>
-			<tbody>
-				<tr>
-					<td class="scTotals"></td>
-					<td class="scTotals" data-bind="text: coursePar"></td>
-					<td class="scTotals"></td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+								<td class="scTotals"></td>
+								<td class="scTotals" data-bind="text: coursePar"></td>
+								<td class="scTotals"></td>
 					
-					<!-- ko if: round_tee() == "yellow" -->
-						<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-						</td>
-					<!-- /ko -->
-					<!-- ko if: round_tee() == "red" -->
-						<td class="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-						</td>
-					<!-- /ko -->
-					<!-- ko if: round_tee() == "blue" -->
-						<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-						</td>
-					<!-- /ko -->
-					<!-- ko if: round_tee() == "white" -->
-						<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-						</td>
-					<!-- /ko -->
+								<!-- ko if: round_tee() == "yellow" -->
+									<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+									</td>
+								<!-- /ko -->
+								<!-- ko if: round_tee() == "red" -->
+									<td class="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+									</td>
+								<!-- /ko -->
+								<!-- ko if: round_tee() == "blue" -->
+									<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+									</td>
+								<!-- /ko -->
+								<!-- ko if: round_tee() == "white" -->
+									<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+									</td>
+								<!-- /ko -->
 					
-					<!-- ko if: validateRound() === false -->
+								<!-- ko if: validateRound() === false -->
 					
-						<!-- ko if: totalToPar() < 0 -->
-							<td class="scBirdie"><span data-bind="text: totalScore"></span>
-							</td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() >= 0 -->	
-							<td class="scTotals"><span data-bind="text: totalScore"></span>
-							</td>
-						<!-- /ko -->				
+									<!-- ko if: totalToPar() < 0 -->
+										<td class="scBirdie"><span data-bind="text: totalScore"></span>
+										</td>
+									<!-- /ko -->
+									<!-- ko if: totalToPar() >= 0 -->	
+										<td class="scTotals"><span data-bind="text: totalScore"></span>
+										</td>
+									<!-- /ko -->				
 						
-						<!-- ko if: totalToPar() > 0 -->
-							<td class="scTotals">+<span data-bind="text: totalToPar"></span>
-							</td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() < 0 -->
-							<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
-							</td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() == 0 -->
-							<td class="scTotals"><span>E</span>
-							</td>
-						<!-- /ko -->
+									<!-- ko if: totalToPar() > 0 -->
+										<td class="scTotals">+<span data-bind="text: totalToPar"></span>
+										</td>
+									<!-- /ko -->
+									<!-- ko if: totalToPar() < 0 -->
+										<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
+										</td>
+									<!-- /ko -->
+									<!-- ko if: totalToPar() == 0 -->
+										<td class="scTotals"><span>E</span>
+										</td>
+									<!-- /ko -->
 						
-					<!-- /ko -->
+								<!-- /ko -->
 					
-					<!-- ko if: validateRound() === true -->
+								<!-- ko if: validateRound() === true -->
 					
-						<!-- ko if: totalToPar() < 0 -->
-							<td class="scBirdie"><span data-bind="text: totalScore"></span></td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() >= 0 -->	
-							<td class="scTotals"><span data-bind="text: totalScore"></span></td>
-						<!-- /ko -->
+									<!-- ko if: totalToPar() < 0 -->
+										<td class="scBirdie"><span data-bind="text: totalScore"></span></td>
+									<!-- /ko -->
+									<!-- ko if: totalToPar() >= 0 -->	
+										<td class="scTotals"><span data-bind="text: totalScore"></span></td>
+									<!-- /ko -->
 									
-						<!-- ko if: totalToPar() > 0 -->
-							<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() < 0 -->
-							<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
-						<!-- /ko -->
-						<!-- ko if: totalToPar() == 0 -->
-							<td class="scTotals"><span>E</span></td>
-						<!-- /ko -->
+									<!-- ko if: totalToPar() > 0 -->
+										<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
+									<!-- /ko -->
+									<!-- ko if: totalToPar() < 0 -->
+										<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
+									<!-- /ko -->
+									<!-- ko if: totalToPar() == 0 -->
+										<td class="scTotals"><span>E</span></td>
+									<!-- /ko -->
 
-					<!-- /ko -->
+								<!-- /ko -->
 					
-					<td class="scTotals" data-bind="text: totalPoints"></td> 
-				</tr>
-			</tbody>
-		</table>
-		<table class="scoreCardTable">
-			<tbody>
-				<tr>
-					<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Uusi tasoitus: <span data-bind="text: hcpPreview"></span></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+								<td class="scTotals" data-bind="text: totalPoints"></td> 
+							</tr>
+						</tbody>
+					</table>
+					<table class="scoreCardTable">
+						<tbody>
+							<tr>
+								<td style="float: left; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Kierroksen kesto: <span data-bind="text: roundDuration"></span></td>
+								
+								<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Uusi tasoitus: <span data-bind="text: hcpPreview"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<div id="scoreCardButtons">
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="finish_round" id="scoreCardFinish">Maalissa</label>
+							<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" value="true" data-bind="checked: roundFinished, mobileradio: roundFinished" style="display: none" data-theme="b" />
+						</fieldset>
 
-		<div id="scoreCardButtons">
-
-			<div data-role="fieldcontain">
-				<fieldset data-role="controlgroup">
-					<label for="finish_round" class="scoreCardFinish">Maalissa</label>
-					<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" value="true" data-bind="checked: roundFinished, mobileradio: roundFinished" style="display: none" />
-				</fieldset>
+					
+						<div id="scoreCardClose">
+						<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-inline="true" data-theme="a" data-icon="delete" data-mini="true">Sulje</a>
+						</div>
+					</div>
+				</div>
 			</div>
-
-			<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-inline="true" data-theme="a" data-icon="delete" data-mini="true" class="scoreCardClose">Sulje</a>
 		</div>
-
-
-	</div>
-	</div>
 	</div>
 </div>
 
@@ -483,22 +483,20 @@
 	</div>
 	
 	<!-- credits -->
-		<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" class="ui-corner-all" data-mini="true">
-				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
-					<h1>Tietoja</h1>
-				</div>
-				<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
-					<h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
+	<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" class="ui-corner-all" data-mini="true">
+		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
+			<h1>Tietoja</h1>
+		</div>
+		<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
+			<h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
 	
-					<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu vihapuhe osoitteeseen <a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a> tai kasvotusten kentällä. Saatan kuunnella jos tarjoat oluen.</p>
+			<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu vihapuhe osoitteeseen <a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a> tai kasvotusten kentällä. Saatan kuunnella jos tarjoat oluen.</p>
 	
 			  
-				  <p>Kiitokset: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko ja Janne.</p>
-				</div>
-			</div>
-	<!-- -->
-	
+		  <p>Kiitokset: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko ja Janne.</p>
+		</div>
+	</div>
 
 	<div id="prefsWrappi">
 		<div id="mainPrefs">
@@ -507,7 +505,6 @@
 				<input id="i" style="display: none"
 				data-bind="value: playerExactHcp" data-role="none" />
 			</div>
-<!--				<div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div> -->
 			
 			<div id="tees">
 				<h5>Tii</h5>
@@ -526,19 +523,6 @@
 					<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Val..en</label>
 				</fieldset>
 			</div>
-<!--			
-			<div id="gender">
-				<label for="gender">
-					<h5>Gender</h5>
-				</label>
-				<select name="gender" id="gender" data-role="slider" data-theme="b" data-track-theme="c" data-bind="jqmOptions: playerGenders, value: playerGender" data-mini="true">
-					<option>Male</option>
-					<option>Female</option>
-				</select> 
-			</div>
-			
-			<span style="font-size: 6px" data-bind="text: playerGender"></span> -->
-			
 		</div> 
 	</div>
 </div>
@@ -551,59 +535,46 @@
 	</div>
 	
 	<div class="scrollOuter">
-	<div class="scrollMiddle">
-	
-	<div class="scrollInner" id="courseListWrap">
-		
-		<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Kentän nimi tai lyhenne..." data-filter-theme="c" id="courseList">
+		<div class="scrollMiddle">
+			<div class="scrollInner" id="courseListWrap">
+				<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Kentän nimi tai lyhenne..." data-filter-theme="c" id="courseList">
 
-
-			<!-- ko if: recentlyPlayedCourses().length > 0 -->
+					<!-- ko if: recentlyPlayedCourses().length > 0 -->
+						<li data-role="list-divider" data-theme="d">Viimeisimmät pelatut kentät</il>
+						<!-- ko mobileList: recentlyPlayedCourses, foreach: recentlyPlayedCourses -->
+							<li>
+							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
+							</li>
+						<!-- /ko -->
+					<!-- /ko -->
 			
-				<li data-role="list-divider" data-theme="d">Viimeisimmät pelatut kentät</il>
-
-				<!-- ko mobileList: recentlyPlayedCourses, foreach: recentlyPlayedCourses -->
-
-				<li>
-				<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
-				</li>
+					<li data-role="list-divider" data-theme="d">Kaikki kentät</il>
 			
-				<!-- /ko -->
-			
-			<!-- /ko -->
-			
-			<li data-role="list-divider" data-theme="d">Kaikki kentät</il>
-			
-			<!-- ko mobileList: courseList, foreach: courseList -->
-			
-			<li data-bind="attr: { 'data-filtertext': alias +' '+ name}">
-				<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
-			</li>
-			
-			<!-- /ko -->
-			
-		</ul>
-	</div>
-	</div>
+					<!-- ko mobileList: courseList, foreach: courseList -->
+						<li data-bind="attr: { 'data-filtertext': alias +' '+ name}">
+							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
+						</li>
+					<!-- /ko -->
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>		
 
 {% else %}
 
-		<script src="http://code.jquery.com/jquery-2.0.0.js"></script>
-	<script src="{{ asset('bundles/apexscore/js/jquery.mobile-1.3.1.min.js') }}"></script>
-
-
+	<script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 </head>
 <body>
 
-<div data-theme="b" data-role="page" id="login">
+	<div data-theme="b" data-role="page" id="login">
 
-  <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-	<script type="text/javascript">
-		window.location.href="{{ path('fos_user_security_login') }}";
-	</script>
-</div>
+	  <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+		<script type="text/javascript">
+			window.location.href="{{ path('fos_user_security_login') }}";
+		</script>
+	</div>
 
 {% endif %}
 

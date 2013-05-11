@@ -57,7 +57,9 @@ function viewModel () {
 	
 	self.roundFinished = ko.observable(false);
 	
-	self.bogikorttiVersion = ko.observable("Bogikortti v0.2 - 'Ykköstiille asti meni hyvin'");
+	self.cachedScore = ko.observable(0);
+	
+	self.bogikorttiVersion = ko.observable("Bogikortti v0.2.3 - 'Bogi on se tuplabogikikin'");
 	
 	self.prePopulateScores = function () {
 		for (var i = 0; i < 18; i++) {
@@ -102,7 +104,6 @@ function viewModel () {
 				}
 			}
 		);
-
 	};
 
 	self.loadRecentCourses();
@@ -224,17 +225,25 @@ function viewModel () {
 		}
 	});
 	
-	self.setHoleData = function () {
-		var idx = parseInt(self.currentHole(), 10) -1;
+	self.setHoleData = function (hole) {
+		if (self.holes().length === 0)
+			return false;
+		
+		var curHole = hole;
+		
+//		var curHole = parseInt(self.currentHole(), 10);
+		var curScore = parseInt(self.currentHoleScore(), 10);
+		var curPoints = parseInt(self.currentHolePoints(), 10);
+	
+		var idx = curHole - 1;
 		
 		var par = parseInt(self.holes()[idx].hole_par(), 10);
 		self.currentHolePar(par);
 		self.currentHoleHcp(parseInt(self.holes()[idx].hole_hcp(), 10));
 		self.currentHoleLength(self.holes()[idx].hole_length());
-	
-		var curHole = parseInt(self.currentHole(), 10);
-		var curScore = parseInt(self.currentHoleScore(), 10);
-		var curPoints = parseInt(self.currentHolePoints(), 10);
+		var hole_id = self.holes()[idx].hole_number();
+		
+//		console.log(hole_id);
 				
 		for (var i = 0; i < self.roundScores().length; i++) {
 			if (self.roundScores()[i].hole() === curHole) {
@@ -246,7 +255,62 @@ function viewModel () {
 		if (self.currentHoleScore() === 0) {
 			self.noScoreEntered(true);
 		}
+		
+		self.cachedScore( {
+			round_id: self.round_id(),
+			round_hcp : self.round_hcp(),
+			hole_id : hole_id,
+			hole_score : curScore,
+			round_tee : self.round_tee()
+		});	
 	};
+	
+/*	self.loadHole = function(num) {
+		
+	} */
+	
+	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee) {
+	
+		if (self.cachedScore() !== 0) {
+			if (self.cachedScore().round_id === round_id && self.cachedScore().round_hcp === round_hcp && self.cachedScore().hole_id === hole_id &&
+				self.cachedScore().hole_score == hole_score &&
+				self.cachedScore().round_tee === round_tee) {
+				return;
+			}
+		}
+	
+		var data = {
+			round_id : round_id,
+			round_hcp : round_hcp,
+			hole_id : hole_id,
+			hole_score : hole_score,
+			round_tee : round_tee
+		};
+		
+		apexEventProxy.createNewRoundScore(
+			{ data : data },
+			function (data)	{
+				self.cachedScore( {
+					round_id: round_id,
+					round_hcp : round_hcp,
+					hole_id : hole_id,
+					hole_score : hole_score,
+					round_tee : round_tee
+				});
+			
+			}
+		);
+	};
+	
+/*	self.saveScore = ko.computed(function() {
+		if (typeof self.round_id() === 'undefined' || typeof self.round_hcp() === 'undefined') {
+			return false;
+		}
+		console.log("saved... " + self.round_id() + " " + self.round_hcp() + " " + self.currentHole() + " " + self.currentHoleScore() + " " + self.round_tee());
+	
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+	}).extend({throttle: 1000 }); */
+		
 		
 	self.nextHole = function () {
 		var curHole = parseInt(self.currentHole(), 10);
@@ -259,11 +323,11 @@ function viewModel () {
 		var c_len = self.holes().length;
 		if (curHole === c_len) {
 			self.currentHole(1);
-			self.setHoleData();
+			self.setHoleData(1);
 		}
 		else {
 			self.currentHole(curHole + 1);
-			self.setHoleData();
+			self.setHoleData(curHole + 1);
 		}
 		$.mobile.changePage('#s_page', { transition: "slidefade",
                                     allowSamePageTransition: true});
@@ -279,11 +343,11 @@ function viewModel () {
 		var c_len = self.holes().length;
 		if (curHole === 1) {
 			self.currentHole(c_len);
-			self.setHoleData();
+			self.setHoleData(c_len);
 		}
 		else {
 			self.currentHole(curHole - 1);
-			self.setHoleData();
+			self.setHoleData(curHole - 1);
 		}
 		
 		$.mobile.changePage('#s_page', { transition: "slidefade", reverse: true,
@@ -341,7 +405,9 @@ function viewModel () {
 		if (self.hasSlid() === false) {
 			var y = parseInt(self.currentHoleScore(), 10);
 			if (y !== 0) {
+//				console.log(y);
 				self.currentHoleScore(parseInt(y, 10) - 1);
+//				console.log(y - 1);
 				$("#score").animate({ 
 				fontSize: "0.95em"
 					}, 50, function() {
@@ -367,20 +433,20 @@ function viewModel () {
 		var par = self.currentHolePar();
 
 		if (sVal <25 && sVal >= 0 || sVal <= 0 && sVal > -25 ) {
-			if (self.noScoreEntered()) {
+			if (self.noScoreEntered() === true) {
 				self.currentHoleScore(par);
 			}
 		} 
 
 		if (sVal >= 26) {
-			if (self.noScoreEntered()) {
+			if (self.noScoreEntered() === true) {
 				self.currentHoleScore(par);
 			}
 			self.upScore();
 		}
 			
 		if (sVal < -26) {
-			if (self.noScoreEntered()) {
+			if (self.noScoreEntered() === true) {
 				self.currentHoleScore(par);
 			}
 			self.downScore();
@@ -478,6 +544,8 @@ function viewModel () {
 	};
 
 	self.showScoreCard = function () {
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+
 		$.mobile.changePage("#scoreCard", { transition: 'fade'});
 	};
 	
@@ -582,8 +650,8 @@ function viewModel () {
 							});
 						}
 					}
-				
-				self.setHoleData();
+//				console.log(self.currentHole());
+				self.setHoleData(self.currentHole());
 			}
 		);
 	};
@@ -627,23 +695,6 @@ function viewModel () {
 	};
 		
 	
-	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee) {
-		var data = {
-			round_id : round_id,
-			round_hcp : round_hcp,
-			hole_id : hole_id,
-			hole_score : hole_score,
-			round_tee : round_tee
-		};
-		
-		apexEventProxy.createNewRoundScore(
-			{ data : data },
-			function (data)	{
-			}
-		);
-	};
-	
-	
 	self.startNewRound = function(course_id, course_name) {
 	
 		self.holes.removeAll();
@@ -672,8 +723,6 @@ function viewModel () {
 						
 						self.saveHoleScore(round_id, self.playerExactHcp(), 1, 0, self.playerDefaultTee()); // TODO: pitäis tehdä controllerissa
 						
-						
-						
 						self.roundList.unshift({
 							id : round_id,
 							course_name : course_name,
@@ -691,6 +740,9 @@ function viewModel () {
 		self.getHoleData(course_id);
 		
 		self.currentHole(1); // kymppireiältä alkavat kierrokset?
+		self.setHoleData(1);
+
+		
 		
 		$.mobile.changePage('#s_page', { transition: "slidefade",
                                     allowSamePageTransition: true});
@@ -720,8 +772,6 @@ function viewModel () {
 
 		self.roundFinished(false);
 		
-		
-		
 		self.loadedRoundStartTime(start_time);
 		self.holes.removeAll();
 
@@ -735,6 +785,7 @@ function viewModel () {
 				self.getRoundScores(round_id);
 				self.getCourseGeneralData(course_id);
 				self.getHoleData(course_id);
+//				self.getRoundScores(round_id);
 				self.round_id(round_id);
 				self.course_id(course_id);
 				self.roundStartTime(start_time.date);
@@ -760,7 +811,6 @@ function viewModel () {
 			self.el(el);
 			self.clickedRoundStartTime(start_time);
 		}
-		
 
 		$("#delPopUp").popup( "open", { transition: "pop", positionTo: '#f_header'  });
 		
@@ -799,13 +849,10 @@ function viewModel () {
 				self.clickedRoundStartTime("");
 			}
 		};
-
 		
 		$("#delPopUp").popup( "close", { transition: "fade" });
 		
 	};
-	
-
 
 
 	self.cancelRoundDelete = function() {
@@ -828,6 +875,7 @@ function viewModel () {
 					self.round_tee(self.playerDefaultTee());
 				}
 				else {
+					var hole = 0;
 					for (var i = 0; i < data.scores.length; i++) {
 						for (var z = 0; z < self.roundScores().length; z++) {
 							if (self.roundScores()[z].hole() === data.scores[i].hole_id) {
@@ -835,18 +883,26 @@ function viewModel () {
 								self.round_hcp(data.scores[i].round_hcp);
 								self.round_tee(data.scores[i].round_tee);
 							}
-						}
-					}
-				}
-				
-				self.currentHole(1);
 
-				if (parseInt(self.roundScores()[0].score(), 10) !== 0) {
-					self.currentHoleScore(parseInt(self.roundScores()[0].score(), 10));
-					self.noScoreEntered(false);
-				}
-				else {
-					self.noScoreEntered(true);
+						}
+//						console.log("scores " + data.scores[i].score);
+//						console.log("holes " + data.scores[i].hole_id);
+						if (data.scores[i].score === 0 && hole === 0) hole = data.scores[i].hole_id;
+
+					}
+					
+					if (hole !== 0) {
+						self.currentHole(hole);
+//						self.currentHoleScore(0);
+						self.setHoleData(hole);
+						self.noScoreEntered(true);
+					}
+					else {
+						self.currentHole(1);
+						self.currentHoleScore(parseInt(self.roundScores()[0].score(), 10));
+						self.setHoleData(1);
+						self.noScoreEntered(false);
+					}
 				}
 			}
 		);
@@ -944,7 +1000,27 @@ function viewModel () {
 	}).extend({throttle: 250 });
 	
 	self.validateRound = ko.computed(function() {
-		if (self.roundFinished() === true) return true;
+		if (self.roundFinished() === true) {
+			if (self.roundEndTime() === "")
+			{
+				var d = new Date();
+				d = d.format("yyyy-mm-dd HH:MM:ss");
+
+				var data = { 
+					round_id : self.round_id(),
+					end_time : d
+				};
+				apexEventProxy.endRound(
+					{ data : data },
+					function (data) {
+						self.roundEndTime(d);
+					}
+				);
+
+			}
+			return true;
+		}
+		
 		if (self.holes().length > 0 && self.roundScores().length > 0) 
 		{
 			var h = self.holes().length;
@@ -973,10 +1049,10 @@ function viewModel () {
 		else par_points = 36;
 		
 		var group;
+		group = self.getHcpGroup(hcp);
 
 		if (p > par_points ) {
 			while (p > par_points) {
-				group = self.getHcpGroup(hcp);
 				if (group == "9hole") {
 					self.hcpPreview("Ei käytössä 9 reiän kierroksella");
 					return;
@@ -988,7 +1064,6 @@ function viewModel () {
 		}
 		
 		else {
-			group = self.getHcpGroup(hcp);
 			if (group == "9hole") {
 				self.hcpPreview("Ei käytössä 9 reiän kierroksella");
 				return;
@@ -1168,7 +1243,6 @@ function viewModel () {
 		}
 		self.loadedRoundStartTime("");
 		$.mobile.changePage('#courseSelect', { transition: "slidefade" });
-
 	};
 	
 }	
@@ -1177,9 +1251,7 @@ function viewModel () {
 $(document).on('pageinit', function() {
 
 	window.vm = new viewModel();
-	
-	ko.virtualElements.allowedBindings.mobileList = true;
-
+	ko.virtualElements.allowedBindings.mobileList = true; // 
 	
 	ko.applyBindings(vm, document.getElementById("f_page"));
 	
@@ -1187,7 +1259,6 @@ $(document).on('pageinit', function() {
 	var searchTerms = '.scrollOuter',
 			$target = $(e.target),
 			parents = $target.parents(searchTerms);
-
 		if (parents.length || $target.hasClass(searchTerms)) {
 			// ignore as we want the scroll to happen
 			// (This is where we may need to check if at limit)
@@ -1228,7 +1299,7 @@ $(document).on('pageinit', function() {
 		vm.calcRoundDuration();
 		var clock = setInterval(function() { 
 			vm.calcRoundDuration();
-		} , 20000); 
+		} , 10000); 
 		
 	});
 	
