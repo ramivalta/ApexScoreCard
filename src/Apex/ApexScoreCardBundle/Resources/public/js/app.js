@@ -59,9 +59,11 @@ function viewModel () {
 	
 	self.cachedScore = ko.observable(0);
 	
-	self.bogikorttiVersion = ko.observable("Bogikortti v0.2.3 - 'Bogi on se tuplabogikikin'");
+	self.bogikorttiVersion = ko.observable("Bogikortti v0.2.3 - 'Bogi se on tuplabogikin'");
 	
 	self.prePopulateScores = function () {
+//		if (self.roundScores().length > 0) self.roundScores.removeAll();
+
 		for (var i = 0; i < 18; i++) {
 			var el = {};
 			el.hole = ko.observable(i + 1);
