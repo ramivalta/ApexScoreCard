@@ -655,7 +655,7 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 //	clear: both;
 //	float: left;
 	width: 100%;
-	padding: 2px;
+//	padding: 2px;
 	height: 46px;
 	min-height: 46px;
 	border: 0px;
