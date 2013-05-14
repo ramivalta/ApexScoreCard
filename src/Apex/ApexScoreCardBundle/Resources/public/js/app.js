@@ -257,6 +257,8 @@ function viewModel () {
 		if (self.currentHoleScore() === 0) {
 			self.noScoreEntered(true);
 		}
+
+//		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, curScore, self.round_tee());
 		
 		self.cachedScore( {
 			round_id: self.round_id(),
@@ -265,17 +267,14 @@ function viewModel () {
 			hole_score : curScore,
 			round_tee : self.round_tee()
 		});	
+				
 	};
-	
-/*	self.loadHole = function(num) {
-		
-	} */
 	
 	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee) {
 	
 		if (self.cachedScore() !== 0) {
 			if (self.cachedScore().round_id === round_id && self.cachedScore().round_hcp === round_hcp && self.cachedScore().hole_id === hole_id &&
-				self.cachedScore().hole_score == hole_score &&
+				self.cachedScore().hole_score === hole_score &&
 				self.cachedScore().round_tee === round_tee) {
 				return;
 			}
@@ -545,13 +544,20 @@ function viewModel () {
 
 	};
 
-	self.showScoreCard = function () {
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+	self.scoreCardClicked = false;
 
-		$.mobile.changePage("#scoreCard", { transition: 'fade'});
+	self.showScoreCard = function () {
+		if (self.scoreCardClicked === false) {
+			self.scoreCardClicked = true;
+			console.log(self.scoreCardClicked);
+			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+
+			$.mobile.changePage("#scoreCard", { transition: 'fade'});
+		}
 	};
 	
 	self.closeScoreCard = function() {
+		self.scoreCardClicked = false;
 		$.mobile.changePage('#s_page', { transition: 'fade', reverse:true });
 	};
 	
@@ -656,9 +662,10 @@ function viewModel () {
 				self.setHoleData(self.currentHole());
 			}
 		);
-	};
+	}; 
 	
 	self.leaveRound = function () {
+
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
 		if (self.roundEndTime() === "" && self.validateRound() === true)
@@ -672,7 +679,7 @@ function viewModel () {
 			apexEventProxy.endRound(
 				{ data : data },
 				function (data) {
-					
+				
 				}
 			);
 			if (self.firstRun() === true) {
@@ -692,7 +699,7 @@ function viewModel () {
 	//	self.scoreCard.removeAll();
 		self.roundScores.removeAll();
 		self.prePopulateScores();
-		
+	
 		$.mobile.changePage("#f_page", { transition: "slidefade", reverse: true });
 	};
 		
@@ -814,7 +821,7 @@ function viewModel () {
 			self.clickedRoundStartTime(start_time);
 		}
 
-		$("#delPopUp").popup( "open", { transition: "pop", positionTo: '#f_header'  });
+		$("#delPopUp").popup( "open", { transition: "pop", shadow: false, positionTo: event.target  });
 		
 /*		$.mobile.changePage("#delPopUp", { transition: "pop", role: "popup" }); */
 		
@@ -827,10 +834,12 @@ function viewModel () {
 		var round_id = self.clickedRound();
 		var divs = $(elli).length;
 		
-		$(elli).transition({x: '-500px', opacity: '0', duration: 500, complete: function() {
-			if ( --divs > 0) return;
-			delRound(round_id);
-		} });
+	//	$(elli).transition({x: '-500px', opacity: '0', duration: 500, complete: function() {
+		$(elli).transition({scale: '1, 0', duration: 350, easing: 'in', complete: function() {
+				if ( --divs > 0) return;
+				delRound(round_id);
+			}
+		});
 
 		function delRound (round_id) {
 			var data = { round_id : round_id };
@@ -890,7 +899,6 @@ function viewModel () {
 //						console.log("scores " + data.scores[i].score);
 //						console.log("holes " + data.scores[i].hole_id);
 						if (data.scores[i].score === 0 && hole === 0) hole = data.scores[i].hole_id;
-
 					}
 					
 					if (hole !== 0) {
@@ -912,6 +920,12 @@ function viewModel () {
 	
 	self.getRoundList = function (callback) {
 		var a;
+
+	   var interval = setInterval(function(){
+			$.mobile.loading('show');
+			clearInterval(interval);
+		},1);
+
 		apexEventProxy.getRoundList(
 			{ a : a },
 			function (data) {
@@ -937,26 +951,32 @@ function viewModel () {
 				else {
 					self.firstRun(true);
 				}
-				
+
+			interval = setInterval(function() {
+				$.mobile.loading('hide');
+				clearInterval(interval);
+			},1);
+
+
 			}
+			
 		);
 	};
 	
 	self.getRoundList();
 	
 	
-	self.getCourseList = ko.computed(function (callback) {
+	self.getCourseList = function () {
 		var a;
 		apexEventProxy.getCourseList(
 		{ a : a },
 		function(data) {
-//			alert(data.courses[0].name);
 			for (var i = 0, m = data.courses.length; i < m; i++) {
 				self.courseList.push(data.courses[i]);
 				}
 			}
 		);
-	});
+	};
 	
 	self.saveGolfer = function (callback) {
 		var data = {
@@ -1239,8 +1259,6 @@ function viewModel () {
 			
 	self.loadCourseSelect = function () {
 		if (self.loadedRoundStartTime() !== "") {
-//			var el = $("span:contains('" + self.loadedRoundStartTime() + "')");
-//			el.parent().parent().parent().parent().parent().attr('style', '');
 			self.scrollPos(0);
 		}
 		self.loadedRoundStartTime("");
@@ -1251,7 +1269,6 @@ function viewModel () {
 	
 	
 $(document).on('pageinit', function() {
-
 	window.vm = new viewModel();
 	ko.virtualElements.allowedBindings.mobileList = true; // 
 	
@@ -1270,11 +1287,10 @@ $(document).on('pageinit', function() {
 	});
 	
 	$('#f_page').on('pageshow', function() {
-	
 		if (vm.loadedRoundStartTime() !== "") {
+//			$('html, body').animate({scrollTop: vm.scrollPos()}, "slow");
 			$.mobile.silentScroll(vm.scrollPos());
 		}
-
 	});
 	
 	$('#courseSelect').on('pageinit', function () {
@@ -1317,4 +1333,6 @@ $(document).on('pageinit', function() {
 	});
 	
 	$(document).off('pageinit');
+	
+
 });	

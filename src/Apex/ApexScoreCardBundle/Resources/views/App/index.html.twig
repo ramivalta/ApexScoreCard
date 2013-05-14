@@ -61,8 +61,8 @@
 
 	<script type="text/javascript">
 		$.mobile.changePage.defaults.allowSamePageTransition = true;
-		$.mobile.loader.prototype.options.theme = "d";
-		$.mobile.loader.prototype.options.textVisible = true;
+		$.mobile.loader.prototype.options.theme = "b";
+		$.mobile.loader.prototype.options.textVisible = false;
 	</script>
 
 </head>
@@ -76,7 +76,7 @@
 		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
 	</div>
 	
-	<div class="scrollOuter" data-theme="b">	
+	<div class="scrollOuter">	
 
 	<!-- ko if: firstRun() == "working" -->
 		<div data-theme="c" data-role="content">
@@ -89,10 +89,11 @@
 			<div class="scrollInner" id="roundListWrap">
 				<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"  class="round"> 
 				
-					<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted: $root.highlightDeleted(start_time.date) }">
+					<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date) }">
 				 
 						<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
 						<span data-bind="text: course_name"></span>
+						
 						<span style="font-size: 66%">
 							<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
 							<div style="color: #999">
@@ -109,19 +110,26 @@
 		</div>
 	<!-- /ko -->
 	
+<!-- 
 
-		<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true" id="deletiongPopup">
-			<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-					<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
-			</div>
-			<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content" id="deletionContent">
-	<!--				  <h5 class="ui-title">Remove this round?</h5> -->
-			  <p style="font-weight: bold">Kierros poistetaan lopullisesti.</p>
-				<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
-				<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
-			</div>
+	<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true" id="deletiongPopup">
+		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+				<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
 		</div>
+		<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content" id="deletionContent">
+	<!~~				  <h5 class="ui-title">Remove this round?</h5> ~~>
+		  <p style="font-weight: bold">Kierros poistetaan lopullisesti.</p>
+			<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
+			<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
+		</div>
+	</div>
 	
+ -->
+ 
+ 	<div data-role="popup" id="delPopUp"  data-theme="none"  style="right: 16px" data-mini="true" data-shadow="false" id="deletiongPopup">
+		<a href="" class="aDeleteBtn ui-btn-up-r" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-mini="true">Poista kierros?</a>
+	</div>
+ 
 	<!-- ko if: firstRun() == true -->
 		<div data-theme="b" data-role="content">
 			<div style="width: 100%; margin-left: 10px; float:left">
@@ -147,7 +155,6 @@
 		<div class="headerText">Reikä <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
 		</div>
-
 		<a data-bind="event: { tap: showScoreCard }" data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext" data-close-btn="none" data-transition="slidedown"></a>
 	</div>
 
@@ -180,7 +187,6 @@
 				<!-- ko if: totalToPar() < 0 -->
 					(<span data-bind="text: totalToPar"></span>)
 				<!-- /ko -->
-				
 				<!-- ko if: totalToPar() == 0 -->
 					(E)
 				<!-- /ko -->
@@ -193,7 +199,6 @@
 			</div>
 		</div>
 
-
 		<div id="sliderWrappi" class="ui-grid-b">
 			<div id="leftFill" class="ui-block-a"></div>
 				<div id="sliderW" class="ui-block-b">
@@ -204,8 +209,6 @@
 			<div id="rightFill" class="ui-block-c"></div>
 		</div>
 	</div>
-
-<!-- <div style="color: white; text-shadow: 0 0 0 #000, 0 0 0 #000" data-bind="text: ko.toJSON($data)"></div>    -->
 
 	<div id="bottom" data-bind="event: { swipeleft: nextHole, swiperight: previousHole }">
 		<div id="holeData">
@@ -475,7 +478,7 @@
 
 <div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
 	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-			<a href="#" data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
+			<a data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
 
 		<div class="headerText">Asetukset</div>
 		
