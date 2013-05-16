@@ -251,7 +251,7 @@ class roundScoreController extends BaseController
     	
     	$round_id = $json->data->round_id;
     	$em = $this->getDoctrine()->getManager();
-    	$entities = $em->getRepository('ApexScoreBundle:roundScore')->findByRoundId($round_id);
+    	$entities = $em->getRepository('ApexScoreBundle:roundScore')->findByRoundId(array('roundId' => $round_id), array('holeId' => 'ASC'));
     	
     	$scores = array();
     	

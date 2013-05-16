@@ -243,10 +243,7 @@ function viewModel () {
 		self.currentHolePar(par);
 		self.currentHoleHcp(parseInt(self.holes()[idx].hole_hcp(), 10));
 		self.currentHoleLength(self.holes()[idx].hole_length());
-		var hole_id = self.holes()[idx].hole_number();
-		
-//		console.log(hole_id);
-				
+
 		for (var i = 0; i < self.roundScores().length; i++) {
 			if (self.roundScores()[i].hole() === curHole) {
 				self.currentHoleScore(parseInt(self.roundScores()[i].score(), 10));
@@ -263,8 +260,8 @@ function viewModel () {
 		self.cachedScore( {
 			round_id: self.round_id(),
 			round_hcp : self.round_hcp(),
-			hole_id : hole_id,
-			hole_score : curScore,
+			hole_id : hole,
+			hole_score : self.currentHoleScore(),
 			round_tee : self.round_tee()
 		});	
 				
@@ -273,9 +270,19 @@ function viewModel () {
 	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee) {
 	
 		if (self.cachedScore() !== 0) {
+	/*		console.log("cache: " +
+				self.cachedScore().round_id + " " +
+				self.cachedScore().round_hcp + " " +
+				self.cachedScore().hole_id + " " +
+				self.cachedScore().hole_score + " " +
+				self.cachedScore().round_tee + " "
+			); */
+		
+		
 			if (self.cachedScore().round_id === round_id && self.cachedScore().round_hcp === round_hcp && self.cachedScore().hole_id === hole_id &&
 				self.cachedScore().hole_score === hole_score &&
 				self.cachedScore().round_tee === round_tee) {
+//				console.log("cached");
 				return;
 			}
 		}
@@ -298,19 +305,21 @@ function viewModel () {
 					hole_score : hole_score,
 					round_tee : round_tee
 				});
+				
+//				console.log("saved... " + round_id + " " + round_hcp + " " + hole_id + " " + hole_score + " " + round_tee);
 			
 			}
 		);
 	};
 	
-/*	self.saveScore = ko.computed(function() {
+	self.saveScore = ko.computed(function() {
 		if (typeof self.round_id() === 'undefined' || typeof self.round_hcp() === 'undefined') {
 			return false;
 		}
-		console.log("saved... " + self.round_id() + " " + self.round_hcp() + " " + self.currentHole() + " " + self.currentHoleScore() + " " + self.round_tee());
+///		console.log("trying to save... " + self.round_id() + " " + self.round_hcp() + " " + self.currentHole() + " " + self.currentHoleScore() + " " + self.round_tee());
 	
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
-	}).extend({throttle: 1000 }); */
+	}).extend({throttle: 2000 });
 		
 		
 	self.nextHole = function () {
@@ -549,7 +558,6 @@ function viewModel () {
 	self.showScoreCard = function () {
 		if (self.scoreCardClicked === false) {
 			self.scoreCardClicked = true;
-			console.log(self.scoreCardClicked);
 			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
 			$.mobile.changePage("#scoreCard", { transition: 'fade'});
@@ -886,7 +894,6 @@ function viewModel () {
 					self.round_tee(self.playerDefaultTee());
 				}
 				else {
-					var hole = 0;
 					for (var i = 0; i < data.scores.length; i++) {
 						for (var z = 0; z < self.roundScores().length; z++) {
 							if (self.roundScores()[z].hole() === data.scores[i].hole_id) {
@@ -898,21 +905,27 @@ function viewModel () {
 						}
 //						console.log("scores " + data.scores[i].score);
 //						console.log("holes " + data.scores[i].hole_id);
-						if (data.scores[i].score === 0 && hole === 0) hole = data.scores[i].hole_id;
+//						if (data.scores[i].score === 0 && hole === 0) hole = data.scores[i].hole_id;
 					}
+				}
+			
+				var hole = 0;
+				for (var x = 0; x < self.holes().length; x++) {
+					if (self.roundScores()[x].score() === 0 && hole === 0) {
+						hole = self.roundScores()[x].hole();
+					}
+				}
 					
-					if (hole !== 0) {
-						self.currentHole(hole);
-//						self.currentHoleScore(0);
-						self.setHoleData(hole);
-						self.noScoreEntered(true);
-					}
-					else {
-						self.currentHole(1);
-						self.currentHoleScore(parseInt(self.roundScores()[0].score(), 10));
-						self.setHoleData(1);
-						self.noScoreEntered(false);
-					}
+				if (hole !== 0) {
+					self.currentHole(hole);
+					self.setHoleData(hole);
+					self.noScoreEntered(true);
+				}
+				else {
+					self.currentHole(1);
+					self.currentHoleScore(parseInt(self.roundScores()[0].score(), 10));
+					self.setHoleData(1);
+					self.noScoreEntered(false);
 				}
 			}
 		);
