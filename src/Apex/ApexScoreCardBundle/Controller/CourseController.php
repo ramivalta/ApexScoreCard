@@ -219,8 +219,8 @@ class CourseController extends BaseController
     	}
     	
     	$courses = array();
-		foreach ($entities as $poops) { 
-    		$courses[] = $poops->getJson();
+		foreach ($entities as $c) { 
+    		$courses[] = $c->getJson();
     	}
     	return new Response(json_encode(array('courses' => $courses)));
     }

@@ -4,14 +4,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-<!--   	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/jquery.mobile-1.3.0.min.css') }}" /> -->
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
-  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
-    <link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" />
+  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/app_styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-    
+    <link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" />    
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
 
 	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
@@ -31,8 +29,8 @@
 	{% javascripts
 		'@ApexScoreBundle/Resources/public/js/date.format.js'
 		'@ApexScoreBundle/Resources/public/js/mobiscroll.custom-2.5.2.min.js'
-		'@ApexScoreBundle/Resources/public/js/lang/fi.js'
 		'@ApexScoreBundle/Resources/public/js/moment.min.js'
+		'@ApexScoreBundle/Resources/public/js/lang/fi.js'
 		'@ApexScoreBundle/Resources/public/js/jquery.transit.min.js'
 		'@ApexScoreBundle/Resources/public/js/app.js'
 		'@ApexScoreBundle/Resources/public/js/add2home.js'
@@ -177,24 +175,48 @@
 			</div>
 	
 			<div id="roundScore" class="ui-block-c">
-				Tulos: <span data-bind="text: totalScore"></span>
+				Tulos:
 				
-				<span style="opacity: 0.7; font-size: 90%">
-				<!-- ko if: totalToPar() > 0 -->
-					(+<span data-bind="text: totalToPar"></span>)
+				
+				<!-- ko if: totalToPar() === false -->
+				
+					<img src="{{ asset('bundles/apexscore/images/loading_gray.gif') }} ">
+				
 				<!-- /ko -->
-				<!-- ko if: totalToPar() < 0 -->
-					(<span data-bind="text: totalToPar"></span>)
+				
+				<!-- ko if: totalToPar() !== false -->
+				
+					<span data-bind="text: totalScore"></span>
+		
+					<span style="opacity: 0.7; font-size: 90%">
+					<!-- ko if: totalToPar() > 0 -->
+						(+<span data-bind="text: totalToPar"></span>)
+					<!-- /ko -->
+
+					<!-- ko if: totalToPar() < 0 -->
+						(<span data-bind="text: totalToPar"></span>)
+					<!-- /ko -->
+				
+					<!-- ko if: totalToPar() === 0 -->
+						(E)
+					<!-- /ko -->
+					
+					</span>
+					
 				<!-- /ko -->
-				<!-- ko if: totalToPar() == 0 -->
-					(E)
-				<!-- /ko -->
-				</span>
 
 				<br>
 				
 				<span style="font-size: 75%"> Pisteet:</span>
-				<span data-bind="text: totalPoints" style="font-size: 75%"></span> 
+				
+				<!-- ko if: totalToPar() === false -->
+					<img src="{{ asset('bundles/apexscore/images/loading_gray.gif') }} ">
+				<!-- /ko -->
+				
+				<!-- ko if: totalToPar() !== false -->
+					<span data-bind="text: totalPoints" style="font-size: 75%"></span> 
+				<!-- /ko -->
+				
 			</div>
 		</div>
 
@@ -222,7 +244,16 @@
 				<div class="ui-block-b" style="text-align: right">
 					Pelaaja: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
 					Tasoitus: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
-					Pelitasoitus: <span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
+					Pelitasoitus:
+					
+					<!-- ko if: playerPlayingHcp() !== false -->
+					<span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
+					<!-- /ko -->
+					
+					<!-- ko if: playerPlayingHcp() === false -->
+					<span><img src="{{ asset('bundles/apexscore/images/loading_white.gif') }} "></span><br>
+					<!-- /ko -->
+					
 					Tii: <span id="playerTee" data-bind="text: locale_tee" style="font-weight: bold"></span><br>
 					Kierrosaika: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
 
@@ -237,21 +268,21 @@
 		
 	<div class="footer" data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer">
 		<div style="float: left">
-			<!-- ko if: currentHole() == 1 -->
+			<!-- ko if: currentHole() === 1 -->
 			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" ><span class="holenav">Reikä </span><span class="holenav" data-bind="text: holes().length" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 			
-			<!-- ko if: currentHole() != 1 -->
+			<!-- ko if: currentHole() !== 1 -->
 			<a href="#s_page" data-role="button" data-icon="arrow-l"  data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: currentHole() - 1" style="padding-right: 30px"></span> </a>
 			<!-- /ko -->
 		</div>
 
 		<div style="float: right"> 
-			<!-- ko if: currentHole() == holes().length -->
+			<!-- ko if: currentHole() === holes().length -->
 			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Reikä </span><span class="holenav">1</span>  </a>
 			<!-- /ko -->
 		
-			<!-- ko if: currentHole() != holes().length -->
+			<!-- ko if: currentHole() !== holes().length -->
 			<a href="#s_page" data-role="button" data-icon="arrow-r" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="padding-left: 30px"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: currentHole() + 1"></span>  </a>
 			<!-- /ko -->
 		</div>	
@@ -304,52 +335,52 @@
 								<td class="scCells" data-bind="text: hole_par"></td>
 								<td class="scCells" data-bind="text: hole_hcp"></td>
 					
-								<!-- ko if: $parent.round_tee() == "yellow" -->
+								<!-- ko if: $parent.round_tee() === "yellow" -->
 									<td class="teeYellow"><span data-bind="text: hole_length"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: $parent.round_tee() == "red" -->
+								<!-- ko if: $parent.round_tee() === "red" -->
 									<td class="teeRed"><span data-bind="text: hole_length"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: $parent.round_tee() == "blue" -->
+								<!-- ko if: $parent.round_tee() === "blue" -->
 									<td class="teeBlue"><span data-bind="text: hole_length"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: $parent.round_tee() == "white" -->
+								<!-- ko if: $parent.round_tee() === "white" -->
 									<td class="teeWhite"><span data-bind="text: hole_length"></span> m
 									</td>
 								<!-- /ko -->
 				
 								<!-- ko if: score() > 0 -->
-									<!-- ko if: scoreToPar == -1 -->
+									<!-- ko if: scoreToPar === -1 -->
 									<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
 									<!-- /ko -->
 									<!-- ko if: scoreToPar < -1 -->
 									<td class="scEagle"><span class="doublecircle"> <span class=" circle" data-bind="text: score"></span></span></td>
 									<!-- /ko -->
-									<!-- ko if: scoreToPar == 1 -->
+									<!-- ko if: scoreToPar === 1 -->
 										<td class="scBogey"><span class="rectangle" data-bind="text: score"></span></td>
 									<!-- /ko -->
 									<!-- ko if: scoreToPar > 1 -->
 										<td class="scDouble" data-bind="text: score"></td>
 									<!-- /ko -->
-									<!-- ko if: scoreToPar == 0 -->
+									<!-- ko if: scoreToPar === 0 -->
 										<td class="scScoreCells" data-bind="text: score"></td>
 									<!-- /ko -->
-									<!-- ko if: scoreToPar == 1 -->
+									<!-- ko if: scoreToPar === 1 -->
 										<td class="scBogey">+<span data-bind="text: scoreToPar"></span></td>
 									<!-- /ko -->
 									<!-- ko if: scoreToPar > 1 -->
 										<td class="scDouble">+<span data-bind="text: scoreToPar"></span></td>
 									<!-- /ko -->
-									<!-- ko if: scoreToPar == -1 -->
+									<!-- ko if: scoreToPar === -1 -->
 										<td class="scBirdie"><span data-bind="text: scoreToPar"></span></td>
 									<!-- /ko -->
 									<!-- ko if: scoreToPar < -1 -->
 										<td class="scEagle"><span data-bind="text: scoreToPar"></span></td>
 									<!-- /ko -->
-									<!-- ko if: scoreToPar == 0 -->
+									<!-- ko if: scoreToPar === 0 -->
 										<td class="scScoreCells"><span>E</span></td>
 									<!-- /ko -->
 					
@@ -357,13 +388,13 @@
 				
 								<!-- /ko -->
 				
-								<!-- ko if: score() == 0 && $root.validateRound() === false -->
+								<!-- ko if: score() === 0 && $root.validateRound() === false -->
 									<td class="scScoreCells">&nbsp;</td>
 									<td class="scCells">&nbsp;</td>
 									<td class="scCells">&nbsp;</td>
 								<!-- /ko -->
 					
-								<!-- ko if: score() == 0 && $root.validateRound() === true -->
+								<!-- ko if: score() === 0 && $root.validateRound() === true -->
 									<td class="scScoreCells">x</td>
 									<td class="scScoreCells">x</td>
 									<td class="scCells">0</td>
@@ -377,19 +408,19 @@
 								<td class="scTotals" data-bind="text: coursePar"></td>
 								<td class="scTotals"></td>
 					
-								<!-- ko if: round_tee() == "yellow" -->
+								<!-- ko if: round_tee() === "yellow" -->
 									<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: round_tee() == "red" -->
+								<!-- ko if: round_tee() === "red" -->
 									<td class="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: round_tee() == "blue" -->
+								<!-- ko if: round_tee() === "blue" -->
 									<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: round_tee() == "white" -->
+								<!-- ko if: round_tee() === "white" -->
 									<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 									</td>
 								<!-- /ko -->
@@ -413,7 +444,7 @@
 										<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
 										</td>
 									<!-- /ko -->
-									<!-- ko if: totalToPar() == 0 -->
+									<!-- ko if: totalToPar() === 0 -->
 										<td class="scTotals"><span>E</span>
 										</td>
 									<!-- /ko -->
@@ -435,7 +466,7 @@
 									<!-- ko if: totalToPar() < 0 -->
 										<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
 									<!-- /ko -->
-									<!-- ko if: totalToPar() == 0 -->
+									<!-- ko if: totalToPar() === 0 -->
 										<td class="scTotals"><span>E</span></td>
 									<!-- /ko -->
 
@@ -545,7 +576,14 @@
 						<li data-role="list-divider" data-theme="d">Viimeisimmät pelatut kentät</il>
 						<!-- ko mobileList: recentlyPlayedCourses, foreach: recentlyPlayedCourses -->
 							<li>
-							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
+
+							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name)">
+								<span data-bind="text: name"></span>
+								<span style="font-size: 66%; color: #999; float:right">
+									<span data-bind="text: hole_count"></span>
+								</span>
+							</a>
+
 							</li>
 						<!-- /ko -->
 					<!-- /ko -->
@@ -554,7 +592,13 @@
 			
 					<!-- ko mobileList: courseList, foreach: courseList -->
 						<li data-bind="attr: { 'data-filtertext': alias +' '+ name}">
-							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name), text: name"></a>
+							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name)">
+								<span data-bind="text: name"></span>
+								<span style="font-size: 66%; color: #999; float:right">
+									<span data-bind="text: hole_count"></span>
+								</span>
+							</a>
+
 						</li>
 					<!-- /ko -->
 				</ul>

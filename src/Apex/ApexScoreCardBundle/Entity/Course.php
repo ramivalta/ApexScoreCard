@@ -615,6 +615,7 @@ class Course
     		'slBlueLadies' 		=> $this->slBlueLadies,
     		'slYellowLadies' 	=> $this->slYellowLadies,
     		'addedBy'			=> $this->addedBy,
+    		'hole_count'		=> count($this->getHoles()),
     	);
     }
 
