@@ -112,8 +112,7 @@ body {
 	text-shadow: 0px 1px 1px #fcfcfc;
 }
 
-#scoreWrappi
-	{
+#scoreWrappi {
 	width: 100% !important;
 	clear: both;
 	border: 0px;
@@ -123,9 +122,9 @@ body {
 	height: 75px;
 }
 	
-#scoreWrappi .ui-block-a { width: 30%}
-#scoreWrappi .ui-block-b { width: 40%}
-#scoreWrappi .ui-block-c { width: 30%}
+#scoreWrappi .ui-block-a { width: 33%}
+#scoreWrappi .ui-block-b { width: 34%}
+#scoreWrappi .ui-block-c { width: 33%}
 	
 #score {
 	margin: auto;
