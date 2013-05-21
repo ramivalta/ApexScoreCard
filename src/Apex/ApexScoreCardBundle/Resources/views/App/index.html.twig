@@ -11,6 +11,9 @@
 
     <link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" />    
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/	jquery-ui-1.10.3.custom.css') }}"> 
+	
+
 
 	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
 	
@@ -19,7 +22,6 @@
 		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/villespecial.css') }}">
 
 	{% endif %}		-->
-	
 	
 	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
@@ -34,6 +36,8 @@
 		'@ApexScoreBundle/Resources/public/js/jquery.transit.min.js'
 		'@ApexScoreBundle/Resources/public/js/app.js'
 		'@ApexScoreBundle/Resources/public/js/add2home.js'
+		'@ApexScoreBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
+		'@ApexScoreBundle/Resources/public/js/jquery.ui.touch-punch.min.js'
 	%}
 	<script src="{{ asset_url }}"></script>
 
@@ -223,12 +227,14 @@
 		<div id="sliderWrappi" class="ui-grid-b">
 			<div id="leftFill" class="ui-block-a"></div>
 				<div id="sliderW" class="ui-block-b">
-					<div id="slideri">
-						<input type="range" data-bind="value: sliderVal, slider: sliderVal, event: { change: sliderMove, slidestop: resetSlider }" name="scoreSlider" id="scoreSlider" min="-50" max="50" /> 
-					</div>
+		<div data-bind="value: sliderVal, uislider: sliderVal, event: { slide: sliderMove, slidestop: resetSlider }, sliderOptions: { value: 0, min: -50, max: 50, step: 1, animate: 'true' }" name="slider" id="slaidi" min="-50" max="50" ></div>
 				</div>
 			<div id="rightFill" class="ui-block-c"></div>
-		</div>
+		</div> 
+		
+		
+		
+		
 	</div>
 
 	<div id="bottom" data-bind="event: { swipeleft: nextHole, swiperight: previousHole }">
@@ -580,7 +586,7 @@
 							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name)">
 								<span data-bind="text: name"></span>
 								<span style="font-size: 66%; color: #999; float:right">
-									<span data-bind="text: hole_count"></span>
+									<span data-bind="text: hole_count"></span>r
 								</span>
 							</a>
 
@@ -595,7 +601,7 @@
 							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name)">
 								<span data-bind="text: name"></span>
 								<span style="font-size: 66%; color: #999; float:right">
-									<span data-bind="text: hole_count"></span>
+									<span data-bind="text: hole_count"></span>r
 								</span>
 							</a>
 

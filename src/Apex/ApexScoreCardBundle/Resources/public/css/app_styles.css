@@ -242,7 +242,7 @@ body {
 	padding: 0px;
 }
 
-#slideri {
+#slaidi {
 	margin: auto;
 	height: 36px;
 	padding: auto;
@@ -250,7 +250,7 @@ body {
 	margin-right: 40px;
 }
 
-#slideri .ui-slider .ui-slider-handle {
+.ui-slider .ui-slider-handle {
 	width:100px !important; 
 	height:80px !important; 
 //	background: blue;
@@ -261,16 +261,16 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100%;
 	margin-left: -50px !important;
-	margin-top: -40px !important;
+	margin-top: -13px !important;
 	margin-bottom: 0px !important;
 	
 }
 
-.ui-slider .ui-slider-handle .ui-btn-inner {
+/* .ui-slider .ui-slider-handle .ui-btn-inner {
 	border: 0px;
 	background: transparent;
 	padding: 0px;
-}
+} */
 
 .ui-slider-track {
 	width: 100%;
@@ -279,18 +279,20 @@ body {
 	border:0px;
 }
 
+/*
+
 .ui-slider .ui-btn  {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none ;
-}
+} */
 
 /* a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
 a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 
 #scoreSlider {
-	display: none;
-	width: 0px !important;
+//	display: none;
+//	width: 0px !important;
 }
 
 #top {

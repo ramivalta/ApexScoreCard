@@ -446,11 +446,11 @@ function viewModel () {
 	
 	self.resetSlider = function () {
 		self.hasSlid(false);
+//		$("#slaidi").slider('value', 0); pitäis animoida nollaus mut eipä toimi
 		self.sliderVal(0);
 	};
 	
 	self.sliderMove = function () {
-	
 		var sVal = parseInt(self.sliderVal(), 10);
 		var par = self.currentHolePar();
 
@@ -484,23 +484,77 @@ function viewModel () {
 	};
 	
 	
-	ko.bindingHandlers.slider = {
+/*	ko.bindingHandlers.uislider = {
 		init: function (element, valueAccessor) {
 			function setSliderValue(newValue) {
-				var slider = $("#" + element.id);
+		//		var slider = $("#" + element.id);
+				var slider = $("#slaidi");
+				$(slider).slider();
+				$(slider).slider( "option", "max", 50);
+				$(slider).slider( "option", "min", -50);				
 			//	console.log(slider);
 				slider.val(newValue);
 				slider.slider('refresh');
-				slider.on('change', function () {
+				slider.on('slidechange', function () {
 					valueAccessor()(slider.val());
 				});
 				slider.on('slidestop', function () {
 					valueAccessor()(slider.val());
+					self.resetSlider();
 				});
+				
+				slider.on('stop', function() {
+					valueAccessor()(slider.val());
+				});
+				
 			}
 			valueAccessor().subscribe(setSliderValue);
 		}
-	}; 
+	}; */
+	
+	ko.bindingHandlers.uislider = {
+		init: function (element, valueAccessor, allBindingsAccessor) {
+			var options = allBindingsAccessor().sliderOptions || {};
+//			console.log(options);
+			
+			$(element).slider(options);
+
+//			$(element).slider( { value: 0, min: -50, max: 50, step : 1, animate: 'true' });
+			
+	//		$(element).slider( { animate: 'slow' });
+
+			ko.utils.registerEventHandler(element, "slidechange", function (event, ui) {
+				var observable = valueAccessor();
+				observable(ui.value);
+			});
+			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+				$(element).slider("destroy");
+			});
+			ko.utils.registerEventHandler(element, "slide", function (event, ui) {
+				var observable = valueAccessor();
+				observable(ui.value);
+			});
+			
+			ko.utils.registerEventHandler(element, "slidestop", function (event, ui) {
+				var observable = valueAccessor();
+				observable(ui.value);
+			});
+			
+		},
+		update: function (element, valueAccessor) {
+			var value = ko.utils.unwrapObservable(valueAccessor());
+			if (isNaN(value)) {
+				value = 0;
+			}
+			
+			
+			$(element).slider("value", value);
+		}
+	};
+
+	
+	
+	
 	
 	ko.bindingHandlers.mobileList = {
 		'update': function (element, valueAccessor) {
@@ -1337,7 +1391,9 @@ $(document).on('pageinit', function() {
 	
  	// https://github.com/jquery/jquery-mobile/issues/4078
 	//	$(this).addClass('ui-page-active');
-
+		
+//		$("#slaidi").slider();
+		
 		vm.calcRoundDuration();
 		var clock = setInterval(function() { 
 			vm.calcRoundDuration();
