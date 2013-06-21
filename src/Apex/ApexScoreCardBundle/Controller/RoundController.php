@@ -297,9 +297,6 @@ class RoundController extends BaseController
 			return new Response(json_encode(array('message' => 'fail')));
         }
 
-
-/* järki mukaan lyöntien laskemiseen kierrosnäkymässä */
-
 		$rounds = array();
 		$scores = array();
 
@@ -394,19 +391,14 @@ class RoundController extends BaseController
 	{
 	
 		$golfer_id = $this->get('security.context')->getToken()->getUser()->getId();
-		
 		$em = $this->getDoctrine()->getManager();
-		
-		
 		
 		$g_rounds = $em->getRepository('ApexScoreBundle:roundGolfer')->findBy(array('golferId' => $golfer_id), array('id' => 'DESC'));
 		
-
 		if (!$g_rounds) {
 			return new Response(json_encode(array('message' => 'fail')));
 
 		}
-
 		
 		$rounds = [];
 		foreach ($g_rounds as $g) {
@@ -416,7 +408,6 @@ class RoundController extends BaseController
 		$f_rounds = $em->getRepository('ApexScoreBundle:Round')->findById($rounds, array('id' => 'DESC')); 
 		
 		$recent = [];
-		
 		$i = 0;
 		
 		foreach ($f_rounds as $f) {
@@ -428,16 +419,11 @@ class RoundController extends BaseController
 					}
 				}
 				else $recent[] = $f->getCourse()->getJson();
-
 			}
-			
 			else break;
-		$i++;
+			$i++;
 		}
-		
-
+	
 		return new Response(json_encode(array('courses' => $recent)));
-
 	}
-
 }

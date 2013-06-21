@@ -2,8 +2,7 @@ html, body {
 	height: 100%;
 	min-height: 100%;
 	overflow: hidden;
-
-
+	-webkit-user-select: none;
 }
 
 //a {
@@ -62,6 +61,7 @@ body {
 	border:0;
 	text-shadow: 0px -1px 1px #ccc, 0px 1px 1px #000;
 	margin-top: 10px;
+	text-overflow: ellipsis !important;
 }
 	
 
@@ -161,7 +161,7 @@ body {
 	width: 100%;
 }
 
-#scoreDisplay {
+.scoreDisplay {
 	font-size: 3em !important;
 	width: 100%;
 	text-align: center;

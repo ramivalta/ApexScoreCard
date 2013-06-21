@@ -5,17 +5,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+
+
+<!--    <link href="{{ asset('bundles/apexscore/css/bogikortti.min.css') }}" rel="stylesheet" type="text/css" />    -->
+
   	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/app_styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
     <link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" />    
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
-	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/	jquery-ui-1.10.3.custom.css') }}"> 
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/	jquery-ui-1.10.3.custom.min.css') }}"> 
 	
 
 
-	<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
 	
 <!--	{% if app.user.username == "kuikka" %}
 	
@@ -107,6 +111,16 @@
 						</span>
 					</li>
 				</ul>
+				
+				<!-- ko if: roundList().length >= 5 -->
+				
+					<div data-theme="a" data-role="footer" style="padding: 6px; padding-bottom: 0px; padding-top: 0px; font-size: 66%; color: #eee">
+						Yhteensä 
+						<span data-bind="text: roundList().length"></span>
+						 kierrosta
+					</div>
+				<!-- /ko -->
+				
 			</div>
 		</div>
 	<!-- /ko -->
@@ -153,6 +167,7 @@
 
 	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
 		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="event: { tap: leaveRound }"></a>
+		
 		<div class="headerText">Reikä <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
 			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
 		</div>
@@ -169,11 +184,11 @@
 			<div id="scoreB" class="ui-block-b">
 				<div id="score">
 					<!-- ko if: currentHoleScore() == 0 -->
-						<div id="scoreDisplay">	- </div>
+						<div class="scoreDisplay">	- </div>
 					<!-- /ko -->
 						
 					<!-- ko if: currentHoleScore() > 0 -->
-						<div id="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
+						<div class="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
 					<!-- /ko -->
 				</div>
 			</div>
@@ -227,7 +242,7 @@
 		<div id="sliderWrappi" class="ui-grid-b">
 			<div id="leftFill" class="ui-block-a"></div>
 				<div id="sliderW" class="ui-block-b">
-		<div data-bind="value: sliderVal, uislider: sliderVal, event: { slide: sliderMove, slidestop: resetSlider }, sliderOptions: { value: 0, min: -50, max: 50, step: 1, animate: 'true' }" name="slider" id="slaidi" min="-50" max="50" ></div>
+		<div data-bind="value: sliderVal, uislider: sliderVal, event: { slide: sliderMove, slidestop: resetSlider }, sliderOptions: { value: 0, min: -50, max: 50, step: 1, animate: 'false' }" name="slider" id="slaidi" min="-50" max="50" ></div>
 				</div>
 			<div id="rightFill" class="ui-block-c"></div>
 		</div> 
@@ -413,6 +428,11 @@
 								<td class="scTotals"></td>
 								<td class="scTotals" data-bind="text: coursePar"></td>
 								<td class="scTotals"></td>
+								
+								<!-- ko if: round_tee() === "white" -->
+									<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+									</td>
+								<!-- /ko -->
 					
 								<!-- ko if: round_tee() === "yellow" -->
 									<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
@@ -426,10 +446,7 @@
 									<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
 									</td>
 								<!-- /ko -->
-								<!-- ko if: round_tee() === "white" -->
-									<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-									</td>
-								<!-- /ko -->
+							
 					
 								<!-- ko if: validateRound() === false -->
 					
@@ -485,7 +502,7 @@
 					<table class="scoreCardTable">
 						<tbody>
 							<tr>
-								<td style="float: left; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Kierroksen kesto: <span data-bind="text: roundDuration"></span></td>
+								<td style="float: left; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Kesto: <span data-bind="text: roundDuration"></span></td>
 								
 								<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Uusi tasoitus: <span data-bind="text: hcpPreview"></span></td>
 							</tr>
@@ -573,6 +590,26 @@
 		<div class="headerText">Valitse kenttä...</div>
 	</div>
 	
+ 	<div data-role="popup" id="courseVar" data-theme="a" style="left: -26px">
+ 		<ul data-role="listview" data-theme="c" data-inset="true">
+ 			<li data-role="divider" data-theme="a">
+ 				Muurame Golf
+ 			</li>
+	 		<li>
+		 		<a href="#">18 reikää (etu + taka)</a>
+ 			</li>		
+	 		<li>
+		 		<a href="#">18 reikää (taka + etu)</a>
+ 			</li>		
+	 		<li>
+				<a href="#">Pelkkä etuysi</a>
+ 			</li>		
+	 		<li>
+	 			<a href="#">Pelkkä takaysi</a>
+ 			</li>		
+ 		</ul>
+	</div>
+	
 	<div class="scrollOuter">
 		<div class="scrollMiddle">
 			<div class="scrollInner" id="courseListWrap">
@@ -604,6 +641,8 @@
 									<span data-bind="text: hole_count"></span>r
 								</span>
 							</a>
+							
+<!--							<a href="#courseVar" data-icon="gear" data-rel="popup" data-inline="true" data-theme="d" data-transition="pop"></a> -->
 
 						</li>
 					<!-- /ko -->
