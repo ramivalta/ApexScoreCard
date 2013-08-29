@@ -667,10 +667,7 @@ function viewModel () {
 		}
 	};
 
-	
-	
-	
-	
+		
 	ko.bindingHandlers.mobileList = {
 		'update': function (element, valueAccessor) {
 			setTimeout(function () { //To make sure the refresh fires after the DOM is updated
@@ -737,12 +734,14 @@ function viewModel () {
 	self.scoreCardClicked = false;
 
 	self.showScoreCard = function () {
+	
 		if (self.scoreCardClicked === false) {
 			self.scoreCardClicked = true;
 			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
 
 			$.mobile.changePage("#scoreCard", { transition: 'fade'});
 		}
+		
 	};
 	
 	self.closeScoreCard = function() {
@@ -850,59 +849,83 @@ function viewModel () {
 	//	self.scoreCard.removeAll();
 		self.roundScores.removeAll();
 		self.prePopulateScores();
+		self.newRoundClicked = false;
 	
 		$.mobile.changePage("#f_page", { transition: "slidefade", reverse: true });
 	};
 		
+	self.newRoundClicked = false;
 	
 	self.startNewRound = function(course_id, course_name) {
 	
-		self.holes.removeAll();
-		self.roundFinished(false);
-//		console.log("course id: " + course_id);
-//		console.log("course name: " + course_name);
+		if (self.newRoundClicked === false) {
+		   var interval = setInterval(function(){
+				$.mobile.loading('show');
+				clearInterval(interval);
+			},1);
+			self.newRoundClicked = true;
+			self.holes.removeAll();
+			self.roundFinished(false);
+	//		console.log("course id: " + course_id);
+	//		console.log("course name: " + course_name);
 	
-		var data = { course_id : course_id };
-		apexEventProxy.createNewRound(
-			{ data : data},
-			function (data) {
-				var round_id = data.round_id;
-				var start_time = data.round_start_time;
-				var data = {
-					round_id: round_id
-				};
-				apexEventProxy.createNewRoundGolfer(
-					{ data : data },
-					function (data)	{
-						self.round_id(round_id);
-						self.course_id(course_id);
-						self.roundStartTime(start_time.date);
-						self.round_hcp(self.playerExactHcp());
-						self.round_tee(self.playerDefaultTee());
+			var data = { course_id : course_id };
+			apexEventProxy.createNewRound(
+				{ data : data},
+				function (data) {
+					var round_id = data.round_id;
+					var start_time = data.round_start_time;
+					var data = {
+						round_id: round_id
+					};
+					apexEventProxy.createNewRoundGolfer(
+						{ data : data },
+						function (data)	{
+							self.round_id(round_id);
+							self.course_id(course_id);
+							self.roundStartTime(start_time.date);
+							self.round_hcp(self.playerExactHcp());
+							self.round_tee(self.playerDefaultTee());
 						
 						
-						self.saveHoleScore(round_id, self.playerExactHcp(), 1, 0, self.playerDefaultTee()); // TODO: pitäis tehdä controllerissa
+							self.saveHoleScore(round_id, self.playerExactHcp(), 1, 0, self.playerDefaultTee()); // TODO: pitäis tehdä controllerissa
 						
-						self.roundList.unshift({
-							id : round_id,
-							course_name : course_name,
-							start_time : start_time,
-							score : ko.observable(0),
-							par : ko.observable(0)
-						});
+							self.roundList.unshift({
+								id : round_id,
+								course_name : course_name,
+								start_time : start_time,
+								score : ko.observable(0),
+								par : ko.observable(0)
+							});
 						
-						self.loadRecentCourses();
-					}
-				);
-				self.getCourseData(course_id, round_id);
-			}
-		);
+							self.loadRecentCourses();
+						}
+					);
+					self.getCourseData(course_id, round_id);
+				
+					self.currentHole(1); // kymppireiältä alkavat kierrokset?
+					self.setHoleData(1);
+					
+					
+				   var interval = setInterval(function(){
+						$.mobile.loading('hide');
+						clearInterval(interval);
+					},1);
 		
-		self.currentHole(1); // kymppireiältä alkavat kierrokset?
+					$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+					
+				}
+			);
+		
+		}
+		
+		else return;
+		
+/*		self.currentHole(1); // kymppireiältä alkavat kierrokset?
 		self.setHoleData(1);
 		
 		$.mobile.changePage('#s_page', { transition: "slidefade",
-                                    allowSamePageTransition: true});
+                                    allowSamePageTransition: true}); */
 	};
 	
 	self.highlightLoaded = function(start_time) {
@@ -923,6 +946,13 @@ function viewModel () {
 	};
 	
 	self.loadRound = function(round_id, start_time) {
+
+
+	   var interval = setInterval(function(){
+			$.mobile.loading('show');
+			clearInterval(interval);
+		},1);
+
 
 		var loc = $(window).scrollTop();
 		self.scrollPos(loc);
@@ -949,10 +979,18 @@ function viewModel () {
 				else {
 					self.roundEndTime(end_time.date);
 				}
+				
+			   var interval = setInterval(function(){
+					$.mobile.loading('hide');
+					clearInterval(interval);
+				},1);
+				
+				$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+				
 			}
 		);
 	
-		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+//		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 	};
 	
 	self.el = ko.observable();
@@ -1252,6 +1290,7 @@ function viewModel () {
 					return;
 				}
 				hcp = hcp - (1 * group.factor);
+				group = self.getHcpGroup(hcp);
 				p--;
 			}
 			self.hcpPreview(parseFloat(hcp).toFixed(1));
@@ -1456,8 +1495,8 @@ $(document).on('pageinit', function() {
 	
 	$('body').on('touchmove', function (e) {
 	var searchTerms = '.scrollOuter',
-			$target = $(e.target),
-			parents = $target.parents(searchTerms);
+		$target = $(e.target),
+		parents = $target.parents(searchTerms);
 		if (parents.length || $target.hasClass(searchTerms)) {
 			// ignore as we want the scroll to happen
 			// (This is where we may need to check if at limit)
@@ -1469,6 +1508,7 @@ $(document).on('pageinit', function() {
 	$('#f_page').on('pageshow', function() {
 		if (vm.loadedRoundStartTime() !== "") {
 //			$('html, body').animate({scrollTop: vm.scrollPos()}, "slow");
+
 			$.mobile.silentScroll(vm.scrollPos());
 		}
 	});
