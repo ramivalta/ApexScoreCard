@@ -297,9 +297,9 @@ function viewModel () {
 		if (isNaN(playhcp)) return false;
 		
 //		console.log(playhcp);
-		
+
 		return Math.round(playhcp);
-	}).extend({throttle: 100 });
+	}).extend({ throttle: 100 });
 		
 	self.currentHoleHcpPar = ko.computed(function () {
 		var par = self.currentHolePar();
@@ -402,6 +402,8 @@ function viewModel () {
 					hole_score : hole_score,
 					round_tee : round_tee
 				});
+				
+				self.updateScoreCard(hole_score, hole_id);
 				
 //				console.log("saved... " + round_id + " " + round_hcp + " " + hole_id + " " + hole_score + " " + round_tee);
 			
@@ -806,7 +808,8 @@ function viewModel () {
 						hole_length_red: ko.observable(data.holes[i].length_red)
 					});
 				}
-			self.setHoleData(self.currentHole());				
+				self.setHoleData(self.currentHole());				
+				self.fillScoreCard(self.round_hcp()); // f
 			}
 		);
 	}; 
@@ -899,13 +902,14 @@ function viewModel () {
 							});
 						
 							self.loadRecentCourses();
+							self.getCourseData(course_id, round_id);
 						}
+
 					);
-					self.getCourseData(course_id, round_id);
 				
 					self.currentHole(1); // kymppireiältä alkavat kierrokset?
 					self.setHoleData(1);
-					
+
 					
 				   var interval = setInterval(function(){
 						$.mobile.loading('hide');
@@ -947,12 +951,10 @@ function viewModel () {
 	
 	self.loadRound = function(round_id, start_time) {
 
-
 	   var interval = setInterval(function(){
 			$.mobile.loading('show');
 			clearInterval(interval);
 		},1);
-
 
 		var loc = $(window).scrollTop();
 		self.scrollPos(loc);
@@ -1056,15 +1058,6 @@ function viewModel () {
 		$("#delPopUp").popup( "close", { transition: "fade" });
 	};
 
-
-	self.showroundtee = ko.computed(function() {
-		var tee = self.round_tee();
-		var hcp = self.round_hcp();
-		var id = self.round_id();
-/*		console.log("ROUND TEE: " + tee);
-		console.log("ROUND HCP: " + tee); */
-	});
-
 	self.getRoundScores = function(round_id) {
 	
 		var data = { round_id : round_id };
@@ -1093,6 +1086,10 @@ function viewModel () {
 					}
 					self.round_hcp(hcp);
 					self.round_tee(tee);
+					self.playerPlayingHcp();			
+					
+					self.fillScoreCard(hcp);	// ffffff
+					
 				}
 			
 				self.locale_tee(self.translate_tee());
@@ -1362,15 +1359,19 @@ function viewModel () {
 		
 	};
 	
-	self.fillScoreCard = ko.computed(function () {
+	self.fillScoreCard = function (round_hcp) {
 		self.scoreCard.removeAll();
+/*		console.log(self.roundScores().length);
+		console.log(self.holes().length);
+		console.log("filling it up"); */
 		for (var i = 0; i < self.holes().length; i++) {
 		
-			var t = self.getHolePoints(self.roundScores()[i].score(), self.holes()[i].hole_par(), self.holes()[i].hole_hcp()); 
+			var t = ko.observable();
+			t = self.getHolePoints(self.roundScores()[i].score(), self.holes()[i].hole_par(), self.holes()[i].hole_hcp(), round_hcp); 
 
 			self.roundScores()[i].points(t); // laitetaan scorenäkymälle näkyvään observableen 
 	
-			var p;
+			var p = ko.observable();
 			if (self.roundScores()[i].score() > 0) {
 				p = self.roundScores()[i].score() - self.holes()[i].hole_par();
 			}
@@ -1384,52 +1385,94 @@ function viewModel () {
 			
 			
 
-			var line = {
-				hole_number : self.holes()[i].hole_number,
-				hole_par : self.holes()[i].hole_par,
-				hole_hcp : self.holes()[i].hole_hcp,
-				hole_length : hole_len,
-				score : self.roundScores()[i].score,
-				scoreToPar : p,
-				points : t
-			};
+			var line = {};
+
+			line.hole_number = self.holes()[i].hole_number;
+			line.hole_par = self.holes()[i].hole_par;
+			line.hole_hcp = self.holes()[i].hole_hcp;
+			line.hole_length = hole_len;
+			line.score = self.roundScores()[i].score;
+			line.scoreToPar = ko.observable(p);
+			line.points = ko.observable(t);
+
 			
 			self.scoreCard.push(line);
+
 		}
+
 		self.calcHcpPreview();
 
-	}).extend( { throttle: 5 });
+	};
+//	.extend( { throttle: 5 });
 	
-	self.getHolePoints = function(score, par, hole_hcp) {
+	self.updateScoreCard = function(score, hole) {
+		var h = hole - 1;
+		var h_points = self.getHolePoints(score, self.holes()[h].hole_par(), self.holes()[h].hole_hcp(), self.round_hcp());
+
+
+
+//		console.log("hole points: " + h_points);
+
+		self.roundScores()[h].points(h_points);
 		
-		score = parseInt(score, 10);
-		par = parseInt(par, 10);
-		hole_hcp = parseInt(hole_hcp, 10);
+		var p;
+		if (self.roundScores()[h].score() > 0) {
+			p = score - self.holes()[h].hole_par();
+		}
+		else p = 0;
+			
+//		for (var i = 0; i < self.scoreCard().length; i++) {
+	//		if (self.scoreCard().hole_number === hole) {
+
+
+		self.scoreCard()[h].score(score);
+		self.scoreCard()[h].scoreToPar(p);
+		self.scoreCard()[h].points(h_points);
+
+	
+			
+/*		console.log("updating score");
+		console.log("updated to: " + self.scoreCard()[h].points()); */
+	
+		self.calcHcpPreview();
+	};
+
+
+	
+	self.getHolePoints = function(score, par, hole_hcp, round_hcp) {
 		
-		var crhcp = parseInt(self.playerPlayingHcp(), 10);
+//		console.log(score + " " + par + " " + hole_hcp);
+		
+		var crhcp = parseInt(round_hcp, 10);
 		var baseadj, hcpholes, hole_hcp_par;
 		baseadj = Math.floor(crhcp / 18);
 		hcpholes = (crhcp.mod(18));
 		
 		if (hcpholes >= hole_hcp) {
+
 			hole_hcp_par = par + baseadj + 1;
 			}
 		else {
 			hole_hcp_par = par + parseInt(baseadj, 10);
 			}
+			
+//		console.log("hcp par for hole " + hole_hcp_par);
 		
 		if (score === 0)
 			{
+//				console.log("no score");
 				return 0;
 			}
 		else {		
 			var y = hole_hcp_par - score + 2;
 			if (y > 0)
 			{
+//				console.log(y + " points");
 				return y;
 			}
 			else
 			{
+//				console.log(y + " points");
 				return 0;
 			}
 		}
