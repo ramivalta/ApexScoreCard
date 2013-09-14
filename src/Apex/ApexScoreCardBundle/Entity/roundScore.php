@@ -55,6 +55,19 @@ class roundScore
      * @ORM\Column(name="round_tee", type="string", length=255)
      */
     private $round_tee;
+    
+    /**
+     * @var boolean
+     * @ORM\Column(name="fairway_hit", type="boolean", nullable=true)
+     */
+    private $fairway_hit;
+    
+    /**
+     * @var boolean
+     * @ORM\Column(name="green_hit", type="boolean", nullable=true)
+     */
+    private $green_hit;
+    
 
     /**
      * @var Apex\ApexScoreCardBundle\Entity\Round
@@ -76,6 +89,50 @@ class roundScore
     {
         return $this->id;
     }
+
+	/**
+	 * Get fairway_hit
+	 *
+	 * @return boolean
+	 */
+	public function getFairwayHit()
+	{
+		return $this->fairway_hit;
+	}
+	
+	/**
+	 * Set fairway_hit
+	 *
+	 * @return roundScore
+	 */
+	public function setFairwayHit($fairway_hit)
+	{
+		$this->fairway_hit = $fairway_hit;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get green_hit
+	 *
+	 * @return boolean
+	 */
+	public function getGreenHit()
+	{
+		return $this->green_hit;
+	}
+	
+	/**
+	 * Set green_hit
+	 *
+	 * @return roundScore
+	 */
+	public function setGreenHit($green_hit)
+	{
+		$this->green_hit = $green_hit;
+		
+		return $this;
+	}
 
     /**
      * Set roundId
@@ -219,6 +276,21 @@ class roundScore
     
     public function getJson()
     {
+    	$fairway_hit = $this->fairway_hit;
+    	if ($fairway_hit == null || $fairway_hit == 0) {
+    		$fairway_hit = false;
+    	}
+    	else if ($fairway_hit == 1) {
+    		$fairway_hit = true;
+    	}
+    	$green_hit = $this->green_hit;
+    	if ($green_hit == null || $green_hit == 0) {
+    		$green_hit = false;
+    	}
+    	else if ($green_hit == 1) {
+    		$green_hit = true;
+    	}
+    	
     	return array(
     		'id' 		=> $this->id,
     		'round_id'  => $this->roundId,
@@ -226,6 +298,8 @@ class roundScore
     		'score' 	=> $this->score,
     		'round_hcp' => $this->round_hcp,
     		'round_tee' => $this->round_tee,
+    		'fairway_hit' => $fairway_hit,
+    		'green_hit' => $green_hit,
     	);
     }
 }

@@ -34,6 +34,7 @@ body {
 
 #s_page {
 	position: fixed;
+	height: 100%;
 }
 
 #f_page {
@@ -42,14 +43,43 @@ body {
 //	height: 100%;
 //	overflow: hidden;
 }
+
+/* .footer {
+	width: 100%;
+	height: 44px;
+	position: fixed;
+	padding: 0px;
+	padding-bottom: 0px !important;
+	bottom: -1px !important;
+//	bottom: 0px;
+	margin: 0px;
+}
+	
+.navbutton .ui-btn {
+	background: transparent;
+	height: 44px;
+	top: 0px !important;
+	bottom: 0px !important;
+	padding: 0px;
+	margin: 0px;
+	border-color: transparent;
+	box-shadow: none;
+	padding: 0px
+}
+*/
+
+
+
+
 	
 .header {
 	width: 100%;
 	height: 44px;
 	position: fixed;
-	top: 0px;
-	margin-top: 0px;
-	padding-top: 0px;
+	top: 0px !important; 
+	margin-top: 0px !important;
+	padding-top: 0px !important;
+	
 //	-webkit-box-sizing: border-box;
 }
 
@@ -67,10 +97,10 @@ body {
 
 
 .header .ui-btn {
-	margin: 0px;
-	padding-left: 8px;
-	padding-right: 8px;
-	top: 4px;
+	margin: 0px !important;
+	padding-left: 8px !important;
+	padding-right: 8px !important;
+	top: 4px !important;
 	height: 34px;
 	border-radius: 6px;
 }
@@ -187,7 +217,7 @@ body {
 	margin: 0px;
 }
 	
-.footer .ui-btn {
+.navbutton .ui-btn {
 	background: transparent;
 	height: 44px;
 	top: 0px !important;
@@ -199,9 +229,9 @@ body {
 	padding: 0px
 }
 
-.footer .ui-btn-inner { margin-top: 6px; border: 0px }
+.navbutton .ui-btn-inner { margin-top: 6px; border: 0px }
 
-.footer .ui-icon {
+.navbutton .ui-icon {
 	background-color: rgba(0,0,0,0.0);
 	box-shadow: none;
 }
@@ -309,9 +339,31 @@ a.ui-slider-handle {-webkit-transition: none; -moz-transition: none; } */
 	border-top-style: solid;
 	padding-top: 0px;
 	margin-top: 0px;
+	height: 100% !important;
+	bottom: 0px !important;
 }
 
 #holeData {
+	clear: both;
+	text-align: left;
+	width: 90%;
+	margin: auto;
+	line-height: 1.1em;
+	border-style: solid;
+	border-radius: 8px;
+	border-top-color: #ADADAD;
+	border-bottom-color: #707070;
+	border-width: 1px;
+	border-right-color: #ADADAD;
+	border-left-color: #ADADAD;
+	font-size: 0.8em;
+	color: #fff;
+	text-shadow: 0px 1px 1px #000;
+	overflow: auto;
+	margin-top: 15px;
+}
+
+#stats {
 	clear: both;
 	text-align: left;
 	width: 90%;

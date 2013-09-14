@@ -218,6 +218,22 @@ class roundScoreController extends BaseController
     	$hole_score = $json->data->hole_score;
     	$hole_id = $json->data->hole_id;
     	$round_tee = $json->data->round_tee;
+    	$fairway_hit = $json->data->fairway_hit;
+    	$green_hit = $json->data->green_hit;
+    	
+    	if ($fairway_hit == true) {
+    		$fairway_hit = 1;
+    	}
+    	else if ($fairway_hit == false) {
+    		$fairway_hit = 0;
+    	}
+    	
+    	if ($green_hit == true) {
+    		$green_hit = 1;
+    	}
+    	else if ($green_hit == false) {
+    		$green_hit = 0;
+    	}
     	
     	$em = $this->getDoctrine()->getManager();
     	    	
@@ -226,6 +242,8 @@ class roundScoreController extends BaseController
 
     	if ($hole) {
     		$hole->setScore($hole_score);
+    		$hole->setFairwayHit($fairway_hit);
+    		$hole->setGreenHit($green_hit);
     		$em->persist($hole);
     	}
     	else {
@@ -236,6 +254,8 @@ class roundScoreController extends BaseController
 			$entity->setHoleId($hole_id);
 			$entity->setScore($hole_score);
 			$entity->setRoundTee($round_tee);
+			$entity->setFairwayHit($fairway_hit);
+			$entity->setGreenHit($green_hit);
 	    	$em->persist($entity);
     	}
 	    	

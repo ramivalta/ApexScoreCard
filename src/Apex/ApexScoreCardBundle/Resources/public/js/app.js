@@ -79,6 +79,9 @@ function viewModel () {
 	
 	self.roundFinished = ko.observable(false);
 	
+	self.hitFairway = ko.observable(true);
+	self.hitGreen = ko.observable(true);
+	
 	self.cachedScore = ko.observable(0);
 	
 	self.bogikorttiVersion = ko.observable("Bogikortti v0.2.3 - 'Bogi se on tuplabogikin'");
@@ -96,6 +99,8 @@ function viewModel () {
 			el.score = ko.observable(0);
 			el.points = ko.observable(0);
 			el.scoreToPar = ko.observable(0);
+			el.fairway_hit = ko.observable(false);
+			el.green_hit = ko.observable(false);
 			self.roundScores.push(el);
 		}
 	};
@@ -344,13 +349,39 @@ function viewModel () {
 		for (var i = 0; i < self.roundScores().length; i++) {
 			if (self.roundScores()[i].hole() === curHole) {
 				self.currentHoleScore(parseInt(self.roundScores()[i].score(), 10));
+				if (self.currentHolePar() === 3) {
+					$('#fir-checkbox').checkboxradio( "disable" );
+				}
+				else $('#fir-checkbox').checkboxradio( "enable" );
+
+				if (self.roundScores()[i].fairway_hit() == true) {
+					self.hitFairway(true);
+					$('#fir-checkbox').prop( "checked", true).checkboxradio("refresh");
+				}
+				else if (self.roundScores()[i].fairway_hit() == false) {
+					self.hitFairway(false);
+					$('#fir-checkbox').prop( "checked", false).checkboxradio("refresh");
+				}
+				
+				if (self.roundScores()[i].green_hit() == true) {
+					self.hitGreen(true);
+					$('#gir-checkbox').prop("checked", true).checkboxradio("refresh");
+				}
+				else if (self.roundScores()[i].green_hit() == false) {
+					self.hitGreen(false);
+					$('#gir-checkbox').prop("checked", false).checkboxradio("refresh");
+				}
 				self.noScoreEntered(false);
 			}
 		}
 		
 		if (self.currentHoleScore() === 0) {
 			self.noScoreEntered(true);
+			self.hitFairway(false),
+			self.hitGreen(false);
 		}
+		
+
 
 //		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, curScore, self.round_tee());
 		
@@ -359,12 +390,14 @@ function viewModel () {
 			round_hcp : self.round_hcp(),
 			hole_id : hole,
 			hole_score : self.currentHoleScore(),
-			round_tee : self.round_tee()
+			round_tee : self.round_tee(),
+			hit_fairway : self.hitFairway(),
+			hit_green : self.hitGreen()
 		});	
 				
 	};
 	
-	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee) {
+	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee, fairway_hit, green_hit) {
 	
 		if (self.cachedScore() !== 0) {
 	/*		console.log("cache: " +
@@ -378,18 +411,20 @@ function viewModel () {
 		
 			if (self.cachedScore().round_id === round_id && self.cachedScore().round_hcp === round_hcp && self.cachedScore().hole_id === hole_id &&
 				self.cachedScore().hole_score === hole_score &&
-				self.cachedScore().round_tee === round_tee) {
+				self.cachedScore().round_tee === round_tee &&  self.cachedScore().fairway_hit === fairway_hit &&  self.cachedScore().green_hit === green_hit) {
 //				console.log("cached");
 				return;
 			}
 		}
-	
+		
 		var data = {
 			round_id : round_id,
 			round_hcp : round_hcp,
 			hole_id : hole_id,
 			hole_score : hole_score,
-			round_tee : round_tee
+			round_tee : round_tee,
+			fairway_hit : fairway_hit,
+			green_hit : green_hit
 		};
 		
 		apexEventProxy.createNewRoundScore(
@@ -400,10 +435,14 @@ function viewModel () {
 					round_hcp : round_hcp,
 					hole_id : hole_id,
 					hole_score : hole_score,
-					round_tee : round_tee
+					round_tee : round_tee,
+					fairway_hit : fairway_hit,
+					green_hit : green_hit
+					
 				});
 				
 				self.updateScoreCard(hole_score, hole_id);
+				self.calcHcpPreview();
 				
 //				console.log("saved... " + round_id + " " + round_hcp + " " + hole_id + " " + hole_score + " " + round_tee);
 			
@@ -417,14 +456,14 @@ function viewModel () {
 		}
 ///		console.log("trying to save... " + self.round_id() + " " + self.round_hcp() + " " + self.currentHole() + " " + self.currentHoleScore() + " " + self.round_tee());
 	
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 	}).extend({throttle: 2000 });
 		
 		
 	self.nextHole = function () {
 		var curHole = parseInt(self.currentHole(), 10);
 		
-		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, self.currentHoleScore(), self.round_tee());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 
 		self.showPoints(false);
 		self.noScoreEntered(true);
@@ -445,7 +484,7 @@ function viewModel () {
 	self.previousHole = function() {
 		var curHole = parseInt(self.currentHole(), 10);
 		
-		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, self.currentHoleScore(), self.round_tee());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 
 		self.noScoreEntered(false);
 
@@ -696,7 +735,7 @@ function viewModel () {
 			var value = valueAccessor();
 			var valueUnwrapped = ko.utils.unwrapObservable(value);
 			if (valueUnwrapped === $(element).val()) {
-				$(element).prop("checked", "true").checkboxradio("refresh");
+				$(element).prop("checked", true).checkboxradio("refresh");
 			} else {
 				$(element).removeProp("checked").checkboxradio("refresh");
 			}
@@ -739,7 +778,7 @@ function viewModel () {
 	
 		if (self.scoreCardClicked === false) {
 			self.scoreCardClicked = true;
-			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 
 			$.mobile.changePage("#scoreCard", { transition: 'fade'});
 		}
@@ -819,7 +858,7 @@ function viewModel () {
 		var round_id = self.round_id();
 //		console.log(round_id);
 
-		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee());
+		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 
 		if (self.roundEndTime() === "" && self.validateRound() === true)
 		{
@@ -889,9 +928,10 @@ function viewModel () {
 							self.roundStartTime(start_time.date);
 							self.round_hcp(self.playerExactHcp());
 							self.round_tee(self.playerDefaultTee());
+							
+							self.getCourseData(course_id, round_id);
 						
-						
-							self.saveHoleScore(round_id, self.playerExactHcp(), 1, 0, self.playerDefaultTee()); // TODO: pitäis tehdä controllerissa
+							self.saveHoleScore(round_id, self.playerExactHcp(), 1, 0, self.playerDefaultTee(), false, false); // TODO: pitäis tehdä controllerissa
 						
 							self.roundList.unshift({
 								id : round_id,
@@ -902,34 +942,38 @@ function viewModel () {
 							});
 						
 							self.loadRecentCourses();
-							self.getCourseData(course_id, round_id);
+							
+							self.currentHole(1); // kymppireiältä alkavat kierrokset?
+							self.setHoleData(1);
+							
+//						self.setHoleData(1);
 						}
-
 					);
-				
-					self.currentHole(1); // kymppireiältä alkavat kierrokset?
-					self.setHoleData(1);
 
-					
-				   var interval = setInterval(function(){
-						$.mobile.loading('hide');
-						clearInterval(interval);
-					},1);
-		
-					$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
-					
+
+				var interval = setInterval(function(){
+					$.mobile.loading('hide');
+					clearInterval(interval);
+				},1);
+				
+				$.mobile.changePage('#s_page', { transition: "slidefade",
+                                    allowSamePageTransition: true});				
+	
 				}
+				
 			);
+														
+//			$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+
 		
 		}
 		
 		else return;
 		
 /*		self.currentHole(1); // kymppireiältä alkavat kierrokset?
-		self.setHoleData(1);
+		self.setHoleData(1); */
 		
-		$.mobile.changePage('#s_page', { transition: "slidefade",
-                                    allowSamePageTransition: true}); */
+
 	};
 	
 	self.highlightLoaded = function(start_time) {
@@ -1017,8 +1061,8 @@ function viewModel () {
 		var round_id = self.clickedRound();
 		var divs = $(elli).length;
 		
-	//	$(elli).transition({x: '-500px', opacity: '0', duration: 500, complete: function() {
-		$(elli).transition({scale: '1, 0', duration: 350, easing: 'in', complete: function() {
+
+		$(elli).transition({scale: '1, 0', duration: 450, easing: 'in', complete: function() {
 				if ( --divs > 0) return;
 				delRound(round_id);
 			}
@@ -1075,6 +1119,10 @@ function viewModel () {
 						for (var z = 0; z < self.roundScores().length; z++) {
 							if (self.roundScores()[z].hole() === data.scores[i].hole_id) {
 								self.roundScores()[z].score(data.scores[i].score);
+							self.roundScores()[z].fairway_hit(data.scores[i].fairway_hit);							self.roundScores()[z].green_hit(data.scores[i].green_hit);
+								
+//								console.log(self.roundScores()[z].green_hit());
+							
 								hcp = data.scores[i].round_hcp;
 								tee = data.scores[i].round_tee;
 							}
@@ -1221,6 +1269,52 @@ function viewModel () {
 		
 	}).extend({throttle: 350 });
 	
+	self.fairwayPercentage = ko.computed(function() {
+		if (self.holes().length > 0 && self.roundScores().length > 0) {
+		
+			var x = self.hitFairway();
+			var c_hole = self.currentHole() -1;
+//			console.log(self.currentHole());
+			self.roundScores()[c_hole].fairway_hit(x);
+		
+			var fwsHit = 0;
+			var c_len = 0;
+			for (var i = 0; i < self.roundScores().length; i++) {
+				if (self.holes()[i].hole_par() !== 3) {
+					c_len++;					
+						if (self.roundScores()[i].fairway_hit() === true) {
+//							console.log(self.holes()[i].hole_par());
+							fwsHit++;
+						}
+					}
+				}
+			
+			return Math.round(fwsHit / c_len * 100) + "% " + "(" + fwsHit + "/" + c_len + ")";
+		}
+		
+		else return false;
+	}).extend({throttle: 350 });
+	
+	self.greenPercentage = ko.computed(function() {
+		var x = self.hitGreen();
+		var c_hole = self.currentHole() -1;
+		self.roundScores()[c_hole].green_hit(x);
+		
+//		console.log(x);
+		if (self.holes().length > 0 && self.roundScores().length > 0) {
+			var gHit = 0;
+			var c_len = self.roundScores().length;
+			for (var i = 0; i < self.roundScores().length; i++) {
+				if (self.roundScores()[i].green_hit() == true) {
+					gHit++;
+				}
+			}
+			
+			return Math.round(gHit / c_len * 100) + "% " + "(" + gHit + "/" + c_len + ")";
+		}
+		else return false;
+	}).extend({throttle: 350 });
+	
 	self.validateRound = ko.computed(function() {
 		if (self.roundFinished() === true) {
 			if (self.roundEndTime() === "")
@@ -1267,42 +1361,45 @@ function viewModel () {
 	}).extend({throttle: 250 });
 	
 		
-	self.calcHcpPreview = function() {
-		var p = parseInt(self.totalPoints(), 10);
-		var hcp = parseFloat(self.round_hcp());	
+	self.calcHcpPreview = ko.computed(function() {
+		if (self.holes().length > 0) {
+			var p = parseInt(self.totalPoints(), 10);
+			var hcp = parseFloat(self.round_hcp());	
 
-		var num_holes = parseInt(self.holes().length, 10);
-		var par_points;
+			var num_holes = parseInt(self.holes().length, 10);
+			var par_points;
 		
-		if (num_holes === 9) par_points = 18;
-		else par_points = 36;
+			if (num_holes === 9) par_points = 18;
+			else par_points = 36;
 		
-		var group;
-		group = self.getHcpGroup(hcp);
+			var group;
+			group = self.getHcpGroup(hcp);
 
-		if (p > par_points ) {
-			while (p > par_points) {
+			if (p > par_points ) {
+				while (p > par_points) {
+					if (group == "9hole") {
+						self.hcpPreview("Ei käytössä 9 reiän kierroksella");
+						return;
+					}
+					hcp = hcp - (1 * group.factor);
+					group = self.getHcpGroup(hcp);
+					p--;
+				}
+				self.hcpPreview(parseFloat(hcp).toFixed(1));
+			}
+		
+			else {
 				if (group == "9hole") {
 					self.hcpPreview("Ei käytössä 9 reiän kierroksella");
 					return;
 				}
-				hcp = hcp - (1 * group.factor);
-				group = self.getHcpGroup(hcp);
-				p--;
+				if (p >= par_points - group.buffer)	self.hcpPreview(hcp);
+				else self.hcpPreview(parseFloat(hcp + group.incr).toFixed(1));
 			}
-			self.hcpPreview(parseFloat(hcp).toFixed(1));
 		}
+		else return;
 		
-		else {
-			if (group == "9hole") {
-				self.hcpPreview("Ei käytössä 9 reiän kierroksella");
-				return;
-			}
-			if (p >= par_points - group.buffer)	self.hcpPreview(hcp);
-			else self.hcpPreview(parseFloat(hcp + group.incr).toFixed(1));
-		}
-		
-	};
+	}).extend({throttle: 250 });
 	
 	self.getHcpGroup = function(hcp) {
 	
@@ -1397,6 +1494,7 @@ function viewModel () {
 
 			
 			self.scoreCard.push(line);
+//			self.calcHcpPreview();
 
 		}
 
@@ -1434,7 +1532,7 @@ function viewModel () {
 /*		console.log("updating score");
 		console.log("updated to: " + self.scoreCard()[h].points()); */
 	
-		self.calcHcpPreview();
+//		self.calcHcpPreview();
 	};
 
 
@@ -1477,6 +1575,65 @@ function viewModel () {
 			}
 		}
 	};
+	
+	self.showStats = function() {
+		var stats = document.getElementById('stats');
+		var holedata = document.getElementById('holeData');
+		
+//		holedata.style.background = 'blue';
+		stats.style.background = 'white';
+
+		
+		var sc = document.getElementById('bottom');
+		
+/*				$(elli).transition({scale: '1, 0', duration: 450, easing: 'in', complete: function() {
+				if ( --divs > 0) return;
+				delRound(round_id);
+			}
+		});
+ */
+		
+		
+		$(sc).transition({ 
+			perspective: '0px',
+			rotateY: '90deg',
+			duration: 350,
+			complete: function() { 
+				stats.style.display = 'block';
+				holedata.style.display = 'none';
+			}
+		}).
+		transition( {
+			perspective: '0px',
+			rotateY: '0deg',
+			duration: 250
+		});
+		
+	
+	};
+	
+	self.showHoledata = function() {
+		var stats = document.getElementById('stats');
+		var holedata = document.getElementById('holeData');
+		
+		var sc = document.getElementById('bottom');
+		
+		$(sc).transition({ 
+			perspective: '0px',
+			rotateY: '90deg',
+			duration: 350,
+			complete: function() { 
+				stats.style.display = 'none';
+				holedata.style.display = 'block';
+			}
+		}).
+		transition( {
+			perspective: '0px',
+			rotateY: '0deg',
+			duration: 250
+		});
+	};
+	
 		
 	self.getGolferData();
 	self.getCourseList();
