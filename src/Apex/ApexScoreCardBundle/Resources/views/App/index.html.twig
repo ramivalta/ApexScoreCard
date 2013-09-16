@@ -287,15 +287,15 @@
 		</div>
 		<div id="stats" style="display: none; text-align: center">
 			<div data-role="content" data-theme="c" class="ui-grid-b">
-				<div class="ui-block-a">
-					<span>Väyläosumat: </span>
+				<div class="ui-block-a" style="width: 30%">
+					<span>Väylät: </span><br>
 					<span data-bind="text: fairwayPercentage"></span>
 				</div>
-				<div class="ui-block-b">
+				<div class="ui-block-b" style="width: 40%">
 			
 			
 					<form>
-						<fieldset data-role="controlgroup" data-type="horizontal">
+						<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
 
 							<label><input type="checkbox" name="fir-checkbox" id="fir-checkbox" data-theme="a" value="false" data-bind="checked: hitFairway" />FiR</label>
 					
@@ -303,8 +303,8 @@
 						</fieldset>
 					</form>
 				</div>
-				<div class="ui-block-c">
-					<span>Greeniosumat: </span>
+				<div class="ui-block-c" style="width: 30%">
+					<span>Greenit: </span><br>
 					<span data-bind="text: greenPercentage"></span>
 				</div>
 			</div>
@@ -312,7 +312,7 @@
 	</div>
 		
 	<div data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer" class="footer ui-grid-b">
-			<div class="ui-block-a navbutton">
+			<div class="ui-block-a navbutton" style="width: 25%">
 			<!-- ko if: currentHole() === 1 -->
 			<a href="#s_page" data-icon="arrow-l" data-role="button" data-inline="true" data-bind="event: { tap: previousHole }" data-iconpos="left"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: holes().length"></span> </a>
 			<!-- /ko -->
@@ -322,14 +322,14 @@
 			<!-- /ko -->
 			</div>
 		
-			<div class="ui-block-b" data-role="controlgroup" data-type="horizontal" style="text-align: center">
+			<div class="ui-block-b" data-role="controlgroup" data-type="horizontal" style="text-align: center; width: 50%">
 				<a data-role="button" data-mini="true" data-inline="true" data-bind="click: showHoledata">Tiedot</a>
 				<a data-role="button" data-mini="true" data-inline="true" data-bind="click: showStats">Tilastot</a>
 			</div>
 			
 <!--		style="float: right">  -->
 
-			<div class="ui-block-c navbutton" style="float: right">
+			<div class="ui-block-c navbutton" style="float: right; width: 25%">
 			
 			<!-- ko if: currentHole() === holes().length -->
 			<a href="#s_page" data-icon="arrow-r" data-role="button"  data-inline="true" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="float: right"><span class="holenav">Reikä </span><span class="holenav">1</span>  </a>
