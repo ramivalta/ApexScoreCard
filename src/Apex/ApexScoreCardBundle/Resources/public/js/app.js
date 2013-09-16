@@ -350,7 +350,7 @@ function viewModel () {
 			if (self.roundScores()[i].hole() === curHole) {
 				self.currentHoleScore(parseInt(self.roundScores()[i].score(), 10));
 				if (self.currentHolePar() === 3) {
-					$('#fir-checkbox').checkboxradio( "disable" );
+					$('#fir-checkbox').checkboxradio( "disable" ); // refreshataan toistaiseksi käsin nää jqm:n checkboxit koska bindaus ei suostu toimimaan
 				}
 				else $('#fir-checkbox').checkboxradio( "enable" );
 
@@ -379,6 +379,8 @@ function viewModel () {
 			self.noScoreEntered(true);
 			self.hitFairway(false),
 			self.hitGreen(false);
+			$('#gir-checkbox').prop("checked", false).checkboxradio("refresh");
+			$('#fir-checkbox').prop( "checked", false).checkboxradio("refresh");
 		}
 		
 
@@ -780,14 +782,14 @@ function viewModel () {
 			self.scoreCardClicked = true;
 			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 
-			$.mobile.changePage("#scoreCard", { transition: 'fade'});
+			$.mobile.changePage("#scoreCard", { transition: 'slidedown'});
 		}
 		
 	};
 	
 	self.closeScoreCard = function() {
 		self.scoreCardClicked = false;
-		$.mobile.changePage('#s_page', { transition: 'fade', reverse:true });
+		$.mobile.changePage('#s_page', { transition: 'slidedown', reverse:true });
 	};
 	
 	self.getCourseData = function (course_id, round_id) {
@@ -956,15 +958,14 @@ function viewModel () {
 					clearInterval(interval);
 				},1);
 				
-				$.mobile.changePage('#s_page', { transition: "slidefade",
-                                    allowSamePageTransition: true});				
+//				$.mobile.changePage('#s_page', { transition: "slidefade",
+//                                    allowSamePageTransition: true});				
 	
 				}
 				
 			);
 														
-//			$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
-
+			$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 		
 		}
 		
@@ -1031,12 +1032,12 @@ function viewModel () {
 					clearInterval(interval);
 				},1);
 				
-				$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+//				$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 				
 			}
 		);
 	
-//		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 	};
 	
 	self.el = ko.observable();
