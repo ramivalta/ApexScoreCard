@@ -22,6 +22,7 @@ function viewModel () {
 	self.playerDefaultTee = ko.observable();
 	self.courseAlias = ko.observable();
 	self.locale_tee = ko.observable();
+	self.playerPlayingHcp = ko.observable();
 	
 	self.round_id = ko.observable();
 	self.course_id = ko.observable();
@@ -174,7 +175,7 @@ function viewModel () {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
 			s = s + parseInt(self.holes()[i].hole_par(), 10);
-			}
+		}
 		return s;
 	}).extend({throttle: 1 });
 
@@ -234,11 +235,11 @@ function viewModel () {
 			return s;
 		}
 	}).extend({throttle: 1 });
-
-	self.playerPlayingHcp = ko.computed(function () {
+	
+	self.calcPlayingHcp = function(hcp) {
 		/* GA PLAYING HANDICAP FORMULA the “EGA Playing Handicap Formula” converts exact handicaps into playing handicaps. PLAYING HCP = EXACT HCP x (SR / 113) + (CR - PAR) */
 		
-	//	if (typeof self.round_hcp() === 'undefined' || typeof self.round_tee() === 'undefined' || typeof self.courseCr() === 'undefined' || typeof self.courseSl() === 'undefined' || typeof self.coursePar() === 'undefined' || typeof self.holes().length === 0) return false;
+		if (typeof self.round_hcp() === 'undefined' || typeof self.round_tee() === 'undefined' || typeof self.courseCr() === 'undefined' || typeof self.courseSl() === 'undefined' || typeof self.coursePar() === 'undefined') return 0;
 		
 /*		console.log("round hcp: " + self.round_hcp());
 		console.log("playing hcp: " + self.playerExactHcp());
@@ -246,6 +247,8 @@ function viewModel () {
 		
 //		console.log(typeof self.round_tee());
 //		console.log(self.round_tee());
+
+//		var hcp = self.round_hcp();
 		
 		var courseSl;
 		var courseCr;
@@ -288,38 +291,57 @@ function viewModel () {
 			}			
 		}
 		
-		var a = parseFloat(self.round_hcp());
+		console.log(self.round_tee());
+		console.log(self.round_hcp());
+		
+		var a = parseFloat(hcp);
 		var b = parseFloat(courseSl / 113);
 		var par;
 		
 		if (self.holes().length === 9) { par = self.coursePar() * 2; }
 		else if (self.holes().length === 18) { par = self.coursePar(); }
-		else return false;
 		
 		var c = parseFloat(courseCr - parseFloat(par));
+//		console.log(par);
+//		alert (courseCr);
+		
+//		alert (a + " " + " " + b + " " + c);
+		
 		var playhcp = a * b + c;
 		
-		if (isNaN(playhcp)) return false;
+//		console.log("pelitasoitus " + playhcp);
 		
-//		console.log(playhcp);
+		if (isNaN(playhcp)) return 0;
 
-		return Math.round(playhcp);
-	}).extend({ throttle: 100 });
-		
+//		self.playerPlayingHcp(Math.round(playhcp));
+		self.playerPlayingHcp(Math.round(playhcp));
+
+		self.fillScoreCard(Math.round(playhcp));
+
+//		return (Math.round(playhcp));
+
+	};	
+
 	self.currentHoleHcpPar = ko.computed(function () {
-		var par = self.currentHolePar();
-		var crhcp = parseInt(self.playerPlayingHcp(), 10);
-		var baseadj, hcpholes;
-		baseadj = Math.floor(crhcp / 18);
-		hcpholes = (crhcp.mod(18));
-		
-		if (hcpholes >= parseInt(self.currentHoleHcp(), 10)) {
-			return parseInt(self.currentHolePar(), 10) + baseadj + 1;
-			}
+		if (typeof self.currentHolePar() === 'undefined' || typeof self.playerPlayingHcp() === 'undefined' || self.playerPlayingHcp() === false) return;
 		else {
-			return parseInt(par, 10) + parseInt(baseadj, 10);
+			var par = self.currentHolePar();
+			var crhcp = parseInt(self.playerPlayingHcp(), 10);
+			var baseadj, hcpholes;
+			baseadj = Math.floor(crhcp / 18);
+			hcpholes = (crhcp.mod(18));
+		
+//			console.log(hcpholes);
+	//		console.log(self.playerPlayingHcp());
+		
+			if (hcpholes >= parseInt(self.currentHoleHcp(), 10)) {
+				return parseInt(self.currentHolePar(), 10) + baseadj + 1;
+				}
+			else {
+				return parseInt(par, 10) + parseInt(baseadj, 10);
+			}
 		}
-	}).extend({throttle: 1 });
+	}).extend({throttle: 10 });
 	
 	self.setHoleData = function (hole) {
 		if (self.holes().length === 0)
@@ -453,9 +475,12 @@ function viewModel () {
 	};
 	
 	self.saveScore = ko.computed(function() {
-		if (typeof self.round_id() === 'undefined' || typeof self.round_hcp() === 'undefined') {
+		if (typeof self.round_id() === 'undefined' || typeof self.round_hcp() === 'undefined' || self.holes().length === 0) {
 			return false;
 		}
+		
+//		console.log(self.holes().length);
+		
 ///		console.log("trying to save... " + self.round_id() + " " + self.round_hcp() + " " + self.currentHole() + " " + self.currentHoleScore() + " " + self.round_tee());
 	
 		self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
@@ -479,7 +504,7 @@ function viewModel () {
 			self.currentHole(curHole + 1);
 			self.setHoleData(curHole + 1);
 		}
-		$.mobile.changePage('#s_page', { transition: "slidefade",
+		$.mobile.changePage('#s_page', { transition: "slide",
                                     allowSamePageTransition: true});
 	};
 	
@@ -500,7 +525,7 @@ function viewModel () {
 			self.setHoleData(curHole - 1);
 		}
 		
-		$.mobile.changePage('#s_page', { transition: "slidefade", reverse: true,
+		$.mobile.changePage('#s_page', { transition: "slide", reverse: true,
                                     allowSamePageTransition: true});
 	};
 	
@@ -603,7 +628,8 @@ function viewModel () {
 	
 	self.resetSlider = function () {
 		self.hasSlid(false);
-		$("#slaidi").slider('option', 'value', 0); 
+//		$("#slaidi").slider('value', 0); 
+		$(".ui-slider-handle").animate( { left: '50%', easing: 'swing' }, 100);		
 		self.sliderVal(0);
 	};
 	
@@ -673,8 +699,7 @@ function viewModel () {
 	ko.bindingHandlers.uislider = {
 		init: function (element, valueAccessor, allBindingsAccessor) {
 			var options = allBindingsAccessor().sliderOptions || {};
-//			console.log(options);
-			
+						
 			$(element).slider(options);
 
 //			$(element).slider( { value: 0, min: -50, max: 50, step : 1, animate: 'true' });
@@ -691,6 +716,10 @@ function viewModel () {
 			ko.utils.registerEventHandler(element, "slide", function (event, ui) {
 				var observable = valueAccessor();
 				observable(ui.value);
+				
+				var value = ko.unwrap(observable);
+				$(element).slider('option', 'value', value);
+				
 			});
 			
 			ko.utils.registerEventHandler(element, "slidestop", function (event, ui) {
@@ -699,7 +728,7 @@ function viewModel () {
 			});
 			
 		},
-		update: function (element, valueAccessor) {
+/*		update: function (element, valueAccessor) {
 			var value = ko.utils.unwrapObservable(valueAccessor());
 			if (isNaN(value)) {
 				value = 0;
@@ -707,7 +736,7 @@ function viewModel () {
 			
 			
 			$(element).slider("value", value);
-		}
+		} */
 	};
 
 		
@@ -794,8 +823,6 @@ function viewModel () {
 	
 	self.getCourseData = function (course_id, round_id) {
 
-		if (round_id) self.getRoundScores(round_id);
-
 		var data = { course_id : course_id };
 
 		for (var i = 0; self.courseList().length > i; i++) {
@@ -824,7 +851,7 @@ function viewModel () {
 
 				self.courseCrWhiteMen(self.courseList()[i].crWhiteMen);
 				self.courseSlWhiteMen(self.courseList()[i].slWhiteMen);
-	
+
 				break;				
 			}
 
@@ -849,10 +876,18 @@ function viewModel () {
 						hole_length_red: ko.observable(data.holes[i].length_red)
 					});
 				}
-				self.setHoleData(self.currentHole());				
-				self.fillScoreCard(self.round_hcp()); // f
+				if (round_id) self.getRoundScores(round_id);
+//				else self.calcPlayingHcp(self.playerExactHcp());						
+				self.setHoleData(self.currentHole());
+				
+//				self.fillScoreCard(self.round_hcp()); // f
+
 			}
 		);
+		
+		
+/*		var hcp = self.playerPlayingHcp();
+		self.fillScoreCard(hcp); */
 	}; 
 	
 	self.leaveRound = function () {
@@ -953,24 +988,30 @@ function viewModel () {
 					);
 
 
-				var interval = setInterval(function(){
-					$.mobile.loading('hide');
-					clearInterval(interval);
-				},1);
+					interval = setInterval(function(){
+							$.mobile.loading('hide');
+							clearInterval(interval);
+						},1);
 				
+	
+
+
 //				$.mobile.changePage('#s_page', { transition: "slidefade",
 //                                    allowSamePageTransition: true});				
 	
 				}
 				
 			);
-														
-			$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+		
 		
 		}
 		
 		else return;
 		
+				
+		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+			
+			
 /*		self.currentHole(1); // kymppireiältä alkavat kierrokset?
 		self.setHoleData(1); */
 		
@@ -1033,11 +1074,13 @@ function viewModel () {
 				},1);
 				
 //				$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
-				
+		
+				$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
+		
+		
 			}
 		);
 	
-		$.mobile.changePage('#s_page', { transition: "slidefade", allowSamePageTransition: true});
 	};
 	
 	self.el = ko.observable();
@@ -1109,10 +1152,14 @@ function viewModel () {
 		apexEventProxy.getRoundScores(
 			{ data : data },
 			function (data) {
+			
+				var p_hcp;
 				
 				if (data.scores.length === 0) {
 					self.round_hcp(self.playerExactHcp());
 					self.round_tee(self.playerDefaultTee());
+					self.calcPlayingHcp(self.playerExactHcp());
+//					console.log("p_hcp data scores len 0 " + p_hcp);
 				}
 				else {
 					var hcp, tee;
@@ -1135,11 +1182,16 @@ function viewModel () {
 					}
 					self.round_hcp(hcp);
 					self.round_tee(tee);
-					self.playerPlayingHcp();			
-					
-					self.fillScoreCard(hcp);	// ffffff
-					
+					self.calcPlayingHcp(hcp);
+//					console.log("p_hcp has round scores " + p_hcp);
+
 				}
+				
+//				console.log("p_hcp: " + p_hcp);
+//				self.fillScoreCard(p_hcp);
+//				self.fillScoreCard(hcp);	// ffffff
+
+				
 			
 				self.locale_tee(self.translate_tee());
 			
@@ -1459,9 +1511,14 @@ function viewModel () {
 	
 	self.fillScoreCard = function (round_hcp) {
 		self.scoreCard.removeAll();
-/*		console.log(self.roundScores().length);
+		/*		console.log(self.roundScores().length);
 		console.log(self.holes().length);
 		console.log("filling it up"); */
+//		console.log("fillscore round hcp: " + round_hcp);
+
+
+//		round_hcp = self.playerPlayingHcp();
+
 		for (var i = 0; i < self.holes().length; i++) {
 		
 			var t = ko.observable();
@@ -1505,10 +1562,9 @@ function viewModel () {
 //	.extend( { throttle: 5 });
 	
 	self.updateScoreCard = function(score, hole) {
+//		console.log(self.holes().length);
 		var h = hole - 1;
-		var h_points = self.getHolePoints(score, self.holes()[h].hole_par(), self.holes()[h].hole_hcp(), self.round_hcp());
-
-
+		var h_points = self.getHolePoints(score, self.holes()[h].hole_par(), self.holes()[h].hole_hcp(), self.playerPlayingHcp());
 
 //		console.log("hole points: " + h_points);
 
@@ -1542,10 +1598,18 @@ function viewModel () {
 		
 //		console.log(score + " " + par + " " + hole_hcp);
 		
-		var crhcp = parseInt(round_hcp, 10);
+//		var crhcp = parseInt(round_hcp, 10);
+		var crhcp = parseInt(round_hcp);
 		var baseadj, hcpholes, hole_hcp_par;
 		baseadj = Math.floor(crhcp / 18);
+		
+//		console.log("cr hcp: " + crhcp);
+	//	console.log(baseadj);
+		
+//		console.log(crhcp);		
+		
 		hcpholes = (crhcp.mod(18));
+//		console.log("hcp holes: " + hcpholes);
 		
 		if (hcpholes >= hole_hcp) {
 
@@ -1733,7 +1797,7 @@ $(document).on('pageinit', function() {
 	$('#s_page').on('pageshow', function(e) {
 	
  	// https://github.com/jquery/jquery-mobile/issues/4078
-	//	$(this).addClass('ui-page-active');
+		$(this).addClass('ui-page-active');
 		
 //		$("#slaidi").slider();
 		
