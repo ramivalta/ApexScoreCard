@@ -3,42 +3,70 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+
+	<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" /> -->
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+
+
 
 
 <!--    <link href="{{ asset('bundles/apexscore/css/bogikortti.min.css') }}" rel="stylesheet" type="text/css" />    -->
 
-  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
+  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/stylet.css?123') }}" type="text/css" media="screen" rel="stylesheet" />
+
+	<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" />
+
+
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-    <link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" />    
+    <!--<link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" /> -->
+
+	<link href="{{ asset('bundles/apexscore/css/mobiscroll.scroller.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/apexscore/css/mobiscroll.scroller.ios7.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/apexscore/css/mobiscroll.animation.css') }}" rel="stylesheet" type="text/css" />
+
+
+
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
-	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/	jquery-ui-1.10.3.custom.min.css') }}"> 
-	
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/	jquery-ui-1.10.3.custom.min.css') }}">
+
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet">
+
 
 
 	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-	
+
 <!--	{% if app.user.username == "kuikka" %}
-	
+
 		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/villespecial.css') }}">
 
 	{% endif %}		-->
-	
-	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js"></script>
-	
+
+	<!-- <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script> -->
+	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>-->
+
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
+
+<!-- 		'@ApexScoreBundle/Resources/public/js/mobiscroll.custom-2.5.2.min.js' -->
+
+
+	<script src="{{ asset('bundles/apexscore/js/mobiscroll.core.js') }}"></script>
+	<script src="{{ asset('bundles/apexscore/js/mobiscroll.scroller.js') }}"></script>
+	<script src="{{ asset('bundles/apexscore/js/mobiscroll.scroller.ios7.js') }}"></script>
+
+
 
 	{% javascripts
 		'@ApexScoreBundle/Resources/public/js/date.format.js'
-		'@ApexScoreBundle/Resources/public/js/mobiscroll.custom-2.5.2.min.js'
+		'@ApexScoreBundle/Resources/public/js/knockout-3.0.0.js'
 		'@ApexScoreBundle/Resources/public/js/moment.min.js'
 		'@ApexScoreBundle/Resources/public/js/lang/fi.js'
-		'@ApexScoreBundle/Resources/public/js/jquery.transit.min.js'
-		'@ApexScoreBundle/Resources/public/js/app.js'
+		'@ApexScoreBundle/Resources/public/js/lodash.min.js'
+		'@ApexScoreBundle/Resources/public/js/jquery.transit.custom.js'
+		'@ApexScoreBundle/Resources/public/js/appsi.js'
 		'@ApexScoreBundle/Resources/public/js/add2home.js'
 		'@ApexScoreBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
 		'@ApexScoreBundle/Resources/public/js/jquery.ui.touch-punch.min.js'
@@ -46,650 +74,882 @@
 	<script src="{{ asset_url }}"></script>
 
 	{% endjavascripts %}
-	
-<!--    <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script> 
-	<script src="{{ asset('bundles/apexscore/js/mobiscroll.custom-2.5.2.min.js') }}"></script> 
+
+<!--    <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script>
+	<script src="{{ asset('bundles/apexscore/js/mobiscroll.custom-2.5.2.min.js') }}"></script>
 	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
 	<script src="{{ asset('bundles/apexscore/js/lang/fi.js') }}"> </script>
 
 	<script src="{{ asset('bundles/apexscore/js/jquery.transit.min.js') }}"></script>
 	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
 	<script type="application/javascript" src="{{ asset('bundles/apexscore/js/add2home.js') }}"></script> -->
-	
-	
 
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" /> 
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
-	
+
+
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
 	<meta name="apple-mobile-web-app-title" content="Bogikortti" >
 
 	<script type="text/javascript">
-		$.mobile.changePage.defaults.allowSamePageTransition = true;
-		$.mobile.loader.prototype.options.theme = "b";
-		$.mobile.loader.prototype.options.textVisible = false;
+		//$.mobile.changePage.defaults.allowSamePageTransition = true;
+	  	/*$.mobile.loader.prototype.options.theme = "b";
+		$.mobile.loader.prototype.options.textVisible = false;*/
 	</script>
 
 </head>
 
 <body>
 
-<div id="f_page" data-role="page" data-title="Bogikortti" >
-	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-		<a href="#" id="txt-only" data-role="button" data-icon="gear" data-iconpos="notext" data-bind="event: { tap: loadPrefs }"></a>
-		<div class="headerText" id="f_header">Bogikortti - <span data-bind="text: playerName"></span></div>
-		<a href="#" data-bind="event: { tap: loadCourseSelect }"  data-role="button" data-icon="plus" id="newRoundButton" data-iconpos="notext"></a>
-	</div>
-	
-	<div class="scrollOuter">	
+<div id="root" data-role="page" data-title="Bogikortti">
+	<div id="f_header" class="header" data-theme="b" data-role="content" style="padding-left:0 ; padding-right: 0">
 
-	<!-- ko if: firstRun() == "working" -->
-		<div data-theme="c" data-role="content">
-			Ladataan kierroksia...
+		<div style="padding-left: 6px; visibility: hidden; position: absolute; padding-top: 12px; height: 44px" class="headerButton" id="pageBackButton" data-bind="event: { tap : hidePrefs }">
+			<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
+			<span style="padding-left: 2px; ">Takaisin</span>
 		</div>
-	<!-- /ko -->		
-	
-	<!-- ko if: firstRun() == false -->
-		<div class="scrollMiddle">
-			<div class="scrollInner" id="roundListWrap">
-				<ul id="roundList" data-role="listview" data-theme="c" data-split-icon="delete" data-split-theme="c" data-bind="mobileList: roundList, foreach: roundList"  class="round"> 
-				
-					<li data-bind="css: { highlightLoaded: $root.highlightLoaded(start_time.date) }">
-				 
-						<a data-bind="click: $root.loadRound.bind($data, id, start_time.date)">
-						<span data-bind="text: course_name"></span>
-						
-						<span style="font-size: 66%">
-							<span data-bind="text: start_time.date" style="visibility: hidden"></span>   
-							<div style="color: #999">
-								<span data-bind="text: moment(start_time.date).calendar()">						</span> - Tulos:
-								<span data-bind="text: score"></span> / <span data-bind="text: par"> </span>
+
+		<div class="ui-grid-b" id="header_scorepage" data-bind="event: { swipedown: showScoreCard }" style="display: none">
+			<div class="ui-block-a" style="text-align: left; width: 20%" data-bind="event: { tap: leaveRound }">
+				<div class="headerButton" id="s_back" style="padding-left: 6px">
+					<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
+					<!-- <span style="padding-left: 2px; margin-right: 8px"></span> -->
+					<span style="letter-spacing: -1px">Takaisin</span>
+				</div>
+			</div>
+
+			<div class="ui-block-b" style="text-align: center; width: 55%">
+				<div class="headerTitle" style="text-align: center;">
+					<div id="holeHeader">
+						Reikä
+						<span data-bind="text: currentHole"></span>
+						- Par
+						<span data-bind="text: currentHolePar"></span>
+						<span style="font-size: 75%">
+							/ Hcp
+							<span data-bind="text: currentHoleHcp"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-block-c" id="s_card" data-bind="event: { tap: showScoreCard }" style="width: 25%;">
+				<div class="headerButton" style=" text-align: right; padding-right: 6px">
+					<span style="letter-spacing: -1px">Tuloskortti</span>
+
+					<!--<i class="fa fa-list-ol chevron" style="font-size: 12px"></i>-->
+					<!--<i class="fa fa-chevron-right" style="font-size: 14px; position: absolute; top: 15px; margin-left: 2px"></i> -->
+				</div>
+			</div>
+		</div>
+
+
+		<div class="ui-grid-b" id="header_courselist" style="display: none">
+			<div class="ui-block-a" data-bind="event: { tap : hideCourseSelect }">
+				<div class="headerButton" style="min-width: 90px; padding-left: 6px">
+					<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
+					<span style="padding-left: 2px; ">Takaisin</span>
+				</div>
+			</div>
+
+			<div class="ui-block-b">
+				<div class="headerTitle" style="text-align: center; font-weight: 700">
+					Valitse kenttä
+				</div>
+
+			</div>
+
+			<div class="ui-block-c">
+				<div data-bind="event: { tap: toggleTeeSelect }" class="headerButton" style="text-align: right; padding-right: 6px">
+					<span data-bind="css: { yellow : round_tee() === 'yellow', blue : round_tee() === 'blue', red : round_tee() === 'red', white : round_tee() === 'white' }">&bull;</span>
+					<span>Tii</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="ui-grid-b" id="header_front">
+			<div class="ui-block-a" id="pageLeft" style="text-align: center; padding-left: 0px">
+				<div id="prefs_link" data-bind="event: { tap: loadPrefs }">
+					<div class="headerButton" id="f_text" style="display: inline-block; margin-right: 100%; min-width: 90px; padding-left: 2px">
+						<i class="fa fa-gear reflect" style="display: inline-block; text-decoration: none"></i>
+						<span id="pref_text" style="display: inline-block; "  class="reflect">Asetukset</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-block-b" id="pageTitle" style="text-align: center">
+				<div class="headerTitle" style="text-align: center; font-weight: 700">Bogikortti</div>
+			</div>
+
+			<div class="ui-block-c" id="pageRight" data-bind="event: { tap: loadCourseSelect }" style="text-align: right; ">
+				<div class="headerButton" style="padding-right: 6px; ">
+					<span style=" display: inline-block">Uusi kierros</span>
+					<i class="fa fa-chevron-right chevron" style="margin-left: 2px; display: inline-block; "></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="f_page">
+		<div id="f_outer">
+			<div id="f_content" class="scrollOuter">
+
+				<div data-theme="a" data-role="content" style="height: 80px; margin-top: 33%; background: rgba(255, 255, 255, 0.75); text-align: center" data-bind="fadeVisible: firstRun() == 'working'">
+					<div class="ajaxloader_large" style="background: #333;"></div>
+				</div>
+
+
+				<div class="scrollMiddle" data-bind="fadeVisible: firstRun() == false">
+					<div class="scrollInner" id="roundListWrap" data-bind="css: { ios :  launchedFromHome() == true }">
+
+						<div id="roundList" data-bind="foreach: roundList">
+
+							<div data-bind="if: $index() < 21 && $root.showAllRounds() == false">
+
+								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow listViewRowBorder">
+									<div class="listViewItem">
+										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+											<span data-bind="text: course_name"></span>
+										</div>
+
+										&nbsp;
+
+										<div style="inline-block; float: right; color: #888">
+											<span style="font-size: 12px"> Par </span>
+											<span style="font-size: 12px" data-bind="text: par"></span>
+										</div>
+
+										<div style="font-size: 12px; color: #888">
+											<span style="float: left">
+												<span data-bind="text: score"></span>
+												<span> lyöntiä </span>
+											</span>
+
+											<div style="text-align: right; display: inline-block; float: right">
+
+												<span data-bind="text: moment(start_time.date).calendar()" style="font-size: 12px; float: right">
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px">
+										<div data-bind="if: $root.loadingRound() !== id">
+											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+										</div>
+										<div data-bind="if: $root.loadingRound() === id">
+											<div class="ajaxloader1" style="background: #888"></div>
+										</div>
+									</div>
+								</div>
+
+
+								<div data-bind="event: { tap : $root.confirmDelete.bind($data, id) }" style="position: absolute; right: 0; top: 0; bottom: 0; visibility: visible; text-align: right; ">
+									<div  class="deleteBtn listViewRow" style="z-index: 0; background: transparent">
+										<div class="listViewItem" style="width: 54px; text-align: center; vertical-align: middle; height: 100%">
+											<i class="fa fa-trash-o" style="font-size: 24px; ; vertical-align: middle"></i>
+										</div>
+									</div>
+								</div>
 							</div>
-						</span>
-						<span>
-							<a data-bind="event: { tap: $root.deleteRoundDialog.bind($data, id, start_time.date) }" data-icon="minus" id="roundMenu"></a>
-						</span>
-					</li>
-				</ul>
-				
-				<!-- ko if: roundList().length >= 5 -->
-				
-					<div data-theme="a" data-role="footer" style="padding: 6px; padding-bottom: 0px; padding-top: 0px; font-size: 66%; color: #eee">
-						Yhteensä 
-						<span data-bind="text: roundList().length"></span>
-						 kierrosta
-					</div>
-				<!-- /ko -->
-				
-			</div>
-		</div>
-	<!-- /ko -->
-	
-<!-- 
 
-	<div data-role="popup" id="delPopUp" data-over-theme="a" data-theme="c" data-dismissible="false" style="max-width: 250px; font-size: 75%" class="ui-corner-all" data-mini="true" id="deletiongPopup">
-		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-				<span style="font-size: 1.5em; font-weight: bold">Poistetaanko kierros?</span>
-		</div>
-		<div data-role="content" data-mini="true" data-theme="d" class="ui-corner-bottom ui-content" id="deletionContent">
-	<!~~				  <h5 class="ui-title">Remove this round?</h5> ~~>
-		  <p style="font-weight: bold">Kierros poistetaan lopullisesti.</p>
-			<a data-bind="event: { tap: cancelRoundDelete }" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-mini="true">Peru</a>
-			<a href="" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-mini="true">Poista kierros</a>
-		</div>
-	</div>
-	
- -->
- 
- 	<div data-role="popup" id="delPopUp"  data-theme="none"  style="right: 16px" data-mini="true" data-shadow="false" id="deletiongPopup">
-		<a href="" class="aDeleteBtn ui-btn-up-r" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-mini="true">Poista kierros?</a>
-	</div>
- 
-	<!-- ko if: firstRun() == true -->
-		<div data-theme="b" data-role="content">
-			<div style="width: 100%; margin-left: 10px; float:left">
-				<img src="{{asset('bundles/apexscore/images/arrow_left.png') }}" style="float:left">
-				<img src="{{asset('bundles/apexscore/images/arrow_right.png') }}" style="float:right; margin-right: 30px">
-			</div>
-			
-			<div style="width: 100%" style="float:left">
-				<span style="float:left; margin: 5px">Aseta tasoituksesi ja valitse tii</span>
-				<span style="float: right; margin: 5px">Aloita uusi kierros</span>
-			</div>
-		</div>	
-	<!-- /ko -->	
-		
-	</div>
-</div>
-	
+							<div data-bind="if: $root.showAllRounds() == true">
+								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow listViewRowBorder">
+									<div class="listViewItem">
+										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+											<span data-bind="text: course_name"></span>
+										</div>
 
-<div id="s_page" data-role="page" data-title="Round in progress" data-theme="b">
+										&nbsp;
 
-	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-		<a href="#f_page" data-role="button" data-icon="home" data-iconpos="notext" 		 data-bind="event: { tap: leaveRound }"></a>
-		
-		<div class="headerText">Reikä <span data-bind="text: currentHole"></span> - Par <span data-bind="text: currentHolePar"></span>
-			<span style="font-size: 75%">/ Hcp  <span data-bind="text: currentHoleHcp" ></span></span>
-		</div>
-		<a data-bind="event: { tap: showScoreCard }" data-role="button" data-rel="dialog" data-icon="grid" data-iconpos="notext" data-close-btn="none" data-transition="slidedown"></a>
-	</div>
+										<div style="inline-block; float: right; color: #888">
+											<span style="font-size: 12px"> Par </span>
+											<span style="font-size: 12px" data-bind="text: par"></span>
+										</div>
 
-	<div id="top" data-role="content" data-theme="b">
-		<div id="scoreWrappi" class="ui-grid-b">
-			<div id="holeScore" class="ui-block-a">
-				<span data-bind="text: holeScoreName, visible: showPoints"></span><br>
-				<span data-bind="text: currentHolePoints, visible: showPoints" style="font-size: 75%"></span>
-			</div>
-	
-			<div id="scoreB" class="ui-block-b">
-				<div id="score">
-					<!-- ko if: currentHoleScore() == 0 -->
-						<div class="scoreDisplay"> - </div>
-					<!-- /ko -->
-						
-					<!-- ko if: currentHoleScore() > 0 -->
-						<div class="scoreDisplay" data-bind="visible: noScoreEntered() == false, text: currentHoleScore"></div>
-					<!-- /ko -->
-				</div>
-			</div>
-	
-			<div id="roundScore" class="ui-block-c">
-				Tulos:
-				
-				
-				<!-- ko if: totalToPar() === false -->
-				
-					<img src="{{ asset('bundles/apexscore/images/loading_gray.gif') }} ">
-				
-				<!-- /ko -->
-				
-				<!-- ko if: totalToPar() !== false -->
-				
-					<span data-bind="text: totalScore"></span>
-		
-					<span style="opacity: 0.7; font-size: 90%">
-					<!-- ko if: totalToPar() > 0 -->
-						(+<span data-bind="text: totalToPar"></span>)
-					<!-- /ko -->
+										<div style="font-size: 12px; color: #888">
+											<span style="float: left">
+												<span data-bind="text: score"></span>
+												<span> lyöntiä </span>
+											</span>
 
-					<!-- ko if: totalToPar() < 0 -->
-						(<span data-bind="text: totalToPar"></span>)
-					<!-- /ko -->
-				
-					<!-- ko if: totalToPar() === 0 -->
-						(E)
-					<!-- /ko -->
-					
-					</span>
-					
-				<!-- /ko -->
+											<div style="text-align: right; display: inline-block; float: right">
 
-				<br>
-				
-				<span style="font-size: 75%"> Pisteet:</span>
-				
-				<!-- ko if: totalToPar() === false -->
-					<img src="{{ asset('bundles/apexscore/images/loading_gray.gif') }} ">
-				<!-- /ko -->
-				
-				<!-- ko if: totalToPar() !== false -->
-					<span data-bind="text: totalPoints" style="font-size: 75%"></span> 
-				<!-- /ko -->
-				
-			</div>
-		</div>
+												<span data-bind="text: moment(start_time.date).calendar()" style="font-size: 12px; float: right">
+												</span>
+											</div>
+										</div>
+									</div>
 
-		<div id="sliderWrappi" class="ui-grid-b">
-			<div id="leftFill" class="ui-block-a"></div>
-				<div id="sliderW" class="ui-block-b">
-					<div data-bind="value: sliderVal, uislider: sliderVal, event: { slide: sliderMove, slidestop: resetSlider }, sliderOptions: { value: 0, min: -50, max: 50, step: 1, animate: 'slow' }" name="slider" id="slaidi" min="-50" max="50" >
-					</div>
-				</div>
-			<div id="rightFill" class="ui-block-c"></div>
-		</div> 
-		
-		
-		
-		
-	</div>
+									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px">
+										<div data-bind="if: $root.loadingRound() !== id">
+											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+										</div>
+										<div data-bind="if: $root.loadingRound() === id">
+											<div class="ajaxloader1" style="background: #888"></div>
+										</div>
+									</div>
+								</div>
 
-	<div id="bottom" data-bind="event: { swipeleft: nextHole, swiperight: previousHole }">
-		<div id="holeData" style="display: block">
-			<div id="tmp" class="ui-grid-a" data-role="content" data-theme="c">
-				<div class="ui-block-a">
-					<span id="course" data-bind="text: courseName"></span><br>
-					Reikä <span id="hole" data-bind="text: currentHole"></span><br>
-					Par <span id="par" data-bind="text: currentHolePar"></span><br>
-					Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
-					<span id="length" data-bind="text: currentHoleLength"></span> metriä<br>
-				</div>
-				<div class="ui-block-b" style="text-align: right">
-					Pelaaja: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
-					Tasoitus: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
-					Pelitasoitus:
-					
-					<!-- ko if: playerPlayingHcp() !== false -->
-					<span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
-					<!-- /ko -->
-					
-					<!-- ko if: playerPlayingHcp() === false -->
-					<span><img src="{{ asset('bundles/apexscore/images/loading_white.gif') }} "></span><br>
-					<!-- /ko -->
-					
-					Tii: <span id="playerTee" data-bind="text: locale_tee" style="font-weight: bold"></span><br>
-					Kierrosaika: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
+								<div data-bind="event: { tap : $root.confirmDelete.bind($data, id) }" style="position: absolute; right: 0; top: 0; bottom: 0; visibility: visible; text-align: right; ">
+									<div  class="deleteBtn listViewRow" style="z-index: 0; background: transparent">
+										<div class="listViewItem" style="width: 54px; text-align: center; vertical-align: middle; height: 100%">
+											<i class="fa fa-trash-o" style="font-size: 24px; ; vertical-align: middle"></i>
+										</div>
+									</div>
+								</div>
 
-<!--						<span data-bind="if: roundEndTime()">End time:
-						<span data-bind="text: moment(roundEndTime()).format('HH:mm:ss')" style="font-weight: bold">
-						</span>
-					</span> -->
-				</div>
-			</div>
-		</div>
-		<div id="stats" style="display: none; text-align: center">
-			<div data-role="content" data-theme="c" class="ui-grid-b">
-				<div class="ui-block-a" style="width: 30%">
-					<span>Väylät: </span><br>
-					<span data-bind="text: fairwayPercentage"></span>
-				</div>
-				<div class="ui-block-b" style="width: 40%">
-			
-			
-					<form>
-						<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+							</div>
 
-							<label><input type="checkbox" name="fir-checkbox" id="fir-checkbox" data-theme="a" value="false" data-bind="checked: hitFairway" />FiR</label>
-					
-							<label><input type="checkbox" name="gir-checkbox" id="gir-checkbox" data-theme="a" value="false" data-bind="checked: hitGreen" />GiR</label>
-						</fieldset>
-					</form>
-				</div>
-				<div class="ui-block-c" style="width: 30%">
-					<span>Greenit: </span><br>
-					<span data-bind="text: greenPercentage"></span>
-				</div>
-			</div>
-		</div>
-	</div>
-		
-	<div data-role="footer" data-theme="a" data-position="fixed" data-id="score_footer" class="footer ui-grid-b">
-			<div class="ui-block-a navbutton" style="width: 25%">
-			<!-- ko if: currentHole() === 1 -->
-			<a href="#s_page" data-icon="arrow-l" data-role="button" data-inline="true" data-bind="event: { tap: previousHole }" data-iconpos="left"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: holes().length"></span> </a>
-			<!-- /ko -->
-			
-			<!-- ko if: currentHole() !== 1 -->
-			<a href="#s_page" data-icon="arrow-l" data-role="button"  data-inline="true" data-bind="event: { tap: previousHole }" data-iconpos="left" data-shadow="false" ><span class="holenav">Reikä </span><span class="holenav" data-bind="text: currentHole() - 1"></span> </a>
-			<!-- /ko -->
-			</div>
-		
-			<div class="ui-block-b" data-role="controlgroup" data-type="horizontal" style="text-align: center; width: 50%">
-				<a data-role="button" data-mini="true" data-inline="true" data-bind="click: showHoledata">Tiedot</a>
-				<a data-role="button" data-mini="true" data-inline="true" data-bind="click: showStats">Tilastot</a>
-			</div>
-			
-<!--		style="float: right">  -->
+						</div>
 
-			<div class="ui-block-c navbutton" style="float: right; width: 25%">
-			
-			<!-- ko if: currentHole() === holes().length -->
-			<a href="#s_page" data-icon="arrow-r" data-role="button"  data-inline="true" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="float: right"><span class="holenav">Reikä </span><span class="holenav">1</span>  </a>
-			<!-- /ko -->
-		
-			<!-- ko if: currentHole() !== holes().length -->
-			<a href="#s_page" data-icon="arrow-r" data-role="button"  data-inline="true" data-bind="event: { tap: nextHole }"  data-iconpos="right" style="float: right"><span class="holenav">Reikä </span><span class="holenav" data-bind="text: currentHole() + 1"></span>  </a>
-			<!-- /ko -->
-			</div>
-			
-	</div>
-</div>	
-	
-	
-<div id="scoreCard" class="scorecard-dialog" data-role="page" data-close-btn="none" data-theme="b">
+						<div data-theme="b" data-role="content" style="padding: 6px; padding-bottom: 20px; padding-top: 0px; text-align: center; background: transparent" data-bind="visible: roundList().length >= 5">
+							<h5 data-bind="if: roundList().length < 21 || showAllRounds() == true">
+								Yhteensä
+								<span data-bind="text: roundList().length"></span>
+								kierrosta
+							 </h5>
 
-	<div data-theme="a" data-role="header" id="dialogHeader">
-		<span id="scCourse" data-bind="text: courseName"></span>
-			-
-		<span id="scStartTime" data-bind="text: moment(roundStartTime()).format('LLL')"></span>
-	</div>	
-	
-
-	<div class="scrollOuter" data-theme="b" style="top: 36px !important">	
-		<div class="scrollMiddle" style="top: 0px !important">
-			<div class="scrollInner" id="">
-
-				<div data-role="content" id="dialogContent" data-theme="b">
-					<table class="scoreCardTable">
-						<tr>
-							<td class="scHeaders">Kenttä</td>
-							<td class="scHeaders">Päiväys</td>
-							<td class="scHeaders">Pelaaja</td>
-							<td class="scHeaders">Tasoitus</td>
-						</tr>
-						<tr>
-							<td class="scCells" data-bind="text: courseName"></td>
-							<td class="scCells" data-bind="text: moment(roundStartTime()).format('LL')"></td>
-							<td class="scCells" data-bind="text: playerName"></td>
-							<td class="scCells" data-bind="text: round_hcp"></td>
-						<tr>
-					</table> 
-	
-					<table class="scoreCardTable">
-						<tr>
-							<td class="scHeaders">Reikä</td>
-							<td class="scHeaders">Par</td>
-							<td class="scHeaders">HCP</td>
-							<td class="scHeaders">Pituus</td>
-							<td class="scHeaders">Tulos</td>
-							<td class="scHeaders">+/-</td>
-							<td class="scHeaders">Pisteet</td>
-						</tr>
-						<tbody data-bind="foreach: scoreCard">
-							<tr>
-								<td class="scCells" data-bind="text: hole_number"></td>
-								<td class="scCells" data-bind="text: hole_par"></td>
-								<td class="scCells" data-bind="text: hole_hcp"></td>
-					
-								<!-- ko if: $parent.round_tee() === "yellow" -->
-									<td class="teeYellow"><span data-bind="text: hole_length"></span> m
-									</td>
-								<!-- /ko -->
-								<!-- ko if: $parent.round_tee() === "red" -->
-									<td class="teeRed"><span data-bind="text: hole_length"></span> m
-									</td>
-								<!-- /ko -->
-								<!-- ko if: $parent.round_tee() === "blue" -->
-									<td class="teeBlue"><span data-bind="text: hole_length"></span> m
-									</td>
-								<!-- /ko -->
-								<!-- ko if: $parent.round_tee() === "white" -->
-									<td class="teeWhite"><span data-bind="text: hole_length"></span> m
-									</td>
-								<!-- /ko -->
-				
-								<!-- ko if: score() > 0 -->
-									<!-- ko if: scoreToPar() === -1 -->
-									<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() < -1 -->
-									<td class="scEagle"><span class="doublecircle"> <span class=" circle" data-bind="text: score"></span></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() === 1 -->
-										<td class="scBogey"><span class="rectangle" data-bind="text: score"></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() > 1 -->
-										<td class="scDouble" data-bind="text: score"></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() === 0 -->
-										<td class="scScoreCells" data-bind="text: score"></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() === 1 -->
-										<td class="scBogey">+<span data-bind="text: scoreToPar"></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() > 1 -->
-										<td class="scDouble">+<span data-bind="text: scoreToPar"></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() === -1 -->
-										<td class="scBirdie"><span data-bind="text: scoreToPar"></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() < -1 -->
-										<td class="scEagle"><span data-bind="text: scoreToPar"></span></td>
-									<!-- /ko -->
-									<!-- ko if: scoreToPar() === 0 -->
-										<td class="scScoreCells"><span>E</span></td>
-									<!-- /ko -->
-					
-									<td class="scCells" data-bind="text: points"></td>
-				
-								<!-- /ko -->
-				
-								<!-- ko if: score() === 0 && $root.validateRound() === false -->
-									<td class="scScoreCells">&nbsp;</td>
-									<td class="scCells">&nbsp;</td>
-									<td class="scCells">&nbsp;</td>
-								<!-- /ko -->
-					
-								<!-- ko if: score() === 0 && $root.validateRound() === true -->
-									<td class="scScoreCells">x</td>
-									<td class="scScoreCells">x</td>
-									<td class="scCells">0</td>
-								<!-- /ko -->
-					
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-								<td class="scTotals"></td>
-								<td class="scTotals" data-bind="text: coursePar"></td>
-								<td class="scTotals"></td>
-								
-								<!-- ko if: round_tee() === "white" -->
-									<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-									</td>
-								<!-- /ko -->
-					
-								<!-- ko if: round_tee() === "yellow" -->
-									<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-									</td>
-								<!-- /ko -->
-								<!-- ko if: round_tee() === "red" -->
-									<td class="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-									</td>
-								<!-- /ko -->
-								<!-- ko if: round_tee() === "blue" -->
-									<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
-									</td>
-								<!-- /ko -->
-							
-					
-								<!-- ko if: validateRound() === false -->
-					
-									<!-- ko if: totalToPar() < 0 -->
-										<td class="scBirdie"><span data-bind="text: totalScore"></span>
-										</td>
-									<!-- /ko -->
-									<!-- ko if: totalToPar() >= 0 -->	
-										<td class="scTotals"><span data-bind="text: totalScore"></span>
-										</td>
-									<!-- /ko -->				
-						
-									<!-- ko if: totalToPar() > 0 -->
-										<td class="scTotals">+<span data-bind="text: totalToPar"></span>
-										</td>
-									<!-- /ko -->
-									<!-- ko if: totalToPar() < 0 -->
-										<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
-										</td>
-									<!-- /ko -->
-									<!-- ko if: totalToPar() === 0 -->
-										<td class="scTotals"><span>E</span>
-										</td>
-									<!-- /ko -->
-						
-								<!-- /ko -->
-					
-								<!-- ko if: validateRound() === true -->
-					
-									<!-- ko if: totalToPar() < 0 -->
-										<td class="scBirdie"><span data-bind="text: totalScore"></span></td>
-									<!-- /ko -->
-									<!-- ko if: totalToPar() >= 0 -->	
-										<td class="scTotals"><span data-bind="text: totalScore"></span></td>
-									<!-- /ko -->
-									
-									<!-- ko if: totalToPar() > 0 -->
-										<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
-									<!-- /ko -->
-									<!-- ko if: totalToPar() < 0 -->
-										<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
-									<!-- /ko -->
-									<!-- ko if: totalToPar() === 0 -->
-										<td class="scTotals"><span>E</span></td>
-									<!-- /ko -->
-
-								<!-- /ko -->
-					
-								<td class="scTotals" data-bind="text: totalPoints"></td> 
-							</tr>
-						</tbody>
-					</table>
-					<table class="scoreCardTable">
-						<tbody>
-							<tr>
-								<td style="float: left; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Kesto: <span data-bind="text: roundDuration"></span></td>
-								
-								<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Uusi tasoitus: <span data-bind="text: hcpPreview"></span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				
-				<div id="scoreCardButtons">
-					<div data-role="fieldcontain">
-<!--						<fieldset data-role="controlgroup"> -->
-							<label for="finish_round" id="scoreCardFinish">Maalissa
-							<input type="checkbox" id="finish_round" name="finish_round" data-mini="true" data-inline="true" value="true" data-bind="checked: roundFinished, mobileradio: roundFinished" style="display: none" data-theme="b" /></label>
-<!--						</fieldset> -->
-
-					
-						<div id="scoreCardClose">
-						<a href="" data-bind="event: { tap: closeScoreCard }" data-rel="back" data-role="button" data-inline="true" data-theme="a" data-icon="delete" data-mini="true">Sulje</a>
+							<h5 data-bind="if: roundList().length >= 21 && showAllRounds() == false, event: { tap : function() { showAllRounds(true) }} " class="headerButton">
+<!--								<a style="color: 2ad"> -->
+								<a style="color: #fff">
+									Näytä loput
+									<span data-bind="text: roundList().length - 20"></span>
+									kierrosta
+								</a>
+							 </h5>
 						</div>
 					</div>
 				</div>
+
+
+				<!-- <div data-role="popup" id="delPopUp"  data-theme="b"  style="right: 16px" data-mini="true" data-shadow="false" id="deletiongPopup">
+					<a href="" class="aDeleteBtn ui-btn-up-r" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-mini="true">Poista kierros?</a>
+				</div> -->
+
+
+				<div data-theme="a" data-role="content" data-bind="visible: firstRun() == true">
+					<div style="width: 100%; margin-left: 10px; float:left">
+						<img src="{{asset('bundles/apexscore/images/arrow_left.png') }}" style="float:left">
+						<img src="{{asset('bundles/apexscore/images/arrow_right.png') }}" style="float:right; margin-right: 30px">
+					</div>
+
+					<div style="width: 100%" style="float:left">
+						<span style="float:left; margin: 5px">Aseta tasoituksesi ja valitse tii</span>
+						<span style="float: right; margin: 5px">Aloita uusi kierros</span>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
-</div>
 
 
-<div id="prefs" data-role="page" data-title="Preferences" data-theme="b">
-	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-			<a data-role="Home" data-bind="event: { tap: saveGolfer }" data-icon="home" data-iconpos="notext"></a>
+	<div id="prefs" style="display: none" data-role="content" data-theme="b">
 
-		<div class="headerText">Asetukset</div>
-		
-			<a href="#credsPopUp" id="credsBtn" data-rel="popup" data-position-to="#credsBtn" data-role="button" data-transition="flow" data-icon="info" data-theme="b" data-iconpos="notext"></a>
-	</div>
-	
-	<!-- credits -->
-	<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="c" data-dismissible="true" class="ui-corner-all" data-mini="true">
-		<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
-			<h1>Tietoja</h1>
-		</div>
-		<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
-			<h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
-	
-			<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu vihapuhe osoitteeseen <a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a> tai kasvotusten kentällä. Saatan kuunnella jos tarjoat oluen.</p>
-	
-			  
-		  <p>Kiitokset: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko ja Janne.</p>
-		</div>
-	</div>
+		<div id="prefs_content">
 
-	<div id="prefsWrappi">
-		<div id="mainPrefs">
-			<h5>Tasoitus</h5>
-			<div id="prefsPlayerHcp">
-				<input id="i" style="display: none"
-				data-bind="value: playerExactHcp" data-role="none" />
+			<!-- credits -->
+			<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="a" data-dismissible="true" class="ui-corner-all" data-mini="true">
+				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
+					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
+					<h1>Tietoja</h1>
+				</div>
+				<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
+					<h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
+
+					<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu vihapuhe osoitteeseen <a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a>.
+
+
+				  <p>Kiitokset: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko ja Janne.</p>
+				</div>
 			</div>
-			
-			<div id="tees">
-				<h5>Tii</h5>
 
-				<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
-					<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Pun..en</label>
+			<div id="prefsWrappi">
+				<div id="mainPrefs">
+					<h5 class="reflect">Tasoitus</h5>
+					<div id="prefsPlayerHcp">
+						<input id="i" style="display: none"	data-bind="value: playerExactHcp" data-role="none" />
+					</div>
 
-					<input type="radio" name="blue" id="tees_blue" value="blue" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_blue" style="border-top-color: blue !important" class="prefsTees">Sin..en</label>
+					<div id="tees">
+						<h5 class="reflect">Tii</h5>
 
-					<input type="radio" name="yellow" id="tees_yellow" value="yellow"  data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_yellow" style="border-top-color: yellow !important" class="prefsTees">Kel..en</label>
+						<fieldset id="teeOptions" data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="b" style="font-size: 12px !important">
+							<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+							<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Punainen</label>
 
-					<input type="radio" name="white" id="tees_white" value="white" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
-					<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Val..en</label>
-				</fieldset>
+							<input type="radio" name="blue" id="tees_blue" value="blue" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+							<label for="tees_blue" style="border-top-color: blue !important" class="prefsTees">Sininen</label>
+
+							<input type="radio" name="yellow" id="tees_yellow" value="yellow"  data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+							<label for="tees_yellow" style="border-top-color: yellow !important" class="prefsTees">Keltainen</label>
+
+							<input type="radio" name="white" id="tees_white" value="white" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
+							<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Valkoinen</label>
+						</fieldset>
+					</div>
+				</div>
 			</div>
-		</div> 
+		</div>
+
 	</div>
-</div>
 
 
-<div id="courseSelect" data-role="page" data-title="New round" data-theme="b">
-	<div class="header" data-role="header" data-theme="b" data-position="fixed" data-id="bogi_header">
-		<a href="#f_page" data-transition="slidefade" data-direction="reverse"  data-role="button" id="Home" data-icon="home" data-iconpos="notext"></a>
-		<div class="headerText">Valitse kenttä...</div>
+	<div id="courseSelect" style="visibility: hidden">
+
+
+
+
+		<div id="c_outer">
+			<div class="scrollOuter">
+				<div class="scrollMiddle">
+					<div class="scrollInner" id="courseListWrap">
+
+						<div id="teeSelect" style="text-align: center; background: transparent; padding: 8px; display: none; position: relative; z-index: 5">
+							<div style="position: relative; z-index: 5">
+								<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="b" style="font-size: 12px !important">
+									<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: round_tee, mobileradio: round_tee" />
+									<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Punainen</label>
+
+									<input type="radio" name="blue" id="tees_blue" value="blue" data-bind="checked: round_tee, mobileradio: round_tee" />
+									<label for="tees_blue" style="border-top-color: blue !important" class="prefsTees">Sininen</label>
+
+									<input type="radio" name="yellow" id="tees_yellow" value="yellow"  data-bind="checked: round_tee, mobileradio: round_tee" />
+									<label for="tees_yellow" style="border-top-color: yellow !important" class="prefsTees">Keltainen</label>
+
+									<input type="radio" name="white" id="tees_white" value="white" data-bind="checked: round_tee, mobileradio: round_tee" />
+									<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Valkoinen</label>
+								</fieldset>
+							</div>
+						</div>
+
+
+							<!-- ko if: recentlyPlayedCourses().length > 0 -->
+
+							<div class="courseList_subheader">
+								<div style="height: 24px; padding: 6px">
+									<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+										<h4 style="display: inline">Viimeisimmät pelatut kentät</h4>
+									</div>
+								</div>
+							</div>
+
+							<div data-bind="foreach: recentlyPlayedCourses">
+								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow listViewRowBorder">
+									<div class="listViewItem" style="font-size: 15px; height: 32px">
+										<span data-bind="text: name"></span>
+									</div>
+									<div class="listViewItem" style="text-align: right; font-size: 12px; color: #888; height: 32px">
+										<span data-bind="text: hole_count"></span>r
+									</div>
+
+									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
+										<div data-bind="if: $root.loadingRound() !== id">
+											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+										</div>
+										<div data-bind="if: $root.loadingRound() === id">
+											<div class="ajaxloader1" style="background: #888"></div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+
+
+							<!-- /ko -->
+
+
+
+						<div style="height: 6px"></div>
+
+
+						<div class="courseList_subheader" data-bind="event: { tap: $root.toggleCourseList.bind($data) }">
+							<div style="height: 24px; padding: 6px">
+								<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+									<span>
+										<i data-bind="visible: courseListVisible() == false" class="fa fa-caret-right"></i>
+										<i data-bind="visible: courseListVisible() == true" class="fa fa-caret-down"></i>
+									</span>
+									<h4 style="display: inline">
+										Kaikki kentät
+									</h4>
+								</div>
+							</div>
+						</div>
+
+						<div data-bind="visible: courseListVisible() == true">
+							<div style="text-align: center; background: #e0e0e0">
+								<input id="search" data-role="none" type="text" data-bind="value: courseSearch, valueUpdate: 'afterkeyup'" placeholder="Kentän nimi tai lyhenne..." />
+							</div>
+
+							<div data-bind="foreach: filteredCourseList, css: { ios_bottom : $root.launchedFromHome() == true }">
+								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow listViewRowBorder" style="height: 32px">
+									<div class="listViewItem" style="font-size: 15px; height: 32px">
+										<span data-bind="text: name"></span>
+									</div>
+									<div class="listViewItem" style="text-align: right; font-size: 12px; color: #888; height: 32px">
+										<span data-bind="text: hole_count"></span>r
+									</div>
+
+									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
+										<div data-bind="if: $root.loadingRound() !== id">
+											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+										</div>
+										<div data-bind="if: $root.loadingRound() === id">
+											<div class="ajaxloader1" style="background: #888"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div data-bind="visible: courseListVisible() == false">
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	
- 	<div data-role="popup" id="courseVar" data-theme="a" style="left: -26px">
- 		<ul data-role="listview" data-theme="c" data-inset="true">
- 			<li data-role="divider" data-theme="a">
- 				Muurame Golf
- 			</li>
-	 		<li>
-		 		<a href="#">18 reikää (etu + taka)</a>
- 			</li>		
-	 		<li>
-		 		<a href="#">18 reikää (taka + etu)</a>
- 			</li>		
-	 		<li>
-				<a href="#">Pelkkä etuysi</a>
- 			</li>		
-	 		<li>
-	 			<a href="#">Pelkkä takaysi</a>
- 			</li>		
- 		</ul>
-	</div>
-	
-	<div class="scrollOuter">
-		<div class="scrollMiddle">
-			<div class="scrollInner" id="courseListWrap">
-				<ul data-theme="c" data-role="listview" data-filter="true" data-filter-placeholder="Kentän nimi tai lyhenne..." data-filter-theme="c" id="courseList">
 
-					<!-- ko if: recentlyPlayedCourses().length > 0 -->
-						<li data-role="list-divider" data-theme="d">Viimeisimmät pelatut kentät</il>
-						<!-- ko mobileList: recentlyPlayedCourses, foreach: recentlyPlayedCourses -->
-							<li>
 
-							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name)">
-								<span data-bind="text: name"></span>
-								<span style="font-size: 66%; color: #999; float:right">
-									<span data-bind="text: hole_count"></span>r
+	<div id="s_page" data-theme="a" style="display: none">
+		<!-- <div class="header" data-theme="b" data-role="content" style="font-size: 14px; padding-left:0 ; padding-right: 0 ">
+
+		</div> -->
+
+		<div id="s_content">
+
+			<div id="top" data-role="content" data-theme="a">
+				<div id="scoreWrappi" class="ui-grid-b">
+					<div id="holeScore" class="ui-block-a">
+						<span data-bind="text: holeScoreName, visible: showPoints"></span><br>
+						<span data-bind="text: currentHolePoints, visible: showPoints" style="font-size: 75%"></span>
+					</div>
+
+					<div id="scoreB" class="ui-block-b">
+						<div id="score">
+							<div class="scoreDisplay">
+							<!-- style="-webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(66%, transparent), to(rgba(255,255,255,0.2))); -webkit-transform: scale (1.0, 0.1) skew(5) !important" -->
+								<span data-bind="if: noScoreEntered() == false && currentHoleScore() > 0">
+									<div data-bind="text: currentHoleScore">
+									</div>
 								</span>
-							</a>
+								<span data-bind="if: noScoreEntered() == true || currentHoleScore() == 0">
+									<span> - </span>
+								</span>
 
-							</li>
+							</div>
+						</div>
+					</div>
+
+					<div id="roundScore" class="ui-block-c">
+						Tulos:
+
+
+						<!-- ko if: totalToPar() === false -->
+
+							<img src="{{ asset('bundles/apexscore/images/loading_gray.gif') }} ">
+
 						<!-- /ko -->
-					<!-- /ko -->
-			
-					<li data-role="list-divider" data-theme="d">Kaikki kentät</il>
-			
-					<!-- ko mobileList: courseList, foreach: courseList -->
-						<li data-bind="attr: { 'data-filtertext': alias +' '+ name}">
-							<a href="#" data-bind="click: $root.startNewRound.bind($data, id, name)">
-								<span data-bind="text: name"></span>
-								<span style="font-size: 66%; color: #999; float:right">
-									<span data-bind="text: hole_count"></span>r
-								</span>
-							</a>
-							
-<!--							<a href="#courseVar" data-icon="gear" data-rel="popup" data-inline="true" data-theme="d" data-transition="pop"></a> -->
 
-						</li>
+						<!-- ko if: totalToPar() !== false -->
+
+							<span data-bind="text: totalScore"></span>
+
+							<span style="opacity: 0.7; font-size: 90%">
+							<!-- ko if: totalToPar() > 0 -->
+								(+<span data-bind="text: totalToPar"></span>)
+							<!-- /ko -->
+
+							<!-- ko if: totalToPar() < 0 -->
+								(<span data-bind="text: totalToPar"></span>)
+							<!-- /ko -->
+
+							<!-- ko if: totalToPar() === 0 -->
+								(E)
+							<!-- /ko -->
+
+							</span>
+
+						<!-- /ko -->
+
+						<br>
+
+						<span style="font-size: 75%"> Pisteet:</span>
+
+						<!-- ko if: totalToPar() === false -->
+							<img src="{{ asset('bundles/apexscore/images/loading_gray.gif') }} ">
+						<!-- /ko -->
+
+						<!-- ko if: totalToPar() !== false -->
+							<span data-bind="text: totalPoints" style="font-size: 75%"></span>
+						<!-- /ko -->
+
+					</div>
+				</div>
+
+				<div id="sliderWrappi" class="ui-grid-b">
+					<div id="leftFill" class="ui-block-a"></div>
+					<div class="ui-block-b">
+						<div id="sliderW">
+							<div data-bind="value: sliderVal, uislider: sliderVal, event: { slide: sliderMove, slidestop: resetSlider }, sliderOptions: { value: 0, min: -50, max: 50, step: 1, animate: 'slow' }" name="slider" id="slaidi" min="-50" max="50" >
+							</div>
+						</div>
+
+					</div>
+					<div id="rightFill" class="ui-block-c"></div>
+				</div>
+			</div>
+
+			<div id="bottom" data-bind="event: { swipeleft: nextHole, swiperight: previousHole }">
+				<div id="dataDisplay" data-role="content" data-theme="a">
+					<div id="holeData" style="display: block; min-height: 100%; ">
+						<div class="ui-grid-a" style="min-height: 100%">
+							<div class="ui-block-a" style="width: 50%; text-align: left;  min-height: 100%">
+								<span id="course" data-bind="text: courseName"></span><br>
+								Reikä <span id="hole" data-bind="text: currentHole"></span><br>
+								Par <span id="par" data-bind="text: currentHolePar"></span><br>
+								Hcp <span id="hcp" data-bind="text: currentHoleHcp"></span><br>
+								<span id="length" data-bind="text: currentHoleLength"></span> metriä<br>
+							</div>
+
+							<!--<div class="ui-block-b" style="width: 10%">
+
+
+							</div>-->
+
+
+							<div class="ui-block-b" style="text-align: right; width: 50%; ">
+								Pelaaja: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
+								Tasoitus: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
+								Pelitasoitus:
+
+								<!-- ko if: playerPlayingHcp() !== false -->
+								<span id="playerplayhcp" data-bind="text: playerPlayingHcp" style="font-weight: bold"></span><br>
+								<!-- /ko -->
+
+								<!-- ko if: playerPlayingHcp() === false -->
+								<span><img src="{{ asset('bundles/apexscore/images/loading_white.gif') }} "></span><br>
+								<!-- /ko -->
+
+								Tii: <span id="playerTee" data-bind="text: locale_tee" style="font-weight: bold"></span><br>
+								Kierrosaika: <span id="duration" data-bind="text: roundDuration" style="font-weight: bold"></span><br>
+
+			<!--						<span data-bind="if: roundEndTime()">End time:
+									<span data-bind="text: moment(roundEndTime()).format('HH:mm:ss')" style="font-weight: bold">
+									</span>
+								</span> -->
+							</div>
+						</div>
+					</div>
+					<div id="stats" style="display: none; text-align: center; min-height: 100%">
+						<div class="ui-grid-b">
+							<div class="ui-block-a" style="width: 30%">
+								<span style="font-weight: 700">Väylät: </span><br>
+								<span data-bind="text: fairwayPercentage"></span>
+							</div>
+							<div class="ui-block-b" style="width: 40%">
+								<form>
+									<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="a">
+										<label><input type="checkbox" name="fir-checkbox" id="fir-checkbox" value="false" data-bind="checked: hitFairway" />FiR</label>
+
+										<label><input type="checkbox" name="gir-checkbox" id="gir-checkbox" value="false" data-bind="checked: hitGreen" />GiR</label>
+									</fieldset>
+								</form>
+							</div>
+							<div class="ui-block-c" style="width: 30%">
+								<span  style="font-weight: 700">Greenit: </span><br>
+								<span data-bind="text: greenPercentage"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="dataButtons" class="ui-grid-b">
+					<div class="ui-block-a" style="width: 20%">
+						<p></p>
+					</div>
+					<div class="ui-block-b" style="width: 60%">
+						<div class="" data-role="controlgroup" data-type="horizontal" style="text-align: center">
+							<a id="dataBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap:  showHoledata }" class="navbutton activeBtn" style="border-right: 1px #999 solid !important;">Tiedot</a>
+							<a id="statsBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap : showStats }" class="navbutton" style="border-left: 0px !important;">Tilastot</a>
+						</div>
+					</div>
+					<div class="ui-block-c" style="width: 20%">
+						<p></p>
+					</div>
+
+
+
+				</div>
+
+
+
+			</div>
+		</div>
+
+		<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a"  data-bind="css: { ios : launchedFromHome() == true }">
+			<div class="ui-block-a hurp" style="width: 50%">
+
+				<div class="holenav" data-inline="true" data-bind="event: { tap: previousHole }">
+
+					<i class="fa fa-caret-left" style="font-size: 16px"></i>
+
+					<span>&nbsp;Reikä</span>
+
+					<!-- ko if: currentHole() === 1 -->
+					<span data-bind="text: holes().length"></span>
 					<!-- /ko -->
-				</ul>
+
+					<!-- ko if: currentHole() !== 1 -->
+					<span data-bind="text: currentHole() - 1"></span>
+					<!-- /ko -->
+				</div>
+
+			</div>
+
+
+
+
+	<!--		style="float: right">  -->
+
+			<div class="ui-block-b hurp" style="width: 50%; text-align: right">
+				<div class="holenav"  data-bind="event: { tap: nextHole }">
+
+					<span>Reikä&nbsp;</span>
+
+					<!-- ko if: currentHole() === holes().length -->
+						<span>1</span>
+					<!-- /ko -->
+
+					<!-- ko if: currentHole() !== holes().length -->
+						<span data-bind="text: currentHole() + 1"></span>
+					<!-- /ko -->
+
+					<i class="fa fa-caret-right" style="font-size: 16px"></i>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div id="scoreCard" class="scorecard-dialog"  data-theme="b" style="display: none; z-index: 10000; background: rgba(0, 0, 0, 0.5);" data-bind="event: { swipeup: closeScoreCard, tap: closeScoreCard }" ">
+
+			<div data-role="content" id="dialogContent" data-theme="a" style="box-shadow: 0px 2px 24px #000">
+				<table class="scoreCardTable">
+					<tr>
+						<td class="scHeaders">Kenttä</td>
+						<td class="scHeaders">Päiväys</td>
+						<td class="scHeaders">Pelaaja</td>
+						<td class="scHeaders">Tasoitus</td>
+					</tr>
+					<tr>
+						<td class="scCells" data-bind="text: courseName"></td>
+						<td class="scCells" data-bind="text: moment(roundStartTime()).format('LL')"></td>
+						<td class="scCells" data-bind="text: playerName"></td>
+						<td class="scCells" data-bind="text: round_hcp"></td>
+					<tr>
+				</table>
+
+				<table class="scoreCardTable">
+					<tr>
+						<td class="scHeaders">Reikä</td>
+						<td class="scHeaders">Par</td>
+						<td class="scHeaders">HCP</td>
+						<td class="scHeaders">Pituus</td>
+						<td class="scHeaders">Tulos</td>
+						<td class="scHeaders">+/-</td>
+						<td class="scHeaders">Pisteet</td>
+					</tr>
+					<tbody data-bind="foreach: scoreCard">
+						<tr>
+							<td class="scCells" data-bind="text: hole_number"></td>
+							<td class="scCells" data-bind="text: hole_par"></td>
+							<td class="scCells" data-bind="text: hole_hcp"></td>
+
+							<!-- ko if: $parent.round_tee() === "yellow" -->
+								<td class="teeYellow"><span data-bind="text: hole_length"></span> m
+								</td>
+							<!-- /ko -->
+							<!-- ko if: $parent.round_tee() === "red" -->
+								<td class="teeRed"><span data-bind="text: hole_length"></span> m
+								</td>
+							<!-- /ko -->
+							<!-- ko if: $parent.round_tee() === "blue" -->
+								<td class="teeBlue"><span data-bind="text: hole_length"></span> m
+								</td>
+							<!-- /ko -->
+							<!-- ko if: $parent.round_tee() === "white" -->
+								<td class="teeWhite"><span data-bind="text: hole_length"></span> m
+								</td>
+							<!-- /ko -->
+
+							<!-- ko if: score() > 0 -->
+								<!-- ko if: scoreToPar() === -1 -->
+								<td class="scBirdie"><span class="circle" data-bind="text: score"></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() < -1 -->
+								<td class="scEagle"><span class="doublecircle"> <span class=" circle" data-bind="text: score"></span></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() === 1 -->
+									<td class="scBogey"><span class="rectangle" data-bind="text: score"></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() > 1 -->
+									<td class="scDouble" data-bind="text: score"></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() === 0 -->
+									<td class="scScoreCells" data-bind="text: score"></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() === 1 -->
+									<td class="scBogey">+<span data-bind="text: scoreToPar"></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() > 1 -->
+									<td class="scDouble">+<span data-bind="text: scoreToPar"></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() === -1 -->
+									<td class="scBirdie"><span data-bind="text: scoreToPar"></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() < -1 -->
+									<td class="scEagle"><span data-bind="text: scoreToPar"></span></td>
+								<!-- /ko -->
+								<!-- ko if: scoreToPar() === 0 -->
+									<td class="scScoreCells"><span>E</span></td>
+								<!-- /ko -->
+
+								<td class="scCells" data-bind="text: points"></td>
+
+							<!-- /ko -->
+
+							<!-- ko if: score() === 0 && $root.validateRound() === false -->
+								<td class="scScoreCells">&nbsp;</td>
+								<td class="scCells">&nbsp;</td>
+								<td class="scCells">&nbsp;</td>
+							<!-- /ko -->
+
+							<!-- ko if: score() === 0 && $root.validateRound() === true -->
+								<td class="scScoreCells">x</td>
+								<td class="scScoreCells">x</td>
+								<td class="scCells">0</td>
+							<!-- /ko -->
+
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td class="scTotals"></td>
+							<td class="scTotals" data-bind="text: coursePar"></td>
+							<td class="scTotals"></td>
+
+							<!-- ko if: round_tee() === "white" -->
+								<td class="teeWhite"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+								</td>
+							<!-- /ko -->
+
+							<!-- ko if: round_tee() === "yellow" -->
+								<td class="teeYellow"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+								</td>
+							<!-- /ko -->
+							<!-- ko if: round_tee() === "red" -->
+								<td class="teeRed"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+								</td>
+							<!-- /ko -->
+							<!-- ko if: round_tee() === "blue" -->
+								<td class="teeBlue"><span data-bind="text: courseLength" style="font-weight: bold"></span> m
+								</td>
+							<!-- /ko -->
+
+
+							<!-- ko if: validateRound() === false -->
+
+								<!-- ko if: totalToPar() < 0 -->
+									<td class="scBirdie"><span data-bind="text: totalScore"></span>
+									</td>
+								<!-- /ko -->
+								<!-- ko if: totalToPar() >= 0 -->
+									<td class="scTotals"><span data-bind="text: totalScore"></span>
+									</td>
+								<!-- /ko -->
+
+								<!-- ko if: totalToPar() > 0 -->
+									<td class="scTotals">+<span data-bind="text: totalToPar"></span>
+									</td>
+								<!-- /ko -->
+								<!-- ko if: totalToPar() < 0 -->
+									<td class="scBirdie"><span data-bind="text: totalToPar" ></span>
+									</td>
+								<!-- /ko -->
+								<!-- ko if: totalToPar() === 0 -->
+									<td class="scTotals"><span>E</span>
+									</td>
+								<!-- /ko -->
+
+							<!-- /ko -->
+
+							<!-- ko if: validateRound() === true -->
+
+								<!-- ko if: totalToPar() < 0 -->
+									<td class="scBirdie"><span data-bind="text: totalScore"></span></td>
+								<!-- /ko -->
+								<!-- ko if: totalToPar() >= 0 -->
+									<td class="scTotals"><span data-bind="text: totalScore"></span></td>
+								<!-- /ko -->
+
+								<!-- ko if: totalToPar() > 0 -->
+									<td class="scTotals">+<span data-bind="text: totalToPar"></span></td>
+								<!-- /ko -->
+								<!-- ko if: totalToPar() < 0 -->
+									<td class="scBirdie"><span data-bind="text: totalToPar" ></span></td>
+								<!-- /ko -->
+								<!-- ko if: totalToPar() === 0 -->
+									<td class="scTotals"><span>E</span></td>
+								<!-- /ko -->
+
+							<!-- /ko -->
+
+							<td class="scTotals" data-bind="text: totalPoints"></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="scoreCardTable">
+					<tbody>
+						<tr>
+							<td style="float: left; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Kesto: <span data-bind="text: roundDuration"></span></td>
+
+							<td style="float: right; border-top: 0px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 2px" class="scHeaders">Uusi tasoitus: <span data-bind="text: hcpPreview"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div style="height: 24px; text-align: center; background: #ccc; box-shadow: 0px 16px 16px #444" data-role="content" data-bind="event: { tap: closeScoreCard }">
+				<div>
+					<i class="fa fa-chevron-up" style="font-size: 24px; -webkit-transform: scale(1.5,1); color: #999 "></i>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>		
+
+
+</div>
+
+
+
+
+
+
+
+
 
 {% else %}
 
 	<script src="http://code.jquery.com/jquery-2.0.3.js"></script>
-	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+	<!--<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>-->
+	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
 </head>
 <body>
 

@@ -1985,7 +1985,7 @@ function viewModel () {
 
 				}
 
-				console.log("getroundscore round_tee", self.round_tee());
+				//console.log("getroundscore round_tee", self.round_tee());
 
 				self.locale_tee(self.translate_tee());
 
