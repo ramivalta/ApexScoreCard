@@ -328,7 +328,7 @@ body {
 }
 
 .reflect {
-	/*-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(255,255,255,0.2)));*/
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(255,255,255,0.2)));
 }
 
 .scoreDisplay {
@@ -1195,8 +1195,8 @@ background-size: 5px 5px;
 }
 
 #prefsPlayerHcp {
-	border-top: 1px solid #555 !important;
-	border-bottom: 1px solid #777 !important;
+	border-top: 1px solid #555;
+	border-bottom: 1px solid #777;
 	background: #f7f7f7;
 	width: 100%;
 }
