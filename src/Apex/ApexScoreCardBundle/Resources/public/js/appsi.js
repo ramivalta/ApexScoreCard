@@ -85,7 +85,8 @@ function viewModel () {
 
 	self.cachedScore = ko.observable(0);
 
-	self.bogikorttiVersion = ko.observable("Bogikortti v0.2.3 - 'Bogi se on tuplabogikin'");
+	self.bogikorttiVersion = ko.observable("Bogikortti v2.0 - 'Heitä varamaila'");
+	self.bogikorttiReleaseName = ko.observable("");
 	self.activePage = ko.observable("front");
 	self.showAllRounds = ko.observable(false);
 	self.loadingRound = ko.observable();
@@ -991,8 +992,11 @@ function viewModel () {
 			var f_text = $('#f_text');
 			var former_title = $('#pageTitle');
 
+			var creditsbtn = $('#creditsButton');
 
 			var pageRight = $('#pageRight');
+
+			var new_round_btn = $('#pageRight');
 
 			f_text.removeClass('headerButton').addClass('headerTitle');
 
@@ -1014,6 +1018,16 @@ function viewModel () {
 					x: '-100%',
 					display : 'block',
 				});
+
+				creditsbtn.css({
+					perspective: '1000',
+					x: '100%',
+					opacity: '0',
+					visibility: 'visible',
+					display: 'block',
+				});
+
+
 			}, 0);
 
 			setTimeout(function() {
@@ -1023,11 +1037,13 @@ function viewModel () {
 					duration: '350',
 					x: '100%',
 					complete: function() {
-						former_title.css({ visiblity: 'hidden' });
+						former_title.css({ visibility: 'hidden', display: 'none' });
 					}
 				});
 
-				var new_round_btn = $('#pageRight');
+
+
+
 
 				new_round_btn.transition({
 					perspective: '1000',
@@ -1039,6 +1055,12 @@ function viewModel () {
 							x: '0%',
 							duration: '200',
 							opacity: '1',
+						});
+						creditsbtn.transition({
+							perspective: '1000',
+							x: '0%',
+							opacity: '1',
+							duration: '350',
 						});
 					}
 				});
@@ -1071,7 +1093,7 @@ function viewModel () {
 					easing: 'out',
 					complete: function() {
 						f_content.css({ visibility: 'hidden', x: '100%' });
-						pageRight.css({ visibility: 'hidden' });
+						pageRight.css({ visibility: 'hidden', display: 'none' });
 					}
 				});
 
@@ -1131,7 +1153,9 @@ function viewModel () {
 
 			var pageRight = $('#pageRight');
 
-			pageRight.css({ visibility: 'visible' });
+			var creditsbtn = $('#creditsButton');
+
+			pageRight.css({ visibility: 'visible', display: 'block' });
 
 			/*prefs_link.transition({
 				perspective: '1000',
@@ -1154,7 +1178,7 @@ function viewModel () {
 
 			//pref_text.css({ textDecoration: 'underline'});
 
-			former_title.css({ visibility: 'visible' }).transition({
+			former_title.css({ visibility: 'visible', display: 'block' }).transition({
 				perspective: '1000',
 				opacity: '1',
 				duration: '350',
@@ -1171,6 +1195,18 @@ function viewModel () {
 				opacity: '1',
 				duration: '850',
 			});
+
+			creditsbtn.transition({
+				perspective: '1000',
+				opacity: '0',
+				duration: '350',
+				x: '100%',
+				complete: function() {
+					creditsbtn.css({ visibility: 'hidden', display: 'none' });
+				}
+			});
+
+
 
 			f_content.css({transformOrigin: '100% 0', visibility: 'visible' }).transition({
 				perspective: '1000',
@@ -1442,6 +1478,42 @@ function viewModel () {
 
 	};
 
+
+	self.showCredits = function() {
+
+		var credits = $('#credits');
+		credits.css({
+			y: '100%',
+			display: 'block',
+		});
+
+
+		credits.transition({
+			perspective: '1000',
+			y: '0%',
+			duration: '350',
+			easing: 'in',
+		});
+	}
+
+	self.hideCredits = function() {
+
+		var credits = $('#credits');
+		credits.transition({
+			perspective: '1000',
+			y: '100%',
+			duration: '350',
+			easing: 'out',
+			complete: function() {
+				credits.css({
+					display: 'none',
+				});
+
+			}
+		});
+	}
+
+
 	self.getCourseData = function (course_id, round_id, cb) {
 
 		var data = { course_id : course_id };
@@ -1679,7 +1751,7 @@ function viewModel () {
 								self.roundStartTime(start_time.date);
 								self.round_hcp(self.playerExactHcp());
 
-								console.log(self.round_tee());
+								//console.log(self.round_tee());
 
 								//self.round_tee(self.playerDefaultTee());
 
@@ -2550,6 +2622,8 @@ function viewModel () {
 		if(!inTransition) {
 			inTransition = true;
 
+			$('#fullCourseList').css({visibility: 'hidden'});
+
 			self.round_tee(self.playerDefaultTee());
 
 		   /*var interval = setInterval(function(){
@@ -2634,6 +2708,8 @@ function viewModel () {
 						});
 
 						inTransition = false;
+
+						$('#fullCourseList').css({visibility: 'visible'});
 
 					   /*var interval = setInterval(function(){
 							$.mobile.loading('hide');
@@ -2932,7 +3008,7 @@ function viewModel () {
 
 		var sel = $('#teeSelect');
 
-		sel.css({ y: '-100%', display: 'block', zIndex: '-1', boxShadow: '0 0 0 #666'  }).transition({
+		sel.css({ y: '-100%', display: 'block', boxShadow: '0 0 0 #666'  }).transition({
 			perspective: '1000',
 			y: '0%',
 			duration: '250',

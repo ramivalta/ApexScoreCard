@@ -27,8 +27,6 @@
 	<link href="{{ asset('bundles/apexscore/css/mobiscroll.scroller.ios7.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('bundles/apexscore/css/mobiscroll.animation.css') }}" rel="stylesheet" type="text/css" />
 
-
-
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}">
 	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/	jquery-ui-1.10.3.custom.min.css') }}">
 
@@ -110,6 +108,11 @@
 			<span style="padding-left: 2px; ">Takaisin</span>
 		</div>
 
+		<div style="padding-right: 6px; visibility: hidden; position: absolute; padding-top: 12px; height; 44px; right: 0; z-index: 5" class="headerButton" id="creditsButton" data-bind="event: { tap : showCredits }">
+			<i class="fa fa-info"></i>
+			<span style="padding-right: 2px; padding-left: 2px">Tietoja</span>
+		</div>
+
 		<div class="ui-grid-b" id="header_scorepage" data-bind="event: { swipedown: showScoreCard }" style="display: none">
 			<div class="ui-block-a" style="text-align: left; width: 20%" data-bind="event: { tap: leaveRound }">
 				<div class="headerButton" id="s_back" style="padding-left: 6px">
@@ -145,7 +148,7 @@
 		</div>
 
 
-		<div class="ui-grid-b" id="header_courselist" style="display: none">
+		<div class="ui-grid-b" id="header_courselist" style="display: none; z-index: 1">
 			<div class="ui-block-a" data-bind="event: { tap : hideCourseSelect }">
 				<div class="headerButton" style="min-width: 90px; padding-left: 6px">
 					<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
@@ -162,7 +165,7 @@
 
 			<div class="ui-block-c">
 				<div data-bind="event: { tap: toggleTeeSelect }" class="headerButton" style="text-align: right; padding-right: 6px">
-					<span data-bind="css: { yellow : round_tee() === 'yellow', blue : round_tee() === 'blue', red : round_tee() === 'red', white : round_tee() === 'white' }">&bull;</span>
+					<span data-bind="css: { yellow : round_tee() === 'yellow', blue : round_tee() === 'blue', red : round_tee() === 'red', white : round_tee() === 'white' }" class="chevron">&bull;</span>
 					<span>Tii</span>
 				</div>
 			</div>
@@ -174,7 +177,7 @@
 				<div id="prefs_link" data-bind="event: { tap: loadPrefs }">
 					<div class="headerButton" id="f_text" style="display: inline-block; margin-right: 100%; min-width: 90px; padding-left: 2px">
 						<i class="fa fa-gear reflect" style="display: inline-block; text-decoration: none"></i>
-						<span id="pref_text" style="display: inline-block; "  class="reflect">Asetukset</span>
+						<span id="pref_text" style="display: inline-block; ">Asetukset</span>
 					</div>
 				</div>
 			</div>
@@ -314,7 +317,7 @@
 
 							<h5 data-bind="if: roundList().length >= 21 && showAllRounds() == false, event: { tap : function() { showAllRounds(true) }} " class="headerButton">
 <!--								<a style="color: 2ad"> -->
-								<a style="color: #fff">
+								<a style="color: #fff; text-decoration: underline">
 									Näytä loput
 									<span data-bind="text: roundList().length - 20"></span>
 									kierrosta
@@ -347,27 +350,99 @@
 		</div>
 	</div>
 
+	<div id="credits" style="display: none; min-height: 100%; height: 100%; background: #ddd; z-index: 100; position: absolute; top: 0; right: 0; bottom: 0; padding: 6px">
+		<div class="ui-grid-b">
+			<div class="ui-block-a" style="width: 20%">
 
-	<div id="prefs" style="display: none" data-role="content" data-theme="b">
-
-		<div id="prefs_content">
-
-			<!-- credits -->
-			<div data-role="popup" id="credsPopUp" data-over-theme="a" data-theme="a" data-dismissible="true" class="ui-corner-all" data-mini="true">
-				<div data-role="header" data-theme="a" class="ui-corner-top" style="text-align: center; padding: 6px">
-					<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a" data-iconpos="notext" data-icon="delete" style="margin-left: 5px; margin-top: 5px"></a>
-					<h1>Tietoja</h1>
+			</div>
+			<div class="ui-block-b" style="width: 60%; margin-left: auto; margin-right: auto">
+				<div class="headerTitle" style="text-align: center;">
+					<span style="font-weight: 700; color: #333; text-align: center;">
+						Tietoja
+					</span>
 				</div>
-				<div data-role="content" data-mini="true" data-theme="a" class="ui-corner-bottom ui-content">
-					<h3 class="ui-title" data-bind="text: bogikorttiVersion"></h3>
+			</div>
+			<div class="ui-block-c" style="width: 20%; text-align: right; float: right">
+				<div class="headerButton" data-bind="event: { tap: hideCredits }" style="text-align: right">
+					<span style="padding-left: 4px; padding-right: 4px; color: #059">Piilota</span>
+				</div>
+			</div>
+		</div>
 
-					<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu vihapuhe osoitteeseen <a href="mailto: rami.valta@gmail.com">rami.valta@gmail.com</a>.
 
+		<div style="padding: 10px; background: #fcfcfc; display: table; border-radius: 6px;">
+			<img src="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" style="width: 70px; height: 70px; display: table-cell; border-radius: 14px; border: 2px solid #fefefe; box-shadow: 0 0 6px #222"></img>
 
-				  <p>Kiitokset: Martti, Ville, Jouni, Antti, Tero, Kari, Jouni, Jaakko ja Janne.</p>
+			<div style="display: table-cell; padding-left: 10px; padding-right: 8px; font-size: 80%; vertical-align: top">
+				<h4 data-bind="text: bogikorttiVersion" style="vertical-align: top; margin: 2px;"></h4>
+				<span>
+					Yksinkertainen digitaalinen tuloskortti.
+				</span>
+
+			</div>
+		</div>
+
+		<div style="height: 6px">&nbsp;</div>
+
+		<div style="padding: 10px; background: #fcfcfc; font-size: 80%; border-radius: 6px; font-weight: 400;">
+
+			<p>Bugiraportit, huomiot virheellisistä kenttätiedoista, valitukset ja muu palaute:
+
+			<div style="border: 1px solid #ddd; border-radius: 6px; padding: 8px; margin: 2px; background: #fefefe">
+				<div style="padding: 4px; ">
+					<div style="font-weight: 500; width: 40px; display: inline-block; text-align: right">Email</div>
+					<span>
+						<a href="mailto: rami.valta@gmail.com" style="font-weight: 300">rami.valta@gmail.com</a>
+					</span>
+				</div>
+
+				<div style="padding: 4px">
+					<div style="font-weight: 500; width: 40px; display: inline-block; text-align: right">Twitter</div>
+					<span>
+						<a href="http://twitter.com/rvalta" style="font-weight: 300">@rvalta</a>
+					</span>
+				</div>
+
+			</div>
+
+			<p>
+			<div style="border: 1px solid #ddd; border-radius: 6px; padding: 8px; margin: 2px; background: #fefefe">
+				<div style="padding: 4px; ">
+
+					<div class="ui-grid-a">
+						<div class="ui-block-a" style="width: 40px">
+							<div style="font-weight: 500; text-align: right">
+								Kiitos&nbsp;
+							</div>
+						</div>
+						<div class="ui-block-b" style="min-width: 200px">
+							<div style="text-align: left; font-weight: 300; width: 100%">
+								Masa, Ville, Jouni, Antti, Janne, Tero, Kari, Lauri
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div style="padding: 4px">
+					<div class="ui-grid-a">
+						<div class="ui-block-a" style="width: 70px">
+							<span style="font-weight: 500">Tekstuurit</span>
+						</div>
+
+						<div class="ui-block-b" style="min-width: 130px">
+							<a style="font-weight: 300" href="http://www.subtlepatterns.com">Subtle Patterns</a>, <a style="font-weight: 300" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">Creative Commonsin</a> alaisuudessa
+						</div>
+					</div>
 				</div>
 			</div>
 
+		</div>
+	</div>
+
+
+
+	<div id="prefs" style="display: none" data-role="content" data-theme="b">
+		<div id="prefs_content">
 			<div id="prefsWrappi">
 				<div id="mainPrefs">
 					<h5 class="reflect">Tasoitus</h5>
@@ -482,7 +557,7 @@
 							</div>
 						</div>
 
-						<div data-bind="visible: courseListVisible() == true">
+						<div id="fullCourseList" data-bind="visible: courseListVisible() == true">
 							<div style="text-align: center; background: #e0e0e0">
 								<input id="search" data-role="none" type="text" data-bind="value: courseSearch, valueUpdate: 'afterkeyup'" placeholder="Kentän nimi tai lyhenne..." />
 							</div>
@@ -713,10 +788,6 @@
 
 			</div>
 
-
-
-
-	<!--		style="float: right">  -->
 
 			<div class="ui-block-b hurp" style="width: 50%; text-align: right">
 				<div class="holenav"  data-bind="event: { tap: nextHole }">
