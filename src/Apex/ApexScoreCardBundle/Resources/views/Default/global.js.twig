@@ -13,8 +13,8 @@ function ControllerProxy() {
             json = null;
         }
 
-        // *** The service endpoint URL        
-        
+        // *** The service endpoint URL
+
         $.ajax({
             url: url,
             data: json,
@@ -31,13 +31,13 @@ function ControllerProxy() {
 			var responseTextErr = xhr.responseText;
 			if (responseTextErr) {
 				if (error) error(responseTextErr);
-				else alert('FAIL', responseTextErr);
+				else console.log('FAIL', responseTextErr);
 			}
 			return;
 		}).always(function() {
                 if (anyway) anyway();
 		});
-            
+
     };
 }
 
@@ -45,15 +45,15 @@ function ControllerProxy() {
 var ApexEventProxy = function() {
     var self = this;
     self.proxy = new ControllerProxy();
-    
+
     self.getGolferData = function(data, done, always, fail){
         self.proxy.post('{{ path('golfer_json_get')}}', data, done, fail, always);
     };
-    
+
     self.getGolferDataById = function(data, done, always, fail){
         self.proxy.post('{{ path('golfer_json_get_by_id')}}', data, done, fail, always);
     };
-    
+
     self.saveGolferData = function(data, done, always, fail) {
         self.proxy.post('{{path('golfer_json_set')}}', data, done, fail, always);
     };
@@ -61,18 +61,18 @@ var ApexEventProxy = function() {
 	self.getCourseList = function (data, done, always, fail) {
 		 self.proxy.post('{{path('course_json_get')}}', data, done, fail, always);
     };
-    
+
     self.createNewRound = function (data, done, always, fail) {
     	self.proxy.post('{{path('round_json_new')}}', data, done, fail, always);
 	};
-	
+
 	self.createNewRoundGolfer = function (data, done, always, fail) {
     	self.proxy.post('{{path('roundGolfer_json_new')}}', data, done, fail, always);
 	};
 	self.createNewRoundScore = function (data, done, always, fail) {
     	self.proxy.post('{{path('roundScore_json_new')}}', data, done, fail, always);
 	};
-	
+
 	self.getHoleData = function (data, done, always, fail) {
     	self.proxy.post('{{path('hole_json_get_all')}}', data, done, fail, always);
 	};
@@ -82,7 +82,7 @@ var ApexEventProxy = function() {
 	self.getRoundList = function (data, done, always, fail) {
     	self.proxy.post('{{path('round_json_get_list')}}', data, done, fail, always);
     };
-    
+
     self.getRoundScores = function (data, done, always, fail) {
     	self.proxy.post('{{path('roundScore_json_get_scores')}}', data, done, fail, always);
     };
