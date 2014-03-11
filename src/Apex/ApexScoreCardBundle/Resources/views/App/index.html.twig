@@ -13,7 +13,7 @@
 
 <!--    <link href="{{ asset('bundles/apexscore/css/bogikortti.min.css') }}" rel="stylesheet" type="text/css" />    -->
 
-  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/stylet.css?123') }}" type="text/css" media="screen" rel="stylesheet" />
+  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/stylet.css?232123') }}" type="text/css" media="screen" rel="stylesheet" />
 
 	<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" />
 
@@ -165,7 +165,7 @@
 
 			<div class="ui-block-c">
 				<div data-bind="event: { tap: toggleTeeSelect }" class="headerButton" style="text-align: right; padding-right: 6px">
-					<span data-bind="css: { yellow : round_tee() === 'yellow', blue : round_tee() === 'blue', red : round_tee() === 'red', white : round_tee() === 'white' }" class="chevron">&bull;</span>
+					<span data-bind="css: { yellow : round_tee() === 'yellow', blue : round_tee() === 'blue', red : round_tee() === 'red', white : round_tee() === 'white' }" style="-webkit-transform: scale(2,2);">&bull;</span>
 					<span>Tii</span>
 				</div>
 			</div>
@@ -333,8 +333,17 @@
 				</div> -->
 
 
-				<div data-theme="a" data-role="content" data-bind="visible: firstRun() == true">
-					<div style="width: 100%; margin-left: 10px; float:left">
+				<div data-theme="b" data-role="content" data-bind="fadeVisible: firstRun() == true" style="background: rgba(25, 25, 25, 0.15)">
+					<h3>Tervetuloa Bogikorttiin!</h3>
+
+					<p style="font-size: 14px">Aseta tasoituksesi ja oletustiisi Asetuksista.
+
+					<p style="font-size: 14px">Aloita kierros valitsemalla Uusi kierros.
+
+				</div>
+
+
+				<!--	<div style="width: 100%; margin-left: 10px; float:left">
 						<img src="{{asset('bundles/apexscore/images/arrow_left.png') }}" style="float:left">
 						<img src="{{asset('bundles/apexscore/images/arrow_right.png') }}" style="float:right; margin-right: 30px">
 					</div>
@@ -343,7 +352,7 @@
 						<span style="float:left; margin: 5px">Aseta tasoituksesi ja valitse tii</span>
 						<span style="float: right; margin: 5px">Aloita uusi kierros</span>
 					</div>
-				</div>
+				</div> -->
 
 
 			</div>
@@ -446,14 +455,16 @@
 			<div id="prefsWrappi">
 				<div id="mainPrefs">
 					<h5 class="reflect">Tasoitus</h5>
-					<div id="prefsPlayerHcp">
+					<div data-bind="visible: spinnerLoaded() == false" style="background: f7f7f7; min-height: 174px; width: 100%">
+					</div>
+					<div id="prefsPlayerHcp" data-bind="fadeVisible: spinnerLoaded() === true">
 						<input id="i" style="display: none"	data-bind="value: playerExactHcp" data-role="none" />
 					</div>
 
 					<div id="tees">
 						<h5 class="reflect">Tii</h5>
 
-						<fieldset id="teeOptions" data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="b" style="font-size: 12px !important">
+						<fieldset id="teeOptions" data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="a" style="font-size: 13px !important; border-radius: 6px">
 							<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: playerDefaultTee, mobileradio: playerDefaultTee" />
 							<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Punainen</label>
 
@@ -470,15 +481,9 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
-
 	<div id="courseSelect" style="visibility: hidden">
-
-
-
-
 		<div id="c_outer">
 			<div class="scrollOuter">
 				<div class="scrollMiddle">
@@ -486,7 +491,7 @@
 
 						<div id="teeSelect" style="text-align: center; background: transparent; padding: 8px; display: none; position: relative; z-index: 5">
 							<div style="position: relative; z-index: 5">
-								<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="b" style="font-size: 12px !important">
+								<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="a" style="font-size: 13px !important; border-radius: 6px">
 									<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: round_tee, mobileradio: round_tee" />
 									<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Punainen</label>
 
@@ -558,7 +563,7 @@
 						</div>
 
 						<div id="fullCourseList" data-bind="visible: courseListVisible() == true">
-							<div style="text-align: center; background: #e0e0e0">
+							<div style="text-align: center; background: #eeeeee">
 								<input id="search" data-role="none" type="text" data-bind="value: courseSearch, valueUpdate: 'afterkeyup'" placeholder="Kentän nimi tai lyhenne..." />
 							</div>
 
@@ -726,7 +731,7 @@
 					<div id="stats" style="display: none; text-align: center; min-height: 100%">
 						<div class="ui-grid-b">
 							<div class="ui-block-a" style="width: 30%">
-								<span style="font-weight: 700">Väylät: </span><br>
+								<span style="font-weight: 700; color: #333">Väylät: </span><br>
 								<span data-bind="text: fairwayPercentage"></span>
 							</div>
 							<div class="ui-block-b" style="width: 40%">
@@ -739,7 +744,7 @@
 								</form>
 							</div>
 							<div class="ui-block-c" style="width: 30%">
-								<span  style="font-weight: 700">Greenit: </span><br>
+								<span  style="font-weight: 700; color: #333">Greenit: </span><br>
 								<span data-bind="text: greenPercentage"></span>
 							</div>
 						</div>
