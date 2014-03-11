@@ -83,8 +83,8 @@ body {
 
 #search {
 	border: 1px solid #bbb;
-	border-radius: 6px;
-	height: 32px;
+	border-radius: 18px !important;
+	height: 24px;
 	font-size: 13px;
 	font-weight: 300;
 	margin-top: 8px;
@@ -1424,7 +1424,10 @@ background-size: 5px 5px;
 
 .courseList_subheader {
 	//background: linear-gradient(to bottom, #777, #999);
-	background: #e0e0e0	;
+	background: #eeeeee;
+
+	//background: #fefefe;
+
 	border-top: 1px solid #888 !important;
 	color: #0e0e0e;
 	text-shadow: 0px 1px 1px #fff;
