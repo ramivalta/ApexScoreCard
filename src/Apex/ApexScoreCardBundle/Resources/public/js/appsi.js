@@ -963,7 +963,7 @@ function viewModel () {
 	};
 
 
-
+	self.spinnerLoaded = ko.observable(false);
 
 	self.loadPrefs = function() {
 
@@ -979,6 +979,14 @@ function viewModel () {
 				self.scrollPos(0);
 				self.loadedRoundStartTime("");
 			}
+
+
+
+			//var spinner = $('#prefsPlayerHcp');
+
+
+			//spinner.css({visibility: 'hidden', opacity: '0' });
+
 
 			var backbtn = $('#pageBackButton');
 			var prefs = $('#prefs');
@@ -1004,6 +1012,8 @@ function viewModel () {
 			//pref_text.css({ textDecoration: 'none', fontWeight: '700'});
 
 
+
+
 			setTimeout(function() {
 				backbtn.css({
 					perspective: '1000',
@@ -1027,6 +1037,8 @@ function viewModel () {
 					display: 'block',
 				});
 
+				//spinner.css({visibility: 'visible' });
+
 
 			}, 0);
 
@@ -1040,10 +1052,6 @@ function viewModel () {
 						former_title.css({ visibility: 'hidden', display: 'none' });
 					}
 				});
-
-
-
-
 
 				new_round_btn.transition({
 					perspective: '1000',
@@ -1080,6 +1088,7 @@ function viewModel () {
 
 					complete: function() {
 						prefs_link.css({ textDecoration: '', color: '#fefefe' });
+						self.spinnerLoaded(true);
 
 					}
 				});
@@ -1097,8 +1106,6 @@ function viewModel () {
 					}
 				});
 
-						//prefs_content.css({display: 'block'});
-
 
 				prefs.transition({
 					perspective: '1000',
@@ -1106,10 +1113,17 @@ function viewModel () {
 					easing: 'in',
 					duration: '150',
 					complete: function() {
-						inTransition = false;
+						//spinner.transition({opacity: '1', duration: '50' });
 					}
 				});
+
+
+
 			}, 1);
+
+			setTimeout(function() {
+				inTransition = false;
+			}, 250);
 
 			//pref_text.removeClass('headerButton:hover');
 
@@ -1131,16 +1145,14 @@ function viewModel () {
 			});
 		})();*/
 
+
 		//$('#pageBackButton').addClass('headerButtonClicked');
 
 		if(!inTransition) {
-
+			self.saveGolfer();
 			inTransition = true;
 
-			self.saveGolfer();
-
 			var backbtn = $('#pageBackButton');
-
 
 			self.activePage("front");
 
@@ -1250,6 +1262,7 @@ function viewModel () {
 				duration: '350',
 				complete: function() {
 					el.css({display : 'none' });
+
 				}
 			});
 
@@ -1259,6 +1272,8 @@ function viewModel () {
 				duration: '350',
 				complete: function() {
 					inTransition = false;
+					self.spinnerLoaded(false);
+					//spinner.css({ visibility: 'hidden' });
 					//prev.css({display : 'block'});
 				}
 			});
@@ -1491,7 +1506,7 @@ function viewModel () {
 		credits.transition({
 			perspective: '1000',
 			y: '0%',
-			duration: '350',
+			duration: '250',
 			easing: 'in',
 		});
 	}
@@ -1502,7 +1517,7 @@ function viewModel () {
 		credits.transition({
 			perspective: '1000',
 			y: '100%',
-			duration: '350',
+			duration: '250',
 			easing: 'out',
 			complete: function() {
 				credits.css({
@@ -1595,6 +1610,10 @@ function viewModel () {
 
 			self.saveHoleScore(self.round_id(), self.round_hcp(), self.currentHole(), self.currentHoleScore(), self.round_tee(), self.hitFairway(), self.hitGreen());
 
+			if (self.firstRun() === true) {
+				self.firstRun(false);
+			}
+
 			if (self.roundEndTime() === "" && self.validateRound() === true)
 			{
 				var d = new Date();
@@ -1609,9 +1628,6 @@ function viewModel () {
 
 					}
 				);
-				if (self.firstRun() === true) {
-					self.firstRun(false);
-				}
 			}
 
 			for (var i = 0; i < self.roundList().length; i++) {
@@ -2709,7 +2725,15 @@ function viewModel () {
 
 						inTransition = false;
 
+
+						if(self.recentlyPlayedCourses().length == 0) {
+							self.courseListVisible(true);
+						}
+
 						$('#fullCourseList').css({visibility: 'visible'});
+
+
+
 
 					   /*var interval = setInterval(function(){
 							$.mobile.loading('hide');
@@ -2952,7 +2976,7 @@ function viewModel () {
 		}
 
 
-	}).extend({ throttle: 50 });
+	}).extend({ throttle: 350 });
 
 
 
@@ -2982,10 +3006,10 @@ function viewModel () {
 
 			if (shouldDisplay == true) {
 				el.css({ display: 'block'});
-				el.transition({ opacity: 1, queue: false, duration: '500ms' });
+				el.transition({ opacity: 1, queue: false, duration: '300' });
 			}
 			else {
-				el.transition({ opacity: 0, queue: false, duration: '500ms' });
+				el.transition({ opacity: 0, queue: false, duration: '300' });
 				el.css({ display: 'none'});
 			}
 		}
