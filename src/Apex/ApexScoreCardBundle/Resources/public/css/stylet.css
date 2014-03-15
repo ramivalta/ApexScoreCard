@@ -67,6 +67,7 @@ body {
 #root {
 	background: transparent;
 	width: 100%;
+	bottom: 0;
 }
 
 .root_ios {
@@ -76,6 +77,12 @@ body {
 .ios_top {
 	top: 20px !important;
 }
+
+.ios_top_minimal_ui {
+	top: 60px !important;
+	bottom: 0 !important;
+}
+
 
 .ios_bottom {
 	padding-bottom: 20px !important;
@@ -95,6 +102,23 @@ body {
 	margin-right: auto;
 	padding: 4px;
 	background: #fff;
+}
+
+.text-input {
+	border: 1px solid #666;
+	border-radius: 32px !important;
+	height: 32px;
+	font-size: 18px;
+	font-weight: 300;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	color: #000;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 4px;
+	background: #fefefe;
+	min-width: 95%;
+	padding-left: 12px;
 }
 
 
@@ -1643,6 +1667,7 @@ background-size: 5px 5px;
 * .ui-input.text {
 	margin-top: 0em !important;
 	margin-bottom: 0em !important;
+	border-radius: 64px !important;
 }
 
 .yellow {

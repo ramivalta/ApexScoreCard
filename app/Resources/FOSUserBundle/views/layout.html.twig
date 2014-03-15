@@ -5,12 +5,21 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0" />
+		<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+
+		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/stylet.css?232123') }}" type="text/css" media="screen" rel="stylesheet" />
+
+		<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" />
+
+
+
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0, minimal-ui" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	</head>
-	<body data-role="page" data-theme="a">
-		<div data-role="content" data-theme="a">
+	<body data-role="page" data-theme="b" style="background: transparent !important">
+	<!--style="background: rgba(25, 25, 25, 0.20)">-->
+		<div data-role="content" data-theme="b" style="background: transparent !important">
 			<div>
 				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 					{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
