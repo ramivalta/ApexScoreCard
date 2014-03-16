@@ -15,9 +15,9 @@ class RegistrationFormType extends BaseType
         parent::buildForm($builder, $options);
 
         // add your custom field
-        $builder->add('name', 'text', array('label' => 'Name:'));
+        $builder->add('name', 'text', array('label' => 'Nimi'));
   //      $builder->add('tee');
-        $builder->add('gender', 'choice', array ('choices' => array('Male' => 'Male', 'Female' => 'Female'), 'expanded' => true, 
+       $builder->add('gender', 'choice', array ('choices' => array('Male' => 'Mies', 'Female' => 'Nainen'), 'label' => 'Sukupuoli', 'expanded' => true, 
         'multiple' => false, 'required' => true,  ));
 //       $builder->add('handicap');
 	}

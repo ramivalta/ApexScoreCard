@@ -7,41 +7,40 @@
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
 
-		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/stylet.css?232123') }}" type="text/css" media="screen" rel="stylesheet" />
-
+		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
 		<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" />
-
-
 
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0, minimal-ui" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	</head>
-	<body data-role="page" data-theme="b" style="background: transparent !important">
-	<!--style="background: rgba(25, 25, 25, 0.20)">-->
-		<div data-role="content" data-theme="b" style="background: transparent !important">
-			<div>
-				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-					{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-					<a href="{{ path('fos_user_security_logout') }}">
-						{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-					</a>
-				{% else %}
-	<!--                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a> -->
-				{% endif %}
-			</div>
 
-			{% for type, messages in app.session.flashbag.all() %}
-				{% for message in messages %}
-					<div class="flash-{{ type }}">
-						{{ message }}
-					</div>
+	<body>
+		<div class="ui-mobile-viewport" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0">
+			<div data-role="content" data-theme="b" style="background: transparent !important">
+				<!-- <div>
+					{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+						{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+						<a href="{{ path('fos_user_security_logout') }}">
+							{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+						</a>
+					{% else %} -->
+					   <!-- <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a> -->
+				<!--	{% endif %}
+				</div> -->
+
+				{% for type, messages in app.session.flashbag.all() %}
+					{% for message in messages %}
+						<!-- <div class="flash-{{ type }}">
+							{{ message }}
+						</div> -->
+					{% endfor %}
 				{% endfor %}
-			{% endfor %}
 
-			<div>
-				{% block fos_user_content %}
-				{% endblock fos_user_content %}
+				<div>
+					{% block fos_user_content %}
+					{% endblock fos_user_content %}
+				</div>
 			</div>
 		</div>
    </body>

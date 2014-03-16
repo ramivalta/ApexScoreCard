@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
-  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/stylet.css?232123') }}" type="text/css" media="screen" rel="stylesheet" />
+  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
 
 	<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" />
 
@@ -560,7 +560,7 @@
 
 						<div id="fullCourseList" data-bind="visible: courseListVisible() == true">
 							<div style="text-align: center; background: #eeeeee">
-								<input id="search" data-role="none" type="text" data-bind="value: courseSearch, valueUpdate: 'afterkeyup'" placeholder="Kentän nimi tai lyhenne..." />
+								<input id="search" data-role="none" type="text" data-bind="value: courseSearch, valueUpdate: 'afterkeyup'" placeholder="Kentän nimi tai lyhenne..." style="padding-left: 12px" />
 							</div>
 
 							<div data-bind="foreach: filteredCourseList, css: { ios_bottom : $root.launchedFromHome() == true }">

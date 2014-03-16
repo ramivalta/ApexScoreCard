@@ -1,7 +1,9 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+    <!-- <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>-->
+    
+    <h1>Rekisteröityminen onnistui, kirjaudutaan sisään...</h1>
     
     <script type="text/javascript">
    		 window.location.href = "../app/"; // tälläset pitäis tehdä symfonyssa 

@@ -1,96 +1,94 @@
 # Group
 group:
     edit:
-        submit: Update group
+        submit: Päivitä ryhmä
     show:
-        name: Group name
+        name: Ryhmän nimi
     new:
-        submit: Create group
+        submit: Luo ryhmä
     flash:
-        updated: The group has been updated
-        created: The group has been created
-        deleted: The group has been deleted
+        updated: Ryhmä on päivitetty
+        created: Ryhmä on luotu
+        deleted: Ryhmä on poistettu
 
 # Security
-"Bad credentials": Invalid username or password
+"Bad credentials": Epäkelpo käyttäjätunnus tai salasana
 
 security:
     login:
-        username: "Username:"
-        password: "Password:"
-        remember_me: Remember me
-        submit: Login
+        username: "Käyttäjätunnus"
+        password: "Salasana"
+        remember_me: Muista minut
+        submit: Kirjaudu
 
 # Profile
 profile:
     show:
-        username: Username
-        email: Email
+        username: Käyttäjätunnus
+        email: Sähköpostiosoite
     edit:
-        submit: Update
+        submit: Päivitä
     flash:
-        updated: The profile has been updated
+        updated: Profiili on päivitetty
 
 # Password change
 change_password:
-    submit: Change password
+    submit: Vaihda salasana
     flash:
-        success: The password has been changed
+        success: Salasana on vaihdettu
 
 # Registration
 registration:
-    check_email: An email has been sent to %email%. It contains an activation link you must click to activate your account.
-    confirmed: Congrats %username%, your account is now activated.
-    back: Back to the originating page.
-    submit: Register
+    check_email: Sähköposti on lähetetty osoitteeseen %email%. Se sisältää aktivointilinkin, jota klikkaamalla tunnus aktivoidaan.
+    confirmed: Onnittelut %username%, tunnuksesi on nyt aktivoitu.
+    back: Takaisin alkuperäiselle sivulle.
+    submit: Luo tunnus
     flash:
-        user_created: The user has been created successfully
+        user_created: Käyttäjätunnus on luotu onnistuneesti
     email:
-        subject: Welcome %username%!
+        subject: Tervetuloa %username%!
         message: |
-            Hello %username%!
+            Hei %username%!
 
-            To finish activating your account - please visit %confirmationUrl%
+            Aktivoidaksesi tunnuksesi, ole hyvä ja klikkaa %confirmationUrl%
 
-            Regards,
-            the Team.
+            Terveisin ylläpito
 
 # Password resetting
 resetting:
-    password_already_requested: The password for this user has already been requested within the last 24 hours.
-    check_email: An email has been sent to %email%. It contains a link you must click to reset your password.
+    password_already_requested: Tälle käyttäjälle on jo pyydetty salasanaa viimeisen 24 tunnin aikana.
+    check_email: Sähköposti on lähetetty osoitteeseen %email%. Se sisältää linkin, jota klikkaamalla salasana alustetaan.
     request:
-        invalid_username: The username or email address "%username%" does not exist.
-        username: "Username or email address:"
-        submit: Reset password
+        invalid_username: Käyttäjätunnusta tai sähköpostiosoitetta "%username%" ei löydy järjestelmästä.
+        username: "Käyttäjätunnus tai sähköpostiosoite"
+        submit: Alusta salasana
     reset:
-        submit: Change password
+        submit: Vaihda salasana
     flash:
-        success: The password has been reset successfully
+        success: Salasana on alustettu onnistuneesti
     email:
-        subject: Reset Password
+        subject: Alusta salasana
         message: |
-            Hello %username%!
+            Hei %username%!
 
-            To reset your password - please visit %confirmationUrl%
+            Alustaaksesi salasanasi, ole hyvä ja klikkaa %confirmationUrl%
 
-            Regards,
-            the Team.
+            Terveisin ylläpito
 
 # Global strings
 layout:
-    logout: Logout
-    login: Login
-    register: Register
-    logged_in_as: Logged in as %username%
+    logout: Ulos
+    login: Kirjaudu
+    register: Luo tunnus
+    logged_in_as: Kirjautuneena %username%
 
 # Form field labels
 form:
-    group_name: "Group name:"
-    username: "Username:"
-    email: "Email:"
-    current_password: "Current password:"
-    password: "Password:"
-    password_confirmation: "Password again:"
-    new_password: "New password:"
-    new_password_confirmation: "Password again:"
+    group_name: "Ryhmän nimi"
+    username: "Käyttäjätunnus"
+    email: "Sähköpostiosoite"
+    current_password: "Nykyinen salasana"
+    password: "Salasana"
+    password_confirmation: "Salasana uudestaan"
+    new_password: "Uusi salasana"
+    new_password_confirmation: "Salasana uudestaan"
