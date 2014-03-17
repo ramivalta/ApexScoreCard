@@ -18,7 +18,7 @@ class RegistrationFormType extends BaseType
         $builder->add('name', 'text', array('label' => 'Nimi'));
   //      $builder->add('tee');
        $builder->add('gender', 'choice', array ('choices' => array('Male' => 'Mies', 'Female' => 'Nainen'), 'label' => 'Sukupuoli', 'expanded' => true, 
-        'multiple' => false, 'required' => true,  ));
+        'multiple' => false, 'required' => true  ));
 //       $builder->add('handicap');
 	}
 

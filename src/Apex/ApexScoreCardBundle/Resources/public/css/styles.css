@@ -1391,7 +1391,7 @@ background-size: 5px 5px;
 	border-radius: 36px !important;
 	height: 24px !important;
 	padding-bottom: 8px !important;	
-	padding-left: 6px !important;
+	//padding-left: 6px !important;
 }
 
 
@@ -1667,6 +1667,15 @@ background-size: 5px 5px;
 	margin-top: 0em !important;
 	margin-bottom: 0em !important;
 	border-radius: 64px !important;
+}
+
+input:-webkit-autofill {
+	//background-color: #eee !important;
+	
+	-webkit-box-shadow: 0 0 0 150px #333 inset !important;
+	-webkit-text-fill-color: #fff !important;
+	border: #333 !important;
+	
 }
 
 .yellow {

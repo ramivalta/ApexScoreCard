@@ -1,5 +1,20 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block header %}
+	<div class="headerButton" style="width: 80px; display: inline-block;">
+		<a href="../login" style="text-decoration: none; color: #eee; font-weight: 400">
+			<i class="fa fa-chevron-left chevron"></i>
+			Takaisin
+		</a>
+	</div>
+	
+	<div class="headerTitle" style="min-width: 200px; display: inline-block; text-align: center;">
+		<span>Rekisteröityminen</span>
+	</div>
+	
+{% endblock %}
+
+
 {% block fos_user_content %}
 {% include "FOSUserBundle:Registration:register_content.html.twig" %}
 {% endblock fos_user_content %}

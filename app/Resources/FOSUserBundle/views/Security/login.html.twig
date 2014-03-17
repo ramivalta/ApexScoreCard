@@ -1,11 +1,19 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+
+{% block header %}
+	<h4 style="text-align: center; color: #eee; text-shadow: 0 1px 2px #000">Kirjaudu Bogikorttiin</h4>
+{% endblock %}
+
+
+
 {% block fos_user_content %}
 {% if error %}
     <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 
-<h2 style="text-align: center; margin: 32px">Kirjaudu Bogikorttiin</h2>
+
+
 
 
 
@@ -30,7 +38,9 @@
     <input type="submit" id="_submit" name="_submit" value="Kirjaudu sisään" style="min-width: 95%" />
 </form>
 
-	<p><a href="register/" style="color: aqua">Ei käyttäjätiliä? Rekisteröidy tästä!</a>
+	
+	<p><span>Ei käyttäjätiliä?</span>
+	<a href="register/" style="color: Aqua"> Rekisteröidy tästä!</a>
 
 
 {% endblock fos_user_content %}
