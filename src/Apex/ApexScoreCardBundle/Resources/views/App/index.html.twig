@@ -141,7 +141,7 @@
 		</div>
 
 
-		<div class="ui-grid-b" id="header_courselist" style="display: none; z-index: 1; position: relative">
+		<div class="ui-grid-b" id="header_courselist" style="display: none; z-index: 10; position: relative">
 			<div class="ui-block-a" data-bind="event: { tap : hideCourseSelect }">
 				<div class="headerButton" style="min-width: 90px; padding-left: 6px">
 					<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
@@ -684,10 +684,12 @@
 			</div>
 
 			<div id="bottom" data-bind="event: { swipeleft: nextHole, swiperight: previousHole }">
+				<div style="height: 12px">
+				</div>
 				<div id="dataDisplay" data-role="content" data-theme="a">
 					<div id="holeData" style="display: block; min-height: 100%; ">
 						<div class="ui-grid-a" style="min-height: 100%">
-							<div class="ui-block-a" style="width: 50%; text-align: left;  min-height: 100%">
+							<div class="ui-block-a" style="width: 50%; text-align: left; padding: 8px">
 								<span id="course" data-bind="text: courseName"></span><br>
 								Reikä <span id="hole" data-bind="text: currentHole"></span><br>
 								Par <span id="par" data-bind="text: currentHolePar"></span><br>
@@ -701,7 +703,7 @@
 							</div>-->
 
 
-							<div class="ui-block-b" style="text-align: right; width: 50%; ">
+							<div class="ui-block-b" style="text-align: right; width: 50%; padding: 8px">
 								Pelaaja: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
 								Tasoitus: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
 								Pelitasoitus:
@@ -745,31 +747,26 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div id="dataButtons" class="ui-grid-b">
-					<div class="ui-block-a" style="width: 20%">
-						<p></p>
-					</div>
-					<div class="ui-block-b" style="width: 60%">
-						<div class="" data-role="controlgroup" data-type="horizontal" style="text-align: center">
-							<a id="dataBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap:  showHoledata }" class="navbutton activeBtn" style="border-right: 1px #999 solid !important;">Tiedot</a>
-							<a id="statsBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap : showStats }" class="navbutton" style="border-left: 0px !important;">Tilastot</a>
+					
+					<div id="dataButtons" class="ui-grid-b">
+						<div class="ui-block-a" style="width: 20%">
+							<p></p>
 						</div>
-					</div>
-					<div class="ui-block-c" style="width: 20%">
-						<p></p>
-					</div>
-
-
-
+						<div class="ui-block-b" style="width: 60%">
+							<div class="" data-role="controlgroup" data-type="horizontal" style="text-align: center">
+								<a id="dataBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap:  showHoledata }" class="navbutton activeBtn" style="border-right: 1px #999 solid !important;">Tiedot</a>
+								<a id="statsBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap : showStats }" class="navbutton" style="border-left: 0px !important;">Tilastot</a>
+							</div>
+						</div>
+						<div class="ui-block-c" style="width: 20%">
+							<p></p>
+						</div>
+					</div>					
 				</div>
-
-
-
 			</div>
 		</div>
 
-		<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a"  data-bind="css: { ios : launchedFromHome() == true }">
+		<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a ios_bottom"  data-bind="css: { ios : launchedFromHome() == true, ios_bottom : ios() == true && launchedFromHome() == false }">
 			<div class="ui-block-a hurp" style="width: 50%">
 
 				<div class="holenav" data-inline="true" data-bind="event: { tap: previousHole }">

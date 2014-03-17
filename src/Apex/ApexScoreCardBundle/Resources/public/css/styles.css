@@ -77,7 +77,7 @@ body {
 
 
 .ios_bottom {
-	padding-bottom: 20px !important;
+	padding-bottom: 40px !important;
 }
 
 #search {
@@ -165,7 +165,7 @@ body {
 	color: #fefefe;
 	font-weight: normal:
 	opacity: 1 !important;
-	-webkit-transition: opacity 100ms linear !important;
+	-webkit-transition: opacity 250ms linear !important;
 }
 
 .headerTitle {
@@ -181,10 +181,10 @@ body {
 	font-weight: 700;
 }
 
-.headerButton:hover {
+.headerButton:active {
 	//color: #808080;
-	opacity: 0.33 !important;
-	-webkit-transition: opacity 100ms linear !important;
+	opacity: 0.25 !important;
+	-webkit-transition: opacity 150ms linear !important;
 
 /*	-webkit-animation-name: fadeInOut !important;
 	-webkit-animation-duration: 0.5s !important;*/
@@ -375,7 +375,7 @@ body {
 	height: 40px !important;
 	position: absolute;
 	padding: 0px;
-	padding-bottom: 0px !important;
+	padding-bottom: 0px;
 	//bottom: -1px !important;
 	bottom: 0px;
 	left: 0px;
@@ -411,14 +411,13 @@ body {
 
 #dataButtons {
 	position: absolute;
-	bottom: 59px !important;
 	width: 100%;
 	z-index: 10;
-
-//
-
+	top: 118px;
+	left: 0;
+	right: 0;
+	-webkit-transform: perspective(1000px) translate(0px, 0px);		
 }
-
 
 .navbutton
 {
@@ -430,7 +429,6 @@ body {
 	background: #ececec !important;
 	z-index: 10 !important;
 }
-
 
 #dataBtn {
 	box-shadow: 0px 3px 3px #bbb;
@@ -470,6 +468,13 @@ body {
 	padding-left: 0;
 	padding-right: 0;
 	//text-decoration: underline;
+	opacity: 1 !important;
+	-webkit-transition: opacity 250ms linear !important;	
+}
+
+.holenav:active {
+	opacity: 0.25 !important;
+	-webkit-transition: opacity 150ms linear !important;	
 }
 
 #sliderWrappi {
@@ -703,27 +708,23 @@ background-size: 5px 5px;
 	border-right-color: #ADADAD;
 	border-left-color: #ADADAD;
 	font-size: 0.8em;
-	overflow: auto;
-	//margin-top: 15px;
-	overflow: hidden;
-	position: absolute;
+//	overflow: auto;
+//	overflow: hidden;
+	overflow: visible;
+	/*position: absolute;
 	left: 8px;
 	right: 8px;
 	bottom: 100px !important;
-	top: 164px;
-
-	//background: #eee;
-	//background: rgba(250, 250, 250, 0.75) !important;
-
+	top: 164px;*/
+	min-height: 100%;
 	background: linear-gradient(to bottom, rgba(235, 235, 235, 0.5), #eeeeee);
-
-	//color: #fff;
-	//text-shadow: 0px 1px 1px #000;
-
-
 	box-shadow: 0px 2px 8px #999;
-
 	z-index: 4;
+	
+	margin-left: 8px;
+	margin-right: 8px;
+	min-height: 100px;
+	-webkit-transform: perspective(1000px) translate(0px, 0px);	
 }
 
 .ios {
