@@ -896,14 +896,14 @@
 
 							<!-- ko if: score() === 0 && $root.validateRound() === false -->
 								<td class="scScoreCells">&nbsp;</td>
-								<td class="scCells">&nbsp;</td>
-								<td class="scCells">&nbsp;</td>
+								<td class="scScoreCells">&nbsp;</td>
+								<td class="scScoreCells">&nbsp;</td>
 							<!-- /ko -->
 
 							<!-- ko if: score() === 0 && $root.validateRound() === true -->
 								<td class="scScoreCells">x</td>
 								<td class="scScoreCells">x</td>
-								<td class="scCells">0</td>
+								<td class="scScoreCells">0</td>
 							<!-- /ko -->
 
 						</tr>
@@ -936,11 +936,13 @@
 							<!-- ko if: validateRound() === false -->
 
 								<!-- ko if: totalToPar() < 0 -->
-									<td class="scBirdie"><span data-bind="text: totalScore"></span>
+									<td class="scBirdie">
+										(<span data-bind="text: totalScore"></span>)
 									</td>
 								<!-- /ko -->
 								<!-- ko if: totalToPar() >= 0 -->
-									<td class="scTotals"><span data-bind="text: totalScore"></span>
+									<td class="scTotals">
+										(<span data-bind="text: totalScore"></span>)
 									</td>
 								<!-- /ko -->
 
@@ -995,24 +997,14 @@
 				</table>
 			</div>
 
-			<div style="height: 24px; text-align: center; background: #ccc; box-shadow: 0px 16px 16px #444" data-role="content" data-bind="event: { tap: closeScoreCard }">
+			<div style="height: 24px; text-align: center; background: #eee; box-shadow: 0px 16px 16px #444" data-role="content" data-bind="event: { tap: closeScoreCard }">
 				<div>
-					<i class="fa fa-chevron-up" style="font-size: 24px; -webkit-transform: scale(1.5,1); color: #999 "></i>
+					<i class="fa fa-chevron-up" style="font-size: 24px; -webkit-transform: scale(1.5,1); color: #bbb "></i>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 </div>
-
-
-
-
-
-
-
-
 
 {% else %}
 
