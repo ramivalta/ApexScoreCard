@@ -1148,7 +1148,7 @@ background-size: 5px 5px;
 
 .listViewRow {
 	width: 100%;
-	border-top: 1px solid #ccc;
+//	border-top: 1px solid #ccc;
 	background: #fefefe;
 	height: 36px;
 	display: table;
@@ -1169,6 +1169,10 @@ background-size: 5px 5px;
 	vertical-align: middle;
 }
 
+.hairline-border {
+	border-top: 1px solid #bbb;
+	-webkit-transform: scaleY(0.5);
+}
 
 
 #scoreCardButtons {

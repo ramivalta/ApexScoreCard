@@ -202,9 +202,13 @@
 
 						<div id="roundList" data-bind="foreach: roundList">
 
-							<div data-bind="if: $index() < 21 && $root.showAllRounds() == false">
+							<div style="background: #fefefe" data-bind="visible: ($index() !== 0)">
+								<div class="hairline-border">
+								</div>
+							</div>				
 
-								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow listViewRowBorder">
+							<div data-bind="if: $index() < 21 && $root.showAllRounds() == false">
+								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow">
 									<div class="listViewItem">
 										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
 											<span data-bind="text: course_name"></span>
@@ -252,7 +256,7 @@
 							</div>
 
 							<div data-bind="if: $root.showAllRounds() == true">
-								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow listViewRowBorder">
+								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow">
 									<div class="listViewItem">
 										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
 											<span data-bind="text: course_name"></span>
@@ -515,7 +519,11 @@
 							</div>
 
 							<div data-bind="foreach: recentlyPlayedCourses">
-								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow listViewRowBorder">
+								<div style="background: #fefefe">
+									<div class="hairline-border">
+									</div>
+								</div>	
+								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow">
 									<div class="listViewItem" style="font-size: 15px; height: 32px">
 										<span data-bind="text: name"></span>
 									</div>
@@ -564,7 +572,13 @@
 							</div>
 
 							<div data-bind="foreach: filteredCourseList, css: { ios_bottom : $root.launchedFromHome() == true }">
-								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow listViewRowBorder" style="height: 32px">
+							
+								<div style="background: #fefefe">
+									<div class="hairline-border">
+									</div>
+								</div>	
+							
+								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow" style="height: 32px">
 									<div class="listViewItem" style="font-size: 15px; height: 32px">
 										<span data-bind="text: name"></span>
 									</div>
