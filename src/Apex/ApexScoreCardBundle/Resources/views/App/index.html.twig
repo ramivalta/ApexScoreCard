@@ -5,43 +5,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
   	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
-
 	<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" />
-
-
-
-
-
-    <!--<link href="{{ asset('bundles/apexscore/css/mobiscroll.custom-2.5.2.min.css') }}" rel="stylesheet" type="text/css" /> -->
-
 	<link href="{{ asset('bundles/apexscore/css/mobiscroll.scroller.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('bundles/apexscore/css/mobiscroll.scroller.ios7.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('bundles/apexscore/css/mobiscroll.animation.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- <link rel="stylesheet" href="{{ asset('bundles/apexscore/css/add2home.css') }}"> -->
-	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/jquery-ui-1.10.3.custom.min.css') }}">
 
+	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/jquery-ui-1.10.3.custom.min.css') }}">
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet">
 
-
-
 	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-
-
-	<!-- <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script> -->
 	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
-	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>-->
-
 	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
-
-<!-- 		'@ApexScoreBundle/Resources/public/js/mobiscroll.custom-2.5.2.min.js' -->
-
-
-<!--	<script src="{{ asset('bundles/apexscore/js/mobiscroll.core.js') }}"></script>
-	<script src="{{ asset('bundles/apexscore/js/mobiscroll.scroller.js') }}"></script>
-	<script src="{{ asset('bundles/apexscore/js/mobiscroll.scroller.ios7.js') }}"></script> -->
-
-<!-- 		'@ApexScoreBundle/Resources/public/js/add2home.js' -->
 
 	{% javascripts
 		'@ApexScoreBundle/Resources/public/js/date.format.js'
@@ -51,7 +27,6 @@
 		'@ApexScoreBundle/Resources/public/js/lodash.min.js'
 		'@ApexScoreBundle/Resources/public/js/jquery.transit.custom.js'
 		'@ApexScoreBundle/Resources/public/js/appsi.js'
-
 		'@ApexScoreBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
 		'@ApexScoreBundle/Resources/public/js/jquery.ui.touch-punch.min.js'
 		'@ApexScoreBundle/Resources/public/js/mobiscroll.core.js'
@@ -62,30 +37,10 @@
 
 	{% endjavascripts %}
 
-<!--    <script src="{{ asset('bundles/apexscore/js/date.format.js') }}"></script>
-	<script src="{{ asset('bundles/apexscore/js/mobiscroll.custom-2.5.2.min.js') }}"></script>
-	<script src="{{ asset('bundles/apexscore/js/moment.min.js') }}"> </script>
-	<script src="{{ asset('bundles/apexscore/js/lang/fi.js') }}"> </script>
-
-	<script src="{{ asset('bundles/apexscore/js/jquery.transit.min.js') }}"></script>
-	<script src="{{ asset('bundles/apexscore/js/app.js') }}"></script>
-	<script type="application/javascript" src="{{ asset('bundles/apexscore/js/add2home.js') }}"></script> -->
-
-
-
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5, user-scalable=0, minimal-ui" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
 	<meta name="apple-mobile-web-app-title" content="Bogikortti" >
-
-	<script type="text/javascript">
-		//$.mobile.changePage.defaults.allowSamePageTransition = true;
-	  	/*$.mobile.loader.prototype.options.theme = "b";
-		$.mobile.loader.prototype.options.textVisible = false;*/
-	</script>
-
-
 
 </head>
 
@@ -97,7 +52,7 @@
 	<div id="f_header" class="header" data-theme="b" data-role="content" style="padding-left:0 ; padding-right: 0">
 
 		<div style="padding-left: 6px; visibility: hidden; position: absolute; padding-top: 12px; height: 44px" class="headerButton" id="pageBackButton" data-bind="event: { tap : hidePrefs }">
-			<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
+			<i class="fa fa-chevron-left header-icon" style="font-size: 12px"></i>
 			<span style="padding-left: 2px; ">Takaisin</span>
 		</div>
 
@@ -109,8 +64,7 @@
 		<div class="ui-grid-b" id="header_scorepage" data-bind="event: { swipedown: showScoreCard }" style="display: none">
 			<div class="ui-block-a" style="text-align: left; width: 20%" data-bind="event: { tap: leaveRound }">
 				<div class="headerButton" id="s_back" style="padding-left: 6px">
-					<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
-					<!-- <span style="padding-left: 2px; margin-right: 8px"></span> -->
+					<i class="fa fa-chevron-left header-icon" style="font-size: 12px"></i>
 					<span style="letter-spacing: -1px">Takaisin</span>
 				</div>
 			</div>
@@ -133,9 +87,6 @@
 			<div class="ui-block-c" id="s_card" data-bind="event: { tap: showScoreCard }" style="width: 25%;">
 				<div class="headerButton" style=" text-align: right; padding-right: 6px">
 					<span style="letter-spacing: -1px">Tuloskortti</span>
-
-					<!--<i class="fa fa-list-ol chevron" style="font-size: 12px"></i>-->
-					<!--<i class="fa fa-chevron-right" style="font-size: 14px; position: absolute; top: 15px; margin-left: 2px"></i> -->
 				</div>
 			</div>
 		</div>
@@ -144,7 +95,7 @@
 		<div class="ui-grid-b" id="header_courselist" style="display: none; z-index: 10; position: relative">
 			<div class="ui-block-a" data-bind="event: { tap : hideCourseSelect }">
 				<div class="headerButton" style="min-width: 90px; padding-left: 6px">
-					<i class="fa fa-chevron-left chevron" style="font-size: 12px"></i>
+					<i class="fa fa-chevron-left header-icon" style="font-size: 12px"></i>
 					<span style="padding-left: 2px; ">Takaisin</span>
 				</div>
 			</div>
@@ -182,7 +133,7 @@
 			<div class="ui-block-c" id="pageRight" data-bind="event: { tap: loadCourseSelect }" style="text-align: right; ">
 				<div class="headerButton" style="padding-right: 6px; ">
 					<span style=" display: inline-block">Uusi kierros</span>
-					<i class="fa fa-chevron-right chevron" style="margin-left: 2px; display: inline-block; "></i>
+					<i class="fa fa-chevron-right header-icon" style="margin-left: 2px; display: inline-block; "></i>
 				</div>
 			</div>
 		</div>
@@ -195,7 +146,6 @@
 				<div data-theme="a" data-role="content" style="height: 80px; margin-top: 33%; background: rgba(255, 255, 255, 0.75); text-align: center" data-bind="fadeVisible: firstRun() == 'working'">
 					<div class="ajaxloader_large" style="background: #333;"></div>
 				</div>
-
 
 				<div class="scrollMiddle" data-bind="fadeVisible: firstRun() == false">
 					<div class="scrollInner" id="roundListWrap" data-bind="css: { ios :  launchedFromHome() == true }">
@@ -237,7 +187,7 @@
 
 									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px">
 										<div data-bind="if: $root.loadingRound() !== id">
-											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+											<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
 										</div>
 										<div data-bind="if: $root.loadingRound() === id">
 											<div class="ajaxloader1" style="background: #888"></div>
@@ -285,7 +235,7 @@
 
 									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px">
 										<div data-bind="if: $root.loadingRound() !== id">
-											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+											<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
 										</div>
 										<div data-bind="if: $root.loadingRound() === id">
 											<div class="ajaxloader1" style="background: #888"></div>
@@ -313,7 +263,6 @@
 							 </h5>
 
 							<h5 data-bind="if: roundList().length >= 21 && showAllRounds() == false, event: { tap : function() { showAllRounds(true) }} " class="headerButton">
-<!--								<a style="color: 2ad"> -->
 								<a style="color: #fff; text-decoration: underline">
 									Näytä loput
 									<span data-bind="text: roundList().length - 20"></span>
@@ -324,12 +273,6 @@
 					</div>
 				</div>
 
-
-				<!-- <div data-role="popup" id="delPopUp"  data-theme="b"  style="right: 16px" data-mini="true" data-shadow="false" id="deletiongPopup">
-					<a href="" class="aDeleteBtn ui-btn-up-r" data-bind="event: { tap: deleteRound }" data-role="button" data-inline="true" data-rel="back" data-mini="true">Poista kierros?</a>
-				</div> -->
-
-
 				<div data-theme="b" data-role="content" data-bind="fadeVisible: firstRun() == true" style="background: rgba(25, 25, 25, 0.15)">
 					<h3>Tervetuloa Bogikorttiin!</h3>
 
@@ -338,20 +281,6 @@
 					<p style="font-size: 14px">Aloita kierros valitsemalla Uusi kierros.
 
 				</div>
-
-
-				<!--	<div style="width: 100%; margin-left: 10px; float:left">
-						<img src="{{asset('bundles/apexscore/images/arrow_left.png') }}" style="float:left">
-						<img src="{{asset('bundles/apexscore/images/arrow_right.png') }}" style="float:right; margin-right: 30px">
-					</div>
-
-					<div style="width: 100%" style="float:left">
-						<span style="float:left; margin: 5px">Aseta tasoituksesi ja valitse tii</span>
-						<span style="float: right; margin: 5px">Aloita uusi kierros</span>
-					</div>
-				</div> -->
-
-
 			</div>
 		</div>
 	</div>
@@ -508,50 +437,44 @@
 						</div>
 
 
-							<!-- ko if: recentlyPlayedCourses().length > 0 -->
+						<!-- ko if: recentlyPlayedCourses().length > 0 -->
 
-							<div class="courseList_subheader">
-								<div style="height: 24px; padding: 6px">
-									<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
-										<h4 style="display: inline">Viimeisimmät pelatut kentät</h4>
-									</div>
+						<div class="courseList_subheader">
+							<div style="height: 24px; padding: 6px">
+								<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+									<h4 style="display: inline">Viimeisimmät pelatut kentät</h4>
 								</div>
 							</div>
+						</div>
 
-							<div data-bind="foreach: recentlyPlayedCourses">
-								<div style="background: #fefefe">
-									<div class="hairline-border">
-									</div>
-								</div>	
-								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow">
-									<div class="listViewItem" style="font-size: 15px; height: 32px">
-										<span data-bind="text: name"></span>
-									</div>
-									<div class="listViewItem" style="text-align: right; font-size: 12px; color: #888; height: 32px">
-										<span data-bind="text: hole_count"></span>r
-									</div>
-
-									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
-										<div data-bind="if: $root.loadingRound() !== id">
-											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
-										</div>
-										<div data-bind="if: $root.loadingRound() === id">
-											<div class="ajaxloader1" style="background: #888"></div>
-										</div>
-									</div>
-
+						<div data-bind="foreach: recentlyPlayedCourses">
+							<div style="background: #fefefe">
+								<div class="hairline-border">
 								</div>
+							</div>	
+							<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow">
+								<div class="listViewItem" style="font-size: 15px; height: 32px">
+									<span data-bind="text: name"></span>
+								</div>
+								<div class="listViewItem" style="text-align: right; font-size: 12px; color: #888; height: 32px">
+									<span data-bind="text: hole_count"></span>r
+								</div>
+
+								<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
+									<div data-bind="if: $root.loadingRound() !== id">
+										<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
+									</div>
+									<div data-bind="if: $root.loadingRound() === id">
+										<div class="ajaxloader1" style="background: #888"></div>
+									</div>
+								</div>
+
 							</div>
+						</div>
 
-
-
-							<!-- /ko -->
-
-
+						<!-- /ko -->
 
 						<div style="height: 6px"></div>
-
-
 						<div class="courseList_subheader" data-bind="event: { tap: $root.toggleCourseList.bind($data) }">
 							<div style="height: 24px; padding: 6px">
 								<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
@@ -588,7 +511,7 @@
 
 									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
 										<div data-bind="if: $root.loadingRound() !== id">
-											<i class="fa fa-chevron-right chevron" style="vertical-align: middle; color: #888"></i>
+											<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
 										</div>
 										<div data-bind="if: $root.loadingRound() === id">
 											<div class="ajaxloader1" style="background: #888"></div>
@@ -609,10 +532,6 @@
 
 
 	<div id="s_page" data-theme="a" style="display: none">
-		<!-- <div class="header" data-theme="b" data-role="content" style="font-size: 14px; padding-left:0 ; padding-right: 0 ">
-
-		</div> -->
-
 		<div id="s_content">
 
 			<div id="top" data-role="content" data-theme="a">
@@ -625,7 +544,6 @@
 					<div id="scoreB" class="ui-block-b">
 						<div id="score">
 							<div class="scoreDisplay">
-							<!-- style="-webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(66%, transparent), to(rgba(255,255,255,0.2))); -webkit-transform: scale (1.0, 0.1) skew(5) !important" -->
 								<span data-bind="if: noScoreEntered() == false && currentHoleScore() > 0">
 									<div data-bind="text: currentHoleScore">
 									</div>
@@ -640,7 +558,6 @@
 
 					<div id="roundScore" class="ui-block-c">
 						Tulos:
-
 
 						<!-- ko if: totalToPar() === false -->
 
@@ -711,12 +628,6 @@
 								<span id="length" data-bind="text: currentHoleLength"></span> metriä<br>
 							</div>
 
-							<!--<div class="ui-block-b" style="width: 10%">
-
-
-							</div>-->
-
-
 							<div class="ui-block-b" style="text-align: right; width: 50%; padding: 8px">
 								Pelaaja: <span id="player" data-bind="text: playerName" style="font-weight: bold"></span><br>
 								Tasoitus: <span id="playerhcp" data-bind="text: round_hcp" style="font-weight: bold"></span><br>
@@ -781,7 +692,7 @@
 		</div>
 
 		<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a ios_bottom"  data-bind="css: { ios : launchedFromHome() == true, ios_bottom : ios() == true && launchedFromHome() == false }">
-			<div class="ui-block-a hurp" style="width: 50%">
+			<div class="ui-block-a" style="width: 50%">
 
 				<div class="holenav" data-inline="true" data-bind="event: { tap: previousHole }">
 
@@ -801,7 +712,7 @@
 			</div>
 
 
-			<div class="ui-block-b hurp" style="width: 50%; text-align: right">
+			<div class="ui-block-b" style="width: 50%; text-align: right">
 				<div class="holenav"  data-bind="event: { tap: nextHole }">
 
 					<span>Reikä&nbsp;</span>

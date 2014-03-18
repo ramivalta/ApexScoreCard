@@ -96,32 +96,11 @@ body {
 	background: #fff;
 }
 
-.text-input {
-/*	//border: 1px solid #999 !important;
-	border-radius: 32px !important;
-	height: 24px !important;
-	font-size: 18px;
-	font-weight: 300;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	color: #000 !important;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 4px;
-//	background: #fefefe;
-
-	background: rgba(255, 255, 255, 0.80);
-
-	min-width: 95%;
-	padding-left: 12px; */
-}
-
-
 #f_header {
 	height: 44px;
 }
 
-.chevron {
+.header-icon {
 	font-size: 12px;
 	-webkit-transform: scale(1.5,1.5);
 }
@@ -147,10 +126,6 @@ body {
 	-webkit-font-smoothing: subpixel-antialiased !important;
 //	-webkit-font-smoothing: antialiased !important;
 	z-index: 50;
-}
-
-.herpderp {
-
 }
 
 .headerButton {
@@ -199,22 +174,6 @@ body {
 	100% { opacity: 1 !important }
 }
 
-
-
-/*#pageBackButton:hover {
-	opacity: 0.33;
-	-webkit-transition: opacity 50ms linear;
-
-}*/
-
-/*.headerButtonClicked {
-	opacity: 0.33 !important;
-	-webkit-transition: opacity 75ms linear !important;
-}*/
-
-
-
-
 .headerText {
 	//font-size: 1.0em;
 	//font-family: tahoma, arial;
@@ -226,27 +185,6 @@ body {
 	margin-top: 10px;
 	//text-overflow: ellipsis !important;
 }
-
-
-
-.header .ui-btn {
-	margin: 0px !important;
-	padding-left: 8px !important;
-	padding-right: 8px !important;
-	top: 4px !important;
-	height: 34px;
-	border-radius: 6px;
-}
-
-.header .ui-btn-inner {
-	border: 0px;
-	margin-top: 5px;
-}
-
-
-/* #header .ui-btn { margin: 0px; padding: 0px; top: 5px; width: 44px; height: 34px; border-radius: 6px; }
-#header .ui-btn-inner { border: 0px; padding: 0px; margin-top: 6px; margin-left: 10px;}
-#header .ui-btn-text { font-size: 1.2em; } */
 
 
 #roundScore {
@@ -384,31 +322,6 @@ body {
 	background: linear-gradient(to bottom, #fefefe, #e0e0e0);
 }
 
-.hurp {
-	position: relative;
-	z-index: 9;
-
-}
-
-.navbutton .ui-btn {
-/*	background: transparent !important;
-	//height: 44px;
-	margin-top: 0px;
-	color: #222 !important;
-	border-color: transparent !important;
-	box-shadow: none;
-	text-shadow: 0 1px 0 #fff !important;
-	margin-left: 0;
-	margin-right: 0;
-	/*padding-left:0;
-	padding-right: 0;
-
-	border-radius: 0 !important; */
-
-
-
-}
-
 #dataButtons {
 	position: absolute;
 	width: 100%;
@@ -437,25 +350,6 @@ body {
 #statsBtn {
 	box-shadow: 0px 3px 3px #bbb;
 }
-
-.navbutton .ui-btn-active {
-	/*background-color: #transparent !important;
-	border-color: #transparent !important;
-	text-shadow: 0 1px 0 #fff !important;
-	color: #000 !important;*/
-}
-
-.navbutton .ui-btn {
-	margin-top: 0px;
-}
-
-
-/*.navbutton .ui-btn-inner { margin-top: 6px; border: 0px }
-
-.navbutton .ui-icon {
-	background-color: rgba(0,0,0,0.0);
-	box-shadow: none;
-}*/
 
 .holenav {
 	color: #666;
@@ -732,46 +626,14 @@ background-size: 5px 5px;
 }
 
 #holeData {
-	/*clear: both;
-	text-align: left;
-	width: 90%;
-	margin: auto;
-	line-height: 1.1em;
-	border-style: solid;
-	border-radius: 8px;
-	border-top-color: #ADADAD;
-	border-bottom-color: #707070;
-	border-width: 1px;
-	border-right-color: #ADADAD;
-	border-left-color: #ADADAD;
-	font-size: 0.8em;
-	color: #fff;
-	text-shadow: 0px 1px 1px #000;
-	overflow: auto;
-	margin-top: 15px; */
+
 	position: absolute;
 	right: 12px;
 	left: 12px;
 }
 
 #stats {
-	/* clear: both;
-	text-align: left;
-	width: 90%;
-	margin: auto;
-	line-height: 1.1em;
-	border-style: solid;
-	border-radius: 8px;
-	border-top-color: #ADADAD;
-	border-bottom-color: #707070;
-	border-width: 1px;
-	border-right-color: #ADADAD;
-	border-left-color: #ADADAD;
-	font-size: 0.8em;
-	color: #fff;
-	text-shadow: 0px 1px 1px #000;
-	overflow: auto;
-	margin-top: 15px; */
+
 	position: absolute;
 	right: 12px;
 	left: 12px;
@@ -832,15 +694,6 @@ background-size: 5px 5px;
 	margin-right: 0px;
 //	padding-bottom: 47px !important;
 	background: #eee;
-}
-
-.ui-dialog.scorecard-dialog .ui-dialog-contain {
-//	margin: 5% auto 6px auto;
-	margin-top: 0px;
-	width: 100%;
-	max-width: 720px;
-	padding: 0px;
-	top: 0px;
 }
 
 #scPlayer {
@@ -920,18 +773,6 @@ background-size: 5px 5px;
 	background: linear-gradient(to bottom, rgba(181,194,160,1) 0%,rgba(187,198,170,1) 50%,rgba(165,184,134,1) 51%,rgba(160,183,121,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5c2a0', endColorstr='#a0b779',GradientType=0 ); /* IE6-9 */
 }
-
-/* #rectangle {
-	border-width: 1px;
-	padding-left: 2px;
-	padding-right: 2px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	border-style: solid;
-	border-color: black;
-} */
-
-
 .circle {
 	border-radius: 50%;
 	border-width: 1px;
@@ -1174,60 +1015,6 @@ background-size: 5px 5px;
 	-webkit-transform: scaleY(0.5);
 }
 
-
-#scoreCardButtons {
-//	position: absolute;
-//	clear: both;
-//	float: left;
-	width: 100%;
-//	padding: 2px;
-	height: 46px;
-	min-height: 46px;
-	border: 0px;
-	margin: 0px;
-//	top: 48px;
-	margin-top: 16px;
-}
-
-
-/* .scoreCardFinish {
-//	position: absolute;
-//	max-width: 125px;
-	float: left;
-	top: 6px;
-//	bottom: 5px;
-//	left: 10px;
-	border-radius: 8px !important;
-} */
-
-#scoreCardFinish {
-	position: absolute;
-	max-width: 115px;
-//	float: left;
-//	top: 24px;
-	margin: 0px;
-	left: 6px;
-	bottom: -18px;
-	border-radius: 8px !important;
-}
-
-#scoreCardClose {
-	position: relative;
-	max-width: 115px;
-	float: right;
-//	top: 24px;
-	margin: 0px;
-	bottom: 15px;
-	right: 6px;
-	border-radius: 8px !important;
-}
-
-
-#scoreCardClose .ui-icon {
-	background-color: rgba(0,0,0,0.0);
-	box-shadow: none
-}
-
 #prefsPlayerHcp {
 	border-top: 1px solid #555;
 	border-bottom: 1px solid #777;
@@ -1265,12 +1052,6 @@ background-size: 5px 5px;
 	font-size: 13px !important;
 }
 
-#mainPrefs {
-	/*float: left;
-	width: 100%;
-	margin: auto;*/
-	//background-color: silver !important;
-}
 
 #prefsWrappi {
 	position: absolute;
@@ -1448,11 +1229,6 @@ background-size: 5px 5px;
 	margin-left: 100%;
 }
 
-.derp {
-	-webkit-transform: translate3d(0%, 0 ,0);
-	-webkit-transition: 350ms;
-}
-
 * .ui-listview > li.ui-last-child > a.ui-btn {
 	border-bottom-width: 0px !important
 }
@@ -1480,11 +1256,6 @@ background-size: 5px 5px;
 
 * .ui-collapsible-content {
 	padding: 0;
-}
-
-.3d {
-	-webkit-transform: translate3d(0,0,0) !important;
-	-webkit-backface-visibility: hidden;
 }
 
 .scrollInner > ul > li > .ui-btn:hover {
@@ -1553,28 +1324,6 @@ background-size: 5px 5px;
 	-webkit-overflow-scrolling: touch;
 
 }
-
-.round {
-	//-webkit-transform: translateZ(0);
-	-webkit-perspective: 1000;
-	-webkit-backface-visibility: hidden;
-}
-
-/* #deletionPopup {
-//	opacity: 0.5 !important;
-	background: rgba(255, 255, 255, 0.5) !important;
-}
-*/
-#deletionContent {
-//	opacity: 0.5 !important;
-//	background: rgba(225, 225, 225, 1) !important;
-}
-
-#delPopUp {
-	background: rgba(225, 225, 225, 0) !important;
-}
-
-
 
 .ajaxloader_large {
 	width: 28px;
