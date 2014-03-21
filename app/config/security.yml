@@ -29,6 +29,9 @@ security:
 
 
             anonymous:    true
+            logout:
+                path: fos_user_security_logout
+                target: index
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
