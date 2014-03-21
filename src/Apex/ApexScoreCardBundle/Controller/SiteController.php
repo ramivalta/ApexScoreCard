@@ -15,13 +15,16 @@ class SiteController extends BaseController
 
 	/**
 	 *
-	 * @Route ("/", name="app")
+	 * @Route ("/", name="site")
 	 * @Method("GET")
 	 * @Template()
 	 */
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+
+    	//$request->query->get('round');
+
 /*    	$user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         
@@ -30,6 +33,8 @@ class SiteController extends BaseController
 	//	return array(
 //			'golfers' => $golfers,
 	//	);
+
+		//$request->
     
     
         return $this->render('ApexScoreBundle:Site:index.html.twig');

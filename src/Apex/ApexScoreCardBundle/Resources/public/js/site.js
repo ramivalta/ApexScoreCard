@@ -60,6 +60,15 @@ function viewModel () {
 	self.playerId = ko.observable();
 	
 	self.nippedHoles = ko.observable([]);
+
+	self.roundList = ko.observableArray([]);
+	self.roundScores = ko.observableArray([]);
+	self.holes = ko.observableArray([]);
+
+	self.playerPlayingHcp = ko.observable();	
+
+	self.roundStartTime = ko.observable();
+
 	
 	
 	self.resetForm = function() {
@@ -271,47 +280,47 @@ function viewModel () {
 		);
 	};
 	
-	self.coursePar = ko.computed(function() {
-		var s = 0;
-		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_par(), 10);
-			}
-		return s;
-	});
-
 	self.courseLengthRed = ko.computed(function() {
-		var s = 0;
-		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_red(), 10);
-			}
-		return s;
-	});
+		if(self.holes().length > 0) {
+			var s = 0;
+			for (var i = 0; i < self.holes().length; i++) {
+				s = s + parseInt(self.holes()[i].hole_length_red(), 10);
+				}
+			return s;
+		}
+	}).extend({ throttle: 50 });
 
 	self.courseLengthBlue = ko.computed(function() {
-		var s = 0;
-		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_blue(), 10);
-			}
-		return s;
-	});
+		if(self.holes().length > 0) {
+			var s = 0;
+			for (var i = 0; i < self.holes().length; i++) {
+				s = s + parseInt(self.holes()[i].hole_length_blue(), 10);
+				}
+			return s;
+		}
+	}).extend({ throttle: 50 });
 
 	self.courseLengthYellow = ko.computed(function() {
-		var s = 0;
-		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_yellow(), 10);
-			}
-		return s;
-	});
+		if(self.holes().length > 0) {		
+			var s = 0;
+			for (var i = 0; i < self.holes().length; i++) {
+				s = s + parseInt(self.holes()[i].hole_length_yellow(), 10);
+				}
+			return s;
+		}
+	}).extend({ throttle: 50 });
 	
 	self.courseLengthWhite = ko.computed(function() {
-		var s = 0;
-		for (var i = 0; i < self.holes().length; i++) {
-			s = s + parseInt(self.holes()[i].hole_length_white(), 10);
-			}
-		return s;
-	});
+		if(self.holes().length > 0) {		
+			var s = 0;
+			for (var i = 0; i < self.holes().length; i++) {
+				s = s + parseInt(self.holes()[i].hole_length_white(), 10);
+				}
+			return s;
+		}
+	}).extend({ throttle: 50 });
 
-	self.getCourseGeneralData = function (course_id) {
+	/*self.getCourseGeneralData = function (course_id) {
 		self.resetForm();
 		self.showHoleToggle(false);
 		var data = { course_id : course_id };
@@ -358,9 +367,94 @@ function viewModel () {
 		
 		self.course_id(course_id);
 		
+	}; */
+
+	self.playerGender = ko.observable("Male");
+
+	self.courseCr = ko.observable(0);
+	self.courseSl = ko.observable(0);	
+
+
+	self.calcPlayingHcp = function(hcp) {
+		/* GA PLAYING HANDICAP FORMULA the “EGA Playing Handicap Formula” converts exact handicaps into playing handicaps. PLAYING HCP = EXACT HCP x (SR / 113) + (CR - PAR) */
+
+		/*console.log(self.round_tee());
+		console.log(self.courseCr());
+		console.log(self.coursePar());*/
+
+		if (typeof self.round_hcp() === 'undefined' || typeof self.round_tee() === 'undefined' || typeof self.courseCr() === 'undefined' || typeof self.courseSl() === 'undefined' || typeof self.coursePar() === 'undefined') return 0;
+
+
+		var courseSl;
+		var courseCr;
+
+		if (self.playerGender() === "Male") {
+			if (self.round_tee() === "yellow") {
+				courseSl = self.courseSlYellowMen();
+				courseCr = self.courseCrYellowMen();
+			}
+			else if (self.round_tee() === "blue") {
+				courseSl = self.courseSlBlueMen();
+				courseCr = self.courseCrBlueMen();
+			}
+			else if (self.round_tee() === "red") {
+				courseSl = self.courseSlRedMen();
+				courseCr = self.courseCrRedMen();
+			}
+			else if (self.round_tee() === "white") {
+				courseSl = self.courseSlWhiteMen();
+				courseCr = self.courseCrWhiteMen();
+			}
+		}
+
+		else if (self.playerGender() === "Female") {
+			if (self.round_tee() === "yellow") {
+				courseSl = self.courseSlYellowLadies();
+				courseCr = self.courseCrYellowLadies();
+			}
+			else if (self.round_tee() === "blue") {
+				courseSl = self.courseSlBlueLadies();
+				courseCr = self.courseCrBlueLadies();
+			}
+			else if (self.round_tee() === "red") {
+				courseSl = self.courseSlRedLadies();
+				courseCr = self.courseCrRedLadies();
+			}
+			else if (self.round_tee() === "white") {
+				courseSl = self.courseSlWhiteLadies();
+				courseCr = self.courseCrWhiteLadies();
+			}
+		}
+
+		var a = parseFloat(hcp);
+		var b = parseFloat(courseSl / 113);
+		var par;
+
+		if (self.holes().length === 9) { par = self.coursePar() * 2; }
+		else if (self.holes().length === 18) { par = self.coursePar(); }
+
+		var c = parseFloat(courseCr - parseFloat(par));
+		var playhcp = a * b + c;
+
+		//console.log("peliihänderi");
+		//console.log(playhcp);
+
+		if (isNaN(playhcp)) return 0;
+
+		self.playerPlayingHcp(Math.round(playhcp));
+		fillScoreCard(Math.round(playhcp));
+
 	};
 
-	self.getHoleData = function(course_id) {
+
+
+	self.round_hcp = ko.observable();
+	self.round_tee = ko.observable();
+	self.round_id = ko.observable();
+
+	self.roundEndTime = ko.observable();
+
+	/*self.getHoleData = function(course_id) {
 	
 		self.noOfHoles(0);
 		self.holes.removeAll();
@@ -386,16 +480,16 @@ function viewModel () {
 
 		);
 
-	};
+	}; */
 	
 		
 	self.getCourseList = function (callback) {
 		var a;
 		apexEventProxy.getCourseList(
-		{ a : a },
-		function(data) {
-			for (var i = 0, m = data.courses.length; i < m; i++) {
-				self.courseList.push(data.courses[i]);
+			{ a : a },
+			function(data) {
+				for (var i = 0, m = data.courses.length; i < m; i++) {
+					self.courseList.push(data.courses[i]);
 				}
 			}
 		);
@@ -405,8 +499,8 @@ function viewModel () {
 
 
 	self.getGolferData = function () {
-			var a;
-			apexEventProxy.getGolferData(
+		var a;
+		apexEventProxy.getGolferData(
 			{ a : a },
 			function(data) {
 				if (data.message === "failed") {
@@ -426,11 +520,11 @@ function viewModel () {
 	};
 
 	self.getGolferById = function (golfer_id) {
-			if (golfer_id == undefined) {
-				return null;
-			};
-			var data = { golfer_id : golfer_id };
-			apexEventProxy.getGolferDataById(
+		if (golfer_id == undefined) {
+			return null;
+		};
+		var data = { golfer_id : golfer_id };
+		apexEventProxy.getGolferDataById(
 			{ data : data },
 			function(data) {
 				if (data.message !== "failed") {
@@ -441,16 +535,659 @@ function viewModel () {
 		);
 	};
 	
-	self.getGolferData();
+	//self.getGolferData();
+
+
+	
+	function getRounds() {
+		var data;
+
+		apexEventProxy.getRoundList(
+			{ data : data },
+			function (data) {
+				if (data.message !== "fail") {
+					for (var i = 0, m = data.rounds.length; i < m; i++) {
+						//console.log(data.rounds[i].start_time);
+						var l = {
+							id: ko.observable(data.rounds[i].id),
+							course_name: ko.observable(data.courses[i].name),
+							start_time: ko.observable(data.rounds[i].start_time),
+							score: ko.observable(data.scores[i]),
+							par: ko.observable(data.pars[i])
+						}
+						self.roundList.push(l);
+					}
+				}
+			}
+		);
+	}
+
+	//getRounds();
+
+
+	function getCourseData (course_id, round_id, cb) {
+
+		var data = { course_id : course_id };
+
+		for (var i = 0; self.courseList().length > i; i++) {
+			if (self.courseList()[i].id === course_id) {
+
+				self.courseName(self.courseList()[i].name);
+				self.courseAlias(self.courseList()[i].alias);
+
+				self.courseCrYellowMen(self.courseList()[i].crYellowMen);
+				self.courseSlYellowMen(self.courseList()[i].slYellowMen);
+				self.courseCrYellowLadies(self.courseList()[i].crYellowLadies);
+				self.courseSlYellowLadies(self.courseList()[i].slYellowLadies);
+
+				self.courseCrBlueMen(self.courseList()[i].crBlueMen);
+				self.courseSlBlueMen(self.courseList()[i].slBlueMen);
+
+				self.courseCrBlueLadies(self.courseList()[i].crBlueLadies);
+				self.courseSlBlueLadies(self.courseList()[i].slBlueLadies);
+
+
+				self.courseCrRedMen(self.courseList()[i].crRedMen);
+				self.courseSlRedMen(self.courseList()[i].slRedMen);
+
+				self.courseCrRedLadies(self.courseList()[i].crRedLadies);
+				self.courseSlRedLadies(self.courseList()[i].slRedLadies);
+
+				self.courseCrWhiteMen(self.courseList()[i].crWhiteMen);
+				self.courseSlWhiteMen(self.courseList()[i].slWhiteMen);
+
+				break;
+			}
+		}
+
+		apexEventProxy.getHoleData(
+			{ data : data },
+			function (data) {
+				var i;
+				var h = data.holes.length;
+
+				//console.log("getting holedata");
+
+				for (i = 0; i < h; i++) {
+					self.holes.push({
+						hole_number: ko.observable(data.holes[i].hole_number),
+						hole_par: ko.observable(data.holes[i].par),
+						hole_hcp: ko.observable(data.holes[i].hcp),
+						hole_length_yellow: ko.observable(data.holes[i].length_yellow),
+						hole_length_blue: ko.observable(data.holes[i].length_blue),
+						hole_length_white: ko.observable(data.holes[i].length_white),
+						hole_length_red: ko.observable(data.holes[i].length_red)
+					});
+				}
+
+				//self.setHoleData(self.currentHole());
+
+				if (round_id) getRoundScores(round_id, function() { cb() });
+				else cb();
+
+			}
+		);
+	};
+
+	//getCourseData();
+
+
+	function prePopulateScores() {
+//		if (self.roundScores().length > 0) self.roundScores.removeAll();
+
+//		self.round_tee = ko.observable();
+//		self.round_hcp = ko.observable();
+
+
+		for (var i = 0; i < 18; i++) {
+			var el = {};
+			el.hole = ko.observable(i + 1);
+			el.score = ko.observable(0);
+			el.points = ko.observable(0);
+			el.scoreToPar = ko.observable(0);
+			el.fairway_hit = ko.observable(false);
+			el.green_hit = ko.observable(false);
+			self.roundScores.push(el);
+		}
+	};
+
+	prePopulateScores();
+	
+	function getRoundScores(round_id, cb) {
+
+		var data = { round_id : round_id };
+		apexEventProxy.getRoundScores(
+			{ data : data },
+			function (data) {
+
+				var p_hcp;
+
+				
+				if (data.scores.length === 0) {
+					self.round_hcp(self.playerExactHcp());
+					self.round_tee(self.playerDefaultTee());
+					self.calcPlayingHcp(self.playerExactHcp());
+//					console.log("p_hcp data scores len 0 " + p_hcp);
+				}
+				else {
+					var hcp, tee;
+					for (var i = 0; i < data.scores.length; i++) {
+						for (var z = 0; z < self.roundScores().length; z++) {
+							if (self.roundScores()[z].hole() === data.scores[i].hole_id) {
+								self.roundScores()[z].score(data.scores[i].score);
+								self.roundScores()[z].fairway_hit(data.scores[i].fairway_hit);
+								self.roundScores()[z].green_hit(data.scores[i].green_hit);
+
+								hcp = data.scores[i].round_hcp;
+								tee = data.scores[i].round_tee;
+							}
+
+						}
+					}
+
+					self.round_hcp(hcp);
+					self.round_tee(tee);
+					self.calcPlayingHcp(hcp);
+
+				}
+
+
+				//console.log("getroundscore round_tee", self.round_tee());
+
+				//self.locale_tee(self.translate_tee());
+
+				/*var hole = 0;
+				for (var x = 0; x < self.holes().length; x++) {
+					if (self.roundScores()[x].score() === 0 && hole === 0) {
+						hole = self.roundScores()[x].hole();
+					}
+				}
+
+				if (hole !== 0) {
+					self.currentHole(hole);
+					self.setHoleData(hole);
+					self.noScoreEntered(true);
+				}
+				else {
+					self.currentHole(1);
+					self.currentHoleScore(parseInt(self.roundScores()[0].score(), 10));
+					self.setHoleData(1);
+					self.noScoreEntered(false);
+				}*/
+
+				cb();
+			}
+		);
+	};
+
+
+	self.translate_tee = function() {
+		if (self.round_tee() === "yellow") return "Keltainen";
+		else if (self.round_tee() === "blue") return "Sininen";
+		else if (self.round_tee() === "red") return "Punainen";
+		else if (self.round_tee() === "white") return "Valkoinen";
+	};	
+
+	self.roundLoaded = ko.observable(false);
+
+	self.loadRound = function(round_id) {
+
+		//round_id, start_time
+
+		if(!round_id) {
+
+			var id = window.location.search.split('round=')[1];
+			//console.log(split);
+
+		
+			if (!isNaN(parseInt(id, 10))) {
+				/*console.log("last param");
+				console.log(id);*/
+				round_id = parseInt(id, 10);
+			}
+			else return;
+		}
+
+		self.roundLoaded(false);
+
+		//self.loadedRoundStartTime(start_time);
+		self.holes([]);
+
+
+		//console.log(round_id);
+		//console.log(start_time);
+
+
+		var data = { round_id : round_id };
+		apexEventProxy.getRound(
+			{ data : data },
+			function (data) {
+				//console.log(data.round.start_time);
+				//console.log(data.golfer);
+
+				self.playerName(data.golfer.name);
+				self.playerExactHcp(data.golfer.handicap);
+				self.playerDefaultTee(data.golfer.tee);
+				self.playerGender(data.golfer.gender);
+				self.playerId(data.golfer.id);
+
+
+
+				//console.log("got bits");
+				var course_id = data.round.course_id;
+				var start_time = data.round.start_time;
+				var end_time = data.round.end_time;
+				getCourseData(course_id, round_id, function() {
+					self.round_id(round_id);
+					self.course_id(course_id);
+					self.roundStartTime(start_time.date);
+					if (end_time === null) {
+						self.roundEndTime("");
+					}
+					else {
+						self.roundEndTime(end_time.date);
+					}
+
+					self.roundLoaded(true);
+
+					
+
+					/*self.calcRoundDuration();
+					var clock = setInterval(function() {
+						self.calcRoundDuration();
+					} , 2000);*/
+				});
+			}
+		);
+	};
+
+	self.scoreCard = ko.observableArray([]);
+
+	function fillScoreCard(round_hcp) {
+		self.scoreCard.removeAll();
+
+		//console.log("filling called");
+
+		for (var i = 0; i < self.holes().length; i++) {
+
+			var t = ko.observable();
+			t = getHolePoints(self.roundScores()[i].score(), self.holes()[i].hole_par(), self.holes()[i].hole_hcp(), round_hcp);
+
+			self.roundScores()[i].points(t); // laitetaan scorenäkymälle näkyvään observableen
+
+			var p = ko.observable();
+			if (self.roundScores()[i].score() > 0) {
+				p = self.roundScores()[i].score() - self.holes()[i].hole_par();
+			}
+			else { p = 0; }
+
+			var hole_len;
+			if (self.round_tee() === "yellow") hole_len = self.holes()[i].hole_length_yellow();
+			else if (self.round_tee() === "blue") hole_len = self.holes()[i].hole_length_blue();
+			else if (self.round_tee() === "white") hole_len = self.holes()[i].hole_length_white();
+			else if (self.round_tee() === "red") hole_len = self.holes()[i].hole_length_red();
+
+
+
+			var line = {};
+
+			line.hole_number = self.holes()[i].hole_number;
+			line.hole_par = self.holes()[i].hole_par;
+			line.hole_hcp = self.holes()[i].hole_hcp;
+			line.hole_length = hole_len;
+			line.score = self.roundScores()[i].score;
+			line.scoreToPar = ko.observable(p);
+			line.points = ko.observable(t);
+
+
+			self.scoreCard.push(line);
+			self.calcHcpPreview();
+
+		}
+
+		//self.calcHcpPreview();
+
+	};
+
+
+	function getHolePoints(score, par, hole_hcp, round_hcp) {
+
+		var crhcp = parseInt(round_hcp);
+		var baseadj, hcpholes, hole_hcp_par;
+		baseadj = Math.floor(crhcp / 18);
+
+		hcpholes = (crhcp.mod(18));
+
+		if (hcpholes >= hole_hcp) {
+
+			hole_hcp_par = par + baseadj + 1;
+			}
+		else {
+			hole_hcp_par = par + parseInt(baseadj, 10);
+			}
+
+		if (score === 0)
+			{
+//				console.log("no score");
+				return 0;
+			}
+		else {
+			var y = hole_hcp_par - score + 2;
+			if (y > 0)
+			{
+//				console.log(y + " points");
+				return y;
+			}
+			else
+			{
+//				console.log(y + " points");
+				return 0;
+			}
+		}
+	};	
+
+	self.getHolePoints = function(score, par, hole_hcp, round_hcp) {
+
+		var crhcp = parseInt(round_hcp);
+		var baseadj, hcpholes, hole_hcp_par;
+		baseadj = Math.floor(crhcp / 18);
+
+		hcpholes = (crhcp.mod(18));
+
+		if (hcpholes >= hole_hcp) {
+
+			hole_hcp_par = par + baseadj + 1;
+			}
+		else {
+			hole_hcp_par = par + parseInt(baseadj, 10);
+			}
+
+		if (score === 0)
+			{
+//				console.log("no score");
+				return 0;
+			}
+		else {
+			var y = hole_hcp_par - score + 2;
+			if (y > 0)
+			{
+//				console.log(y + " points");
+				return y;
+			}
+			else
+			{
+//				console.log(y + " points");
+				return 0;
+			}
+		}
+	};	
+
+	self.courseLength = ko.computed(function() {
+		var s = 0;
+		for (var i = 0; i < self.holes().length; i++) {
+			if (self.round_tee() === "yellow") s = s + parseInt(self.holes()[i].hole_length_yellow(), 10);
+			else if (self.round_tee() === "blue")  s = s + parseInt(self.holes()[i].hole_length_blue(), 10);
+			else if (self.round_tee() === "white") s = s + parseInt(self.holes()[i].hole_length_white(), 10);
+			else if (self.round_tee() === "red")  s = s + parseInt(self.holes()[i].hole_length_red(), 10);
+		}
+		return s;
+	}).extend({throttle: 1 });
+
+	self.totalToPar = ko.computed(function() {
+		if (self.holes().length > 0 && self.roundScores().length > 0) {
+			var toPar = 0;
+			var y;
+			for (var i = 0; i < self.roundScores().length; i++) {
+				y = parseInt(self.roundScores()[i].score(), 10);
+				if (i < self.holes().length) {
+					if (y > 0) toPar += y - parseInt(self.holes()[i].hole_par(), 10);
+				}
+			}
+
+			return toPar;
+		}
+		else return false;
+
+	}).extend({throttle: 1 });
+
+	self.totalScore = ko.computed(function() {
+		if (self.roundScores().length > 0) {
+			var s = 0;
+			for (var n = 0, m = self.roundScores().length; n < m; n++) {
+				s += self.roundScores()[n].score();
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });
+
+	self.frontNineScore = ko.computed(function() {
+		if (self.roundScores().length > 0) {
+			var s = 0;
+			for (var n = 0; n < 9; n++) {
+				s += self.roundScores()[n].score();
+			}
+			return s;
+		}
+	}).extend({throttle: 1});
+
+	self.backNineScore = ko.computed(function() {
+		if (self.roundScores().length > 0) {
+			var s = 0;
+			for (var n = 9; n < self.holes().length; n++) {
+				s += self.roundScores()[n].score();
+			}
+			return s;
+		}
+	}).extend({throttle: 1});
+
+	self.frontNineToPar = ko.computed(function() {
+		if(self.roundScores().length > 0 && self.holes().length > 0) {
+			var y, toPar = 0;
+			for (var n = 0; n < 9; n++) {
+				y = parseInt(self.roundScores()[n].score(), 10);
+				if (y > 0) toPar += y - parseInt(self.holes()[n].hole_par(), 10);
+			}
+			return toPar;
+		}
+
+	}).extend({throttle: 1});
+
+	self.backNineToPar = ko.computed(function() {
+		if(self.roundScores().length > 0 && self.holes().length > 0) {
+			var y, toPar = 0;
+			for (var n = 9; n < self.holes().length; n++) {
+				y = parseInt(self.roundScores()[n].score(), 10);
+				if (y > 0) toPar += y - parseInt(self.holes()[n].hole_par(), 10);
+			}
+			return toPar;
+		}
+
+	}).extend({throttle: 1});
+
+	self.frontNinePoints = ko.computed(function() {
+		if(self.roundScores().length > 0) {
+			var s = 0;
+			for (var n = 0; n < 9; n++) {
+				s += self.roundScores()[n].points();
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });
+
+	self.backNinePoints = ko.computed(function() {
+		if(self.roundScores().length > 0) {
+			var s = 0;
+			for (var n = 9; n < self.holes().length; n++) {
+				s += self.roundScores()[n].points();
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });	
+
+	self.totalPoints = ko.computed(function() {
+		if (self.roundScores().length > 0) {
+			var s = 0;
+			for (var n = 0, m = self.roundScores().length; n < m; n++) {
+				s += self.roundScores()[n].points();
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });
+
+	self.frontNinePar = ko.computed(function() {
+		if (self.holes().length > 0) {
+			var s = 0;
+			for (var i = 0; i < 9; i++) {
+				s += self.holes()[i].hole_par();
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });
+
+	self.backNinePar = ko.computed(function() {
+		if (self.holes().length > 0) {		
+			var s = 0;
+			for (var i = 9; i < self.holes().length; i++) {
+				s += self.holes()[i].hole_par();
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });
+
+	self.coursePar = ko.computed(function() {
+		if (self.holes().length > 0) {				
+			var s = 0;
+			for (var i = 0; i < self.holes().length; i++) {
+				s = s + parseInt(self.holes()[i].hole_par(), 10);
+			}
+			return s;
+		}
+	}).extend({throttle: 1 });
+
+
+	ko.bindingHandlers.fadeVisible = {
+		init: function(element, valueAccessor) {
+			var shouldDisplay = valueAccessor();
+			var el = $(element);
+			el.toggle(shouldDisplay);
+		},
+		update: function(element, valueAccessor) {
+			// On update, fade in/out
+			var shouldDisplay = valueAccessor();
+			var el = $(element);
+
+			if (shouldDisplay == true) {
+				el.css({ display: 'block'});
+				el.transition({ opacity: 1, queue: false, duration: '500' });
+			}
+			else {
+				el.transition({ opacity: 0, queue: false, duration: '500' });
+				el.css({ display: 'none'});
+			}
+		}
+	};
+
+	self.hcpPreview = ko.observable();
+
+	self.calcHcpPreview = ko.computed(function() {
+		if (self.holes().length > 0) {
+			var p = parseInt(self.totalPoints(), 10);
+			var hcp = parseFloat(self.round_hcp());
+
+			var num_holes = parseInt(self.holes().length, 10);
+			var par_points;
+
+			if (num_holes === 9) par_points = 18;
+			else par_points = 36;
+
+			var group;
+			group = self.getHcpGroup(hcp);
+
+			if (p > par_points ) {
+				while (p > par_points) {
+					if (group == "9hole") {
+						self.hcpPreview("Ei 9 reiän kierroksella");
+						return;
+					}
+					hcp = hcp - (1 * group.factor);
+					group = self.getHcpGroup(hcp);
+					p--;
+				}
+				self.hcpPreview(parseFloat(hcp).toFixed(1));
+			}
+
+			else {
+				if (group == "9hole") {
+					self.hcpPreview("Ei 9 reiän kierroksella");
+					return;
+				}
+				if (p >= par_points - group.buffer)	self.hcpPreview(hcp);
+				else self.hcpPreview(parseFloat(hcp + group.incr).toFixed(1));
+			}
+		}
+		else return;
+
+	}).extend({throttle: 250 });
+
+	self.getHcpGroup = function(hcp) {
+
+		var h = hcp;
+		var num_holes = self.holes().length;
+		var group = {};
+
+
+		if (h >= 36.1) {
+			group.factor = 1;
+			group.buffer = 0;
+			group.incr = 0;
+		}
+
+		if (h >= 26.5 && h <= 36.0) {
+			group.factor = 0.5;
+			group.incr = 0.2;
+			if (num_holes === 9) group.buffer = 3;
+			else group.buffer = 5;
+		}
+
+		if (h >= 18.5 && h <= 26.4) {
+			group.factor = 0.4;
+			group.incr = 0.1;
+			if (num_holes === 9) group.buffer = 2;
+			else group.buffer = 4;
+		}
+
+		if (h >= 11.5 && h <= 18.4) {
+			if (num_holes === 9) return "9hole";
+			else group.buffer = 3;
+			group.factor = 0.3;
+			group.incr = 0.1;
+		}
+
+		if (h >= 4.5 && h <= 11.4) {
+			if (num_holes === 9) return "9hole";
+			group.buffer = 2;
+			group.factor = 0.2;
+			group.incr = 0.1;
+		}
+
+		if (h <= 4.4) {
+			if (num_holes === 9) return "9hole";
+			group.factor = 0.1;
+			group.incr = 0.1;
+			group.buffer = 1;
+		}
+
+		return group;
+
+	};
+
 
 }	
-	
+
 
 $(document).ready(function() {
-
 	window.vm = new viewModel();
 	ko.applyBindings(vm);
-	
-	$(document).foundation();
-	
+
+	vm.loadRound();
 });	

@@ -1,42 +1,227 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width" />
-    
-  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/foundation.min.css') }}" type="text/css" media="screen" rel="stylesheet" />
-  	
-  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/site_styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
-  	
-<!--	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" /> -->
-
-	<script src="http://code.jquery.com/jquery-2.0.0.js"></script>
-
-   	<script src="{{ path('GlobalJs') }}" type="text/javascript"></script>
-<!-- 	<script src="{{ asset('bundles/apexscore/js/jquery-ui.js') }}" type="text/javascript"></script> -->
-
- 	<script src="{{ asset('bundles/apexscore/js/foundation/foundation.js') }}" type="text/javascript"></script>
- 	<script src="{{ asset('bundles/apexscore/js/foundation/foundation.topbar.js') }}" type="text/javascript"></script>
- 	<script src="{{ asset('bundles/apexscore/js/site.js') }}" type="text/javascript"></script>
-    
-</head>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width" />
 
 
-<body>
+		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/foundation.min.css') }}" type="text/css" media="screen" rel="stylesheet" />
 
-	<script>
-		window.location.href="http://valta.me/home";
-	</script>
+	  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/site_styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
+	  	
+	  	
+		<script src="http://code.jquery.com/jquery-2.0.0.js">
+		</script>
+	   	<script src="{{ path('GlobalJs') }}" type="text/javascript">
+	   	</script>
 
-<!--
-	<div class="ui-widget" style="padding: 15px">
+<!-- 			
+			'@ApexScoreBundle/Resources/public/js/lodash.min.js'
+			
+			'@ApexScoreBundle/Resources/public/js/knockout.mapping-latest.js'
+-->
 
-		<a href="http://valta.me/app/">App</a>			 -->
-<!--
-		<input type="text" id="courseName" maxlength="255" />
-		<input type="text" id="courseAlias" maxlength=255" /> -->
-	
-	
-	
-</body>
+		{% javascripts
+			'@ApexScoreBundle/Resources/public/js/site.js'
+			'@ApexScoreBundle/Resources/public/js/knockout-3.1.0.js'
+			'@ApexScoreBundle/Resources/public/js/moment.min.js'
+			'@ApexScoreBundle/Resources/public/js/lang/fi.js'	
+			'@ApexScoreBundle/Resources/public/js/jquery.transit.custom.js'
+		%}
+		<script src="{{ asset_url }}">
+		</script>
+
+		{% endjavascripts %}
+
+	</head>
+
+
+	<body>
+		<div class="large-12 medium-12 small-12 large-centered medium-centered small-centered columns" style="background: transparent !important; max-width: 760px">
+
+			<div class="row" style="text-align: center; padding: 16px">
+				<img src="{{ asset('bundles/apexscore/images/touch-icon-iphone-retina.png') }}" style="width: 60px; height: 60px;  display: inline-block; border-radius: 14px; border: 2px solid #fefefe; box-shadow: 0 0 6px #222"></img>		
+				<h1 style="display: inline-block; position: relative; top: 8px">Bogikortti</h1>
+			</div>
+
+
+			<div class="large-12 medium-12 small-12 columns" data-bind="fadeVisible: roundLoaded() == true" style="background: #fefefe; border-radius: 24px; box-shadow: 0 0 32px #999">
+
+				<div style="height: 24px"></div>
+
+				<div class="large-12 medium-12 small-12 columns">
+					<h4 style="display: inline-block; float: left; line-height: 1.0">
+						<span data-bind="text: courseName"></span>
+					</h4>
+
+					<h4 style="display: inline-block; float: right; line-height: 1.0">
+						<span data-bind="text: moment(roundStartTime()).format('DoMoYYYY')"></span>
+					</h4>				
+				</div>
+				<div class="large-12 medium-12 small-12 columns">
+					<h4 style="display: inline-block; float: left; line-height: 1.0">
+						<span data-bind="text: playerName"></span>
+					</h4>
+
+					<div style="display: inline-block; float: right">
+						<h4 style="display: inline-block; line-height: 1.0">
+							Tarkka tasoitus&nbsp;<span data-bind="text: playerExactHcp"></span>
+						</h4>
+					</div>
+				</div>
+				<div class="large-12 medium-12 small-12 columns">
+					<h4 style="display: inline-block; float: left; line-height: 1.0">
+						<span data-bind="text: translate_tee()"></span>&nbsp;tii
+					</h4>
+
+					<h4 style="display: inline-block; float: right; line-height: 1.0">
+						Pelitasoitus&nbsp;<span data-bind="text: playerPlayingHcp"></span>
+					</h4>				
+				</div>
+
+				<div class="row" style="float: left">
+					<div class="large-12 medium-12 small-12 columns">
+						<h5 class="subheader" style="text-align: center">
+							Ulos
+						</h5>
+					</div>
+					<div class="large-12 medium-12 small-12 columns">
+						<div style="display: table">
+							<div style="display: table-cell">
+								<div class="scoreCell" style="border-left: 1px solid #bbb; background: #eee; text-shadow: 0 1px 2px #fff; font-weight: 600;">
+									<div class="scoreOuter" style="margin-left: 0; width: 60px">Reikä</div>
+								</div>
+								<div class="scoreCell" style="border-left: 1px solid #bbb">Par</div>				
+								<!-- <div class="scoreCell" style="border-left: 1px solid #bbb">HCP</div> -->
+								<div class="scoreCell" style="border-left: 1px solid #bbb">Tulos</div>
+								<div class="scoreCell" style="border-left: 1px solid #bbb">+/-</div>
+								<div class="scoreCell" style="border-left: 1px solid #bbb">Pisteet</div>
+							</div>
+
+							<div data-bind="foreach: scoreCard">
+								<div data-bind="visible: $index() < 9" style="display: table-cell; width: 80px">
+									<div class="scoreCell" style="background: #eee; text-shadow: 0 1px 2px #fff; font-weight: 600;">
+										<div class="scoreOuter" data-bind="text: hole_number"></div>
+									</div>
+									<div class="scoreCell" data-bind="text: hole_par"></div>
+									<!-- <div class="scoreCell" data-bind="text: hole_hcp"></div>							 -->
+									<div class="scoreCell" data-bind="css: { scBirdie : scoreToPar() == -1, scEagle : scoreToPar() == -2, scBogey : scoreToPar() == 1, scDouble : scoreToPar() >= 2, scPar : scoreToPar() == 0 }">
+										<div class="scoreOuter" data-bind="css: { doublecircle : scoreToPar() == -2, doublerectangle : scoreToPar() >= 2 }">
+											<div class="scoreInner" data-bind="text: score, css: { circle : scoreToPar() <= -1, rectangle : scoreToPar() >= 1 }"></div>
+										</div>
+									</div>
+									<div class="scoreCell">
+	 									<span data-bind="if: scoreToPar() > 0">+<span data-bind="text: scoreToPar"></span></span>
+	 									<span data-bind="if: scoreToPar() <= 0">
+		 									<span data-bind="text: scoreToPar"></span>
+	 									</span>
+									</div>
+									<div class="scoreCell" data-bind="text: points"></div>								
+								</div>
+								<div data-bind="visible: $index() == 10" style="display: table-cell; width: 80px">
+									<div class="scoreCell" style="background: #eee; text-shadow: 0 1px 2px #fff; font-weight: 600;">
+										<div class="scoreOuter" style="margin-left: 0; width: 80px">&nbsp;</div>
+									</div>
+									<div class="scoreCell" data-bind="text: $root.frontNinePar"></div>
+									<!-- <div class="scoreCell">&nbsp;</div> -->
+									<div class="scoreCell scPar" data-bind="text: $root.frontNineScore"></div>
+									<div class="scoreCell">
+	 									<span data-bind="if: $root.frontNineToPar() > 0">+<span data-bind="text: $root.frontNineToPar"></span></span>
+	 									<span data-bind="if: $root.frontNineToPar() <= 0">
+		 									<span data-bind="text: $root.frontNineToPar"></span>
+	 									</span>
+									</div>
+									<div class="scoreCell" data-bind="text: $root.frontNinePoints"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<p>&nbsp;</p>
+
+				<div class="row" style="float: left">
+					<div class="large-12 medium-12 small-12 columns" data-bind="if: holes().length > 9">
+						<h5 class="subheader" style="text-align: center">
+							Sisään
+						</h5>
+					</div>
+					<div class="large-12 medium-12 small-12 columns" data-bind="if: holes().length > 9">
+						<div style="display: table">
+							<div style="display: table-cell">
+								<div class="scoreCell" style="border-left: 1px solid #bbb; background: #eee; text-shadow: 0 1px 2px #fff; font-weight: 600">
+									<div class="scoreOuter" style="margin-left: 0; width: 60px">Reikä</div>
+								</div>
+								<div class="scoreCell" style="border-left: 1px solid #bbb">Par</div>				
+								<!-- <div class="scoreCell" style="border-left: 1px solid #bbb">HCP</div> -->
+								<div class="scoreCell" style="border-left: 1px solid #bbb">Tulos</div>
+								<div class="scoreCell" style="border-left: 1px solid #bbb">+/-</div>
+								<div class="scoreCell" style="border-left: 1px solid #bbb">Pisteet</div>
+							</div>
+
+							<div data-bind="foreach: scoreCard">
+								<div data-bind="visible: $index() >= 9" style="display: table-cell; width: 80px">
+									<div class="scoreCell" style="background: #eee; text-shadow: 0 1px 2px #fff; font-weight: 600;">
+										<div class="scoreOuter"data-bind="text: hole_number"></div>
+									</div>
+									<div class="scoreCell" data-bind="text: hole_par"></div>
+									<!-- <div class="scoreCell" data-bind="text: hole_hcp"></div>							 -->
+									<div class="scoreCell" data-bind="css: { scBirdie : scoreToPar() == -1, scEagle : scoreToPar() == -2, scBogey : scoreToPar() == 1, scDouble : scoreToPar() >= 2, scPar : scoreToPar() == 0 }">
+										<div class="scoreOuter" data-bind="css: { doublecircle : scoreToPar() == -2, doublerectangle : scoreToPar() >= 2 }">
+											<div class="scoreInner" data-bind="text: score, css: { circle : scoreToPar() <= -1, rectangle : scoreToPar() >= 1 }"></div>
+										</div>
+									</div>
+									<div class="scoreCell">
+	 									<span data-bind="if: scoreToPar() > 0">+<span data-bind="text: scoreToPar"></span></span>
+	 									<span data-bind="if: scoreToPar() <= 0">
+		 									<span data-bind="text: scoreToPar"></span>
+	 									</span>
+									</div>
+									<div class="scoreCell" data-bind="text: points"></div>								
+								</div>
+
+								<div data-bind="visible: $index() == $root.scoreCard().length - 1" style="display: table-cell; width: 80px">
+									<div class="scoreCell" style="background: #eee; text-shadow: 0 1px 2px #fff; font-weight: 600">
+										<div class="scoreOuter" style="margin-left: 0; width: 80px">&nbsp;</div>
+									</div>
+									<div class="scoreCell" data-bind="text: $root.coursePar"></div>
+									<!-- div class="scoreCell">&nbsp;</div> -->
+									<div class="scoreCell scPar" data-bind="text: $root.totalScore"></div>
+									<div class="scoreCell">
+	 									<span data-bind="if: $root.totalToPar() > 0">+<span data-bind="text: $root.totalToPar"></span></span>
+	 									<span data-bind="if: $root.totalToPar() <= 0">
+		 									<span data-bind="text: $root.totalToPar"></span>
+	 									</span>
+									</div>
+									<div class="scoreCell" data-bind="text: $root.totalPoints"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<p>&nbsp;</p>
+
+					<div class="row">
+						<div class="large-12 medium-12 small-12 columns" style="text-align: center">
+							<div>
+								<h4 class="subheader" style="display: inline-block">
+									<span data-bind="text: totalScore"></span><span>&nbsp;lyöntiä</span>
+								</h4>
+								<span class="subheader">&nbsp;&bull;&nbsp;</span>							
+								<h4 class="subheader" style="display: inline-block">
+									<span data-bind="text: totalPoints"></span><span>&nbsp;bogipistettä</span>
+								</h4>
+								<span class="subheader">&nbsp;&bull;&nbsp;</span>
+								<h4 class="subheader" style="display: inline-block">
+									<span>Uusi tasoitus</span>&nbsp;<span data-bind="text: hcpPreview"></span>
+								</h4>
+							</div>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

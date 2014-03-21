@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Apex\ApexScoreCardBundle\Entity\Round;
 use Apex\ApexScoreCardBundle\Form\RoundType;
+use Apex\ApexScoreCardBundle\Entity\roundGolfer;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -335,17 +336,39 @@ class RoundController extends BaseController
     {
     	$json = $this->getRequestJson();
     	$round_id = $json->data->round_id;
+
+        error_log($round_id);
     	
 		$em = $this->getDoctrine()->getManager();
     	$entity = $em->getRepository('ApexScoreBundle:Round')->find($round_id);
     	
-   	   if (!$entity) {
+        if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Round entity.');
 		}
     	
     	$round = $entity->getJson();
+
+        $rg = $em->getRepository('ApexScoreBundle:roundGolfer')->findByRoundId($round_id);
+
+        if (!$rg) {
+            throw $this->createNotFoundException('Unable to find roundGolfer entity.');
+        }
+
+        //$roundGolfer = $em->getRepository('ApexScireBundle:roundGolfer')->find($rg[0]->getId());
+
+        $golfer_id = $rg[0]->getGolferId();
+
+
+        //\Doctrine\Common\Util\Debug::dump($roundGolfer);
+
+
+        //$golfer_id = $roundGolfer->getGolferId();
+        $golfer = $em->getRepository('ApexScoreBundle:Golfer')->find($golfer_id)->getJson();
     	
-    	return new Response(json_encode(array('round' => $round)));
+    	//return new Response(json_encode(array('round' => $round, 'golfer' => $golfer->getJson())));
+
+
+        return new Response(json_encode(array('round' => $round, 'golfer' => $golfer)));
     }
 
 	public function deleteRoundAction()
