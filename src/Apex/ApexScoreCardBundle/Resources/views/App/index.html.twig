@@ -152,12 +152,18 @@
 
 						<div id="roundList" data-bind="foreach: roundList">
 
-							<div style="background: #fefefe" data-bind="visible: ($index() !== 0)">
+							<div style="background: #fefefe" data-bind="visible: ($index() !== 0) && $index() < 15 && $root.showAllRounds() == false">
 								<div class="hairline-border">
 								</div>
 							</div>				
+							
+							<div style="background: #fefefe" data-bind="visible: ($index() !== 0) && $root.showAllRounds() == true">
+								<div class="hairline-border">
+								</div>
+							</div>				
+							
 
-							<div data-bind="if: $index() < 21 && $root.showAllRounds() == false">
+							<div data-bind="if: $index() < 15 && $root.showAllRounds() == false">
 								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow">
 									<div class="listViewItem">
 										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
@@ -256,16 +262,16 @@
 						</div>
 
 						<div data-theme="b" data-role="content" style="padding: 6px; padding-bottom: 20px; padding-top: 0px; text-align: center; background: transparent" data-bind="visible: roundList().length >= 5">
-							<h5 data-bind="if: roundList().length < 21 || showAllRounds() == true">
+							<h5 data-bind="if: roundList().length < 15 || showAllRounds() == true">
 								Yhteensä
 								<span data-bind="text: roundList().length"></span>
 								kierrosta
 							 </h5>
 
-							<h5 data-bind="if: roundList().length >= 21 && showAllRounds() == false, event: { tap : function() { showAllRounds(true) }} " class="headerButton">
+							<h5 data-bind="if: roundList().length >= 15 && showAllRounds() == false, event: { tap : function() { showAllRounds(true) }} " class="headerButton">
 								<a style="color: #fff; text-decoration: underline">
 									Näytä loput
-									<span data-bind="text: roundList().length - 20"></span>
+									<span data-bind="text: roundList().length - 14"></span>
 									kierrosta
 								</a>
 							 </h5>
@@ -383,8 +389,6 @@
 					<h5 class="reflect">Tasoitus</h5>
 
 					<div style="background: #f7f7f7; min-height: 174px; width: 100%">
-						<!--  <div data-bind="visible: spinnerLoaded() == false">
-						</div> -->
 						<div id="prefsPlayerHcp" data-bind="fadeVisible: spinnerLoaded() === true">
 							<input id="i" style="display: none"	data-bind="value: playerExactHcp" data-role="none" />
 						</div>
@@ -680,7 +684,7 @@
 						<div class="ui-block-b" style="width: 60%">
 							<div class="" data-role="controlgroup" data-type="horizontal" style="text-align: center">
 								<a id="dataBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap:  showHoledata }" class="navbutton activeBtn" style="border-right: 1px #999 solid !important;">Tiedot</a>
-								<a id="statsBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap : showStats }" class="navbutton" style="border-left: 0px !important;">Tilastot</a>
+								<a id="statsBtn" data-role="button" data-mini="true" data-inline="true" data-bind="event: { tap : showStats }" class="navbutton passiveBtn" style="border-left: 0px !important;">Tilastot</a>
 							</div>
 						</div>
 						<div class="ui-block-c" style="width: 20%">
@@ -732,7 +736,7 @@
 		</div>
 
 
-		<div id="scoreCard" class="scorecard-dialog"  data-theme="b" style="display: none; z-index: 10000; background: rgba(0, 0, 0, 0.5);" data-bind="event: { swipeup: closeScoreCard, tap: closeScoreCard }" ">
+		<div id="scoreCard" class="scorecard-dialog"  data-theme="b" style="display: none; z-index: 10000; background: rgba(0, 0, 0, 0.5);" data-bind="event: { swipeup: closeScoreCard, tap: closeScoreCard }">
 
 			<div data-role="content" id="dialogContent" data-theme="a" style="box-shadow: 0px 2px 24px #000">
 				<table class="scoreCardTable">
