@@ -1080,7 +1080,7 @@ function viewModel () {
 
 				f_text.transition({
 					perspective: '1000',
-					duration: '350',
+					duration: '400',
 					marginRight: '0%',
 					easing: 'easeOutCirc'
 
@@ -2447,8 +2447,6 @@ function viewModel () {
 		self.scoreCard()[h].score(score);
 		self.scoreCard()[h].scoreToPar(p);
 		self.scoreCard()[h].points(h_points);
-
-
 	};
 
 
