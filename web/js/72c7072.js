@@ -1594,7 +1594,7 @@ function viewModel () {
 				complete: function() {  }
 			}); */
 
-			var btns = $('#dataButtons');
+			/*var btns = $('#dataButtons');
 			btns.transition({
 				perspective: '1000',
 				x: '-100%',
@@ -1607,7 +1607,7 @@ function viewModel () {
 				perspective: '1000',
 				x: '0',
 				duration: '250'
-			});
+			});*/
 
 
 
@@ -1685,7 +1685,7 @@ function viewModel () {
 
 			var btns = $('#dataButtons');
 
-			btns.transition({
+			/*btns.transition({
 				perspective: '1000',
 				x: '100%',
 				duration: '350'
@@ -1697,7 +1697,7 @@ function viewModel () {
 				perspective: '1000',
 				x: '0',
 				duration: '250'
-			});
+			});*/
 		}
 
 		var curHole = parseInt(self.currentHole(), 10);
@@ -2084,12 +2084,6 @@ function viewModel () {
 					opacity: '0',
 					duration: '150',
 					complete: function() {
-						backbtn.transition({
-							perspective: '1000',
-							x: '0%',
-							duration: '200',
-							opacity: '1',
-						});
 						creditsbtn.transition({
 							perspective: '1000',
 							x: '0%',
@@ -2099,13 +2093,25 @@ function viewModel () {
 					}
 				});
 
+				setTimeout(function() {
+					backbtn.transition({
+						perspective: '1000',
+						x: '0%',
+						duration: '250',
+						opacity: '1',
+					});
+				}, 150);
+
+
+
 				f_text.transition({
 					perspective: '1000',
-					duration: '350',
+					duration: '400',
 					marginRight: '0%',
-					paddingLeft: '2px'
-				});
+					easing: 'easeOutCirc'
 
+				});
+//					paddingLeft: '2px'
 				header_front.transition({
 					perspective: '1000',
 					x: '30%',
@@ -3467,8 +3473,6 @@ function viewModel () {
 		self.scoreCard()[h].score(score);
 		self.scoreCard()[h].scoreToPar(p);
 		self.scoreCard()[h].points(h_points);
-
-
 	};
 
 
@@ -3786,6 +3790,32 @@ function viewModel () {
 
 
 			setTimeout(function() {
+			
+			
+				header_c.transition({
+					perspective: '1000',
+					x: '50%',
+					opacity: '0',
+					duration: '150',
+					complete: function() {
+						header_c.css({ visibility: 'hidden', display: 'none'
+						});
+					}
+				});
+				
+				
+				(function() {
+					setTimeout(function() {
+						header_front.transition({
+							perspective: '1000',
+							x: '0%',
+							opacity: '1',
+							duration: '250',
+						});
+					}, 100);
+					inTransition = false;
+				})();		
+			
 
 				f_outer.transition({
 					perspective: '1000',
@@ -3805,18 +3835,18 @@ function viewModel () {
 					}
 				});
 
-				header_c.transition({
-					perspective: '1000',
-					x: '50%',
-					opacity: '0',
-					duration: '350',
-					complete: function() {
-						header_c.css({ visibility: 'hidden', display: 'none'
-						});
-					}
-				});
 
-				header_front.transition({
+
+
+
+
+
+		
+				
+				
+				
+
+				/*header_front.transition({
 					perspective: '1000',
 					x: '0%',
 					duration: '350',
@@ -3827,7 +3857,7 @@ function viewModel () {
 						});
 						inTransition = false;
 					}
-				});
+				});*/
 			}, 1);
 		}
 	}
@@ -4057,23 +4087,14 @@ function viewModel () {
 				sel.css({ display: 'none' });
 			}
 		});
-
-
-
 	}
-
-
-
+	
+	
+	self.ios = ko.observable(false);
+	if (navigator.userAgent.match(/(iPhone)/g)) {
+		self.ios(true);
+	}
 }
-
-$(document).on('mobileinit', function() {
-  	/*$.mobile.loader.prototype.options.theme = "b";
-	$.mobile.loader.prototype.options.textVisible = true;*/
-	//$.mobile.loader.prototype.options.text = "Ladataan...";
-
-
-});
-
 
 $(document).on('pageinit', function() {
 	window.vm = new viewModel();
@@ -4090,53 +4111,17 @@ $(document).on('pageinit', function() {
 		}
 	})();
 
-
-	/*window.addEventListener('orientationchange', function(e, ready) {
-
-		if(ready) {
-
-			if (window.orientation == "90" || window.orientation == "-90" || window.orientation == "0" || window.orientation == "360" ) {
-				document.body.style.webkitTransform = 'translate3d(0, 20px, 0)';
-			}
-		}
-
-
-		//}
-
-	}); */
-
-
 	function reorient(e) {
 		var portrait = (window.orientation % 180 == 0);
-
-		//if(vm.launchedFromHome() == true) {
-		//	$('#root').removeClass('ios_top').addClass('ios_top');
-		//}
 		if(!portrait) {
 			if (navigator.userAgent.match(/(iPhone)/g) && vm.launchedFromHome() == false) {
 				$('#root').removeClass('ios_top_minimal_ui');
 				//.addClass('ios_top_minimal_ui');
 			}
 		}
-
-
-		//$("body > div").css("-webkit-transform", !portrait ? "rotate(-90deg)" : "");
 	}
 	window.onorientationchange = reorient;
 	window.setTimeout(reorient, 0);
-
-
-
-/*	document.addEventListener('focusout', function(e) {
-		document.body.style.webkitTransform = 'translate3d(0, 20px, 0)';
-	});*/
-
-	$('input').bind('focus', function() {
-		/*$('#root').css({ top: '23px !important' });
-		$('#root').css({ top: '22px !important' });*/
-
-	});
-
 
 	$('input').bind('focusout', function() {
 
@@ -4148,11 +4133,7 @@ $(document).on('pageinit', function() {
 				$('#root').addClass('ios_top_minimal_ui');
 			}
 		}, 10);
-
-
 	});
-
-
 
 	ko.applyBindings(vm, document.getElementById("root"));
 
@@ -4168,58 +4149,6 @@ $(document).on('pageinit', function() {
 		}
 	});
 
-
-
-	$('#root').on('pageshow', function() {
-
-		if (vm.loadedRoundStartTime() !== "") {
-//			$('html, body').animate({scrollTop: vm.scrollPos()}, "slow");
-
-			$.mobile.silentScroll(vm.scrollPos());
-		}
-	});
-
-	$('#courseSelect').on('pageinit', function () {
-		ko.applyBindings(vm, document.getElementById("courseSelect"));
-	});
-
-	$('#s_page').on('pageinit', function () {
-		ko.applyBindings(vm, document.getElementById("s_page"));
-	});
-
-	$('#scoreCard').on('pageinit', function () {
-		ko.applyBindings(vm, document.getElementById("scoreCard"));
-	});
-
-
-	$('#courseSelect').on('pageshow', function(e) {
-		$('#courseList').listview('refresh');
-	});
-
-	$('#s_page').on('pageshow', function(e) {
-
- 	// https://github.com/jquery/jquery-mobile/issues/4078
-		//$(this).addClass('ui-page-active');
-
-//		$("#slaidi").slider();
-
-		/*vm.calcRoundDuration();
-		var clock = setInterval(function() {
-			vm.calcRoundDuration();
-		} , 2000);*/
-
-	});
-
-	$('#s_page').on('pagehide', function() {
-//		if (clock) {
-	//		clearInterval(clock);
-		//}
-	});
-
-	$('#prefs').on('pageinit', function () {
-		ko.applyBindings(vm, document.getElementById("prefs"));
-		vm.hcpScroller();
-	});
 
 	$(document).off('pageinit');
 
