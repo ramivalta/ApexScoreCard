@@ -134,20 +134,13 @@ function viewModel () {
 		self.noOfHoles(18);
 	};
 	
-	
+/*	
 	self.holeNumToggle = ko.computed(function() {
 		if (parseInt(self.noOfHoles(), 10) === 18) {
-//			if (self.holes().length < 18) {
-/*				if (self.nippedHoles().length > 1) {
-					for (var i = 0; i < self.nippedHoles().length; i++) {
-						self.holes.push(self.nippedHoles()[i]);
-					}
-				} */
-//				else {
+
 					var i = 0;
 					while (self.holes().length < 18) {
-//						console.log(self.holes().length);
-	//					console.log("lengthening");
+
 						self.holes.push({
 							hole_number: ko.observable(self.holes().length + 1),
 							hole_par: ko.observable(0),
@@ -157,23 +150,20 @@ function viewModel () {
 							hole_length_red: ko.observable(0),
 							hole_length_white: ko.observable(0),
 						});
-	//				}
-	//			}
+
 			}
 		}
 
 		else if (parseInt(self.noOfHoles(), 10) === 9) {
-//			console.log("hurkadurka");
+
 			while (self.holes().length > 9) {
-//				self.nippedHoles().push(self.holes.pop());
+
 				self.holes.pop();
-//				console.log("shortening");					
-//				i++;
 		
 			}
 		}
 	});
-		
+*/
 	
 	self.saveCourse = function() {
 	
@@ -280,7 +270,7 @@ function viewModel () {
 		);
 	};
 	
-	self.courseLengthRed = ko.computed(function() {
+/*	self.courseLengthRed = ko.computed(function() {
 		if(self.holes().length > 0) {
 			var s = 0;
 			for (var i = 0; i < self.holes().length; i++) {
@@ -318,56 +308,8 @@ function viewModel () {
 				}
 			return s;
 		}
-	}).extend({ throttle: 50 });
+	}).extend({ throttle: 50 }); */
 
-	/*self.getCourseGeneralData = function (course_id) {
-		self.resetForm();
-		self.showHoleToggle(false);
-		var data = { course_id : course_id };
-		apexEventProxy.getCourseData(
-			{ data : data },
-			function (data) {
-				self.courseName(data.course.name);
-				self.courseAlias(data.course.alias);
-
-				self.courseCrYellowMen(data.course.crYellowMen);
-				self.courseSlYellowMen(data.course.slYellowMen);
-
-				self.courseCrYellowLadies(data.course.crYellowLadies);
-				self.courseSlYellowLadies(data.course.slYellowLadies);
-
-				self.courseCrBlueMen(data.course.crBlueMen);
-				self.courseSlBlueMen(data.course.slBlueMen);
-
-				self.courseCrBlueLadies(data.course.crBlueLadies);
-				self.courseSlBlueLadies(data.course.slBlueLadies);
-				
-				self.courseCrRedMen(data.course.crRedMen);
-				self.courseSlRedMen(data.course.slRedMen);
-
-				self.courseCrRedLadies(data.course.crRedLadies);
-				self.courseSlRedLadies(data.course.slRedLadies);
-				
-				self.courseCrWhiteMen(data.course.crWhiteMen);
-				self.courseSlWhiteMen(data.course.slWhiteMen);
-				
-				if (data.course.addedBy != null) {
-					self.addedBy(data.course.addedBy);
-					self.getGolferById(parseInt(self.addedBy(), 10));
-				}
-				
-				else {
-					self.addedBy(null);
-					self.adderName("");
-				}
-				
-				self.getHoleData(course_id);
-			}
-		);
-		
-		self.course_id(course_id);
-		
-	}; */
 
 	self.playerGender = ko.observable("Male");
 
@@ -382,7 +324,7 @@ function viewModel () {
 		console.log(self.courseCr());
 		console.log(self.coursePar());*/
 
-		if (typeof self.round_hcp() === 'undefined' || typeof self.round_tee() === 'undefined' || typeof self.courseCr() === 'undefined' || typeof self.courseSl() === 'undefined' || typeof self.coursePar() === 'undefined') return 0;
+		//if (typeof self.round_hcp() === 'undefined' || typeof self.round_tee() === 'undefined' || typeof self.courseCr() === 'undefined' || typeof self.courseSl() === 'undefined' || typeof self.coursePar() === 'undefined') return 0;
 
 
 		var courseSl;
@@ -454,51 +396,7 @@ function viewModel () {
 
 	self.roundEndTime = ko.observable();
 
-	/*self.getHoleData = function(course_id) {
-	
-		self.noOfHoles(0);
-		self.holes.removeAll();
-	
-		var data = { course_id : course_id };
-		apexEventProxy.getHoleData(
-			{ data : data },
-			function (data) {
-				for (var i = 0, m = data.holes.length; i < m; i++) {
-					self.holes.push({
-						hole_number: ko.observable(data.holes[i].hole_number),
-						hole_par: ko.observable(data.holes[i].par),
-						hole_hcp: ko.observable(data.holes[i].hcp),
-						hole_length_yellow: ko.observable(data.holes[i].length_yellow),
-						hole_length_blue: ko.observable(data.holes[i].length_blue),
-						hole_length_red: ko.observable(data.holes[i].length_red),
-						hole_length_white: ko.observable(data.holes[i].length_white),
-					});
-				}
-
-			$( "#save" ).button({ enabled: true });	
-			}
-
-		);
-
-	}; */
-	
-		
-	self.getCourseList = function (callback) {
-		var a;
-		apexEventProxy.getCourseList(
-			{ a : a },
-			function(data) {
-				for (var i = 0, m = data.courses.length; i < m; i++) {
-					self.courseList.push(data.courses[i]);
-				}
-			}
-		);
-	};
-	
-	self.getCourseList();
-
-
-	self.getGolferData = function () {
+/*	self.getGolferData = function () {
 		var a;
 		apexEventProxy.getGolferData(
 			{ a : a },
@@ -517,9 +415,9 @@ function viewModel () {
 				}
 			}
 		);
-	};
+	}; */
 
-	self.getGolferById = function (golfer_id) {
+/*	self.getGolferById = function (golfer_id) {
 		if (golfer_id == undefined) {
 			return null;
 		};
@@ -533,12 +431,12 @@ function viewModel () {
 
 			}
 		);
-	};
+	}; */
 	
 	//self.getGolferData();
 
 
-	
+	/*
 	function getRounds() {
 		var data;
 
@@ -560,7 +458,7 @@ function viewModel () {
 				}
 			}
 		);
-	}
+	} */
 
 	//getRounds();
 
@@ -568,65 +466,72 @@ function viewModel () {
 	function getCourseData (course_id, round_id, cb) {
 
 		var data = { course_id : course_id };
-
-		for (var i = 0; self.courseList().length > i; i++) {
-			if (self.courseList()[i].id === course_id) {
-
-				self.courseName(self.courseList()[i].name);
-				self.courseAlias(self.courseList()[i].alias);
-
-				self.courseCrYellowMen(self.courseList()[i].crYellowMen);
-				self.courseSlYellowMen(self.courseList()[i].slYellowMen);
-				self.courseCrYellowLadies(self.courseList()[i].crYellowLadies);
-				self.courseSlYellowLadies(self.courseList()[i].slYellowLadies);
-
-				self.courseCrBlueMen(self.courseList()[i].crBlueMen);
-				self.courseSlBlueMen(self.courseList()[i].slBlueMen);
-
-				self.courseCrBlueLadies(self.courseList()[i].crBlueLadies);
-				self.courseSlBlueLadies(self.courseList()[i].slBlueLadies);
-
-
-				self.courseCrRedMen(self.courseList()[i].crRedMen);
-				self.courseSlRedMen(self.courseList()[i].slRedMen);
-
-				self.courseCrRedLadies(self.courseList()[i].crRedLadies);
-				self.courseSlRedLadies(self.courseList()[i].slRedLadies);
-
-				self.courseCrWhiteMen(self.courseList()[i].crWhiteMen);
-				self.courseSlWhiteMen(self.courseList()[i].slWhiteMen);
-
-				break;
-			}
-		}
-
-		apexEventProxy.getHoleData(
+		apexEventProxy.getCourseData(
 			{ data : data },
 			function (data) {
-				var i;
-				var h = data.holes.length;
+				//console.log(data);
+				self.courseName(data.course.name);
+				self.courseAlias(data.course.alias);
 
-				//console.log("getting holedata");
+				self.courseCrYellowMen(data.course.crYellowMen);
+				self.courseSlYellowMen(data.course.slYellowMen);
 
-				for (i = 0; i < h; i++) {
-					self.holes.push({
-						hole_number: ko.observable(data.holes[i].hole_number),
-						hole_par: ko.observable(data.holes[i].par),
-						hole_hcp: ko.observable(data.holes[i].hcp),
-						hole_length_yellow: ko.observable(data.holes[i].length_yellow),
-						hole_length_blue: ko.observable(data.holes[i].length_blue),
-						hole_length_white: ko.observable(data.holes[i].length_white),
-						hole_length_red: ko.observable(data.holes[i].length_red)
-					});
-				}
+				self.courseCrYellowLadies(data.course.crYellowLadies);
+				self.courseSlYellowLadies(data.course.slYellowLadies);
 
-				//self.setHoleData(self.currentHole());
+				self.courseCrBlueMen(data.course.crBlueMen);
+				self.courseSlBlueMen(data.course.slBlueMen);
 
-				if (round_id) getRoundScores(round_id, function() { cb() });
-				else cb();
+				self.courseCrBlueLadies(data.course.crBlueLadies);
+				self.courseSlBlueLadies(data.course.slBlueLadies);
+				
+				self.courseCrRedMen(data.course.crRedMen);
+				self.courseSlRedMen(data.course.slRedMen);
 
+				self.courseCrRedLadies(data.course.crRedLadies);
+				self.courseSlRedLadies(data.course.slRedLadies);
+				
+				self.courseCrWhiteMen(data.course.crWhiteMen);
+				self.courseSlWhiteMen(data.course.slWhiteMen);
+				
+				
+				self.course_id(course_id);				
+
+				cb();
+
+				var data = { course_id : course_id };
+
+				apexEventProxy.getHoleData(
+					{ data : data },
+					function (data) {
+						var i;
+						var h = data.holes.length;
+
+						//console.log("getting holedata");
+
+						for (i = 0; i < h; i++) {
+							self.holes.push({
+								hole_number: ko.observable(data.holes[i].hole_number),
+								hole_par: ko.observable(data.holes[i].par),
+								hole_hcp: ko.observable(data.holes[i].hcp),
+								hole_length_yellow: ko.observable(data.holes[i].length_yellow),
+								hole_length_blue: ko.observable(data.holes[i].length_blue),
+								hole_length_white: ko.observable(data.holes[i].length_white),
+								hole_length_red: ko.observable(data.holes[i].length_red)
+							});
+						}
+
+						//self.setHoleData(self.currentHole());
+
+						if (round_id) getRoundScores(round_id, function() { cb() });
+						else cb();
+
+					}
+				);
 			}
 		);
+
+
 	};
 
 	//getCourseData();
@@ -777,6 +682,12 @@ function viewModel () {
 				var course_id = data.round.course_id;
 				var start_time = data.round.start_time;
 				var end_time = data.round.end_time;
+
+
+	//self.getCourseGeneralData = function (course_id, cb) {
+
+
+
 				getCourseData(course_id, round_id, function() {
 					self.round_id(round_id);
 					self.course_id(course_id);
@@ -788,7 +699,7 @@ function viewModel () {
 						self.roundEndTime(end_time.date);
 					}
 
-					self.roundLoaded(true);
+					//self.roundLoaded(true);
 
 					
 
@@ -841,11 +752,16 @@ function viewModel () {
 
 
 			self.scoreCard.push(line);
-			self.calcHcpPreview();
+			//self.calcHcpPreview();
+
 
 		}
+		self.calcHcpPreview();		
+		setTimeout(function() {
+			self.roundLoaded(true);			
+		}, 150);
 
-		//self.calcHcpPreview();
+
 
 	};
 
@@ -922,7 +838,7 @@ function viewModel () {
 		}
 	};	
 
-	self.courseLength = ko.computed(function() {
+	/*self.courseLength = ko.computed(function() {
 		var s = 0;
 		for (var i = 0; i < self.holes().length; i++) {
 			if (self.round_tee() === "yellow") s = s + parseInt(self.holes()[i].hole_length_yellow(), 10);
@@ -931,7 +847,7 @@ function viewModel () {
 			else if (self.round_tee() === "red")  s = s + parseInt(self.holes()[i].hole_length_red(), 10);
 		}
 		return s;
-	}).extend({throttle: 1 });
+	}).extend({throttle: 1 }); */
 
 	self.totalToPar = ko.computed(function() {
 		if (self.holes().length > 0 && self.roundScores().length > 0) {
@@ -1090,7 +1006,7 @@ function viewModel () {
 	self.hcpPreview = ko.observable();
 
 	self.calcHcpPreview = ko.computed(function() {
-		if (self.holes().length > 0) {
+		if (self.roundLoaded() == true) {
 			var p = parseInt(self.totalPoints(), 10);
 			var hcp = parseFloat(self.round_hcp());
 
@@ -1127,7 +1043,7 @@ function viewModel () {
 		}
 		else return;
 
-	}).extend({throttle: 250 });
+	}).extend({throttle: 1 });
 
 	self.getHcpGroup = function(hcp) {
 
@@ -1178,10 +1094,7 @@ function viewModel () {
 		}
 
 		return group;
-
 	};
-
-
 }	
 
 

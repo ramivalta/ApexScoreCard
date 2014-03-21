@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/foundation.min.css') }}" type="text/css" media="screen" rel="stylesheet" />
 
-	  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/site_styles.css') }}" type="text/css" media="screen" rel="stylesheet" />
+	  	<link rel="stylesheet" href="{{ asset('bundles/apexscore/css/site_stylesheets.css?929223') }}" type="text/css" media="screen" rel="stylesheet" />
 	  	
 	  	
 		<script src="http://code.jquery.com/jquery-2.0.0.js">
@@ -45,6 +45,10 @@
 				<h1 style="display: inline-block; position: relative; top: 8px">Bogikortti</h1>
 			</div>
 
+			<div class="large-12 medium-12 small-12 columns" data-bind="fadeVisible: roundLoaded() == false" style="text-align: center; margin-top: 240px">
+				<div class="ajaxloader_large"></div>
+			</div>
+
 
 			<div class="large-12 medium-12 small-12 columns" data-bind="fadeVisible: roundLoaded() == true" style="background: #fefefe; border-radius: 24px; box-shadow: 0 0 32px #999">
 
@@ -66,7 +70,7 @@
 
 					<div style="display: inline-block; float: right">
 						<h4 style="display: inline-block; line-height: 1.0">
-							Tarkka tasoitus&nbsp;<span data-bind="text: playerExactHcp"></span>
+							Tarkka tasoitus&nbsp;<span data-bind="text: round_hcp"></span>
 						</h4>
 					</div>
 				</div>
