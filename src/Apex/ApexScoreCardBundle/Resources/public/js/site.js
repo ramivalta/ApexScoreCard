@@ -650,7 +650,8 @@ function viewModel () {
 				console.log(id);*/
 				round_id = parseInt(id, 10);
 			}
-			else return;
+			else window.location.href="/home";
+			
 		}
 
 		self.roundLoaded(false);

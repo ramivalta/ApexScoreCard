@@ -363,6 +363,7 @@ body {
 	border-left: 0;
 	font-weight: 300;
 	height: 32px;
+	min-width: 42px;
 	margin: auto;
 }
 
@@ -403,10 +404,10 @@ body {
 }
 
 .ajaxloader_large {
-	width: 96px;
-	height: 96px;
-	margin: 36px auto;
-	border: 20px solid #fff;
+	width: 68px;
+	height: 68px;
+	margin: 24px auto;
+	border: 12px solid #fff;
 	border-right-color: transparent;
 	border-radius: 50%;
 	box-shadow: 0 0 18px 2px #555;
