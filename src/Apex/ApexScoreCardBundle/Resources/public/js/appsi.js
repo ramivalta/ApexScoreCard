@@ -995,7 +995,7 @@ function viewModel () {
 			var prev_head = $('#f_header');
 			var prefs_link = $('#prefs_link');
 			var prefs_content = $('#prefs_content');
-			var f_content = $('#f_outer');
+			var f_outer = $('#f_outer');
 			var header_front = $('#header_front');
 			var f_text = $('#f_text');
 			var former_title = $('#pageTitle');
@@ -1025,8 +1025,9 @@ function viewModel () {
 
 				prefs.css({
 					transformOrigin: '100% 0',
-					x: '-100%',
+					x: '0%',
 					display : 'block',
+					zIndex: '0',
 				});
 
 				creditsbtn.css({
@@ -1035,7 +1036,13 @@ function viewModel () {
 					opacity: '0',
 					visibility: 'visible',
 					display: 'block',
+					zIndex: '1'
 				});
+
+				f_outer.css({
+					zIndex: '2',
+					boxShadow: '0px 0px 36px #777',	
+				})
 
 				//spinner.css({visibility: 'visible' });
 
@@ -1100,28 +1107,26 @@ function viewModel () {
 				});
 
 
-				f_content.transition({
+				f_outer.transition({
 					perspective: '1000',
-					x: '75%',
-					duration: '300',
-					opacity: '0',
-					easing: 'out',
+					x: '100%',
+					duration: '350',
 					complete: function() {
-						f_content.css({ visibility: 'hidden', x: '100%' });
+						//f_outer.css({ boxShadow: 'none' });
 						pageRight.css({ visibility: 'hidden', display: 'none' });
 					}
 				});
 
 
-				prefs.transition({
+				/*prefs.transition({
 					perspective: '1000',
 					x: '0',
-					easing: 'in',
-					duration: '150',
+					duration: '350',
+					boxShadow: '0 8px 12px #999',
 					complete: function() {
 						//spinner.transition({opacity: '1', duration: '50' });
 					}
-				});
+				});*/
 
 
 
@@ -1163,23 +1168,16 @@ function viewModel () {
 			self.activePage("front");
 
 			var el = $('#prefs');
-			var prev = $('#f_content');
+			//var prev = $('#f_content');
 			var prefs_link = $('#prefs_link');
 			var prefs_content = $('#prefs_content');
 			var prefs = $('#prefs');
-			var f_content = $('#f_outer');
+			var f_outer = $('#f_outer');
 
 			var pageRight = $('#pageRight');
 
 			var creditsbtn = $('#creditsButton');
 
-			pageRight.css({ visibility: 'visible', display: 'block' });
-
-			/*prefs_link.transition({
-				perspective: '1000',
-				marginRight: '100%',
-				duration: '350',
-			});*/
 
 			var backbtn = $('#pageBackButton');
 
@@ -1188,50 +1186,48 @@ function viewModel () {
 			var former_title = $('#pageTitle');
 
 			var pref_text = $('#pref_text');
-			//pref_text.css({ fontWeight: 'normal'});
+			var new_round_btn = $('#pageRight');			
 
-
-			f_text.addClass('headerButton');
-			f_text.removeClass('headerTitle');
-
-			//pref_text.css({ textDecoration: 'underline'});
-
-			former_title.css({ visibility: 'visible', display: 'block' }).transition({
-				perspective: '1000',
-				opacity: '1',
-				duration: '350',
-				x: '0%',
-				complete: function() {
-
-				}
-			});
-
-			var new_round_btn = $('#pageRight');
-
-			new_round_btn.transition({
-				perspective: '1000',
-				opacity: '1',
-				duration: '850',
-			});
-
-			creditsbtn.transition({
-				perspective: '1000',
-				opacity: '0',
-				duration: '350',
-				x: '100%',
-				complete: function() {
-					creditsbtn.css({ visibility: 'hidden', display: 'none' });
-				}
-			});
+			setTimeout(function() {
+				former_title.css({ visibility: 'visible', display: 'block' });
+				pageRight.css({ visibility: 'visible', display: 'block' });	
+				f_text.addClass('headerButton').removeClass('headerTitle');
+			}, 0);
 
 
 
-			f_content.css({transformOrigin: '100% 0', visibility: 'visible' }).transition({
-				perspective: '1000',
-				x: '0%',
-				duration: '350',
-				opacity: '1',
-			});
+
+			setTimeout(function() {
+				former_title.transition({
+					perspective: '1000',
+					opacity: '1',
+					duration: '350',
+					x: '0%',
+					complete: function() {
+
+					}
+				});
+				new_round_btn.transition({
+					perspective: '1000',
+					opacity: '1',
+					duration: '850',
+				});
+
+				creditsbtn.transition({
+					perspective: '1000',
+					opacity: '0',
+					duration: '350',
+					x: '100%',
+					complete: function() {
+						creditsbtn.css({ visibility: 'hidden', display: 'none' });
+					}
+				});
+
+				//f_outer.css({boxShadow: '0px 0px 36px #777'})
+
+
+			}, 1);
+
 
 			header_front.transition({
 				perspective: '1000',
@@ -1246,8 +1242,6 @@ function viewModel () {
 				duration: '100',
 				paddingLeft: '2px'
 			});
-	//			paddingLeft: '0px'
-	//			opacity: '0',
 
 			(function() {
 				backbtn.transition({
@@ -1262,23 +1256,20 @@ function viewModel () {
 				});
 			})();
 
-			prefs.css({transformOrigin: '100% 0'}).transition({
-				perspective: '1000',
-				x: '-100%',
-				duration: '350',
-				complete: function() {
-					el.css({display : 'none' });
 
-				}
-			});
-
-			prev.css({transformOrigin: '100% 0'}).transition({
+			f_outer.css({transformOrigin: '100% 0'}).transition({
 				perspective: '1000',
 				x: '0%',
 				duration: '350',
 				complete: function() {
 					inTransition = false;
 					self.spinnerLoaded(false);
+					prefs.css({
+						display: 'none'
+					});
+
+					//f_outer.css({boxShadow: 'none'})
+
 					//spinner.css({ visibility: 'hidden' });
 					//prev.css({display : 'block'});
 				}
@@ -1309,9 +1300,14 @@ function viewModel () {
 
 			var hh = $('#header_scorepage');
 
-			hh.css({
+			hh.transition({
 				opacity: '0',
-				duration: '100',
+				duration: '150'
+			});
+
+			$('#f_header').transition({
+				opacity: '0',
+				duration: '150'
 			});
 
 
@@ -1335,7 +1331,7 @@ function viewModel () {
 				perspective: '1000',
 				y: '0px',
 				x: '0px',
-				top: '0',
+				top: '-44px',
 				bottom: '0',
 				right: '0',
 				left: '0',
@@ -1481,6 +1477,12 @@ function viewModel () {
 					opacity: '1',
 					duration: '50',
 				});
+
+				$('#f_header').transition({
+					opacity: '1',
+					duration: '150'
+				});
+
 
 				var b = $('#bottom');
 				var s_foot = $('#s_footer');
@@ -1654,61 +1656,82 @@ function viewModel () {
 			var header_score = $('#header_scorepage');
 
 			var c_outer = $('#c_outer');
-			c_outer.css({
-				visibility: 'hidden',
-			});
-
-			var btn = $('#s_back');
-
-			header_score.transition({
-				perspective: '1000',
-				x: '50%',
-				opacity: '0',
-				duration: '350',
-				complete: function() {
-
-				}
-			});
+			var f_outer = $('#f_outer');
+			var btn = $('#s_back');	
+			var s_page = $('#s_page');
+			var s_content = $('#s_content');
 
 			setTimeout(function() {
-				header_score.css({ display: 'none', opacity: '1' });
-			}, 350);
+				c_outer.css({
+					visibility: 'hidden',
+					display: 'none',					
+				});
 
-			(function() {
+				f_outer.css({
+					x: '-100%',
+					display: 'block',
+					visibility: 'visible',
+					xIndex: '1'
+				});				
+
+				header_score.transition({
+					perspective: '1000',
+					x: '50%',
+					opacity: '0',
+					duration: '350',
+					complete: function() {
+
+					}
+				});
+
+				s_page.css({
+					zIndex: '2',
+					boxShadow: '0px 0px 36px #777'
+				});
+
 				setTimeout(function() {
-					f_header.transition({
-						perspective: '1000',
-						x: '0%',
-						opacity: '1',
-						duration: '350',
-					});
-				}, 0);
-			})();
+					header_score.css({ display: 'none', opacity: '1' });
+				}, 350);
 
-			var s_page = $('#s_page');
-			var f_outer = $('#f_outer');
+				(function() {
+					setTimeout(function() {
+						f_header.transition({
+							perspective: '1000',
+							x: '0%',
+							opacity: '1',
+							duration: '350',
+						});
+					}, 0);
+				})();
+			}, 0);
 
-			f_outer.css({ x: '-100%', display: 'block', visibility: 'visible'});
 
-			s_page.transition({
-				perspective: '1000',
-				x: '50%',
-				duration: '350',
-				opacity: '0',
-				complete: function() {
-					s_page.css({ display: 'none', opacity: '1' });
-					inTransition = false;
-				}
-			});
+			setTimeout(function() {
+				s_page.transition({
+					perspective: '1000',
+					x: '100%',
+					duration: '350',
+					complete: function() {
+						inTransition = false;
+						//s_page.css({boxShadow: 'none'})
+					}
+				});
 
-			f_outer.transition({
-				perspective: '1000',
-				x: '0%',
-				duration: '350',
-			});
+				f_outer.transition({
+					perspective: '1000',
+					x: '0%',
+					duration: '350',
+					complete: function() {
+						s_page.css({ display: 'none' });						
+					}
+				});
+			}, 1);
+
+
+
 
 			var c_sel = $('#courseSelect');
-			c_sel.css({ marginLeft: '100%' });
+			//c_sel.css({ marginLeft: '100%' });
 		}
 	};
 
@@ -2655,19 +2678,29 @@ function viewModel () {
 					visibility: 'visible',
 				});
 
+				f_outer.css({
+					zIndex: '0'
+				})
+
 				c_outer.css({
 					x: '100%',
 					opacity: '1',
 					visibility: 'visible',
-
+					display: 'block',
+					boxShadow: '0px 0px 36px #777',	
+					zIndex: '2'
 				});
+
 				c_sel.css({
+					display: 'block',
+					visibility: 'visible'
+				})
+				/*c_sel.css({
 					visibility: 'visible',
 					display: 'block',
 					x: '100%',
-					marginLeft: '0%',
-
-				});
+					boxShadow: '0px 24px 48px #777',					
+				});*/
 			}, 0);
 
 
@@ -2689,28 +2722,33 @@ function viewModel () {
 					duration: '350',
 				});
 
+				c_outer.transition({
+					perspective: '1000',
+					x: '0%',
+					duration: '350',
+					complete: function() {
+						//c_outer.css({boxShadow: 'none'});
+					}
+				});
 
 
 				f_outer.transition({
 					perspective: '1000',
-					x: '-100%',
+					x: '-50%',
 					duration: '350',
-					opacity: '0',
+
 					complete: function() {
 						f_outer.css({
 							visibility: 'hidden',
-							opacity: '1',
 						});
 
 						inTransition = false;
-
 
 						if(self.recentlyPlayedCourses().length == 0) {
 							self.courseListVisible(true);
 						}
 
 						$('#fullCourseList').css({visibility: 'visible'});
-
 
 
 
@@ -2721,15 +2759,23 @@ function viewModel () {
 					}
 				});
 
-				c_outer.transition({
+				/*c_outer.transition({
 					perspective: '1000',
 					x: '0%',
 					duration: '350',
-				});
+					boxShadow: '0px 8px 12px #999',
+					complete: function() {
+						c_outer.css({
+							boxShadow: 'none'
+						})
+					}
+				});*/
 
 
 
-			}, 1);
+
+
+			}, 10);
 		}
 	};
 
@@ -2746,6 +2792,8 @@ function viewModel () {
 			var f_outer = $('#f_outer');
 			var c_sel = $('#courseSelect');
 
+			//$('#fullCourseList').css({visibility: 'hidden'});			
+
 			setTimeout(function() {
 				header_front.css({
 					x: '-100%',
@@ -2756,9 +2804,17 @@ function viewModel () {
 				});
 
 				f_outer.css({
-					x: '-100%',
+					x: '-50%',
 					visibility: 'visible',
 				});
+
+				c_outer.css({
+					boxShadow: '0px 0px 36px #777',	
+
+				});
+				c_sel.css({
+
+				});				
 
 			}, 0);
 
@@ -2796,6 +2852,7 @@ function viewModel () {
 					x: '0',
 					duration: '350',
 					complete: function() {
+						f_outer.css({zIndex: '1'})
 					}
 				});
 
@@ -2804,34 +2861,13 @@ function viewModel () {
 					x: '100%',
 					duration: '350',
 					complete: function() {
-						c_sel.css({visibility: 'hidden' });
+						c_sel.css({visibility: 'hidden', display: 'none', zIndex: '1' });
+						c_outer.css({zIndex: '1'})
 
 					}
 				});
 
 
-
-
-
-
-
-		
-				
-				
-				
-
-				/*header_front.transition({
-					perspective: '1000',
-					x: '0%',
-					duration: '350',
-					opacity: '1',
-					complete: function() {
-						header_front.css({
-							//visibility: 'visible',
-						});
-						inTransition = false;
-					}
-				});*/
 			}, 1);
 		}
 	}
@@ -2846,6 +2882,12 @@ function viewModel () {
 			var s_page = $('#s_page');
 			var header_score = $('#header_scorepage');
 
+			var s_content = $('#s_content');
+
+			s_content.css({
+				x: '0'
+			});
+
 			if(!fromCourseList) {
 				var f_outer = $('#f_outer');
 				var header_front = $('#header_front');
@@ -2859,7 +2901,8 @@ function viewModel () {
 					s_page.css({
 						x: '100%',
 						display: 'block',
-						opacity: '0',
+						boxShadow: '0px 0px 36px #777',	
+						zIndex: '2'			
 					});
 				}, 0);
 
@@ -2884,7 +2927,7 @@ function viewModel () {
 						perspective: '1000',
 						x: '-50%',
 						duration: '350',
-						opacity: '0',
+
 						complete: function() {
 							f_outer.css({visibility: 'hidden', opacity: '1', display: 'none' });
 							inTransition = false;
@@ -2894,8 +2937,10 @@ function viewModel () {
 					s_page.transition({
 						perspective: '1000',
 						x: '0%',
-						opacity: '1',
 						duration: '350',
+						complete: function() {
+							//s_page.css({boxShadow: 'none'});
+						}
 					});
 				}, 1);
 			}
@@ -2911,6 +2956,8 @@ function viewModel () {
 					s_page.css({
 						x: '100%',
 						display: 'block',
+						boxShadow: '0px 0px 36px #777',
+						zIndex: '2'			
 					});
 					header_score.css({
 						x: '100%',
@@ -2941,10 +2988,15 @@ function viewModel () {
 						perspective: '1000',
 						x: '-50%',
 						duration: '350',
-						opacity: '0',
+						
 						complete: function() {
-							c_outer.css({visibility: 'hidden', opacity: '1', x: '100%' });
+							c_outer.css({visibility: 'hidden', display: 'none', x: '100%' });
 							inTransition = false;
+							$('#courseSelect').css({visibility: 'hidden', display: 'none', zIndex: '1' });
+
+
+
+
 						}
 					});
 
@@ -2952,6 +3004,9 @@ function viewModel () {
 						perspective: '1000',
 						x: '0%',
 						duration: '350',
+						complete: function() {
+							//s_page.css({boxShadow: 'none'});
+						}
 					});
 				}, 1);
 			}
@@ -3037,13 +3092,15 @@ function viewModel () {
 
 		var sel = $('#teeSelect');
 
-		sel.css({ y: '-100%', display: 'block', boxShadow: '0 0 0 #666'  }).transition({
+		sel.css({ y: '-100%', display: 'block', boxShadow: 'none'  }).transition({
 			perspective: '1000',
 			y: '0%',
 			duration: '250',
 			opacity: '1',
-			boxShadow: '0 6px 12px #999',
+
 		});
+
+		//			boxShadow: '0 6px 12px #999',
 	}
 
 	self.hideTeeSelect = function() {
@@ -3056,7 +3113,7 @@ function viewModel () {
 			y: '-100%',
 			duration: '250',
 			opacity: '0',
-			boxShadow: '0 0 0 #666',
+			boxShadow: 'none',
 			complete: function() {
 				sel.css({ display: 'none' });
 			}

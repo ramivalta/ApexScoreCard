@@ -422,7 +422,7 @@
 				<div class="scrollMiddle">
 					<div class="scrollInner" id="courseListWrap">
 
-						<div id="teeSelect" style="text-align: center; background: transparent; padding: 8px; display: none; position: relative; z-index: 5">
+						<div id="teeSelect" style="text-align: center; background: #ccc; padding: 8px; display: none; position: relative; z-index: 5">
 							<div style="position: relative; z-index: 5">
 								<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="a" style="font-size: 13px !important; border-radius: 6px">
 									<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: round_tee, mobileradio: round_tee" />
@@ -478,10 +478,10 @@
 
 						<!-- /ko -->
 
-						<div style="height: 6px"></div>
+						<!--<div style="height: 6px"></div>-->
 						<div class="courseList_subheader" data-bind="event: { tap: $root.toggleCourseList.bind($data) }">
 							<div style="height: 24px; padding: 6px">
-								<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+								<div  class="headerButton" style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle; padding-top: 0; padding-bottom: 0; color: black">
 									<span>
 										<i data-bind="visible: courseListVisible() == false" class="fa fa-caret-right"></i>
 										<i data-bind="visible: courseListVisible() == true" class="fa fa-caret-down"></i>
@@ -499,7 +499,7 @@
 							</div>
 
 							<div data-bind="foreach: filteredCourseList, css: { ios_bottom : $root.launchedFromHome() == true }">
-							
+
 								<div style="background: #fefefe">
 									<div class="hairline-border">
 									</div>
