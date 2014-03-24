@@ -313,7 +313,7 @@ body {
 	height: 40px !important;
 	position: absolute;
 	padding: 0px;
-	padding-bottom: 0px;
+	padding-bottom: 2px;
 	//bottom: -1px !important;
 	bottom: 0px;
 	left: 0px;
@@ -972,14 +972,16 @@ background-size: 5px 5px;
 }
 
 .highlightLoaded {
-	background: #DCDCDC !important;
+	//background: #DCDCDC !important;
 	-webkit-transition: background 250ms linear;
+	background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(235,235,235,1) 100%) !important;
 
 }
 
 .highlightDeleted {
 //	background: #F5F5DC !important;
-	background: rgba(255, 255, 255, 0.85) !important;
+	//background: rgba(255, 255, 255, 0.85) !important;
+	background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(235,235,235,0.85) 100%) !important;	
 	-webkit-transition: background 250ms linear;
 }
 
@@ -1004,6 +1006,7 @@ background-size: 5px 5px;
 .hairline-border {
 	border-top: 1px solid #bbb;
 	-webkit-transform: scaleY(0.5);
+	margin-left: 8px;
 }
 
 #prefsPlayerHcp {
@@ -1090,6 +1093,45 @@ background-size: 5px 5px;
 	color: #888 !important;
 }
 
+.delContainer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	visibility: visible;
+	text-align: right;
+}
+
+.listViewData {
+	//font-size: 12px;
+	//float: right;
+	//color: #888;
+}
+
+.listViewData > span {
+	font-size: 12px;
+	color: #888;	
+}
+
+.listViewTitle {
+	display: inline-block;
+	vertical-align: middle;	
+}
+
+.listViewTitle > span {
+	font-size: 15px;
+	font-weight: 300;
+	vertical-align: middle;
+}
+
+
+.listViewRight {
+	text-align: right;
+	padding-right: 8px;
+	width: 32px;
+}
+
+
 .deleteBtn {
 	//height: 54px;
 	height: 100%;
@@ -1098,6 +1140,14 @@ background-size: 5px 5px;
 	color: #333;
 	vertical-align: middle;
 	background: rgba(255, 255, 255, 0.25) !important;
+	z-index: 0;
+}
+
+.deleteBtnInner {
+	width: 54p;
+	text-align: center;
+	vertical-align: middle;
+	height: 100%;
 }
 
 .trashcanActive {
@@ -1246,7 +1296,7 @@ background:  linear-gradient(to bottom, rgba(0,71,153,0.50), rgba(0,71,153, 0.33
 
 	//background: #fefefe;
 
-	border-top: 1px solid #888 !important;
+	border-top: 1px solid #888;
 	color: #0e0e0e;
 	text-shadow: 0px 1px 1px #fff;
 	width: 100%;
@@ -1464,4 +1514,8 @@ input:-webkit-autofill {
 .white {
 	color: white;
 	font-size: 16px;
+}
+
+#pref_button {
+	padding-left: 2px;
 }

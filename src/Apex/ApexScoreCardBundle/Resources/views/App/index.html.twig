@@ -119,7 +119,7 @@
 		<div class="ui-grid-b" id="header_front">
 			<div class="ui-block-a" id="pageLeft" style="text-align: center; padding-left: 0px">
 				<div id="prefs_link" data-bind="event: { tap: loadPrefs }">
-					<div class="headerButton" id="f_text" style="display: inline-block; margin-right: 100%; min-width: 90px; padding-left: 2px">
+					<div class="headerButton" id="pref_button" style="display: inline-block; margin-right: 100%; min-width: 90px">
 						<i class="fa fa-gear reflect" style="display: inline-block; text-decoration: none"></i>
 						<span id="pref_text" style="display: inline-block; ">Asetukset</span>
 					</div>
@@ -152,46 +152,38 @@
 
 						<div id="roundList" data-bind="foreach: roundList">
 
-							<div style="background: #fefefe" data-bind="visible: ($index() !== 0) && $index() < 15 && $root.showAllRounds() == false">
+							<div style="background: #fefefe" data-bind="visible: ($index() !== 0) && $index() < $root.roundsToDisplay()">
 								<div class="hairline-border">
 								</div>
 							</div>				
 							
-							<div style="background: #fefefe" data-bind="visible: ($index() !== 0) && $root.showAllRounds() == true">
-								<div class="hairline-border">
-								</div>
-							</div>				
-							
-
-							<div data-bind="if: $index() < 15 && $root.showAllRounds() == false">
+							<div data-bind="if: $index() < $root.roundsToDisplay()">
 								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow">
 									<div class="listViewItem">
-										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
+										<div class="listViewTitle">
 											<span data-bind="text: course_name"></span>
 										</div>
 
-										&nbsp;
-
-										<div style="inline-block; float: right; color: #888">
-											<span style="font-size: 12px"> Par </span>
-											<span style="font-size: 12px" data-bind="text: par"></span>
+										<div class="listViewData" style="float: right;">
+											<span> Par </span>
+											<span data-bind="text: par"></span>
 										</div>
 
-										<div style="font-size: 12px; color: #888">
+										<div class="listViewData">
 											<span style="float: left">
 												<span data-bind="text: score"></span>
 												<span> lyöntiä </span>
 											</span>
 
-											<div style="text-align: right; display: inline-block; float: right">
+											<div style="text-align: right; display: inline-block; float: right" class="listViewData">
 
-												<span data-bind="text: moment(start_time.date).calendar()" style="font-size: 12px; float: right">
+												<span data-bind="text: moment(start_time.date).calendar()" style="float: right">
 												</span>
 											</div>
 										</div>
 									</div>
 
-									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px">
+									<div class="listViewItem listViewRight">
 										<div data-bind="if: $root.loadingRound() !== id">
 											<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
 										</div>
@@ -202,76 +194,27 @@
 								</div>
 
 
-								<div data-bind="event: { tap : $root.confirmDelete.bind($data, id) }" style="position: absolute; right: 0; top: 0; bottom: 0; visibility: visible; text-align: right; ">
-									<div  class="deleteBtn listViewRow" style="z-index: 0; background: transparent">
-										<div class="listViewItem" style="width: 54px; text-align: center; vertical-align: middle; height: 100%">
+								<div data-bind="event: { tap : $root.confirmDelete.bind($data, id) }" class="delContainer">
+									<div  class="deleteBtn listViewRow">
+										<div class="listViewItem deleteBtnInner">
 											<i class="fa fa-trash-o" style="font-size: 24px; ; vertical-align: middle"></i>
 										</div>
 									</div>
 								</div>
 							</div>
-
-							<div data-bind="if: $root.showAllRounds() == true">
-								<div data-bind="event: { tap: $root.loadRound.bind($data, id, start_time.date), swipeleft : $root.showDeleteRoundButton.bind($data, id, start_time.date), swiperight: $root.hideDeleteRoundButton.bind($data, id, start_time.date) }, css: { highlightLoaded: $root.highlightLoaded(start_time.date), highlightDeleted : $root.roundToDelete() == id }" class="listViewRow">
-									<div class="listViewItem">
-										<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
-											<span data-bind="text: course_name"></span>
-										</div>
-
-										&nbsp;
-
-										<div style="inline-block; float: right; color: #888">
-											<span style="font-size: 12px"> Par </span>
-											<span style="font-size: 12px" data-bind="text: par"></span>
-										</div>
-
-										<div style="font-size: 12px; color: #888">
-											<span style="float: left">
-												<span data-bind="text: score"></span>
-												<span> lyöntiä </span>
-											</span>
-
-											<div style="text-align: right; display: inline-block; float: right">
-
-												<span data-bind="text: moment(start_time.date).calendar()" style="font-size: 12px; float: right">
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px">
-										<div data-bind="if: $root.loadingRound() !== id">
-											<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
-										</div>
-										<div data-bind="if: $root.loadingRound() === id">
-											<div class="ajaxloader1" style="background: #888"></div>
-										</div>
-									</div>
-								</div>
-
-								<div data-bind="event: { tap : $root.confirmDelete.bind($data, id) }" style="position: absolute; right: 0; top: 0; bottom: 0; visibility: visible; text-align: right; ">
-									<div  class="deleteBtn listViewRow" style="z-index: 0; background: transparent">
-										<div class="listViewItem" style="width: 54px; text-align: center; vertical-align: middle; height: 100%">
-											<i class="fa fa-trash-o" style="font-size: 24px; ; vertical-align: middle"></i>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
 						</div>
 
-						<div data-theme="b" data-role="content" style="padding: 6px; padding-bottom: 20px; padding-top: 0px; text-align: center; background: transparent" data-bind="visible: roundList().length >= 5">
-							<h5 data-bind="if: roundList().length < 15 || showAllRounds() == true">
+						<div data-theme="b" data-role="content" style="padding: 6px; padding-bottom: 80px; padding-top: 0px; text-align: center; background: transparent" data-bind="visible: roundList().length >= 5">
+							<h5 data-bind="if: roundList().length == $root.roundsToDisplay()">
 								Yhteensä
 								<span data-bind="text: roundList().length"></span>
 								kierrosta
 							 </h5>
 
-							<h5 data-bind="if: roundList().length >= 15 && showAllRounds() == false, event: { tap : function() { showAllRounds(true) }} " class="headerButton">
+							<h5 data-bind="if: roundList().length > $root.roundsToDisplay(), event: { tap : function() { $root.roundsToDisplay($root.roundList().length) }} " class="headerButton">
 								<a style="color: #fff; text-decoration: underline">
 									Näytä loput
-									<span data-bind="text: roundList().length - 14"></span>
+									<span data-bind="text: roundList().length - $root.roundsToDisplay()"></span>
 									kierrosta
 								</a>
 							 </h5>
@@ -376,7 +319,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -417,33 +359,32 @@
 	</div>
 
 	<div id="courseSelect" style="visibility: hidden">
+
+		<div id="teeSelect" style="text-align: center; background: #ccc; padding: 8px; display: none; position: relative; z-index: 5; border-bottom: 1px solid #555">
+			<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="a" style="font-size: 13px !important; border-radius: 6px">
+				<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: round_tee, mobileradio: round_tee" />
+				<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Punainen</label>
+
+				<input type="radio" name="blue" id="tees_blue" value="blue" data-bind="checked: round_tee, mobileradio: round_tee" />
+				<label for="tees_blue" style="border-top-color: blue !important" class="prefsTees">Sininen</label>
+
+				<input type="radio" name="yellow" id="tees_yellow" value="yellow"  data-bind="checked: round_tee, mobileradio: round_tee" />
+				<label for="tees_yellow" style="border-top-color: yellow !important" class="prefsTees">Keltainen</label>
+
+				<input type="radio" name="white" id="tees_white" value="white" data-bind="checked: round_tee, mobileradio: round_tee" />
+				<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Valkoinen</label>
+			</fieldset>
+
+		</div>			
+
 		<div id="c_outer">
 			<div class="scrollOuter">
 				<div class="scrollMiddle">
 					<div class="scrollInner" id="courseListWrap">
 
-						<div id="teeSelect" style="text-align: center; background: #ccc; padding: 8px; display: none; position: relative; z-index: 5">
-							<div style="position: relative; z-index: 5">
-								<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" data-theme="a" style="font-size: 13px !important; border-radius: 6px">
-									<input type="radio" name="red" id="tees_red" value="red" data-bind="checked: round_tee, mobileradio: round_tee" />
-									<label for="tees_red" style="border-top-color: red !important" class="prefsTees">Punainen</label>
-
-									<input type="radio" name="blue" id="tees_blue" value="blue" data-bind="checked: round_tee, mobileradio: round_tee" />
-									<label for="tees_blue" style="border-top-color: blue !important" class="prefsTees">Sininen</label>
-
-									<input type="radio" name="yellow" id="tees_yellow" value="yellow"  data-bind="checked: round_tee, mobileradio: round_tee" />
-									<label for="tees_yellow" style="border-top-color: yellow !important" class="prefsTees">Keltainen</label>
-
-									<input type="radio" name="white" id="tees_white" value="white" data-bind="checked: round_tee, mobileradio: round_tee" />
-									<label for="tees_white" style="border-top-color: white !important" class="prefsTees">Valkoinen</label>
-								</fieldset>
-							</div>
-						</div>
-
-
 						<!-- ko if: recentlyPlayedCourses().length > 0 -->
 
-						<div class="courseList_subheader">
+						<div class="courseList_subheader" style="border-top: 0; border-bottom: 1px solid #ccc">
 							<div style="height: 24px; padding: 6px">
 								<div style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle">
 									<h4 style="display: inline">Viimeisimmät pelatut kentät</h4>
@@ -452,19 +393,19 @@
 						</div>
 
 						<div data-bind="foreach: recentlyPlayedCourses">
-							<div style="background: #fefefe">
+							<div style="background: #fefefe" data-bind="visible: $index() > 0">
 								<div class="hairline-border">
 								</div>
 							</div>	
 							<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow">
-								<div class="listViewItem" style="font-size: 15px; height: 32px">
+								<div class="listViewItem listViewTitle" style="height: 32px">
 									<span data-bind="text: name"></span>
 								</div>
-								<div class="listViewItem" style="text-align: right; font-size: 12px; color: #888; height: 32px">
-									<span data-bind="text: hole_count"></span>r
+								<div class="listViewItem listViewData" style="text-align: right; height: 32px">
+									<span data-bind="text: hole_count"></span><span>r</span>
 								</div>
 
-								<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
+								<div class="listViewItem listViewRight" style="height: 32px">
 									<div data-bind="if: $root.loadingRound() !== id">
 										<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
 									</div>
@@ -478,7 +419,6 @@
 
 						<!-- /ko -->
 
-						<!--<div style="height: 6px"></div>-->
 						<div class="courseList_subheader" data-bind="event: { tap: $root.toggleCourseList.bind($data) }">
 							<div style="height: 24px; padding: 6px">
 								<div  class="headerButton" style="display: inline-block; font-size: 15px; font-weight: 300; vertical-align: middle; padding-top: 0; padding-bottom: 0; color: black">
@@ -493,27 +433,27 @@
 							</div>
 						</div>
 
-						<div id="fullCourseList" data-bind="visible: courseListVisible() == true">
-							<div style="text-align: center; background: #eeeeee">
+						<div id="fullCourseList" data-bind="visible: courseListVisible() == true" style="padding-bottom: 80px">
+							<div style="text-align: center; background: #eeeeee; border-bottom: 1px solid #ccc">
 								<input id="search" data-role="none" type="text" data-bind="value: courseSearch, valueUpdate: 'afterkeyup'" placeholder="Kentän nimi tai lyhenne..." style="padding-left: 12px" />
 							</div>
 
 							<div data-bind="foreach: filteredCourseList, css: { ios_bottom : $root.launchedFromHome() == true }">
 
-								<div style="background: #fefefe">
+								<div style="background: #fefefe" data-bind="visible: $index() > 0">
 									<div class="hairline-border">
 									</div>
 								</div>	
 							
 								<div data-bind="event: { tap: $root.startNewRound.bind($data, id, name) }" class="listViewRow" style="height: 32px">
-									<div class="listViewItem" style="font-size: 15px; height: 32px">
+									<div class="listViewItem listViewTitle" style="height: 32px">
 										<span data-bind="text: name"></span>
 									</div>
-									<div class="listViewItem" style="text-align: right; font-size: 12px; color: #888; height: 32px">
-										<span data-bind="text: hole_count"></span>r
+									<div class="listViewItem listViewData" style="text-align: right; height: 32px">
+										<span data-bind="text: hole_count"></span><span>r</span>
 									</div>
 
-									<div class="listViewItem" style="text-align: right; padding-right: 8px; width: 32px; height: 32px">
+									<div class="listViewItem listViewRight" style="height: 32px">
 										<div data-bind="if: $root.loadingRound() !== id">
 											<i class="fa fa-chevron-right header-icon" style="vertical-align: middle; color: #888"></i>
 										</div>
@@ -692,8 +632,7 @@
 						</div>
 					</div>					
 				</div>
-			</div>
-		</div>
+
 
 		<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a ios_bottom"  data-bind="css: { ios : launchedFromHome() == true, ios_bottom : ios() == true && launchedFromHome() == false }">
 			<div class="ui-block-a" style="width: 50%">
@@ -734,6 +673,13 @@
 				</div>
 			</div>
 		</div>
+
+
+
+			</div>
+		</div>
+
+
 
 
 		<div id="scoreCard" class="scorecard-dialog"  data-theme="b" style="display: none; z-index: 10000; background: rgba(0, 0, 0, 0.5);" data-bind="event: { swipeup: closeScoreCard, tap: closeScoreCard }">
