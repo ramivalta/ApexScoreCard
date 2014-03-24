@@ -10,3 +10,4 @@
 /app/config/security.yml
 .DS_Store
 /.DS_Store
+/web/js/*
