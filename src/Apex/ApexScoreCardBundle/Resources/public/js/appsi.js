@@ -101,19 +101,7 @@ function viewModel () {
 		else return false;
 	}
 
-
-
-
-	//$('#courseSelect').css({webkitTransform : 'translate3d(100%, 0, 0)'});
-
-
 	self.prePopulateScores = function () {
-//		if (self.roundScores().length > 0) self.roundScores.removeAll();
-
-//		self.round_tee = ko.observable();
-//		self.round_hcp = ko.observable();
-
-
 		for (var i = 0; i < 18; i++) {
 			var el = {};
 			el.hole = ko.observable(i + 1);
@@ -405,10 +393,6 @@ function viewModel () {
 			}
 		}, 0);
 
-
-
-//		self.saveHoleScore(self.round_id(), self.round_hcp(), curHole, curScore, self.round_tee());
-
 		self.cachedScore( {
 			round_id: self.round_id(),
 			round_hcp : self.round_hcp(),
@@ -424,15 +408,6 @@ function viewModel () {
 	self.saveHoleScore = function(round_id, round_hcp, hole_id, hole_score, round_tee, fairway_hit, green_hit) {
 
 		if (self.cachedScore() !== 0) {
-	/*		console.log("cache: " +
-				self.cachedScore().round_id + " " +
-				self.cachedScore().round_hcp + " " +
-				self.cachedScore().hole_id + " " +
-				self.cachedScore().hole_score + " " +
-				self.cachedScore().round_tee + " "
-			); */
-
-
 			if (self.cachedScore().round_id === round_id && self.cachedScore().round_hcp === round_hcp && self.cachedScore().hole_id === hole_id &&
 				self.cachedScore().hole_score === hole_score &&
 				self.cachedScore().round_tee === round_tee &&  self.cachedScore().fairway_hit === fairway_hit && self.cachedScore().green_hit === green_hit) {
@@ -493,8 +468,6 @@ function viewModel () {
 
 	self.nextHole = function () {
 
-		//$('#header_scorepage').css({opacity: '1'});
-
 		if(!inTransition) {
 			inTransition = true;
 			var el = $('#holeHeader');
@@ -516,11 +489,6 @@ function viewModel () {
 				x: '0',
 				duration: '275'
 			});
-
-			//el.css({
-			//	x: '0',
-
-
 
 			el.transition({
 				perspective: '1000',
@@ -550,43 +518,6 @@ function viewModel () {
 				});
 			}, 350);
 
-			/*.addClass('herpderp')
-			.removeClass('herpderp')
-			.transition({
-				perspective: '1000',
-				x: '300px',
-				duration: '0',
-				complete: function() {
-					inTransition = false;
-				}
-			})
-			.addClass('herpderp')
-			.removeClass('herpderp')
-			.transition({
-				perspective: '1000',
-				x: '0',
-				opacity: '1',
-				duration: '250',
-				complete: function() {  }
-			}); */
-
-			/*var btns = $('#dataButtons');
-			btns.transition({
-				perspective: '1000',
-				x: '-100%',
-				duration: '350'
-			}).transition({
-				perspective: '1000',
-				x: '100%',
-				duration: '0',
-			}).transition({
-				perspective: '1000',
-				x: '0',
-				duration: '250'
-			});*/
-
-
-
 		}
 
 		var curHole = parseInt(self.currentHole(), 10);
@@ -606,8 +537,6 @@ function viewModel () {
 			self.setHoleData(curHole + 1);
 		}
 
-
-		//$.mobile.changePage('#s_page', { transition: "slide",                                    allowSamePageTransition: true});
 	};
 
 	self.previousHole = function() {
@@ -659,21 +588,6 @@ function viewModel () {
 				duration: '250'
 			});
 
-			var btns = $('#dataButtons');
-
-			/*btns.transition({
-				perspective: '1000',
-				x: '100%',
-				duration: '350'
-			}).transition({
-				perspective: '1000',
-				x: '-100%',
-				duration: '0',
-			}).transition({
-				perspective: '1000',
-				x: '0',
-				duration: '250'
-			});*/
 		}
 
 		var curHole = parseInt(self.currentHole(), 10);
@@ -691,8 +605,6 @@ function viewModel () {
 			self.currentHole(curHole - 1);
 			self.setHoleData(curHole - 1);
 		}
-
-		//$.mobile.changePage('#s_page', { transition: "slide", reverse: true,                                    allowSamePageTransition: true});
 	};
 
 	self.currentHolePoints = ko.computed(function() {
@@ -745,12 +657,12 @@ function viewModel () {
 			scoreEl.transition({
 				perspective: '100',
 				rotateY: '360deg',
-				duration: 250
+				duration: '350'
 			}).
 			transition( {
 				perspective: '0',
 				rotateY: '0deg',
-				duration: 0
+				duration: '0'
 			});
 		}
 		self.hasSlid(true);
@@ -769,7 +681,7 @@ function viewModel () {
 			scoreEl.transition({
 				perspective: '100',
 				rotateY: '-360deg',
-				duration: 250
+				duration: '350'
 /*				complete: function() {
 
 				} */
@@ -784,7 +696,7 @@ function viewModel () {
 			transition({
 				perspective: '0',
 				rotateY: '0deg',
-				duration: 0
+				duration: '0'
 			});
 
 		}
@@ -833,37 +745,6 @@ function viewModel () {
 		self.setScore(curHole, curScore, curPoints, curHolePar);
 
 	};
-
-
-/*	ko.bindingHandlers.uislider = {
-		init: function (element, valueAccessor) {
-			function setSliderValue(newValue) {
-		//		var slider = $("#" + element.id);
-				var slider = $("#slaidi");
-				$(slider).slider();
-				$(slider).slider( "option", "max", 50);
-				$(slider).slider( "option", "min", -50);
-			//	console.log(slider);
-				slider.val(newValue);
-				slider.slider('refresh');
-				slider.on('slidechange', function () {
-					valueAccessor()(slider.val());
-				});
-				slider.on('slidestop', function () {
-					valueAccessor()(slider.val());
-					self.resetSlider();
-				});
-
-				slider.on('stop', function() {
-					valueAccessor()(slider.val());
-				});
-
-			}
-			valueAccessor().subscribe(setSliderValue);
-		}
-	}; */
-
-
 
 	ko.bindingHandlers.uislider = {
 		init: function (element, valueAccessor, allBindingsAccessor) {
@@ -981,14 +862,6 @@ function viewModel () {
 				self.scrollPos(0);
 				self.loadedRoundStartTime("");
 			}
-
-
-
-			//var spinner = $('#prefsPlayerHcp');
-
-
-			//spinner.css({visibility: 'hidden', opacity: '0' });
-
 
 			var backbtn = $('#pageBackButton');
 			var prefs = $('#prefs');
@@ -1304,15 +1177,26 @@ function viewModel () {
 
 
 			var hh = $('#header_scorepage');
+			var f_header = $('#f_header');			
 
 			hh.transition({
 				opacity: '0',
-				duration: '150'
+				duration: '150',
+				complete: function() {
+					hh.css({
+						display: 'none'
+					})
+				}
 			});
 
-			$('#f_header').transition({
+			f_header.transition({
 				opacity: '0',
-				duration: '150'
+				duration: '150',
+				complete: function() {
+					f_header.css({
+						display: 'none'
+					})
+				}
 			});
 
 
@@ -1460,9 +1344,6 @@ function viewModel () {
 
 	})();
 
-
-
-
 	self.closeScoreCard = function() {
 		self.scoreCardClicked = false;
 		//$.mobile.changePage('#s_page', { transition: 'slidedown', reverse:true });
@@ -1470,6 +1351,17 @@ function viewModel () {
 		var el = $('#scoreCard');
 
 		var hh = $('#header_scorepage');
+		var f_header = $('#f_header');
+
+		setTimeout(function() {
+			hh.css({
+				display: 'block'
+			});
+			f_header.css({
+				display: 'block'
+			});
+
+		}, 0);
 
 		el.css({transformOrigin: '100% 0'}).transition({
 			perspective: '1000',
@@ -1483,7 +1375,7 @@ function viewModel () {
 					duration: '50',
 				});
 
-				$('#f_header').transition({
+				f_header.transition({
 					opacity: '1',
 					duration: '150'
 				});
@@ -2389,7 +2281,7 @@ function viewModel () {
 		}
 
 		if (h >= 11.5 && h <= 18.4) {
-			if (num_holes === 9) return "9hole";
+			if (num_holes === 9) group.buffer = 1;
 			else group.buffer = 3;
 			group.factor = 0.3;
 			group.incr = 0.1;
@@ -2525,14 +2417,10 @@ function viewModel () {
 			return;
 		}
 
-
-
 		stats.css({
 			opacity: '0',
 			display: 'block',
 		});
-
-
 		holedata.transition({
 			opacity: '0',
 			duration: '350',
@@ -2601,7 +2489,7 @@ function viewModel () {
 	self.hcpScroller = function () {
 		if(scroller_init == true) return;
 		var whl1 = {
-		'-3':'-3','-2':'-2','-1':'-1','0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53', '54':'54'
+		'0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'10','11':'11','12':'12','13':'13','14':'14','15':'15','16':'16','17':'17','18':'18','19':'19','20':'20','21':'21','22':'22','23':'23','24':'24','25':'25','26':'26','27':'27','28':'28','29':'29','30':'30','31':'31','32':'32','33':'33','34':'34','35':'35','36':'36','37':'37','38':'38','39':'39','40':'40','41':'41','42':'42','43':'43','44':'44','45':'45','46':'46','47':'47','48':'48','49':'49','50':'50','51':'51','52':'52','53':'53', '54':'54'
 		};
 
 		var whl2 = {'0':'.0','1':'.1','2':'.2','3':'.3','4':'.4','5':'.5','6':'.6','7':'.7','8':'.8','9':'.9'
@@ -2687,12 +2575,12 @@ function viewModel () {
 				})
 
 				c_outer.css({
-					x: '100%',
+					x: '110%',
 					opacity: '1',
 					visibility: 'visible',
 					display: 'block',
 					boxShadow: '0px 0px 36px #777',	
-					zIndex: '2'
+					zIndex: '2',
 				});
 
 				c_sel.css({
@@ -2702,7 +2590,7 @@ function viewModel () {
 
 				if(teeSelectVisible) {
 					teesel.css({
-						x: '100%',
+						x: '110%',
 						opacity: '1'
 					})
 				}
@@ -2732,8 +2620,6 @@ function viewModel () {
 						}
 					});
 				}
-
-
 
 				header_front.transition({
 					perspective: '1000',
@@ -2781,30 +2667,8 @@ function viewModel () {
 
 						$('#fullCourseList').css({visibility: 'visible'});
 
-
-
-					   /*var interval = setInterval(function(){
-							$.mobile.loading('hide');
-							clearInterval(interval);
-						},1);*/
 					}
 				});
-
-				/*c_outer.transition({
-					perspective: '1000',
-					x: '0%',
-					duration: '350',
-					boxShadow: '0px 8px 12px #999',
-					complete: function() {
-						c_outer.css({
-							boxShadow: 'none'
-						})
-					}
-				});*/
-
-
-
-
 
 			}, 10);
 		}
@@ -2887,7 +2751,7 @@ function viewModel () {
 				if(teeSelectVisible) {
 					teesel.transition({
 						perspective: '1000',
-						x: '100%',
+						x: '110%',
 						duration: '350',
 						complete: function() {
 							////teesel.css({
@@ -2908,7 +2772,7 @@ function viewModel () {
 
 				c_outer.transition({
 					perspective: '1000',
-					x: '100%',
+					x: '110%',
 					duration: '350',
 					complete: function() {
 						c_sel.css({visibility: 'hidden', display: 'none', zIndex: '1' });
@@ -3000,8 +2864,6 @@ function viewModel () {
 				var c_outer = $('#c_outer');
 				var header_course = $('#header_courselist');
 
-
-
 				setTimeout(function() {
 					s_page.css({
 						x: '100%',
@@ -3015,7 +2877,6 @@ function viewModel () {
 					});
 				}, 0);
 
-
 				setTimeout(function() {
 
 					header_course.transition({
@@ -3026,14 +2887,11 @@ function viewModel () {
 							header_course.css({display: 'none'});
 						}
 					});
-
-
 					header_score.transition({
 						perspective: '1000',
 						x: '0%',
 						duration: '350',
 					});
-
 					c_outer.transition({
 						perspective: '1000',
 						x: '-50%',
@@ -3043,13 +2901,8 @@ function viewModel () {
 							c_outer.css({visibility: 'hidden', display: 'none', x: '100%' });
 							inTransition = false;
 							$('#courseSelect').css({visibility: 'hidden', display: 'none', zIndex: '1' });
-
-
-
-
 						}
 					});
-
 					s_page.transition({
 						perspective: '1000',
 						x: '0%',
@@ -3177,8 +3030,15 @@ function viewModel () {
 	
 	
 	self.ios = ko.observable(false);
+	self.safari = ko.observable(false);
+
+	// yyyyh
 	if (navigator.userAgent.match(/(iPhone)/g)) {
 		self.ios(true);
+	}
+	if (navigator.userAgent.match(/(Safari)/g) && !navigator.userAgent.match(/(Chrome)/g)) {
+		//console.log("safari, not chrome");
+		self.safari(true);
 	}
 }
 
