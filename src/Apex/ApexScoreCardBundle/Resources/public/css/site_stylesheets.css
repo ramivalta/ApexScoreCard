@@ -2,6 +2,7 @@ body {
 	width: 100%;
 	background-image: url('../images/white_carbonfiber.png') !important;
 	cursor: auto !important;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;	
 }
 
 .content {
