@@ -617,9 +617,9 @@
 						</div>
 					</div>
 					
-					<div id="dataButtons" class="ui-grid-b">
+					<div id="dataButtons" class="ui-grid-b"  data-bind="css: { dataButtons_ios : ios() == true, dataButtons_safari : safari() == true }">
 						<div class="ui-block-a" style="width: 20%">
-							<p></p>
+							
 						</div>
 						<div class="ui-block-b" style="width: 60%">
 							<div class="" data-role="controlgroup" data-type="horizontal" style="text-align: center">
@@ -628,63 +628,58 @@
 							</div>
 						</div>
 						<div class="ui-block-c" style="width: 20%">
-							<p></p>
+							
 						</div>
 					</div>					
 				</div>
 
 
-		<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a ios_bottom"  data-bind="css: { ios : launchedFromHome() == true, ios_bottom : ios() == true && launchedFromHome() == false }">
-			<div class="ui-block-a" style="width: 50%">
+				<div id="s_footer" data-theme="a" data-role="content" class="footer ui-grid-a ios_bottom"  data-bind="css: { ios : launchedFromHome() == true, ios_bottom : ios() == true && launchedFromHome() == false }">
+					<div class="ui-block-a" style="width: 50%">
 
-				<div class="holenav" data-inline="true" data-bind="event: { tap: previousHole }">
+						<div class="holenav" data-inline="true" data-bind="event: { tap: previousHole }">
 
-					<i class="fa fa-caret-left" style="font-size: 16px"></i>
+							<i class="fa fa-caret-left" style="font-size: 16px"></i>
 
-					<span>&nbsp;Reikä</span>
+							<span>&nbsp;Reikä</span>
 
-					<!-- ko if: currentHole() === 1 -->
-					<span data-bind="text: holes().length"></span>
-					<!-- /ko -->
+							<!-- ko if: currentHole() === 1 -->
+							<span data-bind="text: holes().length"></span>
+							<!-- /ko -->
 
-					<!-- ko if: currentHole() !== 1 -->
-					<span data-bind="text: currentHole() - 1"></span>
-					<!-- /ko -->
-				</div>
+							<!-- ko if: currentHole() !== 1 -->
+							<span data-bind="text: currentHole() - 1"></span>
+							<!-- /ko -->
+						</div>
 
-			</div>
+					</div>
 
 
-			<div class="ui-block-b" style="width: 50%; text-align: right">
-				<div class="holenav"  data-bind="event: { tap: nextHole }">
+					<div class="ui-block-b" style="width: 50%; text-align: right">
+						<div class="holenav"  data-bind="event: { tap: nextHole }">
 
-					<span>Reikä&nbsp;</span>
+							<span>Reikä&nbsp;</span>
 
-					<!-- ko if: currentHole() === holes().length -->
-						<span>1</span>
-					<!-- /ko -->
+							<!-- ko if: currentHole() === holes().length -->
+								<span>1</span>
+							<!-- /ko -->
 
-					<!-- ko if: currentHole() !== holes().length -->
-						<span data-bind="text: currentHole() + 1"></span>
-					<!-- /ko -->
+							<!-- ko if: currentHole() !== holes().length -->
+								<span data-bind="text: currentHole() + 1"></span>
+							<!-- /ko -->
 
-					<i class="fa fa-caret-right" style="font-size: 16px"></i>
+							<i class="fa fa-caret-right" style="font-size: 16px"></i>
 
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 
+		<div id="scoreCard" class="scorecard-dialog"  data-theme="b" style="display: none; z-index: 10000; background: rgba(0, 0, 0, 0.5); position: relative">
 
-			</div>
-		</div>
-
-
-
-
-		<div id="scoreCard" class="scorecard-dialog"  data-theme="b" style="display: none; z-index: 10000; background: rgba(0, 0, 0, 0.5);" data-bind="event: { swipeup: closeScoreCard, tap: closeScoreCard }">
-
-			<div data-role="content" id="dialogContent" data-theme="a" style="box-shadow: 0px 2px 24px #000">
+			<div data-role="content" id="dialogContent" data-theme="a" style="box-shadow: 0px 2px 24px #000"  data-bind="event: { swipeup: closeScoreCard, tap: closeScoreCard }">
 				<table class="scoreCardTable">
 					<tr>
 						<td class="scHeaders">Kenttä</td>
@@ -872,10 +867,19 @@
 				</table>
 			</div>
 
-			<div style="height: 24px; text-align: center; background: #eee; box-shadow: 0px 16px 16px #444" data-role="content" data-bind="event: { tap: closeScoreCard }">
+			<div style="margin-top: -16px; background: #eee; text-align: center; padding-top:0; padding-bottom: 0" data-role="content" data-bind="event: { tap: closeScoreCard }">
 				<div>
-					<i class="fa fa-chevron-up" style="font-size: 24px; -webkit-transform: scale(1.5,1); color: #bbb "></i>
+					<i class="fa fa-chevron-up" style="font-size: 24px; -webkit-transform: scale(1.5,1); color: #bbb; display: block "></i>
 				</div>
+			</div>
+
+			<div data-role="content" style="text-align: center; background: #eee; box-shadow: 0px 16px 16px #444; padding-top: 0">
+				<a data-role="button" data-inline="true" data-mini="true" data-theme="b" target="_blank" href="/site/?round= + $root.round_id()" data-bind="attr: { href: '../site/?round=' + $root.round_id() }" data-ajax="false" style="-webkit-transform: scale(0.85, 0.85);">
+					Avaa tuloskortti selaimessa
+				</a>
+			</div>
+			<div style="position: relative; height: 100%; bottom: 0; background: transparent" data-bind="event: { tap: closeScoreCard }">
+
 			</div>
 		</div>
 	</div>

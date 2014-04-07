@@ -3,7 +3,7 @@ html, body {
 	min-height: 100%;
 	overflow: hidden;
 	-webkit-user-select: none;
-	font-family: "helvetica neue";
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding-bottom: 20px;
 }
 
@@ -247,9 +247,6 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 4px;
-	border-color: gray;
-	border-width: 0px;
-	border-style: solid;
 	background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
@@ -257,7 +254,7 @@ body {
 	background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
-	transform: scale(0.5);
+	//transform: scale(0.5);
 
 }
 
@@ -323,13 +320,24 @@ body {
 }
 
 #dataButtons {
-	position: absolute;
+	position: relative;
 	width: 100%;
 	z-index: 10;
-	top: 118px;
+	top: 110px;
 	left: 0;
 	right: 0;
+	border: 0;
+	margin: 0;
+	padding: 0;
 	-webkit-transform: perspective(1000px) translate(0px, 0px);		
+}
+
+.dataButtons_safari {
+	top: 109px !important;
+}
+
+.dataButtons_ios {
+	top: 109px !important;
 }
 
 .navbutton
@@ -607,13 +615,12 @@ background-size: 5px 5px;
 	border-left-color: #ADADAD;
 	font-size: 0.8em;
 	overflow: visible;
-	min-height: 100%;
 	background: linear-gradient(to bottom, rgba(235, 235, 235, 0.5), #eeeeee);
 	box-shadow: 0px 2px 8px #999;
 	z-index: 4;
 	margin-left: 8px;
 	margin-right: 8px;
-	min-height: 100px;
+	min-height: 103px;
 	-webkit-transform: perspective(1000px) translate(0px, 0px);	
 }
 
